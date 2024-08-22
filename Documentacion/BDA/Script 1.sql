@@ -2744,3 +2744,6 @@ ADD constraint cliente_documento_unico UNIQUE (cliente_documento);
 
 alter table domicilio
 add domicilio_codigo_postal nvarchar(50) null;
+
+alter table domicilio
+add domicilio_es_principal nchar(1) null;

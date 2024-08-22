@@ -2741,3 +2741,6 @@ cliente_cuit nvarchar(20) null;
 
 ALTER TABLE dbo.cliente
 ADD constraint cliente_documento_unico UNIQUE (cliente_documento); 
+
+alter table domicilio
+add domicilio_codigo_postal nvarchar(50) null;

@@ -2747,3 +2747,21 @@ add domicilio_codigo_postal nvarchar(50) null;
 
 alter table domicilio
 add domicilio_es_principal nchar(1) null;
+
+insert into estado (estado_descripcion,estado_observaciones,estado_usuario_alta) values
+(UPPER('ENTRGADO'),'Estado para pedidos entregados al cliente de manera satisfactoria','Admin'),
+(UPPER('EN PREPARACION'),'Estado para pedidos que se encuentran preparandose con stock suficiente en el depósito.','Admin'),
+(UPPER('pedido de productos'),'Estado para pedidos en los cuales no se cuenta con todos los productos y se debe realizar una compra.','Admin'),
+(UPPER('Cancelado'),'Cancelado','Admin'),
+(UPPER('Listo para reparto'),'Estado para pedidos que se encuentran listos para distribución','Admin'),
+(UPPER('En reparto'),'Estado para pedidos que se encuentran en distribución','Admin'),
+(UPPER('Nuevo'),'Estado para pedidos que se generan pero aun no estan confirmados','Admin'),
+(UPPER('Confirmado'),'Estado para pedidos confirmados','Admin')
+;
+
+Update estado set estado_observaciones = 'Pedido :: '+ estado_observaciones
+where estado_id not in (1,2);
+Alter table pedido add estado_registro_id bigint default 1;
+Alter table pedido add estado_pago_id bigint ;
+Alter table pedido add constraint FK_Pedido_estado_registro FOREIGN KEY (estado_registro_id) REFERENCES estado (estado_id);
+Alter table pedido add constraint FK_Pedido_estado_pago FOREIGN KEY (estado_pago_id) REFERENCES estado (estado_id);

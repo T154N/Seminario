@@ -1,26 +1,49 @@
+.card {
+  padding: 25px;
+  box-shadow: 0 4px 8px #00000019
+}
+
+.card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.card-title {
+  font-size: 20px;
+}
+
+.card-text {
+  margin-bottom: 1.25rem;
+}
+
+.input-group {
+  justify-content: flex-end; 
+}
+
 .cuadro-cantidad {
-    border: 2px solid #FF9843; /* Cambia el color del borde */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 5px; /* Espaciado interno */
-    font-size: 16px; /* Tamaño de la fuente */
-    width: 100px; /* Abarca todo el ancho del contenedor */
-  }
-  
-  .custom-input:focus {
-    outline: none; /* Elimina el borde por defecto del focus */
-    border-color: #FF9843; /* Cambia el color del borde cuando el input está enfocado */
-  }
+  border: 2px solid #FF9843;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  width: 100px;
+}
+
+.cuadro-cantidad:focus {
+  outline: none; 
+  border-color: #FF9843; 
+}
 
 .btn-agregar {
-    background-color: #FF9843;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    text-decoration: none;
+  background-color: #FF9843; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  padding: 10px 15px; 
+  text-decoration: none;
 }
 
 .btn-agregar:hover {
-    background-color: #dd8238;
+  background-color: #dd8238; 
 }

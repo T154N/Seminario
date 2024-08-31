@@ -1,4 +1,4 @@
-/* Inicio.css */
+
 .inicio {
     text-align: center;
     padding: 20px;
@@ -12,6 +12,7 @@
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .button:hover {
@@ -24,12 +25,29 @@
 }
 
 .inicio-titulo {
-    /* Tus estilos existentes para el título */
-    text-align: center; /* Ejemplo de centrado, ajusta según sea necesario */
+    
+    text-align: center; 
 }
 
 .button-spacing {
-    margin-top: 20px; /* Ajusta el valor según el espaciado que desees */
-    display: inline-block; /* Asegura que se respeten los márgenes alrededor del botón */
-    text-align: center; /* Centramos el botón */
+    margin-top: 20px; 
+    display: inline-block; 
+    text-align: center; 
+}
+
+.descripcion {
+    font-size: 20px; 
+    font-weight: 1;
+    margin-bottom: 10px; 
+}
+
+@keyframes entrada-izquierda-rotar {
+    0% {
+        transform: translateX(-1000px) rotate(0); 
+        opacity: 0; 
+    }
+    100% {
+        transform: translateX(0) rotate(360deg); 
+        opacity: 1; 
+    }
 }

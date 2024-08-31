@@ -1,7 +1,7 @@
 import React from "react";
 import './Categoria.css';
 
-function Categoria({ categorias, indiceSeleccionado, handleButtonClick }) {
+function Categoria({categorias, IndiceSeleccionado: indiceSeleccionado, handleButtonClick}) {
     return (
         <div>
             <div className="list-group">
@@ -9,7 +9,7 @@ function Categoria({ categorias, indiceSeleccionado, handleButtonClick }) {
                     <button
                         key={index}
                         type="button"
-                        className={`list-group-item list-group-item-action custom-button ${indiceSeleccionado === index ? "active" : ""}`}
+                        className={`custom-button list-group-item list-group-item-action  ${indiceSeleccionado === index ? "active" : ""}`}
                         onClick={() => handleButtonClick(index)}
                         aria-current={indiceSeleccionado === index ? "true" : "false"}
                     >

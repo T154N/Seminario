@@ -1,7 +1,5 @@
-.custom-button.active {
-    background-color: #FF9843;
-    color: #FF9843;
+.custom-button.active{
+    background-color: #FF9843 !important;
+    border: none;
 }
-
-
 

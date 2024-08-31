@@ -1,0 +1,35 @@
+/* Inicio.css */
+.inicio {
+    text-align: center;
+    padding: 20px;
+}
+
+.button{
+    padding: 10px 15px;
+    background-color: #FF9843;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.button:hover {
+    color: white;
+    background-color: #dd8238;
+}
+
+.inicio-titulo {
+    color: #181515; 
+}
+
+.inicio-titulo {
+    /* Tus estilos existentes para el título */
+    text-align: center; /* Ejemplo de centrado, ajusta según sea necesario */
+}
+
+.button-spacing {
+    margin-top: 20px; /* Ajusta el valor según el espaciado que desees */
+    display: inline-block; /* Asegura que se respeten los márgenes alrededor del botón */
+    text-align: center; /* Centramos el botón */
+}

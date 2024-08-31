@@ -1,0 +1,26 @@
+.cuadro-cantidad {
+    border: 2px solid #FF9843; /* Cambia el color del borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 5px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    width: 100px; /* Abarca todo el ancho del contenedor */
+  }
+  
+  .custom-input:focus {
+    outline: none; /* Elimina el borde por defecto del focus */
+    border-color: #FF9843; /* Cambia el color del borde cuando el input está enfocado */
+  }
+
+.btn-agregar {
+    background-color: #FF9843;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-agregar:hover {
+    background-color: #dd8238;
+}

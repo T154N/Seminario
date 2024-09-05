@@ -18,7 +18,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
 
-            <Route path='/*' element={<Login />}></Route>
+            <Route path='/*' element={<Login />}></Route> // Esta ruta por default es solo pq no hay otras
           </Routes>
         </main>
 

@@ -1,10 +1,33 @@
 .login {
-    background-image: url("./fondoLogin.png");
+    background-image: url("../../images/Backgrounds/fondoLogin.png");
     background-size: cover;
     background-position: center;
     z-index: 1;
     height: 100vh;
     width: 100vw;
-    align-items: center;
-    justify-content: center;
+    display: flex;
+    flex-direction: column; /* Coloca los elementos en columna */
+    align-items: center; /* Centra horizontalmente los elementos */
+    justify-content: flex-start; /* Alinea los elementos al inicio (parte superior) */
+    padding: 20px; /* Espacio entre los bordes de la pantalla */
+    box-sizing: border-box;
+}
+
+h1 {
+    margin-bottom: 20px; /* Espacio entre el título y la tarjeta */
+}
+
+.card {
+    width: 300px;
+    max-width: 90%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    margin-top: 10px; /* Margen superior para separar un poco más el título */
+    height: 500px;
+    width: 500px;
+}
+
+.fondoTarjeta {
+    background-color: #FCBB3A;
+    border-radius: 50px; /* Bordes redondeados */
 }

@@ -7,7 +7,7 @@ export function Header() {
     return(
         <header className="header text-white p-3">
             <img src={logo} alt='Logo' className='logo'></img>
-            <img src={logo} alt='Logo' className='logo'></img> # Cambiar por PedidoFlex
+            <h1>PedidoFlex</h1>
         </header>
     )
 }

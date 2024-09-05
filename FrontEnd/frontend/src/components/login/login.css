@@ -31,3 +31,97 @@ h1 {
     background-color: #FCBB3A;
     border-radius: 50px; /* Bordes redondeados */
 }
+
+.letraTarjeta {
+    color: #312c55;
+}
+
+.elementosForm {
+    margin-top: 15px;
+    padding: 0;
+    text-align: left;
+}
+
+.tituloForm {
+    padding-left: 0;
+    text-align: left;
+    font-size: 25px;
+}
+
+.textoForm {
+    text-align: left;
+    font-size: 20px;
+}
+
+.botonRegistrarseForm {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    bottom: 20px;
+
+}
+
+.botonAceptarForm {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: auto;
+    width: 100%;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 20px;
+}
+
+.btn-aceptar {
+    color: #000000;
+    background-color: #C8FFDF;
+    border-color: #C8FFD4;
+}
+
+.btn-aceptar:hover,
+.btn-aceptar:active,
+.btn-aceptar.active,
+.open .dropdown-toggle.btn-aceptar {
+    color: #000000;
+    background-color: #83C8A0;
+    border-color: #C8FFD4;
+}
+
+.btn-aceptar:active,
+.btn-aceptar.active,
+.open .dropdown-toggle.btn-aceptar {
+    background-color: #83C8A0;
+}
+/*.btn-aceptar.disabled,
+.btn-aceptar[disabled],
+fieldset[disabled] .btn-aceptar,
+.btn-aceptar.disabled:hover,
+.btn-aceptar[disabled]:hover,
+fieldset[disabled] .btn-aceptar:hover,
+.btn-aceptar.disabled:focus,
+.btn-aceptar[disabled]:focus,
+fieldset[disabled] .btn-aceptar:focus,
+.btn-aceptar.disabled:active,
+.btn-aceptar[disabled]:active,
+fieldset[disabled] .btn-aceptar:active,
+.btn-aceptar.disabled.active,
+.btn-aceptar[disabled].active,
+fieldset[disabled] .btn-aceptar.active {
+    background-color: #C8FFDF;
+    border-color: #C8FFD4;
+}*/
+
+.btn-aceptar .badge {
+    color: #C8FFDF;
+    background-color: #000000;
+}

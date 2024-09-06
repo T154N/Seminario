@@ -17,6 +17,17 @@ h1 {
     margin-bottom: 20px; /* Espacio entre el título y la tarjeta */
 }
 
+.errorInput {
+    color: brown;
+}
+
+.cambiarContrasena {
+    cursor: pointer;
+    color: #312c55;
+    text-decoration: underline;
+    font-size: 20px;
+}
+
 .card {
     width: 300px;
     max-width: 90%;
@@ -75,8 +86,8 @@ h1 {
 }
 
 .card-body {
-    display: flex;
-    flex-direction: column;
+/*    display: flex;
+    flex-direction: column;*/
     justify-content: space-between;
     height: 100%;
     padding: 20px;

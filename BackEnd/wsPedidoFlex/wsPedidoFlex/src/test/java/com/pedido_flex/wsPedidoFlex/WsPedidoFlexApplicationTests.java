@@ -1,10 +1,10 @@
-package com.pedido_flex.SemApi;
+package com.pedido_flex.wsPedidoFlex;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SemApiApplicationTests {
+class WsPedidoFlexApplicationTests {
 
 	@Test
 	void contextLoads() {

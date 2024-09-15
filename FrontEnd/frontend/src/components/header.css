@@ -1,0 +1,19 @@
+.header {
+    background-color: #FCBB3A !important;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+    padding: 0 20px;
+}
+
+.logo {
+    width: 60px;
+    height: auto;
+}
+
+.pflogo {
+    width: 200px;
+    height: auto;
+}

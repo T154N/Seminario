@@ -1,6 +1,16 @@
 .App {
   text-align: center;
+  font-family: 'Bree Serif', serif;
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
+
 
 .App-logo {
   height: 40vmin;

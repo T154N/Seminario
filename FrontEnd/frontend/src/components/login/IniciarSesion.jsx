@@ -16,7 +16,7 @@ export function IniciarSesion() {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-3 elementosForm">
+            <div className="elementosForm">
                 <label className="form-label tituloForm">Nombre de usuario</label>
                 <input className="form-control textoForm" id="inputNombreUsuario"
                        placeholder="Nombre de usuario"
@@ -36,7 +36,7 @@ export function IniciarSesion() {
                 </div>
             </div>
 
-            <div className="mb-3 elementosForm">
+            <div className="elementosForm">
                 <label className="form-label tituloForm">Contraseña</label>
                 <input type="password"
                        className="form-control textoForm"
@@ -58,14 +58,10 @@ export function IniciarSesion() {
                 </div>
             </div>
 
-            <div className="button-container">
-                <div className="botonRegistrarseForm">
-                    <button className="btn btn-aceptar" type="submit">Crear cuenta</button>
-                </div>
-
-                <div className="botonAceptarForm">
-                    <button className="btn btn-aceptar" type="submit">Iniciar sesion</button>
-                </div>
+            <div className="d-flex">
+                    <div className="botonAceptarForm">
+                        <button className="btn btn-aceptar" type="submit">Iniciar sesion</button>
+                    </div>
             </div>
 
         </form>

@@ -1,28 +1,32 @@
-import {useForm} from "react-hook-form";
-import React from "react-hook-form";
 import {useState} from "react";
 import './login.css';
+
 import {CambiarContrasena} from "./CambiarContrasena";
 import {IniciarSesion} from "./IniciarSesion";
+import {Registrarse} from "./Registrarse";
 
 export function Login() {
 
-    const {
-        register,
-        handleSubmit,
-        formState: {errors}} = useForm();
-
     const [mostrarCambiarPwd, setMostrarCambiarPwd] = useState(false);
     const [mostrarIniciarSesion, setMostrarIniciarSesion] = useState(true);
-
-    const onSubmit = async (data) => {
-        //Aca va axios
-        console.log(data);
-    }
+    const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
 
     const mostrarCambiarContrasena = () => {
-        setMostrarCambiarPwd(!mostrarCambiarPwd);
-        setMostrarIniciarSesion(!mostrarIniciarSesion);
+        setMostrarCambiarPwd(true);
+        setMostrarIniciarSesion(false);
+        setMostrarRegistrarse(false);
+    }
+
+    const volverALogin = () => {
+        setMostrarCambiarPwd(false);
+        setMostrarIniciarSesion(true);
+        setMostrarRegistrarse(false);
+    }
+
+    const mostrarReg = () => {
+        setMostrarRegistrarse(true);
+        setMostrarIniciarSesion(false);
+        setMostrarCambiarPwd(false);
     }
 
     return(
@@ -34,12 +38,30 @@ export function Login() {
                         <IniciarSesion/>
                     }
                     {mostrarCambiarPwd &&
-                        <CambiarContrasena/>
+                        <CambiarContrasena volverALogin={volverALogin}/>
+                    }
+                    {mostrarRegistrarse &&
+                        <Registrarse/>
                     }
 
-                    <div className="elementosForm">
-                        <p className="cambiarContrasena" onClick={mostrarCambiarContrasena}>Cambiar contraseña</p>
-                    </div>
+                    {!mostrarRegistrarse && !mostrarCambiarPwd &&
+                        <div className="elementosForm">
+                        <div className="botonRegistrarseForm">
+                            <button className="btn btn-aceptar" onClick={mostrarReg}>No tienes cuenta?</button>
+                        </div>
+                        <p className="cambiarContrasena" onClick={mostrarCambiarContrasena}>
+                            {!mostrarCambiarPwd && "Cambiar contraseña"}
+                        </p>
+                    </div>}
+
+                    {
+                        (mostrarRegistrarse || mostrarCambiarPwd) && 
+                        <div className="elementosForm">
+                            <div className="botonRegistrarseForm">
+                                <button className="btn btn-aceptar" onClick={volverALogin}>Volver</button>
+                            </div>
+                        </div>
+                    }
 
                 </div>
             </div>

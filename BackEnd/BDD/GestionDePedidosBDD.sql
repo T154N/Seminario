@@ -1,3 +1,5 @@
+CREATE DATABASE Gestion_Pedidos
+
 /*Creacion de tablas*/
 -- Create table 'estado'
 CREATE TABLE estado (
@@ -124,8 +126,6 @@ CREATE TABLE localidad (
 );
 
 /*Insert Localidades*/
-insert into localidad (localidad_nombre,localidad_provincia_id ,localidad_estado_id ,localidad_usuario_alta) values (UPPER(TRIM(' 25 de Mayo ')),1,1,'Admin');
-insert into localidad (localidad_nombre,localidad_provincia_id ,localidad_estado_id ,localidad_usuario_alta) values (UPPER(TRIM(' 3 de febrero ')),1,1,'Admin');
 insert into localidad (localidad_nombre,localidad_provincia_id ,localidad_estado_id ,localidad_usuario_alta) values (UPPER(TRIM(' 25 de Mayo ')),1,1,'Admin');
 insert into localidad (localidad_nombre,localidad_provincia_id ,localidad_estado_id ,localidad_usuario_alta) values (UPPER(TRIM(' 3 de febrero ')),1,1,'Admin');
 insert into localidad (localidad_nombre,localidad_provincia_id ,localidad_estado_id ,localidad_usuario_alta) values (UPPER(TRIM(' A. Alsina ')),1,1,'Admin');

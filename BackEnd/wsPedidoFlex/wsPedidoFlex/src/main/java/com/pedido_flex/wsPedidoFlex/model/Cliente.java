@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.http.ResponseEntity;
+
 import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,4 +50,20 @@ public class Cliente {
     @Column(name = "cliente_observaciones")
     private String cliente_observaciones;
 
+    public Cliente get() {
+        Cliente cliente = new Cliente();
+        cliente.setId(this.id);
+        cliente.setCliente_nombre(this.cliente_nombre);
+        cliente.setCliente_email(this.cliente_email);
+        cliente.setCliente_telefono(this.cliente_telefono);
+        cliente.setCliente_estado_id(this.cliente_estado_id);
+        cliente.setCliente_fecha_alta(this.cliente_fecha_alta);
+        cliente.setCliente_fecha_modificacion(this.cliente_fecha_baja);
+        cliente.setCliente_usuario_alta(this.cliente_usuario_alta);
+        cliente.setCliente_usuario_baja(this.cliente_usuario_baja);
+        cliente.setCliente_observaciones(this.cliente_observaciones);
+        cliente.setCliente_usuario_modificacion(this.cliente_usuario_modificacion);
+        cliente.setCliente_usuario_baja(this.cliente_usuario_baja);
+        return cliente;
+    }
 }

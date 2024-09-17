@@ -1,9 +1,7 @@
-import {useState} from "react";
-import './login.css';
+import { useState } from "react";
+import "./login.css";
 
-import {CambiarContrasena} from "./CambiarContrasena";
-import {IniciarSesion} from "./IniciarSesion";
-import {Registrarse} from "./Registrarse";
+import { IniciarSesion } from "./IniciarSesion";
 
 export function Login() {
 
@@ -28,43 +26,50 @@ export function Login() {
         setMostrarIniciarSesion(false);
         setMostrarCambiarPwd(false);
     }
-
+        // TODO: Cambiar tamano de las columnas segun el tamano de la pantalla (con breakpoints)
     return(
-        <div className="login">
-            <h1 className="h1">Iniciar Sesion</h1>
-            <div className="card">
-                <div className="card-body fondoTarjeta">
-                    {mostrarIniciarSesion &&
-                        <IniciarSesion/>
-                    }
-                    {mostrarCambiarPwd &&
-                        <CambiarContrasena volverALogin={volverALogin}/>
-                    }
-                    {mostrarRegistrarse &&
-                        <Registrarse/>
-                    }
 
-                    {!mostrarRegistrarse && !mostrarCambiarPwd &&
-                        <div className="elementosForm">
-                        <div className="botonRegistrarseForm">
-                            <button className="btn btn-aceptar" onClick={mostrarReg}>No tienes cuenta?</button>
-                        </div>
-                        <p className="cambiarContrasena" onClick={mostrarCambiarContrasena}>
-                            {!mostrarCambiarPwd && "Cambiar contraseña"}
-                        </p>
-                    </div>}
+        <>
+            <div className="fondo vh-100">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-3"/>
+                        <div className="col-6">
+                            <div className="">
+                                <h1 className="fs-1">Iniciar sesion</h1>
+                                <div className="card shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
+                                    <div className="card-body text-start">
+                                        {mostrarIniciarSesion && <IniciarSesion/>}
 
-                    {
-                        (mostrarRegistrarse || mostrarCambiarPwd) && 
-                        <div className="elementosForm">
-                            <div className="botonRegistrarseForm">
-                                <button className="btn btn-aceptar" onClick={volverALogin}>Volver</button>
+                                        {!mostrarCambiarPwd && !mostrarRegistrarse &&
+                                        <div className="mt-2 text-start fs-6">
+                                            <div className="d-flex justify-content-start gap-2">
+                                                <span>No tienes cuenta?</span>
+                                                <p style={{color: "darkblue", cursor: "pointer", textDecoration: "underline"}}
+                                                onClick={mostrarReg}>Registrarse</p>
+                                            </div>
+
+                                            <div className="d-flex justify-content-start gap-2">
+                                                <span className="d-flex justify-content-start">Olvidaste tu contraseña?</span>
+                                                <p style={{color: "darkblue", cursor: "pointer", textDecoration: "underline"}} 
+                                                onClick={mostrarCambiarContrasena}>Recuperar contraseña</p>
+                                            </div>
+                                        </div>}
+
+                                        {(mostrarRegistrarse || mostrarCambiarPwd)  &&
+                                            <div className="mt-2">
+                                                <div>
+                                                    <button className="btn btn-aceptar" onClick={volverALogin}>Volver</button>
+                                                </div>
+                                            </div>}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    }
-
+                        <div className="col-3"/>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

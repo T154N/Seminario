@@ -1,94 +1,6 @@
-.login {
-    background-image: url("../../images/Backgrounds/fondoLogin.png");
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-h1 {
-    margin-bottom: 20px; /* Espacio entre el título y la tarjeta */
-}
-
-.errorInput {
-    color: brown;
-    margin-bottom: 5px;
-}
-
-.cambiarContrasena {
-    cursor: pointer;
-    color: #312c55;
-    text-decoration: underline;
-    font-size: 20px;
-}
-
-.card {
-    max-width: 90%;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 50px;
-    margin-top: 10px;
-    min-height: 300px;
-    min-width: 500px;
-}
-
-.fondoTarjeta {
-    background-color: #FCBB3A;
-    border-radius: 50px; /* Bordes redondeados */
-}
-
-.letraTarjeta {
-    color: #312c55;
-}
-
-.elementosForm {
-    margin-top: 15px;
-    padding: 0;
-    text-align: left;
-}
-
-.tituloForm {
-    padding-left: 0;
-    text-align: left;
-    font-size: 25px;
-}
-
-.textoForm {
-    text-align: left;
-    font-size: 20px;
-}
-
-.botonRegistrarseForm {
-    margin-top: 20px;
-    margin-bottom: 15px;
-    bottom: 20px;
-
-}
-
-.botonAceptarForm {
-    margin-top: 20px;
-    margin-bottom: 15px;
-    bottom: 20px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    margin-bottom: auto;
-    width: 100%;
-}
-
-.card-body {
-/*    display: flex;
-    flex-direction: column;*/
-    justify-content: space-between;
-    height: 100%;
-    padding: 20px;
+.fondo {
+    background: #fff3ef;
+    background: linear-gradient(45deg, #ebfd87, #f5b282);
 }
 
 .btn-aceptar {
@@ -111,26 +23,8 @@ h1 {
 .open .dropdown-toggle.btn-aceptar {
     background-color: #83C8A0;
 }
-/*.btn-aceptar.disabled,
-.btn-aceptar[disabled],
-fieldset[disabled] .btn-aceptar,
-.btn-aceptar.disabled:hover,
-.btn-aceptar[disabled]:hover,
-fieldset[disabled] .btn-aceptar:hover,
-.btn-aceptar.disabled:focus,
-.btn-aceptar[disabled]:focus,
-fieldset[disabled] .btn-aceptar:focus,
-.btn-aceptar.disabled:active,
-.btn-aceptar[disabled]:active,
-fieldset[disabled] .btn-aceptar:active,
-.btn-aceptar.disabled.active,
-.btn-aceptar[disabled].active,
-fieldset[disabled] .btn-aceptar.active {
-    background-color: #C8FFDF;
-    border-color: #C8FFD4;
-}*/
-
 .btn-aceptar .badge {
+
     color: #C8FFDF;
     background-color: #000000;
 }

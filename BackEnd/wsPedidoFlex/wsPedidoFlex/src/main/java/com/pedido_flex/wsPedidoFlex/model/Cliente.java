@@ -1,4 +1,4 @@
-package com.pedido_flex.wsPedidoFlex.Model;
+package com.pedido_flex.wsPedidoFlex.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.pedido_flex.wsPedidoFlex.Controller;
 
 import com.pedido_flex.wsPedidoFlex.Exception.ResourceNotFoundException;
-import com.pedido_flex.wsPedidoFlex.Model.Cliente;
+import com.pedido_flex.wsPedidoFlex.model.Cliente;
 import com.pedido_flex.wsPedidoFlex.Repository.ClienteRepository;
 import com.pedido_flex.wsPedidoFlex.Service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;

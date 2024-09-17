@@ -2,7 +2,7 @@ package com.pedido_flex.wsPedidoFlex.Service;
 
 import com.pedido_flex.wsPedidoFlex.Repository.ClienteRepository;
 import org.springframework.stereotype.Service;
-import com.pedido_flex.wsPedidoFlex.Model.Cliente;
+import com.pedido_flex.wsPedidoFlex.model.Cliente;
 
 import java.util.List;
 

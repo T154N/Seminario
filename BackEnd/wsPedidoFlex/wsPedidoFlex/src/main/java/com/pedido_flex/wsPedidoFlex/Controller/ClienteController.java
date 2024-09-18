@@ -1,16 +1,10 @@
 package com.pedido_flex.wsPedidoFlex.Controller;
 
-import com.pedido_flex.wsPedidoFlex.Exception.ResourceNotFoundException;
-import com.pedido_flex.wsPedidoFlex.model.Cliente;
-import com.pedido_flex.wsPedidoFlex.Repository.ClienteRepository;
+import com.pedido_flex.wsPedidoFlex.Model.Cliente;
 import com.pedido_flex.wsPedidoFlex.Service.ClienteService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -18,15 +12,19 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     public ClienteController(ClienteService clienteService) {
+
         this.clienteService = clienteService;
     }
+
     @GetMapping("/clientes/{id}")
     public Cliente  getClienteById(@PathVariable Long id) {
+
         return clienteService.findClienteById(id);
     }
 
     @GetMapping("/clientes")
     public List<Cliente> findAllClientes() {
+
         return clienteService.findAllClientes();
     }
 

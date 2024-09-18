@@ -2,13 +2,13 @@ package com.pedido_flex.wsPedidoFlex.Service;
 
 import com.pedido_flex.wsPedidoFlex.Repository.ClienteRepository;
 import org.springframework.stereotype.Service;
-import com.pedido_flex.wsPedidoFlex.model.Cliente;
+import com.pedido_flex.wsPedidoFlex.Model.Cliente;
 
 import java.util.List;
 
 @Service
 public class ClienteService {
-private final ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
 
     public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;

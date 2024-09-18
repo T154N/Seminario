@@ -17,22 +17,18 @@ export function IniciarSesion() {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="elementosForm">
-                <label className="form-label tituloForm">Nombre de usuario</label>
-                <input className="form-control textoForm" id="inputNombreUsuario"
-                       placeholder="Nombre de usuario"
-                       {...register("nombre", {
+                <label className="form-label">Correo electronico</label>
+                <input className="form-control" id="inputNombreUsuario"
+                       placeholder="Correo electronico"
+                       {...register("correo", {
                            required: "Este campo es requerido.",
                            pattern: {
-                               value: /^[A-Za-z\s'-]+$/,
-                               message: "Nombre invalido. El nombre solo deben ser letras mayusculas o minusculas."
-                           },
-                           minLength: {
-                               value: 3,
-                               message: "El nombre debe tener al menos 3 caracteres."
+                               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                               message: "Correo invalido. Verifique el formato del correo."
                            },
                        })}/>
                 <div>
-                    {errors.nombre && <p className="errorInput">{errors.nombre.message}</p>}
+                    {errors.correo && <p className="errorInput">{errors.correo.message}</p>}
                 </div>
             </div>
 

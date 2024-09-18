@@ -2,6 +2,8 @@ import { useState } from "react";
 import "./login.css";
 
 import { IniciarSesion } from "./IniciarSesion";
+import { CambiarContrasena } from "./CambiarContrasena";
+import { Registrarse } from "./Registrarse";
 
 export function Login() {
 
@@ -26,20 +28,22 @@ export function Login() {
         setMostrarIniciarSesion(false);
         setMostrarCambiarPwd(false);
     }
-        // TODO: Cambiar tamano de las columnas segun el tamano de la pantalla (con breakpoints)
     return(
 
         <>
-            <div className="fondo vh-100">
+            <div className="fondo">
                 <div className="container">
                     <div className="row">
-                        <div className="col-3"/>
-                        <div className="col-6">
+                        <div className="col"/>
+                        <div className="col-sm-12 col-md-10 col-lg-8 col-xl-6 col-xxl-6">
                             <div className="">
                                 <h1 className="fs-1">Iniciar sesion</h1>
                                 <div className="card shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
                                     <div className="card-body text-start">
+
                                         {mostrarIniciarSesion && <IniciarSesion/>}
+                                        {mostrarCambiarPwd && <CambiarContrasena volverALogin={volverALogin}/>}
+                                        {mostrarRegistrarse && <Registrarse volverALogin={volverALogin}/>}
 
                                         {!mostrarCambiarPwd && !mostrarRegistrarse &&
                                         <div className="mt-2 text-start fs-6">
@@ -66,7 +70,7 @@ export function Login() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-3"/>
+                        <div className="col"/>
                     </div>
                 </div>
             </div>

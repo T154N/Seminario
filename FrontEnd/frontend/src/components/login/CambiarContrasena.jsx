@@ -1,5 +1,6 @@
-import {useForm} from "react-hook-form";
-import './login.css';
+import React from "react";
+import { useForm } from "react-hook-form";
+import "./login.css";
 
 export function CambiarContrasena({volverALogin}) {
 
@@ -8,67 +9,33 @@ export function CambiarContrasena({volverALogin}) {
         handleSubmit,
         formState: {errors}} = useForm();
 
-    const onSubmit = async (data) => {
-        // Aquí va el código de axios
-        console.log(data);
+        const onSubmit = async (data) => {
+            //TODO: Cambiar todos los campos a uppercase
+            console.log(data);
+            volverALogin();
+        }
 
-        // Volver a la pantalla de inicio de sesión
-        volverALogin();
-    }
-
-    return (
-        <>
-            <h2 style={{textAlign: "center", fontSize: "30px"}} className="tituloForm">Cambiando contraseña</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-3 elementosForm">
-                    <label className="form-label tituloForm">Introduzca el usuario</label>
-                    <input className="form-control textoForm" id="cambiarPwdUsuario"
-                           placeholder="Nombre de usuario"
-                           {...register("nombre", {
-                               required: "Este campo es requerido.",
-                               pattern: {
-                                   value: /^[A-Za-z\s'-]+$/,
-                                   message: "Nombre invalido. El nombre solo deben ser letras mayusculas o minusculas."
-                               },
-                               minLength: {
-                                   value: 3,
-                                   message: "El nombre debe tener al menos 3 caracteres."
-                               },
-                           })}>
-                    </input>
-                    <div>
-                        {errors.nombre && <p className="errorInput">{errors.nombre.message}</p>}
-                    </div>
-                </div>
-
-                <div className="mb-3 elementosForm">
-                    <label className="form-label tituloForm">Introduzca la nueva contraseña</label>
-                    <input type="password"
-                           className="form-control textoForm"
-                           id="inputPassword"
-                           placeholder="Contraseña"
-                           {...register("password", {
-                               required: "Este campo es requerido.",
-                               minLength: {
-                                   value: 6,
-                                   message: "La contraseña debe tener al menos 6 caracteres."
-                               },
-                               maxLength: {
-                                   value: 20,
-                                   message: "La contraseña debe tener como maximo de 20 caracteres."
-                               }
-                           })}/>
-                    <div>
-                        {errors.password && <p className="errorInput">{errors.password.message}</p>}
-                    </div>
-                </div>
-
-                <div className="button-container mb-3">
-                    <div className="botonRegistrarseForm">
-                        <button className="btn btn-aceptar" type="submit">Aceptar</button>
-                    </div>
-                </div>
-            </form>
-        </>
-    )
+ return(
+    <form onSubmit={handleSubmit(onSubmit)}>
+        <h1 className="fs-3 text-center">Recuperando contraseña</h1>
+        <div className="mt-0 mb-1">
+            <label className="form-label fs-4">Introduzca el correo electronico</label>
+            <input className="form-control" id="inputCorreo" placeholder="correo@ejemplo.com"
+                {...register("correo", {
+                    required: "Este campo es requerido.",
+                    pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: "Correo invalido. Verifique el formato del correo."
+                },
+            })}/>
+            
+            <div>
+                {errors.correo && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.correo.message}</p>}
+            </div>
+        </div>
+        <div className="d-grid mt-2 mb-2">
+            <button className="btn btn-aceptar">Recuperar contraseña</button>
+        </div>
+    </form>
+ )   
 }

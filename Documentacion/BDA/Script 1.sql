@@ -2765,3 +2765,41 @@ Alter table pedido add estado_registro_id bigint default 1;
 Alter table pedido add estado_pago_id bigint ;
 Alter table pedido add constraint FK_Pedido_estado_registro FOREIGN KEY (estado_registro_id) REFERENCES estado (estado_id);
 Alter table pedido add constraint FK_Pedido_estado_pago FOREIGN KEY (estado_pago_id) REFERENCES estado (estado_id);
+
+
+CREATE TABLE roles (
+    rol_id BIGINT PRIMARY KEY IDENTITY(1,1),
+    rol_nombre BIGINT NOT NULL,
+    rol_estado_id BIGINT NOT NULL,
+	rol_observaciones NVARCHAR(MAX),
+    rol_fecha_alta DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET(),
+    rol_fecha_modificacion DATETIMEOFFSET,
+    rol_fecha_baja DATETIMEOFFSET,
+    rol_usuario_alta NVARCHAR(MAX) NOT NULL,
+    rol_usuario_modificacion NVARCHAR(MAX),
+    rol_usuario_baja NVARCHAR(MAX),
+	FOREIGN KEY (rol_estado_id) REFERENCES estado (estado_id),
+);
+
+
+CREATE TABLE usuario (
+    usuario_id BIGINT PRIMARY KEY IDENTITY(1,1),
+    usuario_cliente_id BIGINT NOT NULL,
+    usuario_cliente_email NVARCHAR(MAX) NOT NULL,
+    usuario_contraseña NVARCHAR(MAX),
+    usuario_estado_id BIGINT NOT NULL,
+	usuario_rol_id BIGINT NOT NULL,
+	usuario_observaciones NVARCHAR(MAX),
+    usuario_fecha_alta DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET(),
+    usuario_fecha_modificacion DATETIMEOFFSET,
+    usuario_fecha_baja DATETIMEOFFSET,
+    usuario_usuario_alta NVARCHAR(MAX) NOT NULL,
+    usuario_usuario_modificacion NVARCHAR(MAX),
+    usuario_usuario_baja NVARCHAR(MAX),
+    FOREIGN KEY (usuario_cliente_id) REFERENCES cliente (cliente_id),
+    FOREIGN KEY (usuario_estado_id) REFERENCES estado (estado_id),
+	FOREIGN KEY (usuario_rol_id) REFERENCES roles (rol_id)
+);
+
+ALTER TABLE usuario
+    ADD CONSTRAINT usuario_cliente_id UNIQUE (usuario_cliente_id);

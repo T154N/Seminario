@@ -2769,7 +2769,7 @@ Alter table pedido add constraint FK_Pedido_estado_pago FOREIGN KEY (estado_pago
 
 CREATE TABLE roles (
     rol_id BIGINT PRIMARY KEY IDENTITY(1,1),
-    rol_nombre BIGINT NOT NULL,
+    rol_nombre NVARCHAR(MAX) NOT NULL,
     rol_estado_id BIGINT NOT NULL,
 	rol_observaciones NVARCHAR(MAX),
     rol_fecha_alta DATETIMEOFFSET NOT NULL DEFAULT SYSDATETIMEOFFSET(),

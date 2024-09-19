@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cliente_id")
     private long id;
 
     @Column(name = "cliente_nombre")

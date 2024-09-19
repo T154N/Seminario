@@ -18,6 +18,15 @@ public class Cliente {
     @Column(name = "cliente_id")
     private long id;
 
+    @Column(name = "cliente_documento")
+    private String cliente_documento;
+
+    @Column(name = "cliente_tipo_documento")
+    private String cliente_tipo_documento;
+
+    @Column(name = "cliente_apellido")
+    private String cliente_apellido;
+
     @Column(name = "cliente_nombre")
     private String cliente_nombre;
 
@@ -55,6 +64,9 @@ public class Cliente {
         Cliente cliente = new Cliente();
         cliente.setId(this.id);
         cliente.setCliente_nombre(this.cliente_nombre);
+        cliente.setCliente_apellido(this.cliente_apellido);
+        cliente.setCliente_documento(this.cliente_documento);
+        cliente.setCliente_tipo_documento(this.cliente_tipo_documento);
         cliente.setCliente_email(this.cliente_email);
         cliente.setCliente_telefono(this.cliente_telefono);
         cliente.setCliente_estado_id(this.cliente_estado_id);

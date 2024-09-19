@@ -15,7 +15,10 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
     @GetMapping("/clientes/{id}")
-    public Cliente  getClienteById(@PathVariable Long id) {
+    public Cliente  getClienteById(@PathVariable Long id) throws Exception {
+        if (id == null || id <= 0) {
+            throw new Exception("No existe el cliente buscado");
+        }
         return clienteService.findClienteById(id);
     }
 

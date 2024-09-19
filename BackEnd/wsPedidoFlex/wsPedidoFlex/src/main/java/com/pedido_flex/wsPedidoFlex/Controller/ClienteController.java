@@ -1,6 +1,6 @@
 package com.pedido_flex.wsPedidoFlex.Controller;
 
-import com.pedido_flex.wsPedidoFlex.model.Cliente;
+import com.pedido_flex.wsPedidoFlex.Model.Cliente;
 import com.pedido_flex.wsPedidoFlex.Service.ClienteService;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,18 +12,19 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     public ClienteController(ClienteService clienteService) {
+
         this.clienteService = clienteService;
     }
+
     @GetMapping("/clientes/{id}")
-    public Cliente  getClienteById(@PathVariable Long id) throws Exception {
-        if (id == null || id <= 0) {
-            throw new Exception("No existe el cliente buscado");
-        }
+    public Cliente  getClienteById(@PathVariable Long id) {
+
         return clienteService.findClienteById(id);
     }
 
     @GetMapping("/clientes")
     public List<Cliente> findAllClientes() {
+
         return clienteService.findAllClientes();
     }
 

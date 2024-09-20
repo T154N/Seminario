@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "producto_id")
+    private long producto_id;
 
     @Column(name = "producto_nombre")
     private String producto_nombre;
@@ -51,7 +52,7 @@ public class Producto {
 
     public Producto get() {
         Producto producto = new Producto();
-        producto.setId(this.id);
+        producto.setProducto_id(this.producto_id);
         producto.setProducto_nombre(this.producto_nombre);
         producto.setProducto_descripcion(this.producto_descripcion);
         producto.setProducto_estado_id(this.producto_estado_id);

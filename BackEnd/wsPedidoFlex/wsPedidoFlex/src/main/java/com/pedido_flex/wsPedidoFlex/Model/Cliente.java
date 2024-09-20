@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -14,7 +16,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cliente_id")
-    private long id;
+    private long cliente_id;
 
     @Column(name = "cliente_documento")
     private String cliente_documento;
@@ -38,13 +40,13 @@ public class Cliente {
     private Integer cliente_estado_id;
 
     @Column(name = "cliente_fecha_alta")
-    private String cliente_fecha_alta;
+    private LocalDateTime cliente_fecha_alta;
 
     @Column(name = "cliente_fecha_modificacion")
-    private String cliente_fecha_modificacion;
+    private LocalDateTime cliente_fecha_modificacion;
 
     @Column(name = "cliente_fecha_baja")
-    private String cliente_fecha_baja;
+    private LocalDateTime cliente_fecha_baja;
 
     @Column(name = "cliente_usuario_alta")
     private String cliente_usuario_alta;
@@ -58,10 +60,9 @@ public class Cliente {
     @Column(name = "cliente_observaciones")
     private String cliente_observaciones;
 
-
     public Cliente get() {
         Cliente cliente = new Cliente();
-        cliente.setId(this.id);
+        cliente.setCliente_id(this.cliente_id);
         cliente.setCliente_nombre(this.cliente_nombre);
         cliente.setCliente_apellido(this.cliente_apellido);
         cliente.setCliente_documento(this.cliente_documento);

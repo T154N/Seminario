@@ -1,7 +1,9 @@
 package com.pedido_flex.wsPedidoFlex.Controller;
 
+import com.pedido_flex.wsPedidoFlex.Exception.Response;
 import com.pedido_flex.wsPedidoFlex.Model.Cliente;
 import com.pedido_flex.wsPedidoFlex.Service.ClienteService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,23 +26,23 @@ public class ClienteController {
 
     @GetMapping("/clientes")
     public List<Cliente> findAllClientes() {
-
         return clienteService.findAllClientes();
     }
 
 
-//    @PostMapping("/clientes")
-//    public Cliente postCliente(Cliente cliente) {
-//        return clienteRepository.save(cliente);
-//    }
+    @PutMapping("/clientes/baj/{id}/{u}")
+    public Response bajaCliente(@PathVariable("id") Long id,@PathVariable("u") String usuarioEditor) {
+        try {
+            clienteService.setBajaClienteById(id,usuarioEditor);
+            return Response.general(HttpStatus.OK, null);
+        } catch (NullPointerException | IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
 
 
-   /* @GetMapping("/clientes/{id}")
-    public ResponseEntity<Cliente> getClienteById(Long clienteId) {
-        Cliente cliente = clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Cliente con el id: " + clienteId + "no se encontro"));
-        return ResponseEntity.ok(cliente);
-    }*/
 
 //    @PutMapping("/clientes/{id}")
 //    public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, Cliente clienteDetalles) {

@@ -5,6 +5,8 @@ import com.pedido_flex.wsPedidoFlex.Repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 import com.pedido_flex.wsPedidoFlex.Model.Cliente;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,7 +19,9 @@ public class ClienteService {
     public Cliente createCliente (Cliente cliente) {
         return clienteRepository.save(cliente);
     }
-    public Cliente updateCliente (Cliente cliente) {
+    public Cliente updateCliente (Cliente cliente, String usuario) {
+        cliente.setCliente_fecha_modificacion(LocalDateTime.now());
+        cliente.setCliente_usuario_modificacion(usuario);
         return clienteRepository.save(cliente);
     }
     public Cliente findClienteById (Long id) {
@@ -26,8 +30,13 @@ public class ClienteService {
     public List<Cliente> findAllClientes() {
         return clienteRepository.findAll();
     }
-    public Cliente setBajaClienteById (Long id) {
+    public void setBajaClienteById (Long id, String usuario) {
         Cliente cliente = findClienteById(id);
-return cliente;
+        cliente.setCliente_estado_id(2);
+        cliente.setCliente_usuario_modificacion(usuario);
+        cliente.setCliente_usuario_baja(usuario);
+        cliente.setCliente_fecha_modificacion(LocalDateTime.now());
+        cliente.setCliente_fecha_baja(LocalDateTime.now());
+        clienteRepository.save(cliente);
     }
 }

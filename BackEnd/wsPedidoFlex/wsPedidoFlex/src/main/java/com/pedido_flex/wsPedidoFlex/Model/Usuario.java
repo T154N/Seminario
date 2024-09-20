@@ -25,8 +25,8 @@ public class Usuario {
     @Column(name ="usuario_cliente_email")
     private String usuario_cliente_email;
 
-//    @Column(name ="usuario_contraseña")
-//    private usuario_contrasena;
+    @Column(name ="usuario_contraseña")
+    private String usuario_contrasena;
 
     @Column(name ="usuario_estado_id")
     private Integer usuario_estado_id;
@@ -54,4 +54,25 @@ public class Usuario {
 
     @Column(name ="usuario_usuario_baja")
     private String usuario_usuario_baja;
+
+
+    public Usuario get(){
+        Usuario usuario = new Usuario();
+        usuario.setUsuario_id(this.usuario_id);
+        usuario.setUsuario_cliente_id(this.usuario_cliente_id);
+        usuario.setUsuario_cliente_email(this.usuario_cliente_email);
+        usuario.setUsuario_contrasena(this.usuario_contrasena);
+        usuario.setUsuario_estado_id(this.usuario_estado_id);
+        usuario.setUsuario_rol_id(this.usuario_rol_id);
+        usuario.setUsuario_observaciones(this.usuario_observaciones);
+        usuario.setUsuario_fecha_alta(this.usuario_fecha_alta);
+        usuario.setUsuario_fecha_modificacion(this.usuario_fecha_modificacion);
+        usuario.setUsuario_fecha_baja(this.usuario_fecha_baja);
+        usuario.setUsuario_usuario_alta(this.usuario_usuario_alta);
+        usuario.setUsuario_usuario_modificacion(this.usuario_usuario_modificacion);
+        usuario.setUsuario_usuario_baja(this.usuario_usuario_baja);
+        return usuario;
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.pedido_flex.wsPedidoFlex.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,10 +33,8 @@ public class Usuario {
     @Column(name ="usuario_estado_id")
     private Integer usuario_estado_id;
 
-    // Relación muchos a uno con la tabla Roles
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_rol_id", referencedColumnName = "rol_id", nullable = false)
-    private Roles rol;
+    private Long usuario_rol_id;
 
     @Column(name ="usuario_observaciones")
     private String usuario_observaciones;
@@ -64,7 +64,7 @@ public class Usuario {
         usuario.setUsuario_cliente_email(this.usuario_cliente_email);
         usuario.setUsuario_contrasena(this.usuario_contrasena);
         usuario.setUsuario_estado_id(this.usuario_estado_id);
-        usuario.setRol(this.rol);
+        usuario.setUsuario_rol_id(this.usuario_rol_id);
         usuario.setUsuario_observaciones(this.usuario_observaciones);
         usuario.setUsuario_fecha_alta(this.usuario_fecha_alta);
         usuario.setUsuario_fecha_modificacion(this.usuario_fecha_modificacion);
@@ -107,12 +107,12 @@ public class Usuario {
         this.usuario_contrasena = usuario_contrasena;
     }
 
-    public Roles getRol() {
-        return rol;
+    public Long getUsuario_rol_id() {
+        return usuario_rol_id;
     }
 
-    public void setRol(Roles rol) {
-        this.rol = rol;
+    public void setUsuario_rol_id(Long usuario_rol_id) {
+        this.usuario_rol_id = usuario_rol_id;
     }
 
     public Integer getUsuario_estado_id() {

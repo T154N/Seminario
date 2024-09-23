@@ -73,5 +73,17 @@ public class UsuarioService {
         return dto;
     }
 
+    public UsuarioDTO getUsuarioByEmail(String email) {
+        UsuarioDTO dto= new UsuarioDTO();
+        dto = usuarioRepository.findByEmail(email);
+        if (dto == null) {
+            dto = new UsuarioDTO();
+            dto.setEmail("Usuario no encontrado: "+email);
+            dto.setId(null);
+            dto.setRol(null);
+        }
+        return dto;
+
+    }
 }
 

@@ -64,4 +64,15 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/usuarios/email")
+    public Response getUsuarioRolByEmail(@RequestParam String email) {
+        try {
+            return Response.general(HttpStatus.OK, usuarioService.getUsuarioByEmail(email));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage() );
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "Email no encontrado.");
+        }
+    }
+
 }

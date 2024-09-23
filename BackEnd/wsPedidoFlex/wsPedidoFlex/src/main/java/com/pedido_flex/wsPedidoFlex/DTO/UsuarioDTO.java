@@ -6,6 +6,11 @@ public class UsuarioDTO {
     private String rol;
 
     // Constructor, getters y setters
+    public UsuarioDTO(Long usuarioId, String usuarioClienteEmail, String rolNombre) {
+        this.id = usuarioId;
+        this.email = usuarioClienteEmail;
+        this.rol = rolNombre;
+    }
 
     public UsuarioDTO() {}
 

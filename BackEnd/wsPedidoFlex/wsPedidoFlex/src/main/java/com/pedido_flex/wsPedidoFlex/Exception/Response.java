@@ -6,7 +6,6 @@ public class Response {
     private int status;
     private String message;
     private Object body;
-
     public Response() {}
 
     public Response(int code, String message) {

@@ -18,8 +18,6 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-
-
     private Usuario updateUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }

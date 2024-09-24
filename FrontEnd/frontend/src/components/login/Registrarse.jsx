@@ -1,3 +1,5 @@
+// NOTA: En los divs entre cada input y label debe ir un margin top de 1 y un margin bottom de 0.
+// Entre el ultimo div y el boton debe ir un margin bottom de 3
 import React from "react";
 import {useForm} from "react-hook-form";
 
@@ -42,7 +44,7 @@ export function Registrarse({volverALogin}) {
                 </div>
             </div>
 
-            <div className="mt-2 mb-3">
+            <div className="mt-1 mb-0">
                 <label className="form-label fs-4">Introduzca la contraseña</label>
                 <input type="password" id="inputPasswordReg" className="form-control" placeholder="Contraseña"{...register("password", {
                            required: "Este campo es requerido.",
@@ -60,8 +62,8 @@ export function Registrarse({volverALogin}) {
                 </div>
             </div>
 
-            <div className="mt-2 mb-3">
-                <label className="form-label fs-4">Confirmar Contraseña</label>
+            <div className="mt-1 mb-0">
+                <label className="form-label fs-4">Confirmar contraseña</label>
                 <input type="password"
                        className="form-control"
                        id="inputPasswordRegConf"
@@ -82,7 +84,7 @@ export function Registrarse({volverALogin}) {
                 </div>
             </div>
 
-            <div className="mt-2 mb-3">
+            <div className="mt-1 mb-3">
                 <label className="form-label fs-4">Dirección de entrega</label>
                 <input className="form-control"
                        id="inputDireccion"

@@ -31,7 +31,7 @@ export function Login() {
     return(
 
         <>
-            <div className="fondo">
+            <div className="">
                 <div className="container">
                     <div className="row">
                         <div className="col"/>
@@ -48,13 +48,13 @@ export function Login() {
                                         {!mostrarCambiarPwd && !mostrarRegistrarse &&
                                         <div className="mt-2 text-start fs-6">
                                             <div className="d-flex justify-content-start gap-2">
-                                                <span>No tienes cuenta?</span>
+                                                <span>¿No tenés cuenta?</span>
                                                 <p style={{color: "darkblue", cursor: "pointer", textDecoration: "underline"}}
-                                                onClick={mostrarReg}>Registrarse</p>
+                                                onClick={mostrarReg}>Registrate</p>
                                             </div>
 
                                             <div className="d-flex justify-content-start gap-2">
-                                                <span className="d-flex justify-content-start">Olvidaste tu contraseña?</span>
+                                                <span className="d-flex justify-content-start">¿Olvidaste la contraseña?</span>
                                                 <p style={{color: "darkblue", cursor: "pointer", textDecoration: "underline"}} 
                                                 onClick={mostrarCambiarContrasena}>Recuperar contraseña</p>
                                             </div>

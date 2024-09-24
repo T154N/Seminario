@@ -18,7 +18,7 @@ export function CambiarContrasena({volverALogin}) {
  return(
     <form onSubmit={handleSubmit(onSubmit)}>
         <h1 className="fs-3 text-center">Recuperando contraseña</h1>
-        <div className="mt-0 mb-1">
+        <div className="mt-0 mb-3">
             <label className="form-label fs-4">Introduzca el correo electronico</label>
             <input className="form-control" id="inputCorreo" placeholder="correo@ejemplo.com"
                 {...register("correo", {
@@ -33,7 +33,7 @@ export function CambiarContrasena({volverALogin}) {
                 {errors.correo && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.correo.message}</p>}
             </div>
         </div>
-        <div className="d-grid mt-2 mb-2">
+        <div className="d-grid mt-2 mb-3">
             <button className="btn btn-aceptar">Recuperar contraseña</button>
         </div>
     </form>

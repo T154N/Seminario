@@ -12,7 +12,7 @@ import { Principal } from "./components/principal/Principal";
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className="App fondo">
         <Header />
 
         <main>

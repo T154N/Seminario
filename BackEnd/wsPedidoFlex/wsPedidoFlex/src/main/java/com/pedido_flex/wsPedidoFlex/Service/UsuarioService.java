@@ -85,5 +85,16 @@ public class UsuarioService {
         return dto;
 
     }
+
+/*    public UsuarioDTO updateUsuario(UsuarioDTO usuarioDTO) {
+        Usuario usuario = usuarioRepository.getReferenceById(usuarioDTO.getId()).get();
+        usuario.setUsuario_cliente_email(usuarioDTO.getEmail());
+        usuario.setUsuario_rol_id(rolesService.findRolesByName(usuarioDTO.getRol()).getRolId());
+        usuarioRepository.save(usuario);
+        return usuarioDTO;
+    }
+
+    // verificar que al modificar un usuario, solo sea el mismo usuario, el administrador o el superadmin
+    */
 }
 

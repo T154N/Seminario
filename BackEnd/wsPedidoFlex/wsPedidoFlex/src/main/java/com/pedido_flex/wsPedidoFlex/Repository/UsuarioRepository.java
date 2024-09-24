@@ -14,11 +14,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
     @Query(
-            value = "SELECT  new com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO(u.usuario_id, u.usuario_cliente_email, r.rolNombre) " +
+            value = "SELECT  NEW com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO(u.usuario_id, u.usuario_cliente_email, r.rolNombre) " +
                     "FROM Usuario u " +
                     "JOIN Roles r ON u.usuario_rol_id = r.rol_id " +
                     "WHERE u.usuario_cliente_email = :email "+

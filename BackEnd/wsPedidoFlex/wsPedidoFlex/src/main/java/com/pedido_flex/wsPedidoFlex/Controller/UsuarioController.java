@@ -75,4 +75,26 @@ public class UsuarioController {
         }
     }
 
+    @PostMapping("/usuarios")
+    public Response createUsuario(@RequestBody Usuario usuario) {
+        try {
+            return Response.general(HttpStatus.OK, usuarioService.createUsuario(usuario));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
+    /* @PutMapping("/usuarios/{id}/{u}")
+    public Response updateUsuario(@PathVariable("id") Long id, @PathVariable("u") String usuarioEditor, @RequestBody Usuario usuario) {
+        try {
+            return Response.general(HttpStatus.OK, usuarioService.updateUsuario(usuario, usuarioEditor));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    } **/
+
 }

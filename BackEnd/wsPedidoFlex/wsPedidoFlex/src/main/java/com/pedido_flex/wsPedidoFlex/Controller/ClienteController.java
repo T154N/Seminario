@@ -39,8 +39,31 @@ public class ClienteController {
         }
     }
 
+    @PostMapping("/clientes")
+    public Response createCliente(@RequestBody Cliente cliente) {
+        try {
+            return Response.general(HttpStatus.OK, clienteService.createCliente(cliente));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
+
+    @PutMapping("/clientes/{id}/{u}")
+    public Response updateCliente(@PathVariable("id") Long id, @PathVariable("u") String usuarioEditor, @RequestBody Cliente cliente) {
+        try {
+            return Response.general(HttpStatus.OK, clienteService.updateCliente(cliente, usuarioEditor));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
     @PutMapping("/clientes/baj/{id}/{u}")
-    public Response bajaCliente(@PathVariable("id") Long id,@PathVariable("u") String usuarioEditor) {
+    public Response setBajaClienteById(@PathVariable("id") Long id,@PathVariable("u") String usuarioEditor) {
         try {
             clienteService.setBajaClienteById(id,usuarioEditor);
             return Response.general(HttpStatus.OK, null);
@@ -50,4 +73,5 @@ public class ClienteController {
             return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
+
 }

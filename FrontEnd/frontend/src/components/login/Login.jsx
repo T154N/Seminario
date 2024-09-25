@@ -31,7 +31,7 @@ export function Login() {
     return(
 
         <>
-            <div className="">
+            <div className=" ">
                 <div className="container">
                     <div className="row">
                         <div className="col"/>

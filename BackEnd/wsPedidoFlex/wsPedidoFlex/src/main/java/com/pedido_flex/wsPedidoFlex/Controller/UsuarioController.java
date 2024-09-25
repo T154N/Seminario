@@ -95,7 +95,7 @@ public class UsuarioController {
     public void registrarUsuario(Usuario usuario) {
         // Encriptar la contraseña antes de guardarla
         usuario.setUsuarioContrasena(passwordEncoder.encode(usuario.getUsuarioContrasena()));*/
-
+/*
     @PostMapping("/usuarios")
     public Response createUsuario(@RequestBody Usuario usuario) {
         try {

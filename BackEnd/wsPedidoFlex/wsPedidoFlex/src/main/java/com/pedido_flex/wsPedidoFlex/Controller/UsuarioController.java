@@ -20,6 +20,9 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
+    /**
+    * getUsuarioById:: obtener un usuario completo por su Id
+    **/
     @GetMapping("/usuarios/{id}")
     public Response getUsuarioById(@PathVariable Long id) {
         try {
@@ -31,6 +34,9 @@ public class UsuarioController {
         }
     }
 
+    /**
+     * findAllUsuarios():: obtener lista de todos los usuario con informacion completa
+     **/
     @GetMapping("/usuarios")
     public Response findAllUsuarios() {
         try {
@@ -42,6 +48,9 @@ public class UsuarioController {
         }
     }
 
+    /**
+     * getAllUsuarios():: obtener lista de todos los usuario con información {id, email, rol}
+     **/
     @GetMapping("/usuarios/rol")
     public Response getAllUsuarios() {
         try {
@@ -53,6 +62,9 @@ public class UsuarioController {
         }
     }
 
+    /**
+    * getUsuarioRolById():: obtener un usuario {id, email, rol} por Id
+    **/
     @GetMapping("/usuarios/rol/{id}")
     public Response getUsuarioRolById(@PathVariable Long id) {
         try {
@@ -64,6 +76,9 @@ public class UsuarioController {
         }
     }
 
+    /**
+    * getUsuarioRolByEmail():: obtener un usuario con su id y rol segun su email
+    **/
     @GetMapping("/usuarios/email")
     public Response getUsuarioRolByEmail(@RequestParam String email) {
         try {
@@ -74,6 +89,12 @@ public class UsuarioController {
             return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "Email no encontrado.");
         }
     }
+    /* @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    public void registrarUsuario(Usuario usuario) {
+        // Encriptar la contraseña antes de guardarla
+        usuario.setUsuarioContrasena(passwordEncoder.encode(usuario.getUsuarioContrasena()));*/
 
     @PostMapping("/usuarios")
     public Response createUsuario(@RequestBody Usuario usuario) {

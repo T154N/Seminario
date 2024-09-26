@@ -16,7 +16,7 @@ public class AuthService {
 
     public Authentication authenticateUser(String useremail, String password) {
         try {
-            log.info();
+            //log.info();
             //UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(useremail, password);
             //return authenticationManager.authenticate(authRequest); // Usa la instancia inyectada
             return authenticationManager.authenticate(

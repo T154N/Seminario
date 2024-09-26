@@ -9,6 +9,9 @@ public class Constants {
     public static final String LOGIN_EXITO_MESSAGE = "Login Exitoso";
     public static final String LOGIN_ERROR_MESSAGE = "Ocurrió un error al autenticarse: ";
     public static final String LOGIN_ERROR_GENERAL = "Error general: ";
+    public static final String INVALID_DATA_MESSAGE = "Datos invalidos: ";
+    public static final String INVALID_DATA_GENERAL = "Error general de datos: ";
+    public static final String SOMETHING_WENT_WRONG = "Algo salio mal: ";
 //    public static final String TOKEN_SPLIT = "\\.";
 //
 //    public static final String BEARER_TOKEN = "Bearer ";

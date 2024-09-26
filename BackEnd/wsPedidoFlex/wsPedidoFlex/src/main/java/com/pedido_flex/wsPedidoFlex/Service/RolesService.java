@@ -33,6 +33,8 @@ public class RolesService {
 
     public Roles setBajaRolesById(Long id) {
         Roles roles = findRolesById(id);
+        roles.setRolEstadoId(2);
+        rolesRepository.save(roles);
         return roles;
     }
 

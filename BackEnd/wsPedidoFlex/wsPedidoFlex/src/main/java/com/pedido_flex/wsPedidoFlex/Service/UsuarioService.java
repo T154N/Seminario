@@ -1,21 +1,30 @@
 package com.pedido_flex.wsPedidoFlex.Service;
 
 import com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO;
+import com.pedido_flex.wsPedidoFlex.Exception.Response;
 import com.pedido_flex.wsPedidoFlex.Model.Usuario;
 import com.pedido_flex.wsPedidoFlex.Repository.UsuarioRepository;
+import com.pedido_flex.wsPedidoFlex.Utils.JWT.JwtFilter;
+import com.pedido_flex.wsPedidoFlex.Utils.JWT.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 public class UsuarioService {
     @Autowired
     private final UsuarioRepository usuarioRepository;
     @Autowired
     private RolesService rolesService;
+
 
     private UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
@@ -74,16 +83,7 @@ public class UsuarioService {
     }
 
     public UsuarioDTO getUsuarioByEmail(String email) {
-        UsuarioDTO dto= new UsuarioDTO();
-        dto = usuarioRepository.findByEmail(email);
-        if (dto == null) {
-            dto = new UsuarioDTO();
-            dto.setEmail("Usuario no encontrado: "+email);
-            dto.setId(null);
-            dto.setRol(null);
-        }
-        return dto;
-
+        return usuarioRepository.findByEmail(email);
     }
 
 /*    public UsuarioDTO updateUsuario(UsuarioDTO usuarioDTO) {
@@ -96,5 +96,6 @@ public class UsuarioService {
 
     // verificar que al modificar un usuario, solo sea el mismo usuario, el administrador o el superadmin
     */
+
 }
 

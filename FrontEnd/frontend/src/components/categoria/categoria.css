@@ -1,0 +1,38 @@
+/* categoria.css */
+.btn-orange {
+    margin-top: 10px;
+    background-color: #FCBB3A;
+    color: white;
+    border: 2px solid black;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+}
+
+.btn-orange:hover {
+    background-color: darkorange;
+    color: white;
+    border: 2px solid black;
+}
+
+.search-bar input {
+    margin-top: 10px; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+}
+
+.search-bar input:focus {
+    outline: none;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.3); 
+}
+
+.tarjeta {
+    padding: 25px;
+    margin-bottom: 20px; 
+    margin-top: 20px;    
+    box-shadow: 0 4px 8px #00000019; 
+    border-radius: 5px;
+    width: 100%;
+}
+
+.card {
+    width: 100%;
+    margin-bottom: 20px; 
+}

@@ -37,7 +37,7 @@ export function Login() {
                         <div className="col"/>
                         <div className="col-sm-12 col-md-10 col-lg-8 col-xl-6 col-xxl-6">
                             <div className="">
-                                <h1 className="fs-1">Iniciar sesion</h1>
+                                <h1 className="fs-1">Iniciar sesión</h1>
                                 <div className="card shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
                                     <div className="card-body text-start">
 

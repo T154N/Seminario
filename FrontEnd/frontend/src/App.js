@@ -8,6 +8,10 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import { Header } from "./components/Header";
 import { Login } from "./components/login/Login";
 import { Principal } from "./components/principal/Principal";
+import { Catalogo } from './components/catalogo/Catalogo';
+import { Info } from './components/info/Info';
+import { Footer } from './components/Footer';
+import { Producto } from './components/producto/Producto'
 
 function App() {
   return (
@@ -18,11 +22,15 @@ function App() {
         <main>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/info" element={<Info />} />
+            <Route path='/producto' element={<Producto />}/>
+            
             <Route path="/principal" element={<Principal />} />
-
             <Route path='/*' element={<Principal />}></Route>
           </Routes>
         </main>
+        <Footer />
 
       </div>
     </BrowserRouter>

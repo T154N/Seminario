@@ -19,13 +19,13 @@ export function CambiarContrasena({volverALogin}) {
     <form onSubmit={handleSubmit(onSubmit)}>
         <h1 className="fs-3 text-center">Recuperando contraseña</h1>
         <div className="mt-0 mb-3">
-            <label className="form-label fs-4">Introduzca el correo electronico</label>
+            <label className="form-label fs-4">Introduzca el correo electrónico</label>
             <input className="form-control" id="inputCorreo" placeholder="correo@ejemplo.com"
                 {...register("correo", {
                     required: "Este campo es requerido.",
                     pattern: {
                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "Correo invalido. Verifique el formato del correo."
+                    message: "Correo inválido. Verifique el formato del correo."
                 },
             })}/>
             

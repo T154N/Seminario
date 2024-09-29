@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import './header.css';
 import PFLogo from '../images/Header Icons/PedidoFlex.png';
-import { Carrito } from './carrito/Carrito';  // Importa el componente Carrito
+import { Carrito } from './carrito/Carrito';
 import { useState } from "react";
 
 export function Header() {
@@ -58,15 +58,15 @@ export function Header() {
                             ></button>
                         </div>
 
-                        {/* Contenedor principal del cuerpo del carrito */}
+                       
                         <div className="offcanvas-body carrito-body">
                             <Carrito
                             actualizarTotal={actualizarTotal} />
                         </div>
 
-                        {/* Footer fijo */}
+                    
                         <div className="carrito-footer">
-                            <h5>Total: ${total}</h5> {/* Puedes reemplazar este total dinámicamente */}
+                            <h5>Total: ${total}</h5> 
                             <button className="btn btn-primary">Iniciar Compra</button>
                         </div>
                     </div>

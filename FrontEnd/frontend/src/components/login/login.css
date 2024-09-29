@@ -1,0 +1,31 @@
+.fondo {
+    background: #fff3ef;
+    background: linear-gradient(180deg, #ffefe3, #ffac70);
+    min-height: 100vh;
+}
+
+.btn-aceptar {
+    color: #000000;
+    background-color: #C8FFDF;
+    border-color: #C8FFD4;
+}
+
+.btn-aceptar:hover,
+.btn-aceptar:active,
+.btn-aceptar.active,
+.open .dropdown-toggle.btn-aceptar {
+    color: #000000;
+    background-color: #83C8A0;
+    border-color: #C8FFD4;
+}
+
+.btn-aceptar:active,
+.btn-aceptar.active,
+.open .dropdown-toggle.btn-aceptar {
+    background-color: #83C8A0;
+}
+.btn-aceptar .badge {
+
+    color: #C8FFDF;
+    background-color: #000000;
+}

@@ -1,3 +1,38 @@
+/*offcanvas*/
+.custom-offcanvas-width {
+    width: 40% !important; 
+}
+
+.offcanvas-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.offcanvas-header {
+    background-color: #FCBB3A;
+    height: 10%;
+}
+
+.offcanvas-body {
+    overflow-y: auto; /* Habilitar el scroll dentro del cuerpo del carrito */
+    padding-bottom: 80px; /* Deja espacio para el footer fijo */
+}
+
+.carrito-footer {
+    position: absolute;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    background-color: #FCBB3A;
+    padding: 10px 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+/*carrito*/
 .producto-card {
     background-color: rgb(235, 226, 226);
     margin-bottom: 20px;
@@ -8,9 +43,6 @@
 .card-title {
     font-size: 1.25rem; 
 }
-
-
-
 
 .cantidad-control span {
     font-size: 1.2rem;
@@ -32,4 +64,9 @@
     transition: background-color 0.3s; 
 }
 
-
+.mensaje-carrito-vacio {
+    text-align: center;
+    color: #d80000;
+    font-size: 1.3rem;
+    margin-top: 20px;
+}

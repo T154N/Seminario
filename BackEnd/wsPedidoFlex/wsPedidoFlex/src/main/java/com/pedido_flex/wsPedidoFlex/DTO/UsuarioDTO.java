@@ -11,12 +11,15 @@ public class UsuarioDTO {
     private Long id;
     private String email;
     private String rol;
+    private String contrasenia;
+
 
     // Constructor, getters y setters
-    public UsuarioDTO(Long usuarioId, String usuarioClienteEmail, String rolNombre) {
+    public UsuarioDTO(Long usuarioId, String usuarioClienteEmail, String rolNombre,String contrasenia) {
         this.id = usuarioId;
         this.email = usuarioClienteEmail;
         this.rol = rolNombre;
+        this.contrasenia = contrasenia;
     }
 
     public UsuarioDTO() {}
@@ -43,6 +46,13 @@ public class UsuarioDTO {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

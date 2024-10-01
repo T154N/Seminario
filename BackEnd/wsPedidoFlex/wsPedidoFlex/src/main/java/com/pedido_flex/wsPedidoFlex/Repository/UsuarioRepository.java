@@ -19,7 +19,7 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
     @Query(
-            value = "SELECT  NEW com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO(u.usuario_id, u.usuario_cliente_email, r.rolNombre) " +
+            value = "SELECT  NEW com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO(u.usuario_id, u.usuario_cliente_email, r.rolNombre, u.usuario_contrasena) " +
                     "FROM Usuario u " +
                     "JOIN Roles r ON u.usuario_rol_id = r.rol_id " +
                     "WHERE u.usuario_cliente_email = :email "+

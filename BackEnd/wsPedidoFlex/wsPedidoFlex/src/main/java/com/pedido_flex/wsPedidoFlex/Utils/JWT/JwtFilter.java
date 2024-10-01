@@ -29,11 +29,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().matches("/api/v1/login|/api/v1/forgotPassword|/api/v1/resetPassword|/api/v1/singup")) {
-            filterChain.doFilter(request,response);
-        }
-        else
-        {
+//        if (request.getServletPath().matches("/api/v1/login|/api/v1/forgotPassword|/api/v1/resetPassword|/api/v1/singup")) {
+//            filterChain.doFilter(request,response);
+//        }
+//        else
+//        {
             String authoriztionHeader = request.getHeader("Authorization");
             String jwtToken = null;
             if (authoriztionHeader != null && authoriztionHeader.startsWith("Bearer ")) {
@@ -51,7 +51,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request,response);
-        }
+       // }
     }
 
     public Boolean isAdmin(){

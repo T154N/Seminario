@@ -22,6 +22,11 @@ public class UsuarioDTO {
         this.contrasenia = contrasenia;
     }
 
+    public UsuarioDTO(String usuarioClienteEmail, String contrasenia) {
+        this.email = usuarioClienteEmail;
+        this.contrasenia = contrasenia;
+    }
+
     public UsuarioDTO() {}
 
     public Long getId() {

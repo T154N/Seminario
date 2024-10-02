@@ -1,12 +1,14 @@
 package com.pedido_flex.wsPedidoFlex.Controller;
 
+import com.pedido_flex.wsPedidoFlex.Auth.JwtAuthorizationFilter;
+import com.pedido_flex.wsPedidoFlex.Auth.JwtUtil;
 import com.pedido_flex.wsPedidoFlex.DTO.LoginDTO;
 import com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO;
 import com.pedido_flex.wsPedidoFlex.Exception.Response;
+import com.pedido_flex.wsPedidoFlex.Model.Usuario;
 import com.pedido_flex.wsPedidoFlex.Repository.UsuarioRepository;
 import com.pedido_flex.wsPedidoFlex.Service.UsuarioService;
-import com.pedido_flex.wsPedidoFlex.Utils.JWT.JwtFilter;
-import com.pedido_flex.wsPedidoFlex.Utils.JWT.JwtUtil;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,7 @@ public class LoginController {
     private UsuarioService usuarioService;
 
     @Autowired
-    private JwtFilter jwtFilter;
+    private JwtAuthorizationFilter jwtFilter;
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
@@ -37,27 +39,29 @@ public class LoginController {
 
     @PostMapping("/login")
     public Response login(@RequestBody LoginDTO loginDto) {
-        try {
-                Authentication authentication = authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(
-                                loginDto.getEmail(),
-                                loginDto.getPassword()
-                        )
-                );
-                UsuarioDTO usuarioDTO = usuarioRepository.findByEmail(loginDto.getEmail());
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                String jwt = jwtUtil.generateToken(usuarioDTO);
-            return Response.general(HttpStatus.OK,"{\"token:" +
-                            jwt+ "\"}");
-            //return ResponseEntity.ok(new JwtResponse(jwt));
-        } catch (BadCredentialsException e) {
-            return Response.custom(HttpStatus.UNAUTHORIZED, "Credenciales incorrectas");
-        } catch (NullPointerException | IllegalArgumentException e) {
-            return Response.custom(HttpStatus.BAD_REQUEST, "Error"+e.getMessage() );
-        }catch (Exception e) {
-            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "Ocurrio un error comuniquese con el administrador.");
-        }
+        return Response.general(HttpStatus.OK,"Logueado");
+//        try {
+//                Authentication authentication = authenticationManager.authenticate(
+//                        new UsernamePasswordAuthenticationToken(
+//                                loginDto.getEmail(),
+//                                loginDto.getPassword()
+//                        )
+//                );
+//                UsuarioDTO usuarioDTO = usuarioRepository.findByEmail(loginDto.getEmail());
+//            Usuario usuario = usuarioRepository.getReferenceById(usuarioDTO.getId());
+//
+//                SecurityContextHolder.getContext().setAuthentication(authentication);
+//                String jwt = jwtUtil.createToken(usuario);
+//            return Response.general(HttpStatus.OK,"{\"token:" +
+//                            jwt+ "\"}");
+//            //return ResponseEntity.ok(new JwtResponse(jwt));
+//        } catch (BadCredentialsException e) {
+//            return Response.custom(HttpStatus.UNAUTHORIZED, "Credenciales incorrectas");
+//        } catch (NullPointerException | IllegalArgumentException e) {
+//            return Response.custom(HttpStatus.BAD_REQUEST, "Error"+e.getMessage() );
+//        }catch (Exception e) {
+//            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "Ocurrio un error comuniquese con el administrador.");
+//        }
     }
 //    public Response login(@RequestBody LoginDTO loginDto) {
 //        try {

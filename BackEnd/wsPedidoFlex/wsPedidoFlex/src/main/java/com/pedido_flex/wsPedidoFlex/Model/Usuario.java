@@ -57,6 +57,11 @@ public class Usuario {
     @Column(name ="usuario_usuario_baja")
     private String usuario_usuario_baja;
 
+    public Usuario(String usuario_cliente_email,String usuario_contrasena){
+        this.usuario_cliente_email = usuario_cliente_email;
+        this.usuario_contrasena = usuario_contrasena;
+    }
+
     public Usuario get(){
         Usuario usuario = new Usuario();
         usuario.setUsuario_id(this.usuario_id);

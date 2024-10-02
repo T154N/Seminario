@@ -25,4 +25,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
                     "WHERE u.usuario_cliente_email = :email "+
                     "AND u.usuario_estado_id=1")
     UsuarioDTO findByEmail(@Param("email") String email);
+
+
 }

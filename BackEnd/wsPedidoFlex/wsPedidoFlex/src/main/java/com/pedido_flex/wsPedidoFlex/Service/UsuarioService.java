@@ -5,9 +5,9 @@ import com.pedido_flex.wsPedidoFlex.Model.Usuario;
 import com.pedido_flex.wsPedidoFlex.Repository.UsuarioRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -92,16 +92,16 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-/*    public UsuarioDTO updateUsuario(UsuarioDTO usuarioDTO) {
-        Usuario usuario = usuarioRepository.getReferenceById(usuarioDTO.getId()).get();
-        usuario.setUsuario_cliente_email(usuarioDTO.getEmail());
-        usuario.setUsuario_rol_id(rolesService.findRolesByName(usuarioDTO.getRol()).getRolId());
-        usuarioRepository.save(usuario);
-        return usuarioDTO;
-    }
-
-    // verificar que al modificar un usuario, solo sea el mismo usuario, el administrador o el superadmin
-    */
-
+    @Transactional
+    public void updatePassUsuario(Long id, String contrasenia) {
+        log.info("Actualizo");
+        try{
+            log.info(passwordEncoder.encode(contrasenia).toString());
+            usuarioRepository.updateUsuarioContrasenia(id, passwordEncoder.encode(contrasenia));
+        }catch (Exception e) {
+            log.error("error al actualizar el usuario: "+id+" - "+ e.getMessage());
+            throw e;
+        }
+    }//Actualizar donde falta
 }
 

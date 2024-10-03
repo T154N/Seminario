@@ -1,5 +1,6 @@
 package com.pedido_flex.wsPedidoFlex.Controller;
 
+import com.pedido_flex.wsPedidoFlex.DTO.LoginDTO;
 import com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO;
 import com.pedido_flex.wsPedidoFlex.Exception.Response;
 import com.pedido_flex.wsPedidoFlex.Model.Usuario;
@@ -84,10 +85,11 @@ public class UsuarioController {
     **/
     @GetMapping("/usuarios/email")
     public Response getUsuarioRolByEmail(@RequestParam String email) {
+        log.info("getUsuarioRolByEmail"+ email);
         try {
-            log.info("Busca mail: "+email);
             return Response.general(HttpStatus.OK, usuarioService.getUsuarioByEmail(email));
         } catch (NullPointerException | IllegalArgumentException e) {
+            log.error("Error al buscar email"+ e.getMessage());
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage() );
         } catch (Exception e) {
             return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "Email no encontrado.");
@@ -115,6 +117,27 @@ public class UsuarioController {
         } catch (Exception e) {
             return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
+    }
+
+    @PutMapping("/usuarios/updatePass")
+    public Response updateUsuario(@RequestBody LoginDTO usuarioDTO) {
+       log.info("Actaulizar clave");
+       try { ///cambiar usuario
+            if (!Objects.isNull(usuarioDTO)) {
+                UsuarioDTO dto = usuarioService.getUsuarioByEmail(usuarioDTO.getEmail());
+                dto.setContrasenia(usuarioDTO.getPassword());
+                log.info("Usuario existente " + dto.getEmail());
+                usuarioService.updatePassUsuario(dto.getId(),dto.getContrasenia());
+                return Response.general(HttpStatus.OK, "Pass actualizado");
+            }else {
+                log.info("Error al actualizar usuario id" + usuarioDTO.getEmail());
+                return Response.custom(HttpStatus.BAD_REQUEST, "Ocurrio un error al actualizar la contraseña.");
+            }
+       } catch (NullPointerException | IllegalArgumentException e) {
+           return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+       } catch (Exception e) {
+           return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+       }
     }
     /* @Autowired
     private BCryptPasswordEncoder passwordEncoder;

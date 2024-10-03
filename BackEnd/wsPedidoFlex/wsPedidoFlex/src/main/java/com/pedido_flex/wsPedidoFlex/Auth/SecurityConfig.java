@@ -1,6 +1,7 @@
 package com.pedido_flex.wsPedidoFlex.Auth;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,18 +9,21 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.pedido_flex.wsPedidoFlex.Service.CustomUserDetailsService;
-
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
+
 
     public SecurityConfig(CustomUserDetailsService customUserDetailsService,
                           JwtAuthorizationFilter jwtAuthorizationFilter) {
@@ -46,14 +50,18 @@ public class SecurityConfig {
     @SuppressWarnings({ "removal" })
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        try {
+            http.csrf().disable()
+                    .authorizeHttpRequests()
+                    .requestMatchers("/rest/auth/**").permitAll()
+                    .anyRequest().authenticated()
+                    .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and().addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/rest/auth/**").permitAll()
-                .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
+            return http.build();
+        }catch (Exception e) {
+            log.error("Error security filter "+e.getMessage());
+            throw e;
+        }
     }
 }

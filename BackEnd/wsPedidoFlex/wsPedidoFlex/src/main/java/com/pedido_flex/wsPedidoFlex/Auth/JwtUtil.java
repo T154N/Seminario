@@ -15,27 +15,33 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class JwtUtil {
+
     @Value("${jwt.secret}")
     private String secret_key;
 
     @Value("${jwt.accessTokenValidity}")
     private long accessTokenValidity;
-    //private final String secret_key = "mysecretkey";
-    //private long accessTokenValidity = 60*60*1000;
 
-    private final JwtParser jwtParser;
+    private JwtParser jwtParser;
 
     private final String TOKEN_HEADER = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
 
-    public JwtUtil(){
-        this.jwtParser = (JwtParser) Jwts.parser().setSigningKey(secret_key);
+    // Constructor vacío, ya que no necesitas inicializar jwtParser aquí
+    public JwtUtil() {}
+
+    // Método para inicializar jwtParser después de que las propiedades han sido inyectadas
+    @PostConstruct
+    public void init() {
+        this.jwtParser = Jwts.parser().setSigningKey(secret_key);
     }
 
     public String createToken(Usuario user) {
-        Claims claims = (Claims) Jwts.claims().setSubject(user.getUsuario_cliente_email());
+        Claims claims = Jwts.claims().setSubject(user.getUsuario_cliente_email());
         Date tokenCreateTime = new Date();
         Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValidity));
         return Jwts.builder()
@@ -66,7 +72,6 @@ public class JwtUtil {
     }
 
     public String resolveToken(HttpServletRequest request) {
-
         String bearerToken = request.getHeader(TOKEN_HEADER);
         if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
             return bearerToken.substring(TOKEN_PREFIX.length());
@@ -86,7 +91,7 @@ public class JwtUtil {
         return claims.getSubject();
     }
 
-    @SuppressWarnings({ "unused", "unchecked" })
+    @SuppressWarnings({"unused", "unchecked"})
     private List<String> getRoles(Claims claims) {
         return (List<String>) claims.get("roles");
     }

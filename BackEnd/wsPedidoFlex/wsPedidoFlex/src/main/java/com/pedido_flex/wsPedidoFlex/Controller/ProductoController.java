@@ -1,6 +1,8 @@
 package com.pedido_flex.wsPedidoFlex.Controller;
 
+import com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO;
 import com.pedido_flex.wsPedidoFlex.Exception.Response;
+import com.pedido_flex.wsPedidoFlex.Model.Categoria;
 import com.pedido_flex.wsPedidoFlex.Model.Producto;
 import com.pedido_flex.wsPedidoFlex.Service.ProductoService;
 import org.springframework.http.HttpStatus;
@@ -38,4 +40,19 @@ public class ProductoController {
             return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
+
+   /* @GetMapping("/productos/categoria/{id}")
+    public List<Producto> ProductoPorCategoria(@PathVariable Long id){
+        Categoria categoria = new Categoria();
+        categoria.setCategoriaId(id);
+        return productoService.productoPorCategoria(categoria);
+    }*/
+    @GetMapping("/productos/categoria/{categoriaId}")
+    public List<ProductoDTO> obtenerProductosPorCategoria(@PathVariable Long categoriaId) {
+        Categoria categoria = new Categoria();
+        categoria.setCategoriaId(categoriaId); 
+
+        return productoService.productoPorCategoriaDto(categoria);
+    }
+
 }

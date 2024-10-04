@@ -15,6 +15,7 @@ export function ProductoTarjeta({ nombre, descripcion, imagen }) {
     };
 
     const agregarAlCarrito = () => {
+        alert(`${cantidad} unidades de ${nombre} agregado al carrito`);
     };
 
     return (

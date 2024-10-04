@@ -12,18 +12,17 @@ export function Producto() {
     const { categoria } = useParams(); // Capturar la categoría desde la URL
 
     useEffect(() => {
-        console.log("Categoría URL:", categoria);
         const fetchData = async () => {
             setLoading(true); // Iniciar el estado de carga
 
             if (!categoria) {
                 // Si no hay categoría en la URL, se muestran todos los productos
-                console.log("No se recibió ninguna categoría, mostrando todos los productos...");
+                // console.log("No se recibió ninguna categoría, mostrando todos los productos...");
                 const productos = await productoService.getAllProductos(); // Obtener todos los productos
                 setProductos(productos);
             } else {
                 // Si hay categoría en la URL, se filtran los productos por esa categoría
-                console.log(`Filtrando productos de la categoría: ${categoria}`);
+                // console.log(`Filtrando productos de la categoría: ${categoria}`);
                 const productos = await productoService.getProductosCategoria(categoria);
                 setProductos(productos);
             }
@@ -103,7 +102,6 @@ export function Producto() {
                             <button className="btn btn-success mt-3" onClick={() => agregarAlCarrito(producto.id)}>
                                 Agregar al carrito
                             </button>
-                            {console.log(producto.categoria)}
                         </div>
                     </div>
                 </div>

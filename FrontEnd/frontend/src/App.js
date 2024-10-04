@@ -30,6 +30,7 @@ function App() {
             
             <Route path="/principal" element={<Principal />} />
             <Route path='/' element={<Principal />}></Route>
+            <Route path='*' element={<Principal />}></Route>
           </Routes>
         </main>
         <Footer />

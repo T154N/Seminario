@@ -8,7 +8,6 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import { Header } from "./components/Header";
 import { Login } from "./components/login/Login";
 import { Principal } from "./components/principal/Principal";
-import { Categoria } from './components/categoria/Categoria';
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/principal" element={<Principal />} />
-            <Route path="/categoria" element={<Categoria />} />
 
             <Route path='/*' element={<Principal />}></Route>
           </Routes>

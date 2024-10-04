@@ -1,6 +1,9 @@
 .App {
   text-align: center;
   font-family: 'Bree Serif', serif;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* Crea una cuadrícula con 3 filas */
 }
 
 main {

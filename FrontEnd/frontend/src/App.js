@@ -16,7 +16,7 @@ import { Producto } from './components/producto/Producto'
 function App() {
   return (
     <BrowserRouter>
-      <div className="App fondo ">
+      <div className="App fondo">
         <Header />
 
         <main>
@@ -24,10 +24,12 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/info" element={<Info />} />
-            <Route path='/producto' element={<Producto />}/>
+            <Route path='/productos/:categoria' element={<Producto />}/>
+
+            <Route path='/productos' element={<Producto />}/>
             
             <Route path="/principal" element={<Principal />} />
-            <Route path='/*' element={<Principal />}></Route>
+            <Route path='/' element={<Principal />}></Route>
           </Routes>
         </main>
         <Footer />

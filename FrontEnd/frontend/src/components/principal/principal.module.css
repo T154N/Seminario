@@ -46,3 +46,8 @@
     color: #C8FFDF;
     background-color: #000000;
 }
+
+.pedido-img {
+    width: 100px;  /* Ancho fijo */
+    height: 100px;  /* Mantiene la proporción de la imagen */
+}

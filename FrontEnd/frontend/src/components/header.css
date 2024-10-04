@@ -6,10 +6,12 @@
     justify-content: space-between;
     z-index: 1;
     padding: 0 0px;
+    
 }
 
-.pflogo {
-    width: 15rem;
+.cmlogo {
+    margin-left: 15px;
+    width: 5rem;
     height: auto;
 }
 
@@ -17,3 +19,31 @@
     width: 60px;
     height: auto;
 }
+
+.usuario {
+    width: 30px;
+    height: auto;
+    margin-right: 10px; /* Espacio entre el ícono del usuario y el carrito */
+}
+
+.carrito {
+    width: 35px;
+    height: auto;
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Alinea los íconos a la derecha */
+    margin-right: 25px;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+}
+
+

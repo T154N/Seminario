@@ -1,0 +1,78 @@
+.producto-card {
+    margin-top: 10px;
+    height: 150px;
+    width: calc(100% - 30px); /* Ancho total menos 30px (15px de cada lado) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: left;
+    background-color: #ffff;
+    overflow: hidden;
+}
+
+.producto-card img {
+    max-width: 160px; /* Define el ancho máximo de la imagen */
+    max-height: 160px; 
+    width: 100%; 
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.col-md-1 {
+    width: 160px;
+}
+
+.col-md-2{
+    width: 750px;
+}
+
+.col-md-6{
+    margin-left: 50px;
+    margin-right: 90px;
+}
+
+.card-title {
+    font-size: 1.25rem;        /* Tamaño del título */
+    font-weight: bold;         /* Peso de fuente en negrita */
+    margin-bottom: 10px;       /* Espaciado inferior */
+}
+
+.card-text {
+    font-size: 1rem;           /* Tamaño del texto */
+    color: #6c757d;            /* Color de texto secundario */
+    margin-bottom: 8px;        /* Espaciado inferior */
+}
+
+
+.cantidad-control {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Asegura que los botones estén distribuidos */
+}
+
+.cantidad-control button {
+    font-size: 18px;
+    width: 35px;
+    height: 35px;
+}
+
+.cantidad-control span {
+    font-size: 18px;   
+    text-align: center;
+}
+
+.btn-success {
+    background-color: #FCBB3A;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 2px solid black;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+}
+
+.btn-success:hover {
+    background-color: darkorange;
+    color: white;
+    border: 2px solid black;
+}

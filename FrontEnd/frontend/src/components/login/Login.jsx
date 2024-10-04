@@ -47,14 +47,14 @@ export function Login() {
 
                                         {!mostrarCambiarPwd && !mostrarRegistrarse &&
                                         <div className="mt-2 text-start fs-6">
-                                            <div className="d-flex justify-content-start gap-2">
+                                            <div className="justify-content-start gap-2">
                                                 <span>¿No tenés cuenta?</span>
                                                 <p style={{color: "darkblue", cursor: "pointer", textDecoration: "underline"}}
                                                 onClick={mostrarReg}>Registrate</p>
                                             </div>
 
-                                            <div className="d-flex justify-content-start gap-2">
-                                                <span className="d-flex justify-content-start">¿Olvidaste la contraseña?</span>
+                                            <div className="justify-content-start gap-2">
+                                                <span className="justify-content-start">¿Olvidaste la contraseña?</span>
                                                 <p style={{color: "darkblue", cursor: "pointer", textDecoration: "underline"}} 
                                                 onClick={mostrarCambiarContrasena}>Recuperar contraseña</p>
                                             </div>

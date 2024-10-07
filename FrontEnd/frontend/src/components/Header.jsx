@@ -4,6 +4,7 @@ import usuario from '../images/Header Icons/usuario.png'
 import carrito from '../images/Header Icons/carrito.png'
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // React Router
+import { Carrito } from './carrito/Carrito';
 
 export function Header() {
     const navigate = useNavigate(); // Hook para navegar
@@ -28,6 +29,9 @@ export function Header() {
                     <button className="icon-button" onClick={goToCart}>
                         <img src={carrito} alt="Carrito" className="carrito" />
                     </button>
+                    <div className="header bg-dark text-white d-flex justify-content-between align-items-center p-3">
+                        <Carrito />
+                    </div>
                 </div>
                 
             </header>

@@ -18,7 +18,8 @@ const generarProductos = (cantidad, array) => {
             descripcion: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
             imagen: chupetin,
             marca: `Marca ${i + 1}`, // Cambiar a i + 1 para mantener la correlación con el id
-            categoria: categoriasMock[Math.floor(Math.random() * categoriasMock.length)]
+            categoria: categoriasMock[Math.floor(Math.random() * categoriasMock.length)],
+            precioUnitario: 100 
         });
     }
 }

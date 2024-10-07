@@ -25,3 +25,11 @@
     color: white;
     /* border: 2px solid white; */
 }
+
+/* @media (min-width: 1200px) {
+    .imagen-centrada {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+} */

@@ -8,7 +8,7 @@ export function Footer() {
                 <p>&copy; {new Date().getFullYear()} CM Distribuidora. Todos los derechos reservados.</p>
                 <ul className="footer-links">
                     <li><a href="/catalogo">Catálogo</a></li>
-                    <li><a href="/login">Inicias Sesión</a></li>
+                    <li><a href="/login">Iniciar sesión</a></li>
                     <li><a href="/info">Información</a></li>
                 </ul>
             </div>

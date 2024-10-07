@@ -66,82 +66,58 @@ export function Producto() {
     }
 
     return (
-        <div className="container">
-            <div className="row mb-4">
-                <div className="col">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Buscar producto..."
-                            value={busqueda}
-                            onChange={handleBusquedaChange}
-                        />
-                </div>
+        <div>
+            <div>
+                <h2 className="fs-1 mb-3">{categoria ? categoria : 'Todos los productos'}</h2>
             </div>
-
-            {/* Mapeo del array de productos para generar las cards */}
-            {productosFiltrados.map(producto => (
-            <div className="row">
-                <div className="col">
-                    <div key={producto.id} className="card mb-3">
-                        <div className="card-body">
-                            <div className="row">
-
-                                <div className="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3 col-xxl-3  d-flex justify-content-center"
-                                style={{objectFit: 'cover'}}>
-                                    <img src={producto.imagen} className="img-fluid rounded float-end" alt={producto.nombre} />
-                                </div>
-
-                                <div className="col-12 col-sm-4 col-md-6 col-lg-7 col-xl-7 col-xxl-7">
-                                    <h5 className="card-title text-start">{producto.nombre}</h5>
-                                    <p className="card-text text-start">{producto.descripcion}</p>
-                                    <p className="card-text text-start">{producto.marca}</p>
-                                </div>
-
-                                <div className="col-12 col-sm-4 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
-                                    <div>
-                                    <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>
-                                        <span className="mx-2">{cantidad[producto.id] || 0}</span>
-                                    <button className="btn btn-outline-secondary" onClick={() => incrementarCantidad(producto.id)}>+</button>
-                                    </div>
-                                    <div>
-                                        <button className="btn btn-success mt-3" onClick={() => agregarAlCarrito(producto.id)}>
-                                            Agregar al carrito
-                                        </button>
+            <div className="container">
+                <div className="row mb-4">
+                    <div className="col">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Buscar producto..."
+                                value={busqueda}
+                                onChange={handleBusquedaChange}
+                            />
+                    </div>
+                </div>
+                {/* Mapeo del array de productos para generar las cards */}
+                {productosFiltrados.map(producto => (
+                    <div className="row" key={producto.id}>
+                        <div className="col">
+                            <div className="card mb-3">
+                                <div className="card-body">
+                                    <div className="row">
+                                        <div className="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3 col-xxl-3"
+                                            style={{objectFit: 'cover'}}>
+                                            <img src={producto.imagen} className="img-fluid rounded d-block mx-auto" alt={producto.nombre} />
+                                        </div>
+                                        <div className="col-12 col-sm-4 col-md-6 col-lg-7 col-xl-7 col-xxl-7">
+                                            <h5 className="card-title text-start">{producto.nombre}</h5>
+                                            <p className="card-text text-start">{producto.descripcion}</p>
+                                            <p className="card-text text-start">{producto.marca}</p>
+                                        </div>
+                                        <div className="col-12 col-sm-4 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                                            <div>
+                                                <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>
+                                                <span className="mx-2">{cantidad[producto.id] || 0}</span>
+                                                <button className="btn btn-outline-secondary" onClick={() => incrementarCantidad(producto.id)}>+</button>
+                                            </div>
+                                            <div>
+                                                <button className="btn btn-success mt-3" onClick={() => agregarAlCarrito(producto.id)}>
+                                                    Agregar al carrito
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                ))}
+
             </div>
-            ))}
-            {/* {productosFiltrados.map(producto => (
-                <div key={producto.id} className="card producto-card mb-3">
-                    <div className="row g-0">
-                        <div className="col-md-1 col-12">
-                            <img src={producto.imagen} className="img-fluid rounded-start" alt={producto.nombre} />
-                        </div>
-
-                        <div className="col-md-6 col-12">
-                            <h5 className="card-title">{producto.nombre}</h5>
-                            <p className="card-text">{producto.descripcion}</p>
-                            <p className="card-text">{producto.marca}</p>
-                        </div>
-
-                        <div className="col-md-3 col-12 d-flex align-items-center justify-content-end flex-column">
-                            <div className="cantidad-control">
-                                <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>
-                                <span className="mx-2">{cantidad[producto.id] || 0}</span>
-                                <button className="btn btn-outline-secondary" onClick={() => incrementarCantidad(producto.id)}>+</button>
-                            </div>
-                            <button className="btn btn-success mt-3" onClick={() => agregarAlCarrito(producto.id)}>
-                                Agregar al carrito
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            ))}               */}
         </div>
     );
 }

@@ -15,13 +15,22 @@ import java.util.List;
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
 
-
     //no utilice query pero en teoria esto busca por categoria
-    List<Producto> findByCategoria(Categoria categoria);
+   /* List<Producto> findByCategoria(Categoria categoria);*/
 
-    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio) " +
-            "FROM Producto p WHERE p.categoria = :categoria")
+    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio, p.categoria.categoriaNombre) " +
+            "FROM Producto p WHERE p.categoria = :categoria AND p.producto_estado_id = 1")
     List<ProductoDTO> findProductosPorCategoriaDto(@Param("categoria") Categoria categoria);
+
+    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio, p.categoria.categoriaNombre) " +
+            "FROM Producto p WHERE p.producto_estado_id = 1")
+    List<ProductoDTO> findAllProductosDto();
+
+    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio, p.categoria.categoriaNombre) " +
+            "FROM Producto p WHERE p.producto_id = :id AND p.producto_estado_id = 1")
+    ProductoDTO findProductoById(@Param("id") Long id);
+
+
 
 
 }

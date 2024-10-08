@@ -22,7 +22,7 @@ public class ProductoController {
     @GetMapping("/productos/{id}")
     public Response getProductoById(@PathVariable Long id) {
         try {
-            return Response.general(HttpStatus.OK, productoService.findProductoById(id));
+            return Response.general(HttpStatus.OK, productoService.productoPorId(id));
         } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
@@ -31,26 +31,20 @@ public class ProductoController {
     }
 
     @GetMapping("/productos")
-    public Response findAllProductos() {
+    public Response findAllProductosDto() {
         try {
-            return Response.general(HttpStatus.OK, productoService.findAllProductos());
+            return Response.general(HttpStatus.OK, productoService.findAllProductosDto());
         } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
-            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "No encontramos los productos");
         }
     }
 
-   /* @GetMapping("/productos/categoria/{id}")
-    public List<Producto> ProductoPorCategoria(@PathVariable Long id){
-        Categoria categoria = new Categoria();
-        categoria.setCategoriaId(id);
-        return productoService.productoPorCategoria(categoria);
-    }*/
     @GetMapping("/productos/categoria/{categoriaId}")
     public List<ProductoDTO> obtenerProductosPorCategoria(@PathVariable Long categoriaId) {
         Categoria categoria = new Categoria();
-        categoria.setCategoriaId(categoriaId); 
+        categoria.setCategoriaId(categoriaId);
 
         return productoService.productoPorCategoriaDto(categoria);
     }

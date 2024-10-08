@@ -6,13 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "categorias")
+@Table(name = "categoria")
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +48,7 @@ public class Categoria {
     private Set<Producto> productos;
 
 
+
     public Categoria get() {
         Categoria categoria = new Categoria();
         categoria.setCategoriaId(this.categoriaId);
@@ -59,6 +61,16 @@ public class Categoria {
         categoria.setCategoriaUsuarioModificacion(this.categoriaUsuarioModificacion);
         categoria.setCategoriaUsuarioBaja(this.categoriaUsuarioBaja);
         return categoria;
+    }
+
+
+    public Categoria(String categoriaNombre, Set<Producto> productos) {
+        this.categoriaNombre = categoriaNombre;
+        this.productos = productos;
+    }
+
+    public Categoria(String categoriaNombre) {
+        this.categoriaNombre = categoriaNombre;
     }
 
     public LocalDateTime getCategoriaFechaAlta() {

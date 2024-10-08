@@ -6,13 +6,26 @@ public class ProductoDTO {
     private String descripcion;
     private Double precio;
     private String observaciones;
+    private String categoriaNombre;
 
-    public ProductoDTO(String descripcion, Long id, String nombre, String observaciones, Double precio) {
+    public ProductoDTO(String descripcion, Long id, String nombre, String observaciones, Double precio, String categoriaNombre) {
         this.descripcion = descripcion;
         this.id = id;
         this.nombre = nombre;
         this.observaciones = observaciones;
         this.precio = precio;
+        this.categoriaNombre = categoriaNombre;
+    }
+
+    public ProductoDTO() {
+    }
+
+    public String getCategoriaNombre() {
+        return categoriaNombre;
+    }
+
+    public void setCategoriaNombre(String categoriaNombre) {
+        this.categoriaNombre = categoriaNombre;
     }
 
     public String getDescripcion() {

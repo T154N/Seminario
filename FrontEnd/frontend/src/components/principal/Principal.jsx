@@ -34,19 +34,6 @@ export function Principal() {
                                     <button className='btn btn-aceptar text-black ms-1' onClick={handleCatalogClick}>Ver catálogo</button>
                                 </div>
                             </div>
-=======
-                    <div className="col">
-                        <div className="d-flex justify-content-center">
-                        </div>
-                        <div className="text-center fs-1 fw-bold">
-                            <h1>Bienvenido a</h1>
-                            <img src={pedidoflex} alt='pedido' className='pedido-img'></img>
-                        </div>
-                        <div>Para comenzar seleccioná una opción</div>
-                        <div className={styles.buttonGroup}>
-                            <button className={`${styles.btnAceptar} btn text-black mt-3`} onClick={handleLoginClick}>Iniciar sesión</button>
-                            <button className={`${styles.btnAceptar} btn text-black mt-3`} onClick={handleCatalogClick}>Ver catálogo</button>
->>>>>>> Stashed changes
                         </div>
                     </div>
                     <div className="col"></div>

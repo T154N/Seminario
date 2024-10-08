@@ -18,7 +18,6 @@ export function Principal() {
         <div>
             <div className="container">
                 <div className="row">
-<<<<<<< Updated upstream
                     <div className="col"></div>
                     <div className="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 col-xxl-8">
                         <div className="justify-content-center">

@@ -14,9 +14,9 @@ export function Header() {
         navigate('/login'); // Ruta del perfil de usuario
     };
 
-    const goToCart = () => {
-        navigate('/catalogo'); // Ruta del carrito de compras
-    };
+    // const goToCart = () => {
+    //     navigate('/carrito'); // Ruta del carrito de compras
+    // };
 
     return(
         <div>
@@ -26,10 +26,10 @@ export function Header() {
                     <button className="icon-button" onClick={goToUserProfile}>
                         <img src={usuario} alt="Usuario" className="usuario" />
                     </button>
-                    <button className="icon-button" onClick={goToCart}>
+                    {/* <button className="icon-button">
                         <img src={carrito} alt="Carrito" className="carrito" />
-                    </button>
-                    <div className="header bg-dark text-white d-flex justify-content-between align-items-center p-3">
+                    </button> */}
+                    <div className="header bg-dark d-flex justify-content-between align-items-center p-3">
                         <Carrito />
                     </div>
                 </div>

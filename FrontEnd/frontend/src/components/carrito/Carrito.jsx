@@ -4,20 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './carrito.css';
 import { useCarrito } from './CarritoContext';
+import carrito from '../../images/Header Icons/carrito.png';
 
 export function Carrito() {
     const { productos, incrementarCantidad, disminuirCantidad, eliminarProducto, generarPedido, vaciarCarrito, total } = useCarrito();
 
     return (
         <div>
-            <button
-                className="btn btn-primary"
-                type="button"
+            <button className='icon-button'
                 data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasScrolling"
-                aria-controls="offcanvasScrolling"
-            >
-                Carrito
+                aria-controls="offcanvasScrolling">
+                <img src={carrito} alt="Carrito" className="carrito" />
             </button>
 
             <div className="offcanvas offcanvas-end custom-offcanvas-width"
@@ -25,8 +23,7 @@ export function Carrito() {
                 data-bs-backdrop="false"
                 tabIndex="-1"
                 id="offcanvasScrolling"
-                aria-labelledby="offcanvasScrollingLabel"
-            >
+                aria-labelledby="offcanvasScrollingLabel">
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title" id="offcanvasScrollingLabel">
                         Carrito de Compras

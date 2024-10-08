@@ -13,6 +13,14 @@
     height: 10%;
 }
 
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+}
+
 .offcanvas-body {
     overflow-y: auto; /* Habilitar el scroll dentro del cuerpo del carrito */
     padding-bottom: 80px; /* Deja espacio para el footer fijo */

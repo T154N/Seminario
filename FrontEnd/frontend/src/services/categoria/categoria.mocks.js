@@ -8,14 +8,14 @@ import comestible from '../../images/Header Icons/categoriasImagenesMock/PedidoF
 import filos from '../../images/Header Icons/categoriasImagenesMock/PedidoFlex.png'
 
 const categoriasMock = [
-    { id: 1, nombre: "analgesico", imagen: analgesico},
-    { id: 2, nombre: "perfumeria", imagen: perfumeria},
-    { id: 3, nombre: "limpieza", imagen: limpieza},
-    { id: 4, nombre: "copetin", imagen: copetin},
-    { id: 5, nombre: "golosinas", imagen: golosinas},
-    { id: 6, nombre: "comestible", imagen: comestible},
-    { id: 7, nombre: "galletas", imagen: galleta},
-    { id: 8, nombre: "filos", imagen: filos}
+    { id: 1, nombre: "Analgésico", imagen: analgesico},
+    { id: 2, nombre: "Perfumería", imagen: perfumeria},
+    { id: 3, nombre: "Limpieza", imagen: limpieza},
+    { id: 4, nombre: "Copetín", imagen: copetin},
+    { id: 5, nombre: "Golosinas", imagen: golosinas},
+    { id: 6, nombre: "Comestible", imagen: comestible},
+    { id: 7, nombre: "Galletas", imagen: galleta},
+    { id: 8, nombre: "Filos", imagen: filos}
 ];
 
 export default categoriasMock;

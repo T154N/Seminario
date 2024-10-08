@@ -127,7 +127,7 @@ export function Producto() {
                                                 <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>
                                                 <input
                                                     type="number"
-                                                    value={cantidad[producto.id] || 0}
+                                                    value={cantidad[producto.id] || 1}
                                                     onChange={(e) => manejarCambioCantidad(producto.id, e)}
                                                     className="mx-2 input-cantidad"
                                                     style={{ width: "50px" }}

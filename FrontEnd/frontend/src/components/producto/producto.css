@@ -1,11 +1,31 @@
 .card-title {
-    font-size: 1.25rem;       
+    font-size: 1.5rem;       
     font-weight: bold;       
     margin-bottom: 10px;     
 }
 
+/* Ocultar flechas solo para campos de entrada de tipo number con la clase .input-cantidad */
+
+/* Para navegadores Webkit (Chrome, Safari) */
+.input-cantidad::-webkit-inner-spin-button,
+.input-cantidad::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Oculta el botón de giro */
+    margin: 0; /* Elimina el margen */
+}
+
+/* Para Firefox */
+.input-cantidad {
+    -moz-appearance: textfield; /* Cambia la apariencia a campo de texto */
+}
+
+.input-cantidad {
+    text-align: center; /* Centrar el texto */
+    width: 50px; /* Ajustar el ancho como desees */
+}
+
+
 .card-text {
-    font-size: 1rem;         
+    font-size: 1.1rem;         
     color: #6c757d;            
     margin-bottom: 8px;       
 }

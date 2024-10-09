@@ -1,31 +1,75 @@
 package com.pedido_flex.wsPedidoFlex.Service;
 
 import com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO;
-import com.pedido_flex.wsPedidoFlex.Exception.ResourceNotFoundException;
+import com.pedido_flex.wsPedidoFlex.Model.Domicilio;
 import com.pedido_flex.wsPedidoFlex.Model.Usuario;
 import com.pedido_flex.wsPedidoFlex.Repository.ClienteRepository;
+import com.pedido_flex.wsPedidoFlex.Repository.DomicilioRepository;
 import com.pedido_flex.wsPedidoFlex.Repository.UsuarioRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.pedido_flex.wsPedidoFlex.Model.Cliente;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Slf4j
 @Service
 public class ClienteService {
     private final ClienteRepository clienteRepository;
     private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
+    private final DomicilioRepository domicilioRepository;
 
-    public ClienteService(ClienteRepository clienteRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
+    public ClienteService(ClienteRepository clienteRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository, DomicilioRepository domicilioRepository) {
         this.clienteRepository = clienteRepository;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
+        this.domicilioRepository = domicilioRepository;
     }
-    public Cliente createCliente (Cliente cliente) {
-        return clienteRepository.save(cliente);
+    @Transactional
+    public void createCliente (Cliente cliente, Usuario usuario) {
+        try {
+            log.info("Create cliente");
+            Cliente newCliente = clienteRepository.save(cliente);
+//            usuario.setCliente(newCliente);
+            usuarioRepository.save(usuario);
+        }catch (Exception e){
+            log.error(cliente.toString()+" "+usuario.toString()+" "+e.getMessage());
+            throw e;
+        }
     }
+
+//    @Transactional
+//    public void crearClienteConUsuarioYDomicilios(Cliente cliente, Usuario usuario, List<Domicilio> domicilios) {
+//        log.info("Create cliente completo");
+//        // Configura las relaciones
+//        cliente.setUsuario(usuario);
+//        // Establece el cliente en cada domicilio
+//        for (Domicilio domicilio : domicilios) {
+//            domicilio.setCliente(cliente);
+//        }
+//        cliente.setDomicilios(domicilios);
+//        clienteRepository.save(cliente);
+//
+//        usuario.setCliente(cliente);
+//        usuarioRepository.save(usuario);
+//        domicilioRepository.save(domicilios.get(0));
+//
+//
+//
+//
+//    }
+//    @Transactional
+//    public void insertarClienteConDomicilios(Cliente cliente, List<Domicilio> domicilios) {
+//        // Asignar el cliente a cada domicilio
+//        domicilios.forEach(domicilio -> domicilio.setCliente(cliente));
+//        // Asignar los domicilios al cliente
+//        cliente.setDomicilios(domicilios);
+//        // Guardar el cliente (lo cual también guardará los domicilios por la cascada)
+//        clienteRepository.save(cliente);
+//    }
+
     public Cliente updateCliente (Cliente cliente, String usuario) {
         cliente.setCliente_fecha_modificacion(LocalDateTime.now());
         cliente.setCliente_usuario_modificacion(usuario);

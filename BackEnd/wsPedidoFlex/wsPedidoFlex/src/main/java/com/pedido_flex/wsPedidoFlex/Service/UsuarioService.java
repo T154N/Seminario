@@ -1,6 +1,7 @@
 package com.pedido_flex.wsPedidoFlex.Service;
 
 import com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO;
+import com.pedido_flex.wsPedidoFlex.Model.Cliente;
 import com.pedido_flex.wsPedidoFlex.Model.Usuario;
 import com.pedido_flex.wsPedidoFlex.Repository.UsuarioRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -94,7 +95,7 @@ public class UsuarioService {
 
     @Transactional
     public void updatePassUsuario(Long id, String contrasenia) {
-        log.info("Actualizo");
+        log.debug("Actualizo Pass "+id.toString());
         try{
             log.info(passwordEncoder.encode(contrasenia).toString());
             usuarioRepository.updateUsuarioContrasenia(id, passwordEncoder.encode(contrasenia));
@@ -102,6 +103,15 @@ public class UsuarioService {
             log.error("error al actualizar el usuario: "+id+" - "+ e.getMessage());
             throw e;
         }
-    }//Actualizar donde falta
+    }
+
+    @Transactional
+    public void insertarUsuarioConCliente(Usuario usuario, Cliente cliente) {
+        // Asignamos el cliente al usuario
+        //usuario.setCliente(cliente);
+        // Guardamos el usuario (lo cual también guardará el cliente por la cascada)
+        usuarioRepository.save(usuario);
+    }
+
 }
 

@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form";
 
 import loginService from "../../services/login/login.service";
 
-export function IniciarSesion() {
+export function IniciarSesion({falloIniciarSesion, navegarHaciaCatalogoLogin}) {
 
     const {
         register,
@@ -11,16 +11,15 @@ export function IniciarSesion() {
         formState: {errors}} = useForm();
     
     const onSubmit = async (data) => {
-        console.log("iniciando sesion")
         iniciarSesion(data.correo, data.password);
     }
 
     const iniciarSesion = async (email, password) => {
         const login = await loginService.iniciarSesion(email, password);
         if (login === 200) {
-            console.log("Iniciaste sesión correctamente");
-        } else {
-            console.log("Error al iniciar sesión: ", login);
+            navegarHaciaCatalogoLogin();
+        } else if (login === 1) {
+            falloIniciarSesion();
         }
     }
 

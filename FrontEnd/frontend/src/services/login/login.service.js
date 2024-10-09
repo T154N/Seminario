@@ -4,22 +4,44 @@ axios.defaults.withCredentials = true;
 
 const LOGIN_API_URL = process.env.REACT_APP_SEMINARIO_BACKEND_URL;
 
+// Error 1: Correo o contraseña incorrectos
+// Error 2: El token guardado ya no es válido
+// Respuesta 200: Inicio de sesión correcto
+// Respuesta 400: Error en el servidor
+
 const iniciarSesion = async (email, password) => {
     try {
-        console.log(LOGIN_API_URL)
         const response = await axios.post(`${LOGIN_API_URL}/rest/auth/login`, {email, password});
-        console.log(response)
-        if (response.status === 200 && response.data.body.token) {
-            localStorage.setItem('token', response.data.body.token);
-        } 
-        return 200;
+        // Manejo de errores
+        // El servidor respondio correctamente
+        if (response.status === 200) {
+            // El servidor respondio con un token
+            if (response.data.status === 200 && response.data.body.token) {
+                localStorage.setItem('token', response.data.body.token);
+                return 200;
+            // El servidor respondio con un error
+            } else if (response.data.status === 400) {
+                return 1;
+            }
+        }
     } catch (err) {
-        return err
+        console.log(err);
+        return 400;
     }
+}
+
+const estaIniciadaSesion = () => {
+    return localStorage.getItem('token') !== null;
+}
+
+const cerrarSesion = () => {
+    localStorage.removeItem('token');
 }
 
 const loginService = {
     iniciarSesion,
+    estaIniciadaSesion,
+    cerrarSesion
 }
 
 export default loginService;

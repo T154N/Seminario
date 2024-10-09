@@ -1,7 +1,9 @@
 import React from "react";
 import {useForm} from "react-hook-form";
 
-export function IniciarSesion() {
+import loginService from "../../services/login/login.service";
+
+export function IniciarSesion({falloIniciarSesion, navegarHaciaCatalogoLogin}) {
 
     const {
         register,
@@ -9,7 +11,16 @@ export function IniciarSesion() {
         formState: {errors}} = useForm();
     
     const onSubmit = async (data) => {
-        console.log(data);
+        iniciarSesion(data.correo, data.password);
+    }
+
+    const iniciarSesion = async (email, password) => {
+        const login = await loginService.iniciarSesion(email, password);
+        if (login === 200) {
+            navegarHaciaCatalogoLogin();
+        } else if (login === 1) {
+            falloIniciarSesion();
+        }
     }
 
     return(
@@ -33,7 +44,7 @@ export function IniciarSesion() {
                 <input type="password" id="inputPassword" className="form-control" placeholder="Contraseña"{...register("password", {
                            required: "Este campo es requerido.",
                            minLength: {
-                               value: 6,
+                               value: 3, //TODO: Cambiar a 6 dígitos mínimo
                                message: "La contraseña debe tener al menos 6 caracteres."
                            },
                            maxLength: {

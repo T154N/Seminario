@@ -2,18 +2,6 @@ import React from "react";
 import './categoria.css';
 import { ProductoTarjeta } from "./ProductoTarjeta";
 
-
-
-const productos = [
-    { nombre: "Producto 1", descripcion: "Descripción del producto 1", imagen: "ruta-imagen-1.jpg" },
-    { nombre: "Producto 2", descripcion: "Descripción del producto 2", imagen: "ruta-imagen-2.jpg" },
-    { nombre: "Producto 3", descripcion: "Descripción del producto 3", imagen: "ruta-imagen-3.jpg" },
-    { nombre: "Producto 4", descripcion: "Descripción del producto 4", imagen: "ruta-imagen-4.jpg" },
-    { nombre: "Producto 5", descripcion: "Descripción del producto 5", imagen: "ruta-imagen-5.jpg" },
-    { nombre: "Producto 6", descripcion: "Descripción del producto 6", imagen: "ruta-imagen-6.jpg" }
-];
-
-
 export function Categoria() {
     return (
         <div>

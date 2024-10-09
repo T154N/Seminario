@@ -3,19 +3,14 @@ package com.pedido_flex.wsPedidoFlex.DTO;
 public class ClienteUsuarioDTO {
 
     //Atributos Cliente
-    private long cliente_id;
     private String cliente_documento;
     private String cliente_tipo_documento;
     private String cliente_apellido;
     private String cliente_nombre;
     private String cliente_email;
     private String cliente_telefono;
-    private Integer cliente_estado_id;
     private String cliente_observaciones;
-
     // Atributos de Domicilio
-    private long domicilio_id;
-    private long domicilioClienteId;
     private long domicilioTipoDomicilioId;
     private String domicilioDireccion;
     private String domicilioBarrio;
@@ -23,25 +18,14 @@ public class ClienteUsuarioDTO {
     private long domicilioLocalidadId;
     private String domicilioCodigoPostal;
     private char domicilioEsPrincipal;
-
     // Atributos de Usuario
-    private long usuario_id;
     private String usuario_contrasena;
     private Long usuario_rol_id;
     private String usuario_observaciones;
 
-
     private String usuario_alta;
 
     public ClienteUsuarioDTO() {}
-
-    public long getCliente_id() {
-        return cliente_id;
-    }
-
-    public void setCliente_id(long cliente_id) {
-        this.cliente_id = cliente_id;
-    }
 
     public String getCliente_documento() {
         return cliente_documento;
@@ -91,14 +75,6 @@ public class ClienteUsuarioDTO {
         this.cliente_telefono = cliente_telefono;
     }
 
-    public Integer getCliente_estado_id() {
-        return cliente_estado_id;
-    }
-
-    public void setCliente_estado_id(Integer cliente_estado_id) {
-        this.cliente_estado_id = cliente_estado_id;
-    }
-
     public String getCliente_observaciones() {
         return cliente_observaciones;
     }
@@ -107,21 +83,6 @@ public class ClienteUsuarioDTO {
         this.cliente_observaciones = cliente_observaciones;
     }
 
-    public long getDomicilio_id() {
-        return domicilio_id;
-    }
-
-    public void setDomicilio_id(long domicilio_id) {
-        this.domicilio_id = domicilio_id;
-    }
-
-    public long getDomicilioClienteId() {
-        return domicilioClienteId;
-    }
-
-    public void setDomicilioClienteId(long domicilioClienteId) {
-        this.domicilioClienteId = domicilioClienteId;
-    }
 
     public long getDomicilioTipoDomicilioId() {
         return domicilioTipoDomicilioId;
@@ -177,14 +138,6 @@ public class ClienteUsuarioDTO {
 
     public void setDomicilioEsPrincipal(char domicilioEsPrincipal) {
         this.domicilioEsPrincipal = domicilioEsPrincipal;
-    }
-
-    public long getUsuario_id() {
-        return usuario_id;
-    }
-
-    public void setUsuario_id(long usuario_id) {
-        this.usuario_id = usuario_id;
     }
 
     public String getUsuario_contrasena() {

@@ -20,10 +20,10 @@ public class Domicilio {
     @Column(name = "domicilio_id")
     private long domicilio_id;
 
-//    @ManyToOne
-//    @JoinColumn(name ="domicilio_cliente_id")
-//    @JsonBackReference
-//    private Cliente cliente;
+    @ManyToOne
+    @JoinColumn(name ="domicilio_cliente_id")
+    @JsonBackReference
+    private Cliente cliente;
 
     @Column(name = "domicilio_tipo_domicilio_id")
     private long domicilioTipoDomicilioId; // bigint

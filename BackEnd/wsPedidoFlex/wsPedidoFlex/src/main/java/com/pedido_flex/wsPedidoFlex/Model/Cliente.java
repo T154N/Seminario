@@ -88,7 +88,6 @@ public class Cliente {
         return cliente;
     }
 
-
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @JoinColumn(name = "domicilio_cliente_id")
     @OneToMany( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -167,14 +166,6 @@ public class Cliente {
     public void setCliente_estado_id(Integer cliente_estado_id) {
         this.cliente_estado_id = cliente_estado_id;
     }
-
-//    public Usuario getUsuario() {
-//        return usuario;
-//    }
-//
-//    public void setUsuario(Usuario usuario) {
-//        this.usuario = usuario;
-//    }
 
     public List<Domicilio> getDomicilios() {
         return domicilios;

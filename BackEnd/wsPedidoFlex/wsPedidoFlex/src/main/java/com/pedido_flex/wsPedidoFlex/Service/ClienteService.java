@@ -6,7 +6,10 @@ import com.pedido_flex.wsPedidoFlex.Model.Usuario;
 import com.pedido_flex.wsPedidoFlex.Repository.ClienteRepository;
 import com.pedido_flex.wsPedidoFlex.Repository.DomicilioRepository;
 import com.pedido_flex.wsPedidoFlex.Repository.UsuarioRepository;
+import jakarta.persistence.PersistenceException;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
+import org.hibernate.exception.DataException;
 import org.springframework.stereotype.Service;
 import com.pedido_flex.wsPedidoFlex.Model.Cliente;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,26 +43,31 @@ public class ClienteService {
         }
     }
 
-//    @Transactional
-//    public void crearClienteConUsuarioYDomicilios(Cliente cliente, Usuario usuario, List<Domicilio> domicilios) {
-//        log.info("Create cliente completo");
-//        // Configura las relaciones
-//        cliente.setUsuario(usuario);
-//        // Establece el cliente en cada domicilio
-//        for (Domicilio domicilio : domicilios) {
-//            domicilio.setCliente(cliente);
-//        }
-//        cliente.setDomicilios(domicilios);
-//        clienteRepository.save(cliente);
-//
-//        usuario.setCliente(cliente);
-//        usuarioRepository.save(usuario);
-//        domicilioRepository.save(domicilios.get(0));
-//
-//
-//
-//
-//    }
+    @Transactional
+    public void crearClienteConUsuarioYDomicilios(Cliente cliente, Usuario usuario, List<Domicilio> domicilios) {
+        String error = "";
+        try {
+            log.info("Create cliente usuario y domicilio inicial");
+            // Guardo usuario
+            usuarioRepository.save(usuario);
+
+            // Establece el cliente en cada domicilio
+            for (Domicilio domicilio : domicilios) {
+                domicilio.setCliente(cliente);
+            }
+            clienteRepository.save(cliente);
+            log.info("Guardo todo");
+        }catch (DataException d){
+            log.error("data "+d.toString());
+            throw d;
+        }catch (PersistenceException p){
+            log.error("per "+p.toString());
+            throw p;
+        }catch (Exception e){
+            log.error(cliente.toString()+" "+usuario.toString()+" "+e.getMessage());
+            throw e;
+        }
+    }
 //    @Transactional
 //    public void insertarClienteConDomicilios(Cliente cliente, List<Domicilio> domicilios) {
 //        // Asignar el cliente a cada domicilio

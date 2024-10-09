@@ -1,8 +1,23 @@
-.fondo {
-    background: #fff3ef;
-    background: linear-gradient(180deg, #ffefe3, #ffac70);
-    min-height: 100vh;
+/* .pageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
+
+.loginContainer {
+    width: 80%;
+    max-width: 1200px;
+    min-height: 250px;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.pedido-img {
+    width: 100px;  
+    height: 100px;
+} */
 
 .btn-aceptar {
     color: #000000;
@@ -29,6 +44,3 @@
     color: #C8FFDF;
     background-color: #000000;
 }
-
-
-

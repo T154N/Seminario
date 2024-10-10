@@ -1,6 +1,5 @@
 package com.pedido_flex.wsPedidoFlex.Service;
 
-import com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO;
 import com.pedido_flex.wsPedidoFlex.Model.Categoria;
 import com.pedido_flex.wsPedidoFlex.Model.Producto;
 import com.pedido_flex.wsPedidoFlex.Repository.ProductoRepository;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +21,6 @@ public class ProductoService {
     }
 
     public Producto createProducto(Producto producto) { return productoRepository.save(producto); }
-    public Producto updateProducto(Producto producto) { return productoRepository.save(producto); }
     public Producto findProductoById(Long id) { return productoRepository.getReferenceById(id).get(); }
 
 
@@ -64,16 +61,16 @@ public class ProductoService {
 
 
     @Transactional
-    public void updateProducto(ProductoDTO productoDTO, String user) {
-        Producto producto = productoRepository.findById(productoDTO.getId()).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-        producto.setProducto_nombre(productoDTO.getNombre());
-        producto.setProducto_descripcion(productoDTO.getDescripcion());
-        producto.setProducto_precio(productoDTO.getPrecio());
-        producto.setCategoria(new Categoria(productoDTO.getCategoriaNombre()));
-        producto.setProducto_observaciones(productoDTO.getObservaciones());
+    public Producto updateProducto(Producto productoNew, String user) {
+        Producto producto = productoRepository.findById(productoNew.getProducto_id()).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        producto.setProducto_nombre(productoNew.getProducto_nombre());
+        producto.setProducto_descripcion(productoNew.getProducto_descripcion());
+        producto.setProducto_precio(productoNew.getProducto_precio());
+        producto.setCategoria(new Categoria(productoNew.getCategoria().getCategoriaNombre()));
+        producto.setProducto_observaciones(productoNew.getProducto_observaciones());
         producto.setProducto_fecha_modificacion(LocalDateTime.now());
         producto.setProducto_usuario_modificacion(user);
-        productoRepository.save(producto);
+        return productoRepository.save(producto);
     }
 
 

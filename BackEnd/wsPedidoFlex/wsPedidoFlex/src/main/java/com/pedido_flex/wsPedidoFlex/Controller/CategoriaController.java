@@ -1,6 +1,5 @@
 package com.pedido_flex.wsPedidoFlex.Controller;
 
-import com.pedido_flex.wsPedidoFlex.DTO.CategoriaDTO;
 import com.pedido_flex.wsPedidoFlex.Exception.Response;
 import com.pedido_flex.wsPedidoFlex.Model.Categoria;
 import com.pedido_flex.wsPedidoFlex.Service.CategoriaService;
@@ -37,6 +36,18 @@ public class CategoriaController {
             return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
+
+    @PostMapping("/categorias")
+    public Response createCategoria(@RequestBody Categoria categoria){
+        try{
+            return Response.general(HttpStatus.OK, categoriaService.createCategoria(categoria));
+        }catch (NullPointerException | IllegalArgumentException e){
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        }catch (Exception e){
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
 
     @PutMapping("/categorias/{id}/{u}")
     public Response updateCategoria(@PathVariable("id") Long id, @PathVariable("u") String usuarioEditor, @RequestBody Categoria categoria) {

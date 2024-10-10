@@ -2,7 +2,7 @@ package com.pedido_flex.wsPedidoFlex.Service;
 
 import com.pedido_flex.wsPedidoFlex.DTO.CategoriaDTO;
 import com.pedido_flex.wsPedidoFlex.Model.Categoria;
-import com.pedido_flex.wsPedidoFlex.Model.Producto;
+
 import com.pedido_flex.wsPedidoFlex.Repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
 
@@ -40,10 +40,16 @@ public class CategoriaService {
     public List<CategoriaDTO> findAllCategoriaDto() {
         return categoriaRepository.findAllCategoriaDto();
     }
-
     public Categoria updateCategoria(Categoria categoria, String usuarioModificacion) {
+        categoria.setCategoriaNombre(categoria.getCategoriaNombre());
+        categoria.setCategoriaObservaciones(categoria.getCategoriaObservaciones());
         categoria.setCategoriaFechaModificacion(LocalDateTime.now());
         categoria.setCategoriaUsuarioModificacion(usuarioModificacion);
+        return categoriaRepository.save(categoria);
+    }
+
+
+    public Categoria createCategoria(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
 

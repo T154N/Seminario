@@ -25,14 +25,6 @@ public class ProductoService {
     public Producto createProducto(Producto producto) { return productoRepository.save(producto); }
     public Producto updateProducto(Producto producto) { return productoRepository.save(producto); }
     public Producto findProductoById(Long id) { return productoRepository.getReferenceById(id).get(); }
-    public List<Producto> findAllProductos() {
-        return productoRepository.findAll();
-    }
-
-    public List<ProductoDTO> getAllProductos() {
-        List<Producto> productos = productoRepository.findAll();
-        return productos.stream().map(this::convertToDTO).collect(Collectors.toList());
-    }
 
 
     public ProductoDTO convertToDTO(Producto producto) {

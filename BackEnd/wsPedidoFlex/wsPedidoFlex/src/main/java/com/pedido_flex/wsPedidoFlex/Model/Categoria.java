@@ -44,6 +44,9 @@ public class Categoria {
     @Column(name = "categoria_usuario_baja")
     private String categoriaUsuarioBaja;
 
+    @Column(name = "categoria_estado_id")
+    private Integer categoriaEstadoId;
+
     @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
     private Set<Producto> productos;
 
@@ -60,9 +63,17 @@ public class Categoria {
         categoria.setCategoriaUsuarioAlta(this.categoriaUsuarioAlta);
         categoria.setCategoriaUsuarioModificacion(this.categoriaUsuarioModificacion);
         categoria.setCategoriaUsuarioBaja(this.categoriaUsuarioBaja);
+        categoria.setCategoriaEstadoId(this.categoriaEstadoId);
         return categoria;
     }
 
+    public Integer getCategoriaEstadoId() {
+        return categoriaEstadoId;
+    }
+
+    public void setCategoriaEstadoId(Integer categoriaEstadoId) {
+        this.categoriaEstadoId = categoriaEstadoId;
+    }
 
     public Categoria(String categoriaNombre, Set<Producto> productos) {
         this.categoriaNombre = categoriaNombre;

@@ -49,11 +49,11 @@ public class Domicilio {
 
     @Column(name = "domicilio_fecha_modificacion", columnDefinition = "datetimeoffset(7)")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date domicilioFechaModificacion; // datetimeoffset(7)
+    private LocalDateTime domicilioFechaModificacion; // datetimeoffset(7)
 
     @Column(name = "domicilio_fecha_baja", columnDefinition = "datetimeoffset(7)")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date domicilioFechaBaja; // datetimeoffset(7)
+    private LocalDateTime domicilioFechaBaja; // datetimeoffset(7)
 
     @Column(name = "domicilio_usuario_alta", columnDefinition = "nvarchar(max)")
     private String domicilioUsuarioAlta; // nvarchar(max)
@@ -145,19 +145,19 @@ public class Domicilio {
         this.domicilioFechaAlta = domicilioFechaAlta;
     }
 
-    public Date getDomicilioFechaModificacion() {
+    public LocalDateTime getDomicilioFechaModificacion() {
         return domicilioFechaModificacion;
     }
 
-    public void setDomicilioFechaModificacion(Date domicilioFechaModificacion) {
+    public void setDomicilioFechaModificacion(LocalDateTime domicilioFechaModificacion) {
         this.domicilioFechaModificacion = domicilioFechaModificacion;
     }
 
-    public Date getDomicilioFechaBaja() {
+    public LocalDateTime getDomicilioFechaBaja() {
         return domicilioFechaBaja;
     }
 
-    public void setDomicilioFechaBaja(Date domicilioFechaBaja) {
+    public void setDomicilioFechaBaja(LocalDateTime domicilioFechaBaja) {
         this.domicilioFechaBaja = domicilioFechaBaja;
     }
 

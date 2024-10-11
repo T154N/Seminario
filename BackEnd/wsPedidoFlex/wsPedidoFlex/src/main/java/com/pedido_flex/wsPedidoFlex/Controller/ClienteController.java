@@ -1,6 +1,7 @@
 package com.pedido_flex.wsPedidoFlex.Controller;
 
 import com.pedido_flex.wsPedidoFlex.DTO.ClienteUsuarioDTO;
+import com.pedido_flex.wsPedidoFlex.DTO.FiltroClienteDTO;
 import com.pedido_flex.wsPedidoFlex.Exception.Response;
 import com.pedido_flex.wsPedidoFlex.Model.Cliente;
 import com.pedido_flex.wsPedidoFlex.Model.Domicilio;
@@ -10,12 +11,14 @@ import com.pedido_flex.wsPedidoFlex.Repository.UsuarioRepository;
 import com.pedido_flex.wsPedidoFlex.Service.ClienteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -31,11 +34,19 @@ public class ClienteController {
         this.usuarioRepository = usuarioRepository;
     }
 
+    /**
+     * Endpoint que devuelve solo un cliente por id, con su usuario y domicilios
+    **/
     @GetMapping("/clientes/{id}")
     public Response getClienteById(@PathVariable Long id) {
         try {
-            return Response.general(HttpStatus.OK, clienteService.findClienteById(id));
-        } catch (NullPointerException | IllegalArgumentException e) {
+            Optional<Cliente> cliente = clienteService.obtenerClientePorId(id);
+            if (!cliente.isEmpty()){
+                return Response.general(HttpStatus.OK, cliente);
+            }else{
+                return Response.custom(HttpStatus.BAD_REQUEST, "No hemos encontrado este usuario.");
+            }
+       } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage() );
         } catch (Exception e) {
             return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "No hemos encontrado este usuario.");
@@ -53,22 +64,11 @@ public class ClienteController {
         }
     }
 
-    @PostMapping("/clientes/new/new")
-    public Response createCliente(@RequestBody Cliente cliente, Usuario usuario) {
-        try {
-            clienteService.createCliente(cliente,usuario);
-            return Response.general(HttpStatus.OK,"Cliente creado: "+cliente.toString() );
-        } catch (NullPointerException | IllegalArgumentException e) {
-            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
-        } catch (Exception e) {
-            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
-    }
-
-
+    /**
+    * Endpint para crear un usuario, cliente y domicilio
+    **/
     @PostMapping("/clientes/new")
     public Response crearClienteConUsuarioYDomicilios(@RequestBody ClienteUsuarioDTO clienteUsuarioDTO) {
-        String error = "";
         try {
             if(!Objects.isNull(clienteUsuarioDTO)) {
                 log.debug("Llega cliente",clienteUsuarioDTO.toString());
@@ -153,4 +153,20 @@ public class ClienteController {
         }
     }
 
+    @GetMapping("/clientes/filter")
+    public Response findClientesFilters(@RequestBody FiltroClienteDTO filtroClienteDTO) {
+        try {
+            if(!Objects.isNull(filtroClienteDTO)) {
+                return Response.general(HttpStatus.OK,clienteService.getClienteByFilter(filtroClienteDTO));
+            }else {
+                return Response.custom(HttpStatus.BAD_REQUEST, "No encontramos información a su búsqueda");
+            }
+        } catch (NullPointerException | IllegalArgumentException e) {
+            log.error("Error NullPointerException | IllegalArgumentException "+e.getMessage());
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            log.error("Error Exception "+e.getMessage());
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
 }

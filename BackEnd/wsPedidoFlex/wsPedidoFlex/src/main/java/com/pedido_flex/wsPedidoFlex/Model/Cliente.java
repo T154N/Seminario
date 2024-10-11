@@ -90,7 +90,7 @@ public class Cliente {
 
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @JoinColumn(name = "domicilio_cliente_id")
-    @OneToMany( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany( cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     //@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Domicilio> domicilios = new ArrayList<>();

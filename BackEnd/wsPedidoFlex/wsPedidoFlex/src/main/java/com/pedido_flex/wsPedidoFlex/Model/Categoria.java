@@ -44,7 +44,7 @@ public class Categoria {
     @Column(name = "categoria_usuario_baja")
     private String categoriaUsuarioBaja;
 
-    @Column(name = "categoria_estado_id")
+    @Column(name = "categoria_estado_id", nullable = false)
     private Integer categoriaEstadoId;
 
     @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)

@@ -2,7 +2,9 @@ package com.pedido_flex.wsPedidoFlex.Service;
 
 import com.pedido_flex.wsPedidoFlex.Model.Categoria;
 import com.pedido_flex.wsPedidoFlex.Model.Producto;
+import com.pedido_flex.wsPedidoFlex.Repository.CategoriaRepository;
 import com.pedido_flex.wsPedidoFlex.Repository.ProductoRepository;
+import com.pedido_flex.wsPedidoFlex.Service.CategoriaService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,9 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductoService {
 
     private final ProductoRepository productoRepository;
+    private final CategoriaRepository categoriaRepository;
 
-    public ProductoService(ProductoRepository productoRepository) {
+    public ProductoService(ProductoRepository productoRepository ,CategoriaRepository categoriaRepository) {
         this.productoRepository = productoRepository;
+        this.categoriaRepository = categoriaRepository;
     }
 
     public Producto createProducto(Producto producto) { return productoRepository.save(producto); }
@@ -59,20 +63,24 @@ public class ProductoService {
         return productoRepository.findAllProductosDto();
     }
 
+    public Categoria findByidCategoriaDto(Long id) {
+        return categoriaRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Categoria no encontrada"));
+    }
+
 
     @Transactional
     public Producto updateProducto(Producto productoNew, String user) {
-        Producto producto = productoRepository.findById(productoNew.getProducto_id()).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-        producto.setProducto_nombre(productoNew.getProducto_nombre());
-        producto.setProducto_descripcion(productoNew.getProducto_descripcion());
-        producto.setProducto_precio(productoNew.getProducto_precio());
-        producto.setCategoria(new Categoria(productoNew.getCategoria().getCategoriaNombre()));
-        producto.setProducto_observaciones(productoNew.getProducto_observaciones());
-        producto.setProducto_fecha_modificacion(LocalDateTime.now());
-        producto.setProducto_usuario_modificacion(user);
-        return productoRepository.save(producto);
-    }
-
+    Producto producto = productoRepository.findById(productoNew.getProducto_id()).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+    System.out.println("Original Producto: " + producto);
+    producto.setProducto_nombre(productoNew.getProducto_nombre());
+    producto.setProducto_descripcion(productoNew.getProducto_descripcion());
+    producto.setProducto_precio(productoNew.getProducto_precio());
+    producto.setCategoria(findByidCategoriaDto(productoNew.getCategoria().getCategoriaId()));
+    producto.setProducto_fecha_modificacion(LocalDateTime.now());
+    producto.setProducto_usuario_modificacion(user);
+    System.out.println("Updated Producto: " + producto);
+    return productoRepository.save(producto);
+}
 
 
 }

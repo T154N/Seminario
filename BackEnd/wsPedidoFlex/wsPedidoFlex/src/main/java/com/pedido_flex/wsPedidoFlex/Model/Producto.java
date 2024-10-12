@@ -52,7 +52,7 @@ public class Producto {
     private String producto_observaciones;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinColumn(name = "producto_categoria_id", referencedColumnName = "categoria_id", nullable = false)
     private Categoria categoria;
 

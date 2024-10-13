@@ -53,7 +53,7 @@ public class SecurityConfig {
         try {
             http.csrf().disable()
                     .authorizeHttpRequests()
-                    .requestMatchers("/rest/auth/**","/api/v1/**").permitAll() //poner las querys que no necesitan autenticacion
+                    .requestMatchers("/rest/auth/**","/api/v1/**").permitAll()
                     .anyRequest().authenticated()
                     .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and().addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);

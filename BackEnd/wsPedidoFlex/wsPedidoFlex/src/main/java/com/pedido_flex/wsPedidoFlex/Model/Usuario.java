@@ -1,6 +1,9 @@
 package com.pedido_flex.wsPedidoFlex.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,8 +24,11 @@ public class Usuario {
     @Column(name = "usuario_id")
     private long usuario_id;
 
-    @Column(name = "usuario_cliente_id")
-    private long usuario_cliente_id;
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_cliente_id",referencedColumnName = "cliente_id")
+    @JsonBackReference
+    private Cliente cliente;
 
     @Column(name ="usuario_cliente_email")
     private String usuario_cliente_email;
@@ -39,7 +45,7 @@ public class Usuario {
     @Column(name ="usuario_observaciones")
     private String usuario_observaciones;
 
-    @Column(name ="usuario_fecha_alta")
+    @Column(name ="usuario_fecha_alta",nullable = true)
     private LocalDateTime usuario_fecha_alta;
 
     @Column(name ="usuario_fecha_modificacion")
@@ -62,10 +68,18 @@ public class Usuario {
         this.usuario_contrasena = usuario_contrasena;
     }
 
+//    public Usuario(String usuario_cliente_email,String usuario_contrasena){
+//        this.usuario_cliente_email = usuario_cliente_email;
+//        this.usuario_contrasena = usuario_contrasena;
+//        //this.cliente = cliente;
+//    }
+
+
+
     public Usuario get(){
         Usuario usuario = new Usuario();
         usuario.setUsuario_id(this.usuario_id);
-        usuario.setUsuario_cliente_id(this.usuario_cliente_id);
+        //usuario.setCliente(this.cliente);
         usuario.setUsuario_cliente_email(this.usuario_cliente_email);
         usuario.setUsuario_contrasena(this.usuario_contrasena);
         usuario.setUsuario_estado_id(this.usuario_estado_id);
@@ -88,14 +102,6 @@ public class Usuario {
         this.usuario_id = usuario_id;
     }
 
-    public long getUsuario_cliente_id() {
-        return usuario_cliente_id;
-    }
-
-    public void setUsuario_cliente_id(long usuario_cliente_id) {
-        this.usuario_cliente_id = usuario_cliente_id;
-    }
-
     public String getUsuario_cliente_email() {
         return usuario_cliente_email;
     }
@@ -103,6 +109,14 @@ public class Usuario {
     public void setUsuario_cliente_email(String usuario_cliente_email) {
         this.usuario_cliente_email = usuario_cliente_email;
     }
+
+//    public Cliente getCliente() {
+//        return cliente;
+//    }
+//
+//    public void setCliente(Cliente cliente) {
+//        this.cliente = cliente;
+//    }
 
     public String getUsuario_contrasena() {
         return usuario_contrasena;
@@ -182,5 +196,13 @@ public class Usuario {
 
     public void setUsuario_usuario_baja(String usuario_usuario_baja) {
         this.usuario_usuario_baja = usuario_usuario_baja;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

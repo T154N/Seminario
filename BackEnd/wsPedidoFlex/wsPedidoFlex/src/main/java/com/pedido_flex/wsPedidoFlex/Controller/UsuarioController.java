@@ -101,11 +101,11 @@ public class UsuarioController {
      * Validaciones a revisar, dni o cuit
      **/
     @PostMapping("/usuarios/new")
-    public Response createUsuario(@RequestBody UsuarioDTO usuario) {
+    public Response createUsuario(@RequestBody Usuario usuario) {
         try {
-            UsuarioDTO dto = usuarioService.getUsuarioByEmail(usuario.getEmail());
+            UsuarioDTO dto = usuarioService.getUsuarioByEmail(usuario.getUsuario_cliente_email());
             if (Objects.isNull(dto)) {
-                log.info("No existe creo nuevo user: "+usuario.getEmail());
+                log.info("No existe creo nuevo user: "+usuario.getUsuario_cliente_email());
                 return Response.general(HttpStatus.OK, "Creamos");
                         // usuarioService.createUsuario(usuario)
             }else {
@@ -139,6 +139,7 @@ public class UsuarioController {
            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
        }
     }
+
     /* @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 

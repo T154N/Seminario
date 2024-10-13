@@ -1,70 +1,127 @@
-import {useState} from "react";
-import './login.css';
+import { useState, useEffect } from "react";
+import "./login.css";
+import { useNavigate } from "react-router";
 
-import {CambiarContrasena} from "./CambiarContrasena";
-import {IniciarSesion} from "./IniciarSesion";
-import {Registrarse} from "./Registrarse";
+import { IniciarSesion } from "./IniciarSesion";
+import { CambiarContrasena } from "./CambiarContrasena";
+import { Registrarse } from "./Registrarse";
+
+import loginService from "../../services/login/login.service";
 
 export function Login() {
+
+    const navigate = useNavigate();
 
     const [mostrarCambiarPwd, setMostrarCambiarPwd] = useState(false);
     const [mostrarIniciarSesion, setMostrarIniciarSesion] = useState(true);
     const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
 
+    const [mostrarAlertaFalloIniciarSesion, setMostrarAlertaFalloIniciarSesion] = useState(false);
+    const [sesionYaIniciada, setSesionYaIniciada] = useState(false);
+
+    useEffect(() => {
+        if (loginService.estaIniciadaSesion()) {
+            setSesionYaIniciada(true);
+        }
+    }, []);
+
+    const falloIniciarSesion = () => {
+        setMostrarAlertaFalloIniciarSesion(true);
+    }
+
+    const cerrarSesion = () => {
+        loginService.cerrarSesion();
+        setSesionYaIniciada(false);
+        volverALogin();
+    }
+
+    const navegarHaciaCatalogoLogin = () => {
+        navigate('/catalogo');
+    }
+
     const mostrarCambiarContrasena = () => {
         setMostrarCambiarPwd(true);
         setMostrarIniciarSesion(false);
         setMostrarRegistrarse(false);
+        setMostrarAlertaFalloIniciarSesion(false);
+        if (sesionYaIniciada) {
+            setSesionYaIniciada(false);
+        }
     }
 
     const volverALogin = () => {
         setMostrarCambiarPwd(false);
         setMostrarIniciarSesion(true);
         setMostrarRegistrarse(false);
+        if (loginService.estaIniciadaSesion()) {
+            setSesionYaIniciada(true);
+        }
     }
 
     const mostrarReg = () => {
         setMostrarRegistrarse(true);
         setMostrarIniciarSesion(false);
         setMostrarCambiarPwd(false);
+        setMostrarAlertaFalloIniciarSesion(false);
+        if (sesionYaIniciada) {
+            setSesionYaIniciada(false);
+        }
     }
-
     return(
-        <div className="login">
-            <h1 className="h1">Iniciar Sesion</h1>
-            <div className="card">
-                <div className="card-body fondoTarjeta">
-                    {mostrarIniciarSesion &&
-                        <IniciarSesion/>
-                    }
-                    {mostrarCambiarPwd &&
-                        <CambiarContrasena volverALogin={volverALogin}/>
-                    }
-                    {mostrarRegistrarse &&
-                        <Registrarse/>
-                    }
 
-                    {!mostrarRegistrarse && !mostrarCambiarPwd &&
-                        <div className="elementosForm">
-                        <div className="botonRegistrarseForm">
-                            <button className="btn btn-aceptar" onClick={mostrarReg}>No tienes cuenta?</button>
-                        </div>
-                        <p className="cambiarContrasena" onClick={mostrarCambiarContrasena}>
-                            {!mostrarCambiarPwd && "Cambiar contraseña"}
-                        </p>
-                    </div>}
+        <>
+            <div className=" ">
+                <div className="container">
+                    <div className="row">
+                        <div className="col"/>
+                        <div className="col-sm-12 col-md-10 col-lg-8 col-xl-6 col-xxl-6">
+                            <div className="">
+                                <h1 className="fs-1">Iniciar sesión</h1>
+                                {mostrarAlertaFalloIniciarSesion && <div className="alert alert-danger" role="alert">Fallo el inicio de sesion</div>}
+                                <div className="card shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
+                                    <div className="card-body text-start">
+                                        {sesionYaIniciada && <div className="mt-3 fs-5 text-center alert alert-success" style={{borderRadius: "15px"}}>La sesion esta iniciada</div>}
 
-                    {
-                        (mostrarRegistrarse || mostrarCambiarPwd) && 
-                        <div className="elementosForm">
-                            <div className="botonRegistrarseForm">
-                                <button className="btn btn-aceptar" onClick={volverALogin}>Volver</button>
+                                        {mostrarIniciarSesion && !sesionYaIniciada && <IniciarSesion falloIniciarSesion={falloIniciarSesion} navegarHaciaCatalogoLogin={navegarHaciaCatalogoLogin}/>}
+                                        {mostrarCambiarPwd && <CambiarContrasena volverALogin={volverALogin}/>}
+                                        {mostrarRegistrarse && <Registrarse volverALogin={volverALogin}/>}
+
+                                        {sesionYaIniciada &&
+                                            <div className="d-grid">
+                                            <button className="btn btn-aceptar" onClick={cerrarSesion}>Cerrar sesion</button>
+                                        </div>}
+
+                                        {!mostrarCambiarPwd && !mostrarRegistrarse &&
+                                        <div className="mt-2 text-start fs-6">
+                                            <div className="justify-content-start gap-2 mb-3">
+                                                <span>¿No tenés cuenta?</span>
+                                                <div className="mt-2">
+                                                    <button className="btn btn-aceptar" onClick={mostrarReg}>Registrate</button>
+                                                </div>
+                                            </div>
+                                        
+                                            <div className="justify-content-start gap-2 mb-3">
+                                                <span>¿Olvidaste la contraseña?</span>
+                                                <div className="mt-2">
+                                                    <button className="btn btn-aceptar" onClick={mostrarCambiarContrasena}>Recuperar contraseña</button>
+                                                </div>
+                                            </div>
+                                        </div>}
+
+                                        {(mostrarRegistrarse || mostrarCambiarPwd)  &&
+                                            <div className="mt-2">
+                                                <div>
+                                                    <button className="btn btn-aceptar mb-2" onClick={volverALogin}>Volver</button>
+                                                </div>
+                                            </div>}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    }
-
+                        <div className="col"/>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

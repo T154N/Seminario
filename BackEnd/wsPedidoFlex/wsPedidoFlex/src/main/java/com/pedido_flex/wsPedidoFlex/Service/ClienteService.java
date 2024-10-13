@@ -5,6 +5,7 @@ import com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO;
 import com.pedido_flex.wsPedidoFlex.Model.Domicilio;
 import com.pedido_flex.wsPedidoFlex.Model.Usuario;
 import com.pedido_flex.wsPedidoFlex.Repository.ClienteRepository;
+import com.pedido_flex.wsPedidoFlex.Repository.ClienteRepositoryProcedures;
 import com.pedido_flex.wsPedidoFlex.Repository.DomicilioRepository;
 import com.pedido_flex.wsPedidoFlex.Repository.UsuarioRepository;
 import com.pedido_flex.wsPedidoFlex.Utils.Specifications.SearchClientesSpecification;
@@ -27,6 +28,8 @@ import java.util.Optional;
 public class ClienteService {
     @Autowired
     private final ClienteRepository clienteRepository;
+
+    private final ClienteRepositoryProcedures clienteRepositoryProcedures;
     private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
     private final DomicilioRepository domicilioRepository;
@@ -34,8 +37,9 @@ public class ClienteService {
     @PersistenceContext
     private EntityManager em;
 
-    public ClienteService(ClienteRepository clienteRepository, UsuarioService usuarioService, UsuarioRepository usuarioRepository, DomicilioRepository domicilioRepository) {
+    public ClienteService(ClienteRepository clienteRepository, ClienteRepositoryProcedures clienteRepositoryProcedures, UsuarioService usuarioService, UsuarioRepository usuarioRepository, DomicilioRepository domicilioRepository) {
         this.clienteRepository = clienteRepository;
+        this.clienteRepositoryProcedures = clienteRepositoryProcedures;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
         this.domicilioRepository = domicilioRepository;
@@ -78,37 +82,9 @@ public class ClienteService {
     public List<Cliente> findAllClientes() {
         return clienteRepository.findAll();
     }
-    @Transactional
-    public void setBajaClienteById (Long id, String usuario) { //Revisar baja dejo de funcionar con relaciones de tablas, quedo cambio en persistencia en cliente
-        Cliente cliente = findClienteById(id);
-        cliente.setCliente_estado_id(2);
-        cliente.setCliente_usuario_modificacion(usuario);
-        cliente.setCliente_usuario_baja(usuario);
-        cliente.setCliente_fecha_modificacion(LocalDateTime.now());
-        cliente.setCliente_fecha_baja(LocalDateTime.now());
-        List<Domicilio> domicilios = cliente.getDomicilios();
-        log.error(domicilios.toString());
-        for (Domicilio domicilio : domicilios) {
-            domicilio.setDomicilioEstadoId(2);
-            domicilio.setDomicilioUsuarioModificacion(usuario);
-            domicilio.setDomicilioUsuarioBaja(usuario);
-            domicilio.setDomicilioFechaModificacion(LocalDateTime.now());
-            domicilio.setDomicilioFechaBaja(LocalDateTime.now());
-            domicilio.setCliente(cliente);
-        }
-        cliente.setDomicilios(domicilios);
 
-        UsuarioDTO userDTO = usuarioService.getUsuarioByEmail(cliente.getCliente_email().toString());
-        Usuario user = usuarioService.findUsuarioById(userDTO.getId());
-        user.setUsuario_estado_id(2);
-        user.setUsuario_usuario_modificacion(usuario);
-        user.setUsuario_usuario_baja(usuario);
-        user.setUsuario_fecha_modificacion(LocalDateTime.now());
-        user.setUsuario_fecha_baja(LocalDateTime.now());
-        user.setCliente(cliente);
-        usuarioRepository.save(user);
-        clienteRepository.save(cliente);
-
+    public void updateClienteStatus(Long clienteId, int estadoId, String usuario){
+        clienteRepositoryProcedures.updateClienteStatus(clienteId,estadoId,usuario);
     }
 
     public Optional<Cliente> obtenerClientePorId(Long id) {

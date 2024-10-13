@@ -1,6 +1,7 @@
 package com.pedido_flex.wsPedidoFlex.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -90,8 +91,7 @@ public class Cliente {
 
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @JoinColumn(name = "domicilio_cliente_id")
-    @OneToMany( cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-    //@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany( cascade = { CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY,orphanRemoval = true)
     @JsonManagedReference
     private List<Domicilio> domicilios = new ArrayList<>();
 

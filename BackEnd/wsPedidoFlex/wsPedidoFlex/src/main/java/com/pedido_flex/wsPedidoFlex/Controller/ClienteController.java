@@ -144,7 +144,7 @@ public class ClienteController {
     @PutMapping("/clientes/baj/{id}/{u}")
     public Response setBajaClienteById(@PathVariable("id") Long id,@PathVariable("u") String usuarioEditor) {
         try {
-            clienteService.setBajaClienteById(id,usuarioEditor);
+            clienteService.updateClienteStatus(id,2,usuarioEditor);
             return Response.general(HttpStatus.OK, null);
         } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());

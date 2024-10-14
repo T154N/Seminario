@@ -81,15 +81,38 @@ public class UsuarioController {
     }
 
     /**
-    * getUsuarioRolByEmail():: obtener un usuario con su id y rol segun su email
+    * getUsuarioRolByEmail():: obtener un usuario con su id y rol segun su email, no valida estado
     **/
     @GetMapping("/usuarios/email")
     public Response getUsuarioRolByEmail(@RequestParam String email) {
-        log.info("getUsuarioRolByEmail"+ email);
+        log.debug("getUsuarioRolByEmail: "+ email);
         try {
-            return Response.general(HttpStatus.OK, usuarioService.getUsuarioByEmail(email));
+            UsuarioDTO usuarioDTO = usuarioService.getUsuarioByEmail(email);
+            if (!Objects.isNull(usuarioDTO)) {
+                return Response.general(HttpStatus.OK, usuarioDTO);
+            }else {
+                return Response.general(HttpStatus.OK, "No se encontro usuario");
+            }
         } catch (NullPointerException | IllegalArgumentException e) {
-            log.error("Error al buscar email"+ e.getMessage());
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage() );
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "Email no encontrado.");
+        }
+    }
+
+    /**
+     * findByUserRegister():: valida si existe el mail o documento registrado sin tener en cuenta el estado
+     **/
+    @GetMapping("/usuarios/validateusuario")
+    public Response findByUserRegister(@RequestParam String email, @RequestParam String documento) {
+        try {
+            UsuarioDTO usuarioDTO = usuarioService.findByUserRegister(email, documento);
+            if (!Objects.isNull(usuarioDTO)) {
+                return Response.general(HttpStatus.OK, "Existe Usuario registrado con mail o documento "+usuarioDTO.getEmail());
+            }else {
+                return Response.general(HttpStatus.NO_CONTENT, "No se encontro usuario");
+            }
+        } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage() );
         } catch (Exception e) {
             return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "Email no encontrado.");

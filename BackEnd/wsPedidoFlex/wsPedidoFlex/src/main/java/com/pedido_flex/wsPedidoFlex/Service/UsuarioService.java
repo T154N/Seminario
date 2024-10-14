@@ -88,6 +88,16 @@ public class UsuarioService {
         }
     }
 
+    public UsuarioDTO findByUserRegister(String email, String documento){
+        try {
+            return usuarioRepository.findByUserRegister(email,documento);
+        }catch (Exception e) {
+            log.error("error al buscar el usuario: "+email+" - "+ e.getMessage());
+            return null;
+        }
+    }
+
+
     public Usuario guardarUsuario(Usuario usuario) {
         usuario.setUsuario_contrasena(passwordEncoder.encode(usuario.getUsuario_contrasena()));
         return usuarioRepository.save(usuario);

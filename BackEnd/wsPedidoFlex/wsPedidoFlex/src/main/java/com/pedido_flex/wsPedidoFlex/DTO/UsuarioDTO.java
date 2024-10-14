@@ -27,6 +27,16 @@ public class UsuarioDTO {
         this.contrasenia = contrasenia;
     }
 
+    @Override
+    public String toString() {
+        return "UsuarioDTO{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", rol='" + rol + '\'' +
+                ", contrasenia='" + contrasenia + '\'' +
+                '}';
+    }
+
     public UsuarioDTO() {}
 
     public Long getId() {

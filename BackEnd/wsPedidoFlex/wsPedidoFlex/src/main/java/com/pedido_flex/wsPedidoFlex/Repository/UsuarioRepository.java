@@ -21,7 +21,24 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
                     "JOIN Roles r ON u.usuario_rol_id = r.rol_id " +
                     "WHERE u.usuario_cliente_email = :email "+
                     "AND u.usuario_estado_id=1")
+    UsuarioDTO findByEmailActivo(@Param("email") String email);
+
+    @Query(
+            value = "SELECT  NEW com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO(u.usuario_id, u.usuario_cliente_email, r.rolNombre, u.usuario_contrasena) " +
+                    "FROM Usuario u " +
+                    "JOIN Roles r ON u.usuario_rol_id = r.rol_id " +
+                    "WHERE u.usuario_cliente_email = :email ")
     UsuarioDTO findByEmail(@Param("email") String email);
+
+    @Query(
+            value = "SELECT  NEW com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO(u.usuario_id, u.usuario_cliente_email, r.rolNombre, u.usuario_contrasena) " +
+                    "FROM Usuario u " +
+                    "JOIN Roles r ON u.usuario_rol_id = r.rol_id " +
+                    "JOIN u.cliente c "+
+                    "WHERE(lower(u.usuario_cliente_email) = trim(lower( :email )) " +
+                    "OR c.cliente_documento = trim(:documento))"
+    )
+    UsuarioDTO findByUserRegister(@Param("email") String email,@Param("documento") String documento);
 
     @Modifying
     @Query("UPDATE Usuario u SET u.usuario_contrasena = :password WHERE u.usuario_id = :id")

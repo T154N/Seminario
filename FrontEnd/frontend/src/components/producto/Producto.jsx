@@ -136,48 +136,6 @@ export function Producto() {
                         </div>
                     ))}
                 </div>
-                {/*
-                {productosFiltrados.map(producto => (
-                    <div className="row" key={producto.id}>
-                        <div className="col">
-                            <div className="card mb-3">
-                                <div className="card-body">
-                                    <div className="row">
-                                        <div className="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3 col-xxl-3"
-                                            style={{ objectFit: 'cover' }}>
-                                            <img src={producto.imagen} className="img-fluid rounded d-block mx-auto" alt={producto.nombre} />
-                                        </div>
-                                        <div className="col-12 col-sm-4 col-md-6 col-lg-7 col-xl-7 col-xxl-7">
-                                            <h5 className="card-title text-start">{producto.nombre}</h5>
-                                            <p className="card-text text-start">{producto.descripcion}</p>
-                                            <p className="card-text text-start">{producto.marca}</p>
-                                        </div>
-                                        <div className="col-12 col-sm-4 col-md-2 col-lg-2 col-xl-2 col-xxl-2">
-                                            <div>
-                                                <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>
-                                                <input
-                                                    type="number"
-                                                    value={cantidad[producto.id] || 1}
-                                                    onChange={(e) => manejarCambioCantidad(producto.id, e)}
-                                                    className="mx-2 input-cantidad"
-                                                    style={{ width: "50px" }}
-                                                    min="0"
-                                                />
-                                                <button className="btn btn-outline-secondary" onClick={() => incrementarCantidad(producto.id)}>+</button>
-                                            </div>
-                                            <div>
-                                                <button className="btn btn-success mt-3" onClick={() => agregarAlCarrito(producto)}>
-                                                    Agregar al carrito
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-                */}
             </div>
         </div>
     );

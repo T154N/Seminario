@@ -8,19 +8,24 @@ export function Catalogo() {
 
     const [busqueda, setBusqueda] = useState('');
     const [categorias, setCategorias] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
+
             const categoria = await categoriaService.getAllCategorias();
             setCategorias(categoria);
+
+            setLoading(false);
         };
 
         fetchData();
     }, []);
 
     const handleCardClick = (categoria) => {
-        if (categoria.nombre) {
-            navigate(`/productos/${categoria.nombre}`, { state: { categoria }}); 
+        if (categoria.nombre && categoria.id) {
+            navigate(`/productos/${categoria.id}`, { state: { categoriaNombre: categoria.nombre } }); 
         } else {
             console.error("Categoría sin nombre:", categoria);
         }
@@ -33,6 +38,10 @@ export function Catalogo() {
     const categoriasFiltradas = categorias.filter(categoria =>
         categoria.nombre && categoria.nombre.toLowerCase().includes(busqueda.toLowerCase())
     );
+
+    if (loading) {
+        return <div className='fs-3'>Cargando catalogo...</div>
+    }
 
     return (
         <div className="container mt-2">

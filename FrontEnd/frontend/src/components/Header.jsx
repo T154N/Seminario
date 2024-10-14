@@ -1,7 +1,7 @@
 import './header.css';
 import CMLogo from '../images/Header Icons/cmDistribuidora-removebg-preview.png'
 import usuario from '../images/Header Icons/usuario.png'
-import carrito from '../images/Header Icons/carrito.png'
+//import carrito from '../images/Header Icons/carrito.png'
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // React Router
 import { Carrito } from './carrito/Carrito';

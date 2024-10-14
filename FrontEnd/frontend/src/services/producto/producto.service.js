@@ -1,21 +1,43 @@
 import axios from 'axios';
-import productosMock from './producto.mocks';
+
+const ENDPOINT_PRODUCTO_URL = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
 
 const getAllProductos = async () => {
     try {
-        // Cambiar por el endpoint que corresponda
-        return productosMock();
+        const response = await axios.get(`${ENDPOINT_PRODUCTO_URL}/productos`);
+        console.log(response);
+        return response.data.body.map((c) => {
+            return {
+                id: c.id,
+                nombre: c.nombre,
+                descripcion: c.descripcion,
+                precioUnitario: c.precio,
+                observaciones: c.observaciones,
+                categoria: c.categoriaNombre,
+                imagen: null
+            }
+        })
 
     } catch (error) {
         return []
     };
 };
 
-const getProductosCategoria = async (categoria) => {
+const getProductosCategoria = async (categoriaId) => {
     try {
-        // Cambiar por el endpoint que corresponda
-        const productos = await getAllProductos();
-        return productos.filter(p => p.categoria === categoria);
+        const response = await axios.get(`${ENDPOINT_PRODUCTO_URL}/productos/categoria/${categoriaId}`);
+        console.log(response);
+        return response.data.body.map((p) => {
+            return {
+                id: p.id,
+                nombre: p.nombre,
+                descripcion: p.descripcion,
+                precioUnitario: p.precio,
+                observaciones: p.observaciones,
+                categoria: p.categoriaNombre,
+                imagen: null
+            }
+        });
 
     } catch (error) {
         return []

@@ -4,6 +4,16 @@
     margin-bottom: 10px;     
 }
 
+.producto-img {
+    transition: all 0.3s ease;
+}
+
+.card:hover img {
+    transform: scale(1.02);  
+    transition: all 0.3s ease;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); 
+}
+
 /* Ocultar flechas solo para campos de entrada de tipo number con la clase .input-cantidad */
 
 /* Para navegadores Webkit (Chrome, Safari) */
@@ -15,8 +25,11 @@
 
 /* Para Firefox */
 .input-cantidad {
-    -moz-appearance: textfield; /* Cambia la apariencia a campo de texto */
+    appearance: textfield; /* Propiedad estándar */
+    -moz-appearance: textfield; /* Para compatibilidad con Firefox */
+    -webkit-appearance: none; /* Para compatibilidad con Webkit (Chrome, Safari) */
 }
+
 
 .input-cantidad {
     text-align: center; /* Centrar el texto */
@@ -45,11 +58,3 @@
     color: white;
     /* border: 2px solid white; */
 }
-
-/* @media (min-width: 1200px) {
-    .imagen-centrada {
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-    }
-} */

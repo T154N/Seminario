@@ -107,6 +107,36 @@ export function Producto() {
                     </div>
                 </div>
                 {/* Mapeo del array de productos para generar las cards */}
+                <div className="row">
+                    {productosFiltrados.map(producto => (
+                        <div className="col-12 col-md-6 col-lg-4 mb-4" key={producto.id}>
+                            <div className="card h-100 shadow">
+                                <img src={producto.imagen} className="rounded mx-4 d-block mt-4 producto-img" alt={producto.nombre}/>
+                                <div className="card-body">
+                                    <h5 className="card-title">{producto.nombre}</h5>
+                                    <p className="card-text">{producto.descripcion}</p>
+                                    <p className="card-text">{producto.marca}</p>
+                                    <div className="d-flex justify-content-center align-items-center">
+                                        <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>
+                                        <input
+                                            type="number"
+                                            value={cantidad[producto.id] || 1}
+                                            onChange={(e) => manejarCambioCantidad(producto.id, e)}
+                                            className="mx-2 input-cantidad"
+                                            style={{ width: "50px" }}
+                                            min="0"
+                                        />
+                                        <button className="btn btn-outline-secondary" onClick={() => incrementarCantidad(producto.id)}>+</button>
+                                    </div>
+                                    <button className="btn btn-success mt-3 w-100" onClick={() => agregarAlCarrito(producto)}>
+                                        Agregar al carrito
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                {/*
                 {productosFiltrados.map(producto => (
                     <div className="row" key={producto.id}>
                         <div className="col">
@@ -147,6 +177,7 @@ export function Producto() {
                         </div>
                     </div>
                 ))}
+                */}
             </div>
         </div>
     );

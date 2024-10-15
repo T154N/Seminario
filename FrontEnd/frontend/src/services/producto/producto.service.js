@@ -45,9 +45,18 @@ const getProductosCategoria = async (categoriaId) => {
     };
 }
 
+const postNuevoProducto = async (data) => {
+    try {
+        console.log(data);
+    } catch (error) {
+        return 500;
+    }
+}
+
 const productoService = {
     getAllProductos,
-    getProductosCategoria
+    getProductosCategoria,
+    postNuevoProducto
 }
 
 export default productoService;

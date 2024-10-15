@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./login.css";
+import "../../scss/custom.css";
 import { useNavigate } from "react-router";
 
 import { IniciarSesion } from "./IniciarSesion";
@@ -96,14 +97,14 @@ export function Login() {
                                             <div className="justify-content-start gap-2 mb-3">
                                                 <span>¿No tenés cuenta?</span>
                                                 <div className="mt-2">
-                                                    <button className="btn btn-aceptar" onClick={mostrarReg}>Registrate</button>
+                                                    <button className="btn btn-principal" onClick={mostrarReg}>Registrate</button>
                                                 </div>
                                             </div>
                                         
                                             <div className="justify-content-start gap-2 mb-3">
                                                 <span>¿Olvidaste la contraseña?</span>
                                                 <div className="mt-2">
-                                                    <button className="btn btn-aceptar" onClick={mostrarCambiarContrasena}>Recuperar contraseña</button>
+                                                    <button className="btn btn-principal" onClick={mostrarCambiarContrasena}>Recuperar contraseña</button>
                                                 </div>
                                             </div>
                                         </div>}
@@ -111,7 +112,7 @@ export function Login() {
                                         {(mostrarRegistrarse || mostrarCambiarPwd)  &&
                                             <div className="mt-2">
                                                 <div>
-                                                    <button className="btn btn-aceptar mb-2" onClick={volverALogin}>Volver</button>
+                                                    <button className="btn btn-principal mb-2" onClick={volverALogin}>Volver</button>
                                                 </div>
                                             </div>}
                                     </div>

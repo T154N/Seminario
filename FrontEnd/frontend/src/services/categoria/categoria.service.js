@@ -1,4 +1,5 @@
 import axios from 'axios';
+import imagen from '../../images/Header Icons/categoriasImagenesMock/chupetin.jpeg';
 
 const ENDPOINT_CATEGORIA_URL = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
 
@@ -11,7 +12,7 @@ const getAllCategorias = async () => {
             return {
                 id: c.categoriaId,
                 nombre: c.categoriaNombre.toUpperCase(),
-                imagen: null
+                imagen: imagen
             }
         })
     } catch (error) {

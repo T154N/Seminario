@@ -1,4 +1,5 @@
 import React from "react";
+import "../../scss/custom.css";
 import {useForm} from "react-hook-form";
 
 import loginService from "../../services/login/login.service";
@@ -58,7 +59,7 @@ export function IniciarSesion({falloIniciarSesion, navegarHaciaCatalogoLogin}) {
             </div>
 
             <div className="d-grid">
-                <button className="btn btn-aceptar">Iniciar sesión</button>
+                <button className="btn btn-principal">Iniciar sesión</button>
             </div>
         </form>
     )

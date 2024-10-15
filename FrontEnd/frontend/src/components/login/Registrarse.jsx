@@ -1,7 +1,6 @@
-// NOTA: En los divs entre cada input y label debe ir un margin top de 1 y un margin bottom de 0.
-// Entre el ultimo div y el boton debe ir un margin bottom de 3
 import React from "react";
 import {useForm} from "react-hook-form";
+import "../../scss/custom.css";
 
 export function Registrarse({volverALogin}) {
 
@@ -106,7 +105,7 @@ export function Registrarse({volverALogin}) {
             </div>
 
             <div className="d-grid mb-3">
-                <button className="btn btn-aceptar">Registrarse</button>
+                <button className="btn btn-principal">Registrarse</button>
             </div>
 
         </form>

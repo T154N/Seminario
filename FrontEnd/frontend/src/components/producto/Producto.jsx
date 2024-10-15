@@ -104,7 +104,7 @@ export function Producto() {
                 <div className="row mb-3">  
                     <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
                         <div className="d-flex align-items-start">
-                            <button className="btn btn-success" onClick={handleVolverCatalogo}>Volver al catalogo</button>
+                            <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>Volver al catalogo</button>
                         </div>
                     </div>
                 </div>
@@ -124,11 +124,11 @@ export function Producto() {
                     {productosFiltrados.map(producto => (
                         <div className="col-12 col-md-6 col-lg-4 mb-4" key={producto.id}>
                             <div className="card h-100 shadow">
-                                <img src={producto.imagen} className="rounded mx-4 d-block mt-4 producto-img" alt={producto.nombre}/>
+                                <img src={producto.imagen} className="rounded mx-4 d-block mt-4" alt={producto.descripcion}/>
                                 <div className="card-body">
                                     <h5 className="card-title">{producto.nombre}</h5>
                                     <p className="card-text">{producto.descripcion}</p>
-                                    <p className="card-text">{producto.marca}</p>
+                                    <p className="card-text">$ {producto.precioUnitario}</p>
                                     <div className="d-flex justify-content-center align-items-center">
                                         <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>
                                         <input
@@ -141,8 +141,8 @@ export function Producto() {
                                         />
                                         <button className="btn btn-outline-secondary" onClick={() => incrementarCantidad(producto.id)}>+</button>
                                     </div>
-                                    <button className="btn btn-success mt-3 w-100" onClick={() => agregarAlCarrito(producto)}>
-                                        Agregar al carrito
+                                    <button className="btn btn-secundario text-white mt-3 w-100" onClick={() => agregarAlCarrito(producto)}>
+                                    🛒 Agregar al carrito
                                     </button>
                                 </div>
                             </div>

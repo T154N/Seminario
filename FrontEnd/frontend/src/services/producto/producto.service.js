@@ -1,4 +1,5 @@
 import axios from 'axios';
+import imagen from '../../images/Header Icons/categoriasImagenesMock/chupetin.jpeg';
 
 const ENDPOINT_PRODUCTO_URL = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
 
@@ -35,7 +36,7 @@ const getProductosCategoria = async (categoriaId) => {
                 precioUnitario: p.precio,
                 observaciones: p.observaciones,
                 categoria: p.categoriaNombre,
-                imagen: null
+                imagen: imagen
             }
         });
 

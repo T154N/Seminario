@@ -39,7 +39,7 @@ export function Registrarse({volverALogin}) {
                     },
                 })}/>
                 <div>
-                    {errors.correo && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.correo.message}</p>}
+                    {errors.correo && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.correo.message}</p>}
                 </div>
             </div>
 
@@ -57,7 +57,7 @@ export function Registrarse({volverALogin}) {
                            }
                        })}/>
                 <div>
-                    {errors.password && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.password.message}</p>}
+                    {errors.password && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.password.message}</p>}
                 </div>
             </div>
 
@@ -79,7 +79,7 @@ export function Registrarse({volverALogin}) {
                            }
                        })}/>
                 <div>
-                    {errors.password && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.password.message}</p>}
+                    {errors.password && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.password.message}</p>}
                 </div>
             </div>
 
@@ -100,7 +100,7 @@ export function Registrarse({volverALogin}) {
                            },
                        })}/>
                 <div>
-                    {errors.direccion && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.direccion.message}</p>}
+                    {errors.direccion && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.direccion.message}</p>}
                 </div>
             </div>
 

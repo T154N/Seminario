@@ -1,6 +1,7 @@
 .custom-offcanvas-width {
     width: 100% !important; 
-    max-width: 500px;}
+    max-width: 500px;
+}
 
 .offcanvas-title {
     font-size: 1.5rem;
@@ -48,14 +49,12 @@
     padding: 10px;
 }
 
-
-
 /* Agrega margen inferior a la última tarjeta del carrito */
 @media (max-width: 767px) {
-.producto-card:last-child {
-    margin-bottom: 100px; 
-}}
-
+    .producto-card:last-child {
+        margin-bottom: 100px; 
+    }
+}
 
 .card-title {
     font-size: 1.25rem;
@@ -80,7 +79,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 @media (min-width: 768px) {
@@ -92,10 +90,10 @@
 @media (max-width: 767px) {
     .btn-eliminar {
         width: 100%; 
-        height: auto; 
+        height: auto;
+        margin-top: 10px; 
     }
 }
-
 
 .btn-danger:hover {
     background-color: #c82333;
@@ -104,17 +102,15 @@
 
 @media (max-width: 767px) {
     .carrito-footer {
-      text-align: center; 
-      flex-direction: column; 
+        text-align: center; 
+        flex-direction: column;
     }
-  
-    .carrito-footer .btn {
-      width: 100%; 
-      margin-bottom: 10px; 
-    }
-  }
-  
 
+    .carrito-footer .btn {
+        width: 100%; 
+        margin-bottom: 10px;
+    }
+}
 
 .mensaje-carrito-vacio {
     text-align: center;
@@ -123,16 +119,15 @@
     margin-top: 20px;
 }
 
-.btn-carrito-compra{
+.btn-carrito-compra {
     border: 3px solid black;
 }
 
 @media (min-width: 767px) {
-    .btn-carrito-compra{
+    .btn-carrito-compra {
         margin-left: 70px;
     }
-  }
-
+}
 
 @media (max-width: 767px) {
     .cantidad-control {
@@ -148,13 +143,31 @@
     }
 }
 
+
 .producto-precios p {
     margin-bottom: 10px; 
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
 .producto-precios span {
-    font-weight: bold; 
+    font-weight: bold;
 }
 
+
+@media (max-width: 767px) {
+    .producto-precios {
+        display: flex;
+        flex-direction: row; 
+        justify-content: space-between; 
+    }
+
+    .producto-precios p {
+        margin-bottom: 0;
+    }
+
+    .producto-precios span {
+        display: inline-block;
+        font-weight: bold;
+    }
+}

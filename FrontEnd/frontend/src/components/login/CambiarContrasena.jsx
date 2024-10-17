@@ -34,7 +34,7 @@ export function CambiarContrasena({volverALogin}) {
             </div>
         </div>
         <div className="d-grid mt-2 mb-3">
-            <button className="btn btn-aceptar">Recuperar contraseña</button>
+            <button className="btn btn-principal">Recuperar contraseña</button>
         </div>
     </form>
  )   

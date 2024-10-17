@@ -56,19 +56,19 @@ export function Carrito() {
                                         </div>
                                     </div>
                                     <div className="col-12 col-md-3 d-flex flex-column justify-content-between">
-                                    <div className="text-start producto-precios">
-    <p className="mb-1">
-        Precio unitario:
-        <span className="d-block">${producto.precioUnitario}</span>
-    </p>
-    <p className="mb-1">
-        Precio total:
-        <span className="d-block">${producto.precioUnitario * producto.cantidad}</span>
-    </p>
-</div>
-<button className="btn btn-danger btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
-    <FontAwesomeIcon icon={faTrash} />
-</button>
+                                        <div className="text-start producto-precios">
+                                            <p className="mb-1">
+                                                Precio unitario:
+                                                <span className="d-block">${producto.precioUnitario}</span>
+                                            </p>
+                                            <p className="mb-1">
+                                                Precio total:
+                                                <span className="d-block">${producto.precioUnitario * producto.cantidad}</span>
+                                            </p>
+                                        </div>
+                                        <button className="btn btn-danger btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </button>
                                     </div>
                                 </div>
                             </div>

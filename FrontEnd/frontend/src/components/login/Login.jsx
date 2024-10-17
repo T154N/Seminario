@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./login.css";
+import "../../scss/custom.css";
 import { useNavigate } from "react-router";
 
 import { IniciarSesion } from "./IniciarSesion";
@@ -78,8 +79,8 @@ export function Login() {
                             <div className="">
                                 <h1 className="fs-1">Iniciar sesión</h1>
                                 {mostrarAlertaFalloIniciarSesion && <div className="alert alert-danger" role="alert">Fallo el inicio de sesion</div>}
-                                <div className="card shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
-                                    <div className="card-body text-start">
+                                <div className="card border-0 shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
+                                    <div className="card-body text-start px-3">
                                         {sesionYaIniciada && <div className="mt-3 fs-5 text-center alert alert-success" style={{borderRadius: "15px"}}>La sesion esta iniciada</div>}
 
                                         {mostrarIniciarSesion && !sesionYaIniciada && <IniciarSesion falloIniciarSesion={falloIniciarSesion} navegarHaciaCatalogoLogin={navegarHaciaCatalogoLogin}/>}
@@ -92,18 +93,18 @@ export function Login() {
                                         </div>}
 
                                         {!mostrarCambiarPwd && !mostrarRegistrarse &&
-                                        <div className="mt-2 text-start fs-6">
+                                        <div className="mt-2 text-start fs-6 px-0">
                                             <div className="justify-content-start gap-2 mb-3">
                                                 <span>¿No tenés cuenta?</span>
                                                 <div className="mt-2">
-                                                    <button className="btn btn-aceptar" onClick={mostrarReg}>Registrate</button>
+                                                    <button className="btn btn-principal" onClick={mostrarReg}>Registrate</button>
                                                 </div>
                                             </div>
                                         
-                                            <div className="justify-content-start gap-2 mb-3">
+                                            <div className="justify-content-start gap-2 mb-1">
                                                 <span>¿Olvidaste la contraseña?</span>
                                                 <div className="mt-2">
-                                                    <button className="btn btn-aceptar" onClick={mostrarCambiarContrasena}>Recuperar contraseña</button>
+                                                    <button className="btn btn-principal" onClick={mostrarCambiarContrasena}>Recuperar contraseña</button>
                                                 </div>
                                             </div>
                                         </div>}
@@ -111,7 +112,7 @@ export function Login() {
                                         {(mostrarRegistrarse || mostrarCambiarPwd)  &&
                                             <div className="mt-2">
                                                 <div>
-                                                    <button className="btn btn-aceptar mb-2" onClick={volverALogin}>Volver</button>
+                                                    <button className="btn btn-principal mb-2" onClick={volverALogin}>Volver</button>
                                                 </div>
                                             </div>}
                                     </div>

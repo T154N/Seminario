@@ -51,6 +51,8 @@ public class Producto {
     @Column(name = "producto_observaciones")
     private String producto_observaciones;
 
+    @Column(name="producto_url_imagen")
+    private String producto_url_imagen;
 
     @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinColumn(name = "producto_categoria_id", referencedColumnName = "categoria_id", nullable = false)
@@ -72,10 +74,18 @@ public class Producto {
         producto.setProducto_usuario_baja(this.producto_usuario_baja);
         producto.setProducto_observaciones(this.producto_observaciones);
         producto.setCategoria(this.categoria);
+        producto.setProducto_url_imagen(this.producto_url_imagen);
         return producto;
 
     }
 
+    public String getProducto_url_imagen() {
+        return producto_url_imagen;
+    }
+
+    public void setProducto_url_imagen(String producto_url_imagen) {
+        this.producto_url_imagen = producto_url_imagen;
+    }
 
     public Categoria getCategoria() {
         return categoria;

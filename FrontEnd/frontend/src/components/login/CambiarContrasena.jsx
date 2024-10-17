@@ -30,11 +30,11 @@ export function CambiarContrasena({volverALogin}) {
             })}/>
             
             <div>
-                {errors.correo && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.correo.message}</p>}
+                {errors.correo && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.correo.message}</p>}
             </div>
         </div>
         <div className="d-grid mt-2 mb-3">
-            <button className="btn btn-aceptar">Recuperar contraseña</button>
+            <button className="btn btn-principal">Recuperar contraseña</button>
         </div>
     </form>
  )   

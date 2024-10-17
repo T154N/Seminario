@@ -7,17 +7,27 @@ public class ProductoDTO {
     private Double precio;
     private String observaciones;
     private String categoriaNombre;
+    private String urlImagen;
 
-    public ProductoDTO(String descripcion, Long id, String nombre, String observaciones, Double precio, String categoriaNombre) {
+    public ProductoDTO(String descripcion, Long id, String nombre, String observaciones, Double precio, String categoriaNombre, String urlImagen) {
         this.descripcion = descripcion;
         this.id = id;
         this.nombre = nombre;
         this.observaciones = observaciones;
         this.precio = precio;
         this.categoriaNombre = categoriaNombre;
+        this.urlImagen = urlImagen;
     }
 
     public ProductoDTO() {
+    }
+
+    public String getUrlImagen() {
+        return urlImagen;
+    }
+
+    public void setUrlImagen(String urlImagen) {
+        this.urlImagen = urlImagen;
     }
 
     public String getCategoriaNombre() {

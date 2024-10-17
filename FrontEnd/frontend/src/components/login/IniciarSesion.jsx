@@ -1,4 +1,5 @@
 import React from "react";
+import "../../scss/custom.css";
 import {useForm} from "react-hook-form";
 
 import loginService from "../../services/login/login.service";
@@ -36,7 +37,7 @@ export function IniciarSesion({falloIniciarSesion, navegarHaciaCatalogoLogin}) {
                     },
                 })}/>
                 <div>
-                    {errors.correo && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.correo.message}</p>}
+                    {errors.correo && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.correo.message}</p>}
                 </div>
             </div>
             <div className="mt-2 mb-3">
@@ -53,12 +54,12 @@ export function IniciarSesion({falloIniciarSesion, navegarHaciaCatalogoLogin}) {
                            }
                        })}/>
                 <div>
-                    {errors.password && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.password.message}</p>}
+                    {errors.password && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.password.message}</p>}
                 </div>
             </div>
 
             <div className="d-grid">
-                <button className="btn btn-aceptar">Iniciar sesión</button>
+                <button className="btn btn-principal">Iniciar sesión</button>
             </div>
         </form>
     )

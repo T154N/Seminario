@@ -1,35 +1,48 @@
 import React, { useState, useEffect } from "react";
 import './producto.css'; 
 import productoService from "../../services/producto/producto.service";
-import { useParams, useNavigate } from "react-router"; // Asegúrate de importar useNavigate
+import { useParams, useNavigate, useLocation } from "react-router"; // Asegúrate de importar useNavigate
 import { useCarrito } from '../carrito/CarritoContext'; // Importa el hook de contexto del carrito
 
 export function Producto() {
     const navigate = useNavigate(); // Inicializa useNavigate
+    const location = useLocation(); // Inicializa useLocation
     const [busqueda, setBusqueda] = useState('');
     const [cantidad, setCantidad] = useState({});
     const [productos, setProductos] = useState([]); // Inicializamos productos como array vacío
     const [loading, setLoading] = useState(true); // Controlar el estado de carga
-    const { categoria } = useParams(); // Capturar la categoría desde la URL
+    const { categoria: categoriaId } = useParams(); // Capturar la categoría desde la URL
     const { agregarProducto } = useCarrito(); // Accede a la función agregarProducto del contexto del carrito
+    const [categoriaNombre, setCategoriaNombre] = useState(location.state?.categoriaNombre || null); // Inicializa el estado de la categoría
 
     useEffect(() => {
+        if (!categoriaNombre) {
+            setCategoriaNombre("Todos los productos");
+        }
+    }, [categoriaNombre]);
+    
+    useEffect(() => {
         const fetchData = async () => {
-            setLoading(true); // Iniciar el estado de carga
-
-            if (!categoria) {
-                const productos = await productoService.getAllProductos(); // Obtener todos los productos
+            setLoading(true);
+    
+            // Chequea si `categoriaNombre` necesita ser actualizado a "Todos los productos"
+            if (!categoriaNombre || categoriaNombre === "Todos los productos") {
+                const productos = await productoService.getAllProductos();
                 setProductos(productos);
+                if (!categoriaNombre) {
+                    setCategoriaNombre("Todos los productos");
+                }
             } else {
-                const productos = await productoService.getProductosCategoria(categoria);
+                const productos = await productoService.getProductosCategoria(categoriaId);
                 setProductos(productos);
             }
-            
-            setLoading(false); // Finalizar el estado de carga
+    
+            setLoading(false);
         };
-        
+    
         fetchData();
-    }, [categoria]); // Dependencia de categoria para actualizar cuando la URL cambie
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [categoriaId]);
 
     const handleBusquedaChange = (e) => {
         setBusqueda(e.target.value);
@@ -79,19 +92,19 @@ export function Producto() {
     ) : [];
 
     if (loading) {
-        return <div>Cargando productos...</div>; // Mostrar un mensaje de carga mientras los productos se están obteniendo
+        return <div className="fs-3">Cargando productos...</div>; // Mostrar un mensaje de carga mientras los productos se están obteniendo
     }
 
     return (
         <div>
             <div>
-                <h2 className="fs-1 mb-3">{categoria ? categoria : 'Todos los productos'}</h2>
+                <h2 className="fs-1 mb-3">{categoriaNombre.toUpperCase()}</h2>
             </div>
             <div className="container">
                 <div className="row mb-3">  
                     <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
                         <div className="d-flex align-items-start">
-                            <button className="btn btn-success" onClick={handleVolverCatalogo}>Volver al catalogo</button>
+                            <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>Volver al catalogo</button>
                         </div>
                     </div>
                 </div>
@@ -111,11 +124,11 @@ export function Producto() {
                     {productosFiltrados.map(producto => (
                         <div className="col-12 col-md-6 col-lg-4 mb-4" key={producto.id}>
                             <div className="card h-100 shadow">
-                                <img src={producto.imagen} className="rounded mx-4 d-block mt-4 producto-img" alt={producto.nombre}/>
+                                <img src={producto.imagen} className="rounded mx-4 d-block mt-4" alt={producto.descripcion}/>
                                 <div className="card-body">
                                     <h5 className="card-title">{producto.nombre}</h5>
                                     <p className="card-text">{producto.descripcion}</p>
-                                    <p className="card-text">{producto.marca}</p>
+                                    <p className="card-text">$ {producto.precioUnitario}</p>
                                     <div className="d-flex justify-content-center align-items-center">
                                         <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>
                                         <input
@@ -128,8 +141,8 @@ export function Producto() {
                                         />
                                         <button className="btn btn-outline-secondary" onClick={() => incrementarCantidad(producto.id)}>+</button>
                                     </div>
-                                    <button className="btn btn-success mt-3 w-100" onClick={() => agregarAlCarrito(producto)}>
-                                        Agregar al carrito
+                                    <button className="btn btn-secundario text-white mt-3 w-100" onClick={() => agregarAlCarrito(producto)}>
+                                    🛒 Agregar al carrito
                                     </button>
                                 </div>
                             </div>

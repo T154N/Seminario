@@ -1,7 +1,6 @@
-/*offcanvas*/
 .custom-offcanvas-width {
-    width: 40% !important; 
-}
+    width: 100% !important; 
+    max-width: 500px;}
 
 .offcanvas-title {
     font-size: 1.5rem;
@@ -28,28 +27,29 @@
 
 .carrito-footer {
     position: absolute;
-    bottom: 0%;
+    bottom: 0;
     left: 0;
     right: 0;
     background-color: #FCBB3A;
     padding: 10px 20px;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 10;
 }
 
-/*carrito*/
 .producto-card {
     background-color: rgb(235, 226, 226);
     margin-bottom: 20px;
-    border: 1px solid #ccc; 
-    border-radius: 8px; 
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1) ;
+    padding: 10px;
 }
 
 .card-title {
-    font-size: 1.25rem; 
+    font-size: 1.25rem;
 }
 
 .cantidad-control span {
@@ -58,19 +58,54 @@
 
 .text-start {
     font-size: small;
-    padding: 10px !important; 
+    padding: 10px !important;
     text-align: left;
 }
 
-.btn-danger {
-    background-color: #dc3545; 
-    border: 4px solid black; 
+/* Botón Eliminar */
+.btn-eliminar {
+    background-color: #dc3545;
+    border: 4px solid black;
+    width: 50px; 
+    height: 50px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
-.btn-danger:hover {
-    background-color: #c82333; 
-    transition: background-color 0.3s; 
+@media (min-width: 768px) {
+    .btn-eliminar {
+        margin-left: 30px;
+    }
 }
+
+@media (max-width: 767px) {
+    .btn-eliminar {
+        width: 100%; 
+        height: auto; 
+    }
+}
+
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transition: background-color 0.3s;
+}
+
+@media (max-width: 767px) {
+    .carrito-footer {
+      text-align: center; 
+      flex-direction: column; 
+    }
+  
+    .carrito-footer .btn {
+      width: 100%; 
+      margin-bottom: 10px; 
+    }
+  }
+  
+
 
 .mensaje-carrito-vacio {
     text-align: center;
@@ -78,3 +113,9 @@
     font-size: 1.3rem;
     margin-top: 20px;
 }
+
+.btn-carrito-compra{
+    border: 3px solid black;
+    margin-left: 70px;
+}
+

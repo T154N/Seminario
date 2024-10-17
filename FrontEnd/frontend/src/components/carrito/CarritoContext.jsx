@@ -28,17 +28,17 @@ export const CarritoProvider = ({ children }) => {
 
     const disminuirCantidad = (id) => {
         setProductos((prevProductos) => {
-            return prevProductos.reduce((acc, producto) => {
+            return prevProductos.map((producto) => {
                 if (producto.id === id) {
+                    // Si la cantidad es mayor a 1, permite disminuirla
                     if (producto.cantidad > 1) {
-                        acc.push({ ...producto, cantidad: producto.cantidad - 1 });
+                        return { ...producto, cantidad: producto.cantidad - 1 };
                     }
-                    // Si la cantidad llega a 1 y se disminuye, se elimina del carrito
-                } else {
-                    acc.push(producto);
+                    // Si la cantidad ya es 1, no la cambia
+                    return producto;
                 }
-                return acc;
-            }, []);
+                return producto;
+            });
         });
     };
 

@@ -9,11 +9,20 @@
     
 }
 
+.logo-button {
+    background: none; 
+    border: none; 
+    padding: 0; 
+    outline: none; 
+}
+
 .cmlogo {
     margin-left: 15px;
     width: 5rem;
     height: auto;
+    display: block; 
 }
+
 
 .logo {
     width: 60px;

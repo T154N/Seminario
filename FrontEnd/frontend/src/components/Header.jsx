@@ -1,6 +1,6 @@
 import './header.css';
 // imagenes
-import CMLogo from '../images/Header Icons/cmDistribuidora-removebg-preview.png'
+import CMLogo from '../images/Header Icons/CMDistribuidoraLogo.png'
 import usuario from '../images/Header Icons/usuario.png'
 import catalogo from '../images/Header Icons/catalogo.png'
 import informacion from '../images/Header Icons/informacion.png'

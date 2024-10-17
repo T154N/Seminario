@@ -1,10 +1,12 @@
 package com.pedido_flex.wsPedidoFlex.Service;
 
+import com.pedido_flex.wsPedidoFlex.DTO.FiltroProductoDTO;
 import com.pedido_flex.wsPedidoFlex.Model.Categoria;
 import com.pedido_flex.wsPedidoFlex.Model.Producto;
 import com.pedido_flex.wsPedidoFlex.Repository.CategoriaRepository;
 import com.pedido_flex.wsPedidoFlex.Repository.ProductoRepository;
-import com.pedido_flex.wsPedidoFlex.Service.CategoriaService;
+import com.pedido_flex.wsPedidoFlex.Utils.Specifications.SearchProductosSpecification;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,8 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductoService {
-
+    @Autowired
     private final ProductoRepository productoRepository;
+
     private final CategoriaRepository categoriaRepository;
 
     public ProductoService(ProductoRepository productoRepository ,CategoriaRepository categoriaRepository) {
@@ -82,5 +85,13 @@ public class ProductoService {
     return productoRepository.save(producto);
 }
 
+public List<Producto> findAllProductos() {
+        return productoRepository.findAll();
+}
+
+    public List<Producto> getProductoByFilter(FiltroProductoDTO filtroProductoDTO){
+        SearchProductosSpecification searchProductosSpecification = new SearchProductosSpecification(filtroProductoDTO.getCategoriaId(), filtroProductoDTO.getDescripcion(), filtroProductoDTO.getEstadoId(), filtroProductoDTO.getId(), filtroProductoDTO.getNombre(), null);
+        return productoRepository.findAll(searchProductosSpecification);
+    }
 
 }

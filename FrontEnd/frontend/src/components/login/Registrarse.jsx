@@ -1,7 +1,6 @@
-// NOTA: En los divs entre cada input y label debe ir un margin top de 1 y un margin bottom de 0.
-// Entre el ultimo div y el boton debe ir un margin bottom de 3
 import React from "react";
 import {useForm} from "react-hook-form";
+import "../../scss/custom.css";
 
 export function Registrarse({volverALogin}) {
 
@@ -40,7 +39,7 @@ export function Registrarse({volverALogin}) {
                     },
                 })}/>
                 <div>
-                    {errors.correo && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.correo.message}</p>}
+                    {errors.correo && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.correo.message}</p>}
                 </div>
             </div>
 
@@ -58,7 +57,7 @@ export function Registrarse({volverALogin}) {
                            }
                        })}/>
                 <div>
-                    {errors.password && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.password.message}</p>}
+                    {errors.password && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.password.message}</p>}
                 </div>
             </div>
 
@@ -80,7 +79,7 @@ export function Registrarse({volverALogin}) {
                            }
                        })}/>
                 <div>
-                    {errors.password && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.password.message}</p>}
+                    {errors.password && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.password.message}</p>}
                 </div>
             </div>
 
@@ -101,12 +100,12 @@ export function Registrarse({volverALogin}) {
                            },
                        })}/>
                 <div>
-                    {errors.direccion && <p className="mt-1 mb-0" style={{color: "darkred"}}>{errors.direccion.message}</p>}
+                    {errors.direccion && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.direccion.message}</p>}
                 </div>
             </div>
 
             <div className="d-grid mb-3">
-                <button className="btn btn-aceptar">Registrarse</button>
+                <button className="btn btn-principal">Registrarse</button>
             </div>
 
         </form>

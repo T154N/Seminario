@@ -48,6 +48,15 @@
     padding: 10px;
 }
 
+
+
+/* Agrega margen inferior a la última tarjeta del carrito */
+@media (max-width: 767px) {
+.producto-card:last-child {
+    margin-bottom: 100px; 
+}}
+
+
 .card-title {
     font-size: 1.25rem;
 }
@@ -124,7 +133,7 @@
     }
   }
 
-/* Estilos para resoluciones menores a 767px */
+
 @media (max-width: 767px) {
     .cantidad-control {
         display: flex;
@@ -138,3 +147,14 @@
         text-align: center; 
     }
 }
+
+.producto-precios p {
+    margin-bottom: 10px; 
+    display: flex;
+    flex-direction: column; 
+}
+
+.producto-precios span {
+    font-weight: bold; 
+}
+

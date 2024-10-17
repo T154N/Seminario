@@ -60,9 +60,15 @@ export function Carrito() {
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
 
-                                        <div className="text-start mt-3">
-                                            <p className="mb-1">Precio unitario: ${producto.precioUnitario}</p>
-                                            <p className="mb-1">Precio total: ${producto.precioUnitario * producto.cantidad}</p>
+                                        <div className="text-start producto-precios">
+                                            <p className="mb-1">
+                                                Precio unitario:
+                                                <span className="d-block">${producto.precioUnitario}</span>
+                                            </p>
+                                            <p className="mb-1">
+                                                Precio total:
+                                                <span className="d-block">${producto.precioUnitario * producto.cantidad}</span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

@@ -79,7 +79,7 @@ export function Login() {
                             <div className="">
                                 <h1 className="fs-1">Iniciar sesión</h1>
                                 {mostrarAlertaFalloIniciarSesion && <div className="alert alert-danger" role="alert">Fallo el inicio de sesion</div>}
-                                <div className="card shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
+                                <div className="card border-0 shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
                                     <div className="card-body text-start px-3">
                                         {sesionYaIniciada && <div className="mt-3 fs-5 text-center alert alert-success" style={{borderRadius: "15px"}}>La sesion esta iniciada</div>}
 

@@ -3,6 +3,7 @@ package com.pedido_flex.wsPedidoFlex.Repository;
 import com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO;
 import com.pedido_flex.wsPedidoFlex.Model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,29 +14,28 @@ import java.util.Optional;
 
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+public interface UsuarioRepository extends JpaRepository<Usuario, Long>, JpaSpecificationExecutor<Usuario> {
 
     @Query(
-            value = "SELECT  NEW com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO(u.usuario_id, u.usuario_cliente_email, r.rolNombre, u.usuario_contrasena) " +
+            value = "SELECT NEW com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO(u.usuario_id, u.usuario_email, r, u.usuario_contrasena) " +
                     "FROM Usuario u " +
-                    "JOIN Roles r ON u.usuario_rol_id = r.rol_id " +
-                    "WHERE u.usuario_cliente_email = :email "+
-                    "AND u.usuario_estado_id=1")
+                    "JOIN u.rol r " +
+                    "WHERE u.usuario_email = :email " +
+                    "AND u.usuario_estado_id = 1")
     UsuarioDTO findByEmailActivo(@Param("email") String email);
 
     @Query(
-            value = "SELECT  NEW com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO(u.usuario_id, u.usuario_cliente_email, r.rolNombre, u.usuario_contrasena) " +
+            value = "SELECT  NEW com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO(u.usuario_id, u.usuario_email, r, u.usuario_contrasena) " +
                     "FROM Usuario u " +
-                    "JOIN Roles r ON u.usuario_rol_id = r.rol_id " +
-                    "WHERE u.usuario_cliente_email = :email ")
+                    "JOIN u.rol r " +
+                    "WHERE lower(u.usuario_email) = lower(trim(:email)) ")
     UsuarioDTO findByEmail(@Param("email") String email);
 
     @Query(
-            value = "SELECT  NEW com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO(u.usuario_id, u.usuario_cliente_email, r.rolNombre, u.usuario_contrasena) " +
-                    "FROM Usuario u " +
-                    "JOIN Roles r ON u.usuario_rol_id = r.rol_id " +
-                    "JOIN u.cliente c "+
-                    "WHERE(lower(u.usuario_cliente_email) = trim(lower( :email )) " +
+            value = "SELECT  NEW com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO (u.usuario_id, u.usuario_email) " +
+                    "FROM Cliente c " +
+                    "JOIN c.cliente_Usuario u "+
+                    "WHERE(lower(u.usuario_email) = trim(lower( :email )) " +
                     "OR c.cliente_documento = trim(:documento))"
     )
     UsuarioDTO findByUserRegister(@Param("email") String email,@Param("documento") String documento);

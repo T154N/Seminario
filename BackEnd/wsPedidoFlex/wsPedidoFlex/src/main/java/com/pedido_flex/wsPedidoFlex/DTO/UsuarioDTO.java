@@ -1,5 +1,6 @@
 package com.pedido_flex.wsPedidoFlex.DTO;
 
+import com.pedido_flex.wsPedidoFlex.Model.Roles;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -10,16 +11,20 @@ import java.util.stream.Collectors;
 public class UsuarioDTO {
     private Long id;
     private String email;
-    private String rol;
+    private Roles rol;
     private String contrasenia;
 
-
     // Constructor, getters y setters
-    public UsuarioDTO(Long usuarioId, String usuarioClienteEmail, String rolNombre,String contrasenia) {
+    public UsuarioDTO(Long usuarioId, String usuarioClienteEmail, Roles rolNombre,String contrasenia) {
         this.id = usuarioId;
         this.email = usuarioClienteEmail;
         this.rol = rolNombre;
         this.contrasenia = contrasenia;
+    }
+
+    public UsuarioDTO(Long usuarioId, String usuarioClienteEmail) {
+        this.id = usuarioId;
+        this.email = usuarioClienteEmail;
     }
 
     public UsuarioDTO(String usuarioClienteEmail, String contrasenia) {
@@ -55,11 +60,11 @@ public class UsuarioDTO {
         this.email = email;
     }
 
-    public String getRol() {
+    public Roles getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Roles rol) {
         this.rol = rol;
     }
 
@@ -71,6 +76,6 @@ public class UsuarioDTO {
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(rol)); // Devuelve una colección con el rol //Convierte el rol a GrantedAuthority
+        return Collections.singletonList(new SimpleGrantedAuthority(rol.getRolNombre())); // Devuelve una colección con el rol //Convierte el rol a GrantedAuthority
     }
 }

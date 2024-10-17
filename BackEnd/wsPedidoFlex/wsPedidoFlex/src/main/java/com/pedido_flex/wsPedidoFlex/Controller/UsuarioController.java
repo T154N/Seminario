@@ -1,5 +1,6 @@
 package com.pedido_flex.wsPedidoFlex.Controller;
 
+import com.pedido_flex.wsPedidoFlex.DTO.Filters.FiltroUsuarioDTO;
 import com.pedido_flex.wsPedidoFlex.DTO.LoginDTO;
 import com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO;
 import com.pedido_flex.wsPedidoFlex.Exception.Response;
@@ -22,13 +23,15 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    /**
-    * getUsuarioById:: obtener un usuario completo por su Id
-    **/
-    @GetMapping("/usuarios/{id}")
-    public Response getUsuarioById(@PathVariable Long id) {
+    /**@PostMapping("/usuarios/new")
+     * Alta de usuario sin cliente,casos donde son usuarios Empleados o Administradores
+     **/
+    @PostMapping("/usuarios/new")
+    public Response newUsuario(@RequestBody Usuario usuario) {
         try {
-            return Response.general(HttpStatus.OK, usuarioService.findUsuarioById(id));
+            Usuario newUsuario = usuarioService.guardarUsuario(usuario);
+
+            return Response.general(HttpStatus.OK, "Se creo el Usuario: "+newUsuario.getUsuario_email()+" ID: "+ newUsuario.getUsuario_id()+".");
         } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage() );
         } catch (Exception e) {
@@ -37,11 +40,28 @@ public class UsuarioController {
     }
 
     /**
+    * getUsuarioById:: obtener un usuario completo por su Id
+    **/
+    @GetMapping("/usuarios/{id}")
+    public Response getUsuarioById(@PathVariable Long id) {
+        try {
+            Usuario user = usuarioService.findUsuarioById(id);
+            return Response.general(HttpStatus.OK, user);
+        } catch (NullPointerException | IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage() );
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "No hemos encontrado este usuario.");
+        }
+    }
+
+
+    /**
      * findAllUsuarios():: obtener lista de todos los usuario con informacion completa
      **/
     @GetMapping("/usuarios")
     public Response findAllUsuarios() {
         try {
+            log.info("findAllUsuarios()");
             return Response.general(HttpStatus.OK, usuarioService.findAllUsuarios());
         } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage() );
@@ -100,7 +120,7 @@ public class UsuarioController {
 
     /**
      * findByUserRegister():: valida si existe el mail o documento registrado sin tener en cuenta el estado
-     **/
+     */
     @GetMapping("/usuarios/validateusuario")
     public Response findByUserRegister(@RequestParam String email, @RequestParam String documento) {
         try {
@@ -117,28 +137,29 @@ public class UsuarioController {
         }
     }
 
+
     /**
      * createUsuariol():: Creamo un  nuevo user, primero validamos que el email ingresado no exista.
      * Validaciones a revisar, dni o cuit
      **/
-    @PostMapping("/usuarios/new")
-    public Response createUsuario(@RequestBody Usuario usuario) {
-        try {
-            UsuarioDTO dto = usuarioService.getUsuarioByEmail(usuario.getUsuario_cliente_email());
-            if (Objects.isNull(dto)) {
-                log.info("No existe creo nuevo user: "+usuario.getUsuario_cliente_email());
-                return Response.general(HttpStatus.OK, "Creamos");
-                        // usuarioService.createUsuario(usuario)
-            }else {
-                log.info(" no null "+dto.getEmail());
-                return Response.custom(HttpStatus.BAD_REQUEST, "El mail ya se encuentra registrado.");
-            }
-        } catch (NullPointerException | IllegalArgumentException e) {
-            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
-        } catch (Exception e) {
-            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
-    }
+//    @PostMapping("/usuarios/new")
+//    public Response createUsuario(@RequestBody Usuario usuario) {
+//        try {
+//            UsuarioDTO dto = usuarioService.getUsuarioByEmail(usuario.getUsuario_email());
+//            if (Objects.isNull(dto)) {
+//                log.info("No existe creo nuevo user: "+usuario.getUsuario_email());
+//                return Response.general(HttpStatus.OK, "Creamos");
+//                        // usuarioService.createUsuario(usuario)
+//            }else {
+//                log.info(" no null "+dto.getEmail());
+//                return Response.custom(HttpStatus.BAD_REQUEST, "El mail ya se encuentra registrado.");
+//            }
+//        } catch (NullPointerException | IllegalArgumentException e) {
+//            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+//        } catch (Exception e) {
+//            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+//        }
+//    }
 
     @PutMapping("/usuarios/updatePass")
     public Response updateUsuario(@RequestBody LoginDTO usuarioDTO) {
@@ -180,4 +201,20 @@ public class UsuarioController {
         }
     } **/
 
+    @GetMapping("/usuarios/filter")
+    public Response findUsuariosFilter(@RequestBody FiltroUsuarioDTO filtroUsuarioDTO) {
+        try {
+            if(!Objects.isNull(filtroUsuarioDTO)) {
+                return Response.general(HttpStatus.OK,usuarioService.getUsuarioByFilter(filtroUsuarioDTO));
+            }else {
+                return Response.custom(HttpStatus.BAD_REQUEST, "No encontramos información a su búsqueda");
+            }
+        } catch (NullPointerException | IllegalArgumentException e) {
+            log.error("Error NullPointerException | IllegalArgumentException "+e.getMessage());
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            log.error("Error Exception "+e.getMessage());
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
 }

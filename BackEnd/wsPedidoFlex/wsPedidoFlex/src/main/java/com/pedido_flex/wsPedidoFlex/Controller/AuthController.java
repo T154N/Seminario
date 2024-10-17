@@ -37,7 +37,6 @@ public class AuthController {
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Response login(@RequestBody LoginDTO loginReq) {
-        log.info("Login request received"+loginReq);
         try {
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword()));
@@ -45,14 +44,13 @@ public class AuthController {
             Usuario user = new Usuario(email, "");
             String token = jwtUtil.createToken(user);
             LoginRes loginRes = new LoginRes(email, token);
-            log.info("Login response received"+loginRes);
             return Response.general(HttpStatus.OK,loginRes);
         } catch (BadCredentialsException e) {
             log.error("BadCredentialsException" + e.getMessage());
-            return Response.custom(HttpStatus.BAD_REQUEST,"Invalid username or password");
+            return Response.custom(HttpStatus.BAD_REQUEST,"El email o la contraseña no son correctos.");
         } catch (Exception e) {
             log.error("Other" + e.getMessage());
-            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+            return Response.custom(HttpStatus.BAD_REQUEST, "Ocurrió un error, intenten nuevamente en unos minutos.");
         }
     }
 }

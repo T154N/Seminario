@@ -1,4 +1,4 @@
-package com.pedido_flex.wsPedidoFlex.DTO;
+package com.pedido_flex.wsPedidoFlex.DTO.Filters;
 
 public class FiltroClienteDTO {
     private Long id;

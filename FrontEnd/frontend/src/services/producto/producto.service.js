@@ -28,7 +28,7 @@ const getProductosCategoria = async (categoriaId) => {
     try {
         const response = await axios.get(`${ENDPOINT_PRODUCTO_URL}/productos/categoria/${categoriaId}`);
         console.log(response);
-        return response.data.body.map((p) => {
+        return response.data.map((p) => {
             return {
                 id: p.id,
                 nombre: p.nombre,

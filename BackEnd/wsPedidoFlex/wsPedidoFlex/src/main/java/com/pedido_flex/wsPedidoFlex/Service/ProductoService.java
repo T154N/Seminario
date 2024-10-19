@@ -28,17 +28,19 @@ public class ProductoService {
     }
 
     public Producto createProducto(Producto producto) { return productoRepository.save(producto); }
-    public Producto findProductoById(Long id) { return productoRepository.getReferenceById(id).get(); }
-
-
+    public Producto findProductoById(Long id) {
+        System.out.println("Entrando al método findProductoById con id: " + id);
+        return productoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+    }
     public ProductoDTO convertToDTO(Producto producto) {
         ProductoDTO dto = new ProductoDTO();
-        dto.setId(producto.getProducto_id());
-        dto.setNombre(producto.getProducto_nombre());
-        dto.setDescripcion(producto.getProducto_descripcion());
-        dto.setPrecio(producto.getProducto_precio());
-        dto.setObservaciones(producto.getProducto_observaciones());
-        dto.setCategoriaNombre(producto.getCategoria().getCategoriaNombre());
+        dto.setProducto_id(producto.getProducto_id());
+        dto.setProducto_nombre(producto.getProducto_nombre());
+        dto.setProducto_descripcion(producto.getProducto_descripcion());
+        dto.setProducto_precio(producto.getProducto_precio());
+        dto.setProducto_observaciones(producto.getProducto_observaciones());
+        dto.setCategoriaId(producto.getCategoria().getCategoriaId());
         return dto;
     }
 
@@ -72,15 +74,21 @@ public class ProductoService {
 
 
     @Transactional
-    public Producto updateProducto(Producto productoNew, String user) {
-    Producto producto = productoRepository.findById(productoNew.getProducto_id()).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-    System.out.println("Original Producto: " + producto);
-    producto.setProducto_nombre(productoNew.getProducto_nombre());
-    producto.setProducto_descripcion(productoNew.getProducto_descripcion());
-    producto.setProducto_precio(productoNew.getProducto_precio());
-    producto.setCategoria(findByidCategoriaDto(productoNew.getCategoria().getCategoriaId()));
-    producto.setProducto_fecha_modificacion(LocalDateTime.now());
-    producto.setProducto_usuario_modificacion(user);
+    public Producto updateProducto(long id , ProductoDTO productoDTO, String user) {
+        Producto producto = findProductoById(id);
+        System.out.println("Original Producto: " + producto);
+        producto.setProducto_nombre(productoDTO.getProducto_nombre());
+        producto.setProducto_descripcion(productoDTO.getProducto_descripcion());
+        producto.setProducto_precio(productoDTO.getProducto_precio());
+        producto.setProducto_observaciones(productoDTO.getProducto_observaciones());
+        producto.setProducto_url_imagen(productoDTO.getProducto_urlImagen());
+        if (productoDTO.getCategoriaId() != null) {
+            Categoria categoria = findByidCategoriaDto(productoDTO.getCategoriaId());
+            producto.setCategoria(categoria);
+        }
+        producto.setProducto_fecha_modificacion(LocalDateTime.now());
+        producto.setProducto_usuario_modificacion(user);
+
     System.out.println("Updated Producto: " + producto);
     return productoRepository.save(producto);
 }

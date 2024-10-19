@@ -58,6 +58,17 @@ public class Producto {
     @JoinColumn(name = "producto_categoria_id", referencedColumnName = "categoria_id", nullable = false)
     private Categoria categoria;
 
+    public Producto(String producto_descripcion, LocalDateTime producto_fecha_modificacion, String producto_nombre, long producto_id, String producto_observaciones, Double producto_precio, String producto_url_imagen, String producto_usuario_modificacion, Categoria categoria) {
+        this.producto_descripcion = producto_descripcion;
+        this.producto_fecha_modificacion = producto_fecha_modificacion;
+        this.producto_nombre = producto_nombre;
+        this.producto_id = producto_id;
+        this.producto_observaciones = producto_observaciones;
+        this.producto_precio = producto_precio;
+        this.producto_url_imagen = producto_url_imagen;
+        this.producto_usuario_modificacion = producto_usuario_modificacion;
+        this.categoria = categoria;
+    }
 
     public Producto get() {
         Producto producto = new Producto();

@@ -81,13 +81,16 @@ public class ProductoController {
     }
 
     @PutMapping("/productos/{id}/{u}")
-    public Response updateProducto(@PathVariable("id") Long id, @PathVariable("u") String usuarioEditor, @RequestBody Producto producto) {
+    public Response updateProducto(@PathVariable("id") Long id, @PathVariable("u") String usuarioEditor, @RequestBody ProductoDTO productoDTO) {
         try {
-            return Response.general(HttpStatus.OK, productoService.updateProducto(producto, usuarioEditor));
-        } catch (NullPointerException | IllegalArgumentException e) {
+            productoDTO.setProducto_id(id); // Establecer el ID del producto a actualizar
+            return Response.general(HttpStatus.OK, productoService.updateProducto(id, productoDTO, usuarioEditor));
+        } catch (NullPointerException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, "Error: Un valor nulo fue encontrado - " + e.getMessage());
+        } catch (IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
-            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "Error inesperado: " + e.getMessage());
         }
     }
 

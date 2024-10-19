@@ -1,5 +1,6 @@
 package com.pedido_flex.wsPedidoFlex.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,7 +48,8 @@ public class Categoria {
     @Column(name = "categoria_estado_id", nullable = false)
     private Integer categoriaEstadoId;
 
-    @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Producto> productos;
 
 

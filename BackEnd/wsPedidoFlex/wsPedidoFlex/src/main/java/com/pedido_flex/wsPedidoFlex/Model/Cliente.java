@@ -24,11 +24,14 @@ public class Cliente {
     @Column(name = "cliente_id")
     private long cliente_id;
 
-    @Column(name = "cliente_documento")
+    @Column(name = "cliente_documento",nullable = false)
     private String cliente_documento;
 
     @Column(name = "cliente_tipo_documento")
     private String cliente_tipo_documento;
+
+    @Column(name = "cliente_cuit")
+    private String cliente_cuit;
 
     @Column(name = "cliente_apellido")
     private String cliente_apellido;
@@ -36,7 +39,12 @@ public class Cliente {
     @Column(name = "cliente_nombre")
     private String cliente_nombre;
 
-    @Column (name = "cliente_email")
+    @OneToOne
+    @JoinColumn(name = "cliente_usuario_id", nullable = false)
+    @JsonBackReference
+    private Usuario cliente_Usuario;
+
+    @Column(name = "cliente_email", nullable = false, unique = true)
     private String cliente_email;
 
     @Column (name = "cliente_telefono")
@@ -66,9 +74,6 @@ public class Cliente {
     @Column(name = "cliente_observaciones")
     private String cliente_observaciones;
 
-    @OneToOne(mappedBy = "cliente")
-    private Usuario usuario;
-
     public Cliente get() {
         Cliente cliente = new Cliente();
         cliente.setCliente_id(this.cliente_id);
@@ -95,12 +100,20 @@ public class Cliente {
     @JsonManagedReference
     private List<Domicilio> domicilios = new ArrayList<>();
 
-    public Usuario getUsuario() {
-        return usuario;
+    public String getCliente_cuit() {
+        return cliente_cuit;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setCliente_cuit(String cliente_cuit) {
+        this.cliente_cuit = cliente_cuit;
+    }
+
+    public Usuario getCliente_Usuario() {
+        return cliente_Usuario;
+    }
+
+    public void setCliente_Usuario(Usuario cliente_Usuario) {
+        this.cliente_Usuario = cliente_Usuario;
     }
 
     public long getCliente_id() {

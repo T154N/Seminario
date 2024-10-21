@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,15 +40,17 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         try {
             String accessToken = jwtUtil.resolveToken(request);
             if (accessToken == null) {
+                System.out.println("No access token found, proceeding...");
                 filterChain.doFilter(request, response);
                 return;
             }
             System.out.println("token : " + accessToken);
             Claims claims = jwtUtil.resolveClaims(request);
 
-            if (claims != null & jwtUtil.validateClaims(claims)) {
+            if (claims != null && jwtUtil.validateClaims(claims)) {
                 String email = claims.getSubject();
                 System.out.println("email : " + email);
+                System.out.println("Authenticated email: " + email);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(email, "", new ArrayList<>());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
@@ -59,7 +62,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
             mapper.writeValue(response.getWriter(), errorDetails);
-
+            // Agregar este retorno para evitar continuar con el filtrado
+            return;
         }
         filterChain.doFilter(request, response);
     }

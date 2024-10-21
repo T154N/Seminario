@@ -12,25 +12,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UsuarioRepository userRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public CustomUserDetailsService(UsuarioRepository userRepository, UsuarioRepository usuarioRepository) {
-        this.userRepository = userRepository;
+    public CustomUserDetailsService( UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UsuarioDTO user = usuarioRepository.findByEmail(email);
-        List<String> roles = new ArrayList<>();
-        roles.add(user.getRol().toString());
-        UserDetails userDetails =
-                org.springframework.security.core.userdetails.User.builder()
-                        .username(user.getEmail())
-                        .password(user.getContrasenia())
-                        .roles(roles.toArray(new String[0]))
-                        .build();
-        return userDetails;
+        if (user == null) {
+            throw new UsernameNotFoundException(email);
+        }else {
+            List<String> roles = new ArrayList<>();
+            roles.add(user.getRol().toString());
+            UserDetails userDetails =
+                    org.springframework.security.core.userdetails.User.builder()
+                            .username(user.getEmail())
+                            .password(user.getContrasenia())
+                            .roles(roles.toArray(new String[0]))
+                            .build();
+            return userDetails;
+        }
     }
 }

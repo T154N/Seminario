@@ -1,7 +1,6 @@
 package com.pedido_flex.wsPedidoFlex.Service;
 
-import com.pedido_flex.wsPedidoFlex.DTO.FiltroClienteDTO;
-import com.pedido_flex.wsPedidoFlex.DTO.UsuarioDTO;
+import com.pedido_flex.wsPedidoFlex.DTO.Filters.FiltroClienteDTO;
 import com.pedido_flex.wsPedidoFlex.Model.Domicilio;
 import com.pedido_flex.wsPedidoFlex.Model.Usuario;
 import com.pedido_flex.wsPedidoFlex.Repository.ClienteRepository;

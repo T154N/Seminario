@@ -1,93 +1,24 @@
-package com.pedido_flex.wsPedidoFlex.Model;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package com.pedido_flex.wsPedidoFlex.DTO.Filters;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Entity
-@Table(name = "domicilio")
-public class Domicilio {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "domicilio_id")
+public class DomicilioFiltersDTO {
     private long domicilio_id;
-
-    @ManyToOne
-    @JoinColumn(name ="domicilio_cliente_id")
-    @JsonBackReference
-    private Cliente cliente;
-
-    @Column(name = "domicilio_tipo_domicilio_id")
-    private long domicilioTipoDomicilioId; // bigint
-
-    @Column(name = "domicilio_direccion", columnDefinition = "nvarchar(max)")
+    private String domicilioTipoDomicilioId;
     private String domicilioDireccion; // nvarchar(max)
-
-    @Column(name = "domicilio_barrio", columnDefinition = "nvarchar(max)")
     private String domicilioBarrio; // nvarchar(max)
-
-    @Column(name = "domicilio_ubicacion", columnDefinition = "nvarchar(max)")
     private String domicilioUbicacion; // nvarchar(max)
-
-    @Column(name = "domicilio_localidad_id")
-    private long domicilioLocalidadId; // bigint
-
-    @Column(name = "domicilio_estado_id")
-    private long domicilioEstadoId; // bigint
-
-    @Column(name = "domicilio_fecha_alta", columnDefinition = "datetimeoffset(7)")
-    @Temporal(TemporalType.TIMESTAMP)
+    private String domicilioLocalidad; // bigint
+    private String domicilioEstado; // bigint
     private LocalDateTime domicilioFechaAlta; // datetimeoffset(7)
-
-    @Column(name = "domicilio_fecha_modificacion", columnDefinition = "datetimeoffset(7)")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime domicilioFechaModificacion; // datetimeoffset(7)
-
-    @Column(name = "domicilio_fecha_baja", columnDefinition = "datetimeoffset(7)")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime domicilioFechaBaja; // datetimeoffset(7)
-
-    @Column(name = "domicilio_usuario_alta", columnDefinition = "nvarchar(max)")
     private String domicilioUsuarioAlta; // nvarchar(max)
-
-    @Column(name = "domicilio_usuario_modificacion", columnDefinition = "nvarchar(max)")
     private String domicilioUsuarioModificacion; // nvarchar(max)
-
-    @Column(name = "domicilio_usuario_baja", columnDefinition = "nvarchar(max)")
     private String domicilioUsuarioBaja; // nvarchar(max)
-
-    @Column(name = "domicilio_observaciones", columnDefinition = "nvarchar(max)")
     private String domicilioObservaciones; // nvarchar(max)
-
-    @Column(name = "domicilio_codigo_postal", columnDefinition = "nvarchar(50)")
     private String domicilioCodigoPostal; // nvarchar(50)
-
-    @Column(name = "domicilio_es_principal", columnDefinition = "nchar(1)")
-    private char domicilioEsPrincipal; // nchar(1)
-
-//    public Cliente getCliente() {
-//        return cliente;
-//    }
-//
-//    public void setCliente(Cliente cliente) {
-//        this.cliente = cliente;
-//    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+    private char domicilioEsPrincipal;
 
     public long getDomicilio_id() {
         return domicilio_id;
@@ -97,11 +28,11 @@ public class Domicilio {
         this.domicilio_id = domicilio_id;
     }
 
-    public long getDomicilioTipoDomicilioId() {
+    public String getDomicilioTipoDomicilioId() {
         return domicilioTipoDomicilioId;
     }
 
-    public void setDomicilioTipoDomicilioId(long domicilioTipoDomicilioId) {
+    public void setDomicilioTipoDomicilioId(String domicilioTipoDomicilioId) {
         this.domicilioTipoDomicilioId = domicilioTipoDomicilioId;
     }
 
@@ -129,20 +60,20 @@ public class Domicilio {
         this.domicilioUbicacion = domicilioUbicacion;
     }
 
-    public long getDomicilioLocalidadId() {
-        return domicilioLocalidadId;
+    public String getDomicilioLocalidad() {
+        return domicilioLocalidad;
     }
 
-    public void setDomicilioLocalidadId(long domicilioLocalidadId) {
-        this.domicilioLocalidadId = domicilioLocalidadId;
+    public void setDomicilioLocalidad(String domicilioLocalidad) {
+        this.domicilioLocalidad = domicilioLocalidad;
     }
 
-    public long getDomicilioEstadoId() {
-        return domicilioEstadoId;
+    public String getDomicilioEstado() {
+        return domicilioEstado;
     }
 
-    public void setDomicilioEstadoId(long domicilioEstadoId) {
-        this.domicilioEstadoId = domicilioEstadoId;
+    public void setDomicilioEstado(String domicilioEstado) {
+        this.domicilioEstado = domicilioEstado;
     }
 
     public LocalDateTime getDomicilioFechaAlta() {

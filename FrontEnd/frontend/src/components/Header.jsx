@@ -5,8 +5,6 @@ import usuario from '../images/Header Icons/usuario.png'
 import catalogo from '../images/Header Icons/catalogo.png'
 import informacion from '../images/Header Icons/informacion.png'
 
-// import CMLogo from '../images/Header Icons/cmDistribuidora-removebg-preview.png';
-// import carrito from '../images/Header Icons/carrito.png';
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // React Router
 import { Carrito } from './carrito/Carrito';

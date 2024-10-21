@@ -7,23 +7,30 @@ public class CategoriaDTO {
     private String categoriaObservaciones;
     private String categoriaUrlImagen;
 
-    public CategoriaDTO(Long categoria_id, String categoria_nombre,String categoria_descripcion, String categoria_url_imagen) {
-        this.categoriaId = categoria_id;
-        this.categoriaNombre = categoria_nombre;
-        this.categoriaObservaciones = categoria_descripcion;
-        this.categoriaUrlImagen = categoria_url_imagen;
-
+    public CategoriaDTO(Long categoriaId, String categoriaNombre, String categoriaObservaciones, String categoriaUrlImagen) {
+        this.categoriaId = categoriaId;
+        this.categoriaNombre = categoriaNombre;
+        this.categoriaObservaciones = categoriaObservaciones;
+        this.categoriaUrlImagen = categoriaUrlImagen;
     }
-
 
     public CategoriaDTO() {
     }
-    public String getcategoriaObservaciones() {
-        return categoriaObservaciones;
+
+    public Long getCategoriaId() {
+        return categoriaId;
     }
 
-    public void setcategoriaObservaciones(String categoria_descripcion) {
-        this.categoriaObservaciones = categoria_descripcion;
+    public void setCategoriaId(Long categoriaId) {
+        this.categoriaId = categoriaId;
+    }
+
+    public String getCategoriaNombre() {
+        return categoriaNombre;
+    }
+
+    public void setCategoriaNombre(String categoriaNombre) {
+        this.categoriaNombre = categoriaNombre;
     }
 
     public String getCategoriaObservaciones() {
@@ -42,19 +49,4 @@ public class CategoriaDTO {
         this.categoriaUrlImagen = categoriaUrlImagen;
     }
 
-    public Long getCategoriaId() {
-        return categoriaId;
-    }
-
-    public void setCategoriaId(Long categoriaId) {
-        this.categoriaId = categoriaId;
-    }
-
-    public String getCategoriaNombre() {
-        return categoriaNombre;
-    }
-
-    public void setCategoriaNombre(String categoriaNombre) {
-        this.categoriaNombre = categoriaNombre;
-    }
 }

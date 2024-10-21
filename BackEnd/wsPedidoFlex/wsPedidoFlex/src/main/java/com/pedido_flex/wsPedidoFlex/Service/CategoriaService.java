@@ -18,7 +18,8 @@ public class CategoriaService {
     }
 
     public Categoria findCategoriaById(Long id) {
-        return categoriaRepository.getReferenceById(id).get();
+        return categoriaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Categoria no encontrada"));
     }
 
     public List<Categoria> findAllCategorias() {
@@ -49,17 +50,57 @@ public class CategoriaService {
     }
 
 
-    public Categoria createCategoria(Categoria categoria) {
-        return categoriaRepository.save(categoria);
+
+    public Categoria createCategoria(Categoria categoriaNew){
+        if (categoriaNew.getCategoriaNombre().isEmpty()) {
+            throw new IllegalArgumentException("El nombre de la categoria no puede estar vacio");
+        } else if (findAllCategorias().stream().anyMatch(cat -> cat.getCategoriaNombre().equals(categoriaNew.getCategoriaNombre()))) {
+            throw new IllegalArgumentException("La categoria ya existe");
+        } else {
+            categoriaNew.setCategoriaNombre(categoriaNew.getCategoriaNombre());
+        }
+        categoriaNew.setCategoriaObservaciones(categoriaNew.getCategoriaObservaciones());
+        categoriaNew.setCategoriaFechaAlta(LocalDateTime.now());
+        categoriaNew.setCategoriaUsuarioAlta(categoriaNew.getCategoriaUsuarioAlta());
+        categoriaNew.setCategoriaEstadoId(1);
+        return categoriaRepository.save(categoriaNew);
+    }
+
+
+    public Categoria updateCategoria(Categoria categoria) {
+        Categoria categoriaActual = findCategoriaById(categoria.getCategoriaId());
+        if (categoria.getCategoriaNombre().isEmpty()) {
+            throw new IllegalArgumentException("El nombre de la categoria no puede estar vacio");
+        } else if (findAllCategorias().stream().anyMatch(cat -> cat.getCategoriaId() != categoria.getCategoriaId() && cat.getCategoriaNombre().equals(categoria.getCategoriaNombre()))) {
+        throw new IllegalArgumentException("La categoria ya existe");
+        } else {
+            categoriaActual.setCategoriaNombre(categoria.getCategoriaNombre());
+        }
+        categoriaActual.setCategoriaObservaciones(categoria.getCategoriaObservaciones());
+        categoriaActual.setCategoriaUrlImagen(categoria.getCategoriaUrlImagen());
+        categoriaActual.setCategoriaFechaModificacion(LocalDateTime.now());
+        categoriaActual.setCategoriaUsuarioModificacion(categoria.getCategoriaUsuarioModificacion());
+        return categoriaRepository.save(categoriaActual);
+    }
+
+
+    public Categoria setAltaCategoriaById(Long id, String usuarioModificacion) {
+        Categoria categoria = findCategoriaById(id);
+        categoria.setCategoriaEstadoId(1);
+        categoria.setCategoriaUsuarioModificacion(usuarioModificacion);
+        categoria.setCategoriaUsuarioAlta(usuarioModificacion);
+        categoria.setCategoriaFechaModificacion(LocalDateTime.now());
+        categoriaRepository.save(categoria);
+        return categoria;
     }
 
     public Categoria setBajaCategoriaById(Long id, String usuarioModificacion) {
         Categoria categoria = findCategoriaById(id);
-        categoria.setCategoriaEstadoId(2);
         categoria.setCategoriaUsuarioModificacion(usuarioModificacion);
         categoria.setCategoriaUsuarioBaja(usuarioModificacion);
         categoria.setCategoriaFechaBaja(LocalDateTime.now());
         categoria.setCategoriaFechaModificacion(LocalDateTime.now());
+        categoria.setCategoriaEstadoId(2);
         categoriaRepository.save(categoria);
         return categoria;
     }

@@ -25,7 +25,7 @@ public class ProductoController {
     @GetMapping("/productos/{id}")
     public Response getProductoById(@PathVariable Long id) {
         try {
-            return Response.general(HttpStatus.OK, productoService.productoPorId(id));
+            return Response.general(HttpStatus.OK, productoService.productoPorIdDTO(id));
         } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
@@ -44,6 +44,18 @@ public class ProductoController {
         }
     }
 
+    @GetMapping("/productos/baja")
+    public Response findAllProductosDtoBaja() {
+        try {
+            return Response.general(HttpStatus.OK, productoService.findAllProductosDtoBaja());
+        } catch (NullPointerException | IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "No encontramos los productos");
+        }
+    }
+
+
     @GetMapping("/productos/categoria/{categoriaId}")
     public Response obtenerProductosPorCategoria(@PathVariable Long categoriaId) {
         try {
@@ -57,22 +69,58 @@ public class ProductoController {
         }
     }
 
-    @PostMapping("/productos")
+    @GetMapping("/productos/baja/categoria/{categoriaId}")
+    public Response obtenerProductosPorCategoriaBaja(@PathVariable Long categoriaId) {
+        try {
+            Categoria categoria = new Categoria();
+            categoria.setCategoriaId(categoriaId);
+            return Response.general(HttpStatus.OK, productoService.productoPorCategoriaDtoBaja(categoria));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "No encontramos los productos para la categoría especificada.");
+        }
+    }
+
+
+
+    @PostMapping("/productos/alta")
     public Response createProducto(@RequestBody Producto producto) {
         try {
-
-            if (producto.getCategoria() != null) {
-                Categoria categoria = productoService.findByidCategoriaDto(producto.getCategoria().getCategoriaId());
-                producto.setCategoria(categoria);
+            // Validación mínima de campos obligatorios en el Producto
+            if (producto.getProducto_nombre() == null || producto.getCategoria() == null) {
+                return Response.custom(HttpStatus.BAD_REQUEST, "El nombre del producto y la categoría son obligatorios.");
             }
 
-            if (producto.getProducto_estado_id() == null) {
-                producto.setProducto_estado_id(1);
-            }
-            if (producto.getProducto_fecha_alta() == null) {
-                producto.setProducto_fecha_alta(LocalDateTime.now());
-            }
-            return Response.general(HttpStatus.OK, productoService.createProducto(producto));
+            // Llamar al servicio para crear el producto
+            Producto productoCreado = productoService.createProducto(producto);
+            return Response.general(HttpStatus.CREATED, productoCreado);
+        } catch (NullPointerException | IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "Error al crear el producto: " + e.getMessage());
+        }
+    }
+
+
+    @PutMapping("/productos/mod")
+    public Response updateProducto(@RequestBody Producto producto) {
+        try {
+            return Response.general(HttpStatus.OK, productoService.updateProducto(producto));
+        } catch (NullPointerException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, "Error: Un valor nulo fue encontrado - " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, "Error inesperado: " + e.getMessage());
+        }
+    }
+
+
+    @PutMapping("/productos/alta")
+    public Response setAltaProductoById(@RequestBody Producto productoAlta) {
+        try {
+            return Response.general(HttpStatus.OK, productoService.setAltaProductoById(productoAlta.getProducto_id(), productoAlta.getProducto_usuario_alta()));
         } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
@@ -80,21 +128,10 @@ public class ProductoController {
         }
     }
 
-    @PutMapping("/productos/{id}/{u}")
-    public Response updateProducto(@PathVariable("id") Long id, @PathVariable("u") String usuarioEditor, @RequestBody Producto producto) {
+    @PutMapping("/productos/baja")
+    public Response setBajaProductoById(@RequestBody Producto productoBaja) {
         try {
-            return Response.general(HttpStatus.OK, productoService.updateProducto(producto, usuarioEditor));
-        } catch (NullPointerException | IllegalArgumentException e) {
-            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
-        } catch (Exception e) {
-            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
-    }
-
-    @PutMapping("/productos/baja/{id}/{u}")
-    public Response setBajaProductoById(@PathVariable("id") Long id, @PathVariable("u") String usuarioEditor) {
-        try {
-            return Response.general(HttpStatus.OK, productoService.setBajaProductoById(id, usuarioEditor));
+            return Response.general(HttpStatus.OK, productoService.setBajaProductoById(productoBaja.getProducto_id(), productoBaja.getProducto_usuario_baja()));
         } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {

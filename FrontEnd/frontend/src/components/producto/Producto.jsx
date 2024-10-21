@@ -123,13 +123,24 @@ export function Producto() {
                 <div className="row">
                     {productosFiltrados.map(producto => (
                         <div className="col-12 col-md-6 col-lg-4 mb-4" key={producto.id}>
-                            <div className="card h-100 shadow">
-                                <img src={producto.imagen} className="rounded mx-4 d-block mt-4" alt={producto.descripcion}/>
-                                <div className="card-body">
-                                    <h5 className="card-title">{producto.nombre}</h5>
-                                    <p className="card-text">{producto.descripcion}</p>
-                                    <p className="card-text">$ {producto.precioUnitario}</p>
-                                    <div className="d-flex justify-content-center align-items-center">
+                            <div className="card h-100 shadow d-flex flex-column">
+                                {/* Sección de la imagen */}
+                                <div className="d-flex justify-content-center">
+                                    <img
+                                        src={producto.imagen}
+                                        className="rounded mx-auto d-block mt-4"
+                                        style={{width: "50%", height: "auto"}}
+                                        alt={producto.descripcion}
+                                    />
+                                </div>
+                                {/* Sección del contenido (nombre, descripción, precio, cantidad, botón) */}
+                                <div className="card-body d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h5 className="card-title">{producto.nombre}</h5>
+                                        <p className="card-text">{producto.descripcion}</p>
+                                        <p className="card-text">$ {producto.precioUnitario}</p>
+                                    </div>
+                                    <div className="d-flex justify-content-center align-items-center mt-auto">
                                         <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>
                                         <input
                                             type="number"
@@ -142,7 +153,7 @@ export function Producto() {
                                         <button className="btn btn-outline-secondary" onClick={() => incrementarCantidad(producto.id)}>+</button>
                                     </div>
                                     <button className="btn btn-secundario text-white mt-3 w-100" onClick={() => agregarAlCarrito(producto)}>
-                                    🛒 Agregar al carrito
+                                        🛒 Agregar al carrito
                                     </button>
                                 </div>
                             </div>

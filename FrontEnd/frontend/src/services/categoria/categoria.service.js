@@ -6,18 +6,20 @@ const ENDPOINT_CATEGORIA_URL = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_UR
 const getAllCategorias = async () => {
     try {
         const response = await axios.get(`${ENDPOINT_CATEGORIA_URL}/categorias`);
-        return response.data.body.map((c) => {
-            return {
-                id: c.categoriaId,
-                nombre: c.categoriaNombre.toUpperCase(),
-                imagen: c.imagen ? c.imagen : sinImagen
-            }
-        })
+        return response.data.body
+            .map((c) => {
+                return {
+                    id: c.categoriaId,
+                    nombre: c.categoriaNombre.toUpperCase(),
+                    imagen: c.categoriaUrlImagen ? c.categoriaUrlImagen : sinImagen
+                };
+            })
+            .sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordenar alfabéticamente por nombre
     } catch (error) {
-        return []
+        return [];
     }
-
 };
+
 
 const categoriaService = {
     getAllCategorias,

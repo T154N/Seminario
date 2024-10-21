@@ -1,8 +1,9 @@
 import axios from 'axios';
+import loginMocksService from './login.mocks';
 
 axios.defaults.withCredentials = true;
 
-const LOGIN_API_URL = process.env.REACT_APP_SEMINARIO_BACKEND_URL;
+// const LOGIN_API_URL = process.env.REACT_APP_SEMINARIO_BACKEND_URL;
 
 // Error 1: Correo o contraseña incorrectos
 // Error 2: El token guardado ya no es válido
@@ -11,13 +12,15 @@ const LOGIN_API_URL = process.env.REACT_APP_SEMINARIO_BACKEND_URL;
 
 const iniciarSesion = async (email, password) => {
     try {
-        const response = await axios.post(`${LOGIN_API_URL}/rest/auth/login`, {email, password});
+        // const response = await axios.post(`${LOGIN_API_URL}/rest/auth/login`, {email, password});
+        const response = await loginMocksService.loginMocks(email, password);
         // Manejo de errores
         // El servidor respondio correctamente
         if (response.status === 200) {
             // El servidor respondio con un token
             if (response.data.status === 200 && response.data.body.token) {
                 localStorage.setItem('token', response.data.body.token);
+                localStorage.setItem('usuario', response.data.body.usuario);
                 return 200;
             // El servidor respondio con un error
             } else if (response.data.status === 400) {
@@ -36,6 +39,7 @@ const estaIniciadaSesion = () => {
 
 const cerrarSesion = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
 }
 
 const loginService = {

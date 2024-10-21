@@ -1,5 +1,5 @@
 import axios from 'axios';
-import imagen from '../../images/Header Icons/categoriasImagenesMock/chupetin.jpeg';
+import sinImagen from '../../images/Other Icons/sinImagen.png';
 
 const ENDPOINT_PRODUCTO_URL = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
 
@@ -11,11 +11,11 @@ const getAllProductos = async () => {
             return {
                 id: c.id,
                 nombre: c.nombre,
-                descripcion: c.descripcion,
+                descripcion: c.descripcion ? c.descripcion : "Producto sin descripción",
                 precioUnitario: c.precio,
                 observaciones: c.observaciones,
                 categoria: c.categoriaNombre,
-                imagen: null
+                imagen: c.imagen ? c.imagen : sinImagen
             }
         })
 
@@ -28,15 +28,15 @@ const getProductosCategoria = async (categoriaId) => {
     try {
         const response = await axios.get(`${ENDPOINT_PRODUCTO_URL}/productos/categoria/${categoriaId}`);
         console.log(response);
-        return response.data.map((p) => {
+        return response.data.body.map((p) => {
             return {
                 id: p.id,
                 nombre: p.nombre,
-                descripcion: p.descripcion,
+                descripcion: p.descripcion ? p.descripcion : "Producto sin descripción",
                 precioUnitario: p.precio,
                 observaciones: p.observaciones,
                 categoria: p.categoriaNombre,
-                imagen: imagen
+                imagen: p.imagen ? p.imagen : sinImagen
             }
         });
 

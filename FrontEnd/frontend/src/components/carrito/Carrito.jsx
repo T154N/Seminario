@@ -1,4 +1,3 @@
-// Carrito.js
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +10,7 @@ export function Carrito() {
 
     return (
         <div>
-            <button className='icon-button'
+            <button className="icon-button"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasScrolling"
                 aria-controls="offcanvasScrolling">
@@ -43,27 +42,33 @@ export function Carrito() {
                         productos.map((producto) => (
                             <div className="card producto-card" key={producto.id}>
                                 <div className="row g-0">
-                                    <div className="col-md-3">
+                                    <div className="col-12 col-md-3">
                                         <img src={producto.imagen} className="img-fluid rounded-start" alt={producto.nombre} />
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="col-12 col-md-6">
                                         <div className="card-body">
                                             <h5 className="card-title">{producto.nombre}</h5>
-                                            <div className="cantidad-control">
+                                            <div className="cantidad-control d-flex align-items-center">
                                                 <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>
                                                 <span className="mx-2">{producto.cantidad}</span>
                                                 <button className="btn btn-outline-secondary" onClick={() => incrementarCantidad(producto.id)}>+</button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-3 d-flex align-items-center justify-content-end flex-column">
-                                        <button className="btn btn-danger mt-3" onClick={() => eliminarProducto(producto.id)}>
+                                    <div className="col-12 col-md-3 d-flex flex-column justify-content-between">
+                                        <div className="text-start producto-precios">
+                                            <p className="mb-1">
+                                                Precio unitario:
+                                                <span className="d-block">${producto.precioUnitario}</span>
+                                            </p>
+                                            <p className="mb-1">
+                                                Precio total:
+                                                <span className="d-block">${producto.precioUnitario * producto.cantidad}</span>
+                                            </p>
+                                        </div>
+                                        <button className="btn btn-danger btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
-                                        <div className="text-start mt-5">
-                                            <p className="mb-3">Precio unitario: ${producto.precioUnitario}</p>
-                                            <p className="mb-3">Precio total: ${producto.precioUnitario * producto.cantidad}</p>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -73,8 +78,8 @@ export function Carrito() {
 
                 <div className="carrito-footer">
                     <h5>Total: ${total}</h5>
-                    <button className="btn btn-primary" onClick={generarPedido}>Iniciar Compra</button>
-                    <button className="btn btn-danger ms-2" onClick={vaciarCarrito}>Vaciar Carrito</button>
+                    <button className="btn btn-primary btn-carrito-compra md-2" onClick={generarPedido}>Iniciar Compra</button>
+                    <button className="btn btn-danger btn-vaciar md-2" onClick={vaciarCarrito}>Vaciar Carrito</button>
                 </div>
             </div>
         </div>

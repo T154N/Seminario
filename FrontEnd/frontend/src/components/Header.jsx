@@ -12,7 +12,7 @@ import { Carrito } from './carrito/Carrito';
 export function Header() {
     const navigate = useNavigate(); // Hook para navegar
 
-    // Funciones para manejar clics
+    // Función para manejar clics en el perfil de usuario
     const goToUserProfile = () => {
         navigate('/login');
     };
@@ -25,10 +25,16 @@ export function Header() {
         navigate('/info');
     };
 
-    return(
+    const goToHomePage = () => {
+        navigate('/');
+    };
+
+    return (
         <div>
             <header className="header text-white">
-                <img src={CMLogo} alt='CMDistribuidora' className='cmlogo'></img>
+                <button onClick={goToHomePage} className="logo-button">
+                    <img src={CMLogo} alt="CMDistribuidora" className="cmlogo" />
+                </button>
                 <div className="header-icons">
                     <button className='icon-button' onClick={goToInformacion}>
                         <img src={informacion} alt="informacion" className='usuario' style={{width: '2.5rem'}}/>
@@ -43,8 +49,7 @@ export function Header() {
                         <Carrito />
                     </div>
                 </div>
-                
             </header>
         </div>
-    )
+    );
 }

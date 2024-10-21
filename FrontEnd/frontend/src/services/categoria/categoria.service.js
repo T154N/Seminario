@@ -1,9 +1,7 @@
 import axios from 'axios';
-import imagen from '../../images/Header Icons/categoriasImagenesMock/chupetin.jpeg';
+import sinImagen from '../../images/Other Icons/sinImagen.png';
 
 const ENDPOINT_CATEGORIA_URL = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
-
-// import categoriasMock from './categoria.mocks';
 
 const getAllCategorias = async () => {
     try {
@@ -12,7 +10,7 @@ const getAllCategorias = async () => {
             return {
                 id: c.categoriaId,
                 nombre: c.categoriaNombre.toUpperCase(),
-                imagen: imagen
+                imagen: c.imagen ? c.imagen : sinImagen
             }
         })
     } catch (error) {

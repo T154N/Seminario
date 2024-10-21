@@ -21,16 +21,28 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> , JpaS
     //no utilice query pero en teoria esto busca por categoria
    /* List<Producto> findByCategoria(Categoria categoria);*/
 
-    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio, p.categoria.categoriaId, p.producto_url_imagen) " +
+    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio, p.categoria.categoriaNombre, p.producto_url_imagen) " +
             "FROM Producto p WHERE p.categoria = :categoria AND p.producto_estado_id = 1")
     List<ProductoDTO> findProductosPorCategoriaDto(@Param("categoria") Categoria categoria);
 
-    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio, p.categoria.categoriaId,p.producto_url_imagen) " +
+    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio, p.categoria.categoriaNombre, p.producto_url_imagen) " +
             "FROM Producto p WHERE p.producto_estado_id = 1")
     List<ProductoDTO> findAllProductosDto();
 
-    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio, p.categoria.categoriaId, p.producto_url_imagen) " +
+    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio, p.categoria.categoriaNombre, p.producto_url_imagen) " +
             "FROM Producto p WHERE p.producto_id = :id AND p.producto_estado_id = 1")
-    ProductoDTO findProductoById(@Param("id") Long id);
+    ProductoDTO findProductoDTOById(@Param("id") Long id);
+
+    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio, p.categoria.categoriaNombre, p.producto_url_imagen) " +
+            "FROM Producto p WHERE p.categoria = :categoria AND p.producto_estado_id = 2")
+    List<ProductoDTO> findProductosPorCategoriaDtoBaja(@Param("categoria") Categoria categoria);
+
+    @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.ProductoDTO(p.producto_descripcion, p.producto_id, p.producto_nombre, p.producto_observaciones, p.producto_precio, p.categoria.categoriaNombre, p.producto_url_imagen) " +
+            "FROM Producto p WHERE p.producto_estado_id = 2")
+    List<ProductoDTO> findAllProductosDtoBaja();
+
+
+
+
 
 }

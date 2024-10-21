@@ -37,7 +37,7 @@ public class CategoriaController {
         }
     }
 
-    @PostMapping("/categorias")
+    @PostMapping("/categorias/alta")
     public Response createCategoria(@RequestBody Categoria categoria){
         try{
             return Response.general(HttpStatus.OK, categoriaService.createCategoria(categoria));
@@ -49,10 +49,10 @@ public class CategoriaController {
     }
 
 
-    @PutMapping("/categorias/{id}/{u}")
-    public Response updateCategoria(@PathVariable("id") Long id, @PathVariable("u") String usuarioEditor, @RequestBody Categoria categoria) {
+    @PutMapping("/categorias/mod")
+    public Response updateCategoria(@RequestBody Categoria categoriaNew) {
         try {
-            return Response.general(HttpStatus.OK, categoriaService.updateCategoria(categoria, usuarioEditor));
+            return Response.general(HttpStatus.OK, categoriaService.updateCategoria(categoriaNew));
         } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
@@ -60,10 +60,21 @@ public class CategoriaController {
         }
     }
 
-    @PutMapping("/categorias/baja/{id}/{u}")
-    public Response setBajaCategoriaById(@PathVariable("id") Long id, @PathVariable("u") String usuarioEditor) {
+    @PutMapping("/categorias/alta")
+    public Response setAltaCategoriaById(@RequestBody Categoria categoria) {
         try {
-            return Response.general(HttpStatus.OK, categoriaService.setBajaCategoriaById(id, usuarioEditor));
+            return Response.general(HttpStatus.OK, categoriaService.setAltaCategoriaById(categoria.getCategoriaId(), categoria.getCategoriaUsuarioModificacion()));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            return Response.custom(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
+    @PutMapping("/categorias/baja")
+    public Response setBajaCategoriaById(@RequestBody Categoria categoria) {
+        try {
+            return Response.general(HttpStatus.OK, categoriaService.setBajaCategoriaById(categoria.getCategoriaId(), categoria.getCategoriaUsuarioModificacion()));
         } catch (NullPointerException | IllegalArgumentException e) {
             return Response.custom(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {

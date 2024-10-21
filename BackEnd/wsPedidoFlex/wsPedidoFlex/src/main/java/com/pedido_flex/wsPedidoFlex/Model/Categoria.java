@@ -48,6 +48,9 @@ public class Categoria {
     @Column(name = "categoria_estado_id", nullable = false)
     private Integer categoriaEstadoId;
 
+    @Column(name = "categoria_url_imagen")
+    private String categoriaUrlImagen;
+
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Producto> productos;
@@ -66,7 +69,19 @@ public class Categoria {
         categoria.setCategoriaUsuarioModificacion(this.categoriaUsuarioModificacion);
         categoria.setCategoriaUsuarioBaja(this.categoriaUsuarioBaja);
         categoria.setCategoriaEstadoId(this.categoriaEstadoId);
+        categoria.setCategoriaUrlImagen(this.categoriaUrlImagen);
         return categoria;
+    }
+
+
+
+
+    public String getCategoriaUrlImagen() {
+        return categoriaUrlImagen;
+    }
+
+    public void setCategoriaUrlImagen(String categoriaUrlImagen) {
+        this.categoriaUrlImagen = categoriaUrlImagen;
     }
 
     public Integer getCategoriaEstadoId() {

@@ -89,7 +89,7 @@ export function Login() {
 
                                         {sesionYaIniciada &&
                                             <div className="d-grid">
-                                            <button className="btn btn-aceptar" onClick={cerrarSesion}>Cerrar sesion</button>
+                                            <button className="btn btn-principal" onClick={cerrarSesion}>Cerrar sesion</button>
                                         </div>}
 
                                         {!mostrarCambiarPwd && !mostrarRegistrarse &&

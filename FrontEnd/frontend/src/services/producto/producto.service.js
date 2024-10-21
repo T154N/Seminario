@@ -15,7 +15,7 @@ const getAllProductos = async () => {
                 precioUnitario: c.precio,
                 observaciones: c.observaciones,
                 categoria: c.categoriaNombre,
-                imagen: c.imagen ? c.imagen : sinImagen
+                imagen: c.urlImagen ? c.urlImagen : sinImagen
             }
         })
 
@@ -36,7 +36,7 @@ const getProductosCategoria = async (categoriaId) => {
                 precioUnitario: p.precio,
                 observaciones: p.observaciones,
                 categoria: p.categoriaNombre,
-                imagen: p.imagen ? p.imagen : sinImagen
+                imagen: p.urlImagen ? p.urlImagen : sinImagen
             }
         });
 

@@ -21,6 +21,6 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
     @Query("SELECT new com.pedido_flex.wsPedidoFlex.DTO.CategoriaDTO(c.categoriaId, c.categoriaNombre, c.categoriaObservaciones,c.categoriaUrlImagen) " +
             "FROM Categoria c WHERE c.categoriaEstadoId = 1 AND c.categoriaId = :id")
     CategoriaDTO findByidCategoriaDto(@Param("id") Long id);
-    
+
 
 }

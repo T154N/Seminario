@@ -30,7 +30,7 @@ public class CategoriaService {
         CategoriaDTO dto = new CategoriaDTO();
         dto.setCategoriaId(categoria.getCategoriaId());
         dto.setCategoriaNombre(categoria.getCategoriaNombre());
-        dto.setcategoriaObservaciones(categoria.getCategoriaObservaciones());
+        dto.setCategoriaObservaciones(categoria.getCategoriaObservaciones());
         return dto;
     }
 

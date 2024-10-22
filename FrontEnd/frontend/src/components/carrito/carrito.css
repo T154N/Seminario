@@ -1,7 +1,14 @@
 /* Offcanvas */
 .custom-offcanvas-width {
-    width: 100% !important; 
+    width: 50% !important; 
     max-width: 500px;
+}
+
+@media (max-width: 400px) {
+    .custom-offcanvas-width {
+        width: 100% !important; /* Ocupa el 100% de la pantalla */
+        max-width: none; /* Remueve la limitación de max-width */
+    }
 }
 
 .offcanvas-title {
@@ -196,4 +203,3 @@
 .producto-precios span {
     font-weight: bold;
 }
-

@@ -63,7 +63,7 @@ export function Carrito() {
                                             </p>
                                             <p className="mb-1">
                                                 Precio total:
-                                                <span className="d-block">${producto.precioUnitario * producto.cantidad}</span>
+                                                <span className="d-block">${(producto.precioUnitario * producto.cantidad).toFixed(2)}</span>
                                             </p>
                                         </div>
                                         <button className="btn btn-danger btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
@@ -77,7 +77,7 @@ export function Carrito() {
                 </div>
 
                 <div className="carrito-footer">
-                    <h5>Total: ${total}</h5>
+                    <h5>Total: {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(total)}</h5>
                     <button className="btn btn-primary btn-carrito-compra md-2" onClick={generarPedido}>Iniciar Compra</button>
                     <button className="btn btn-danger btn-vaciar md-2" onClick={vaciarCarrito}>Vaciar Carrito</button>
                 </div>

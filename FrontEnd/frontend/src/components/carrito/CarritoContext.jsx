@@ -56,8 +56,8 @@ export const CarritoProvider = ({ children }) => {
     };
 
     const calcularTotal = () => {
-        return productos.reduce((acc, producto) => acc + producto.precioUnitario * producto.cantidad, 0);
-    };
+        return productos.reduce((acc, producto) => acc + (producto.precioUnitario * producto.cantidad), 0);
+    };    
 
     const total = calcularTotal();
 

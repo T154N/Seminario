@@ -104,7 +104,7 @@ export function Producto() {
                 <div className="row mb-3">  
                     <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
                         <div className="d-flex align-items-start">
-                            <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>Volver al catalogo</button>
+                            <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>Volver al catálogo</button>
                         </div>
                     </div>
                 </div>

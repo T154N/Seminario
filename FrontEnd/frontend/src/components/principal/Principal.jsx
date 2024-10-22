@@ -23,11 +23,11 @@ export function Principal() {
                         <div className="justify-content-center">
                             <div className='card border-0 shadow mt-5' style={{background: "#FCBB3A", borderRadius: "40px"}}>
                                 <div className="text-center fs-1 fw-bold mx-3 my-2">
-                                    <h1>Bienvenid@ a</h1>
+                                    <h1>Bienvenido a</h1>
                                     <img src={pedidoflex} alt='logoPF' className='img-fluid'></img>
                                 </div>
                                 <div className='text-center fs-4'>
-                                    <p>Para comenzar seleccioná una opción</p>
+                                    <p>Para comenzar seleccioná una opción:</p>
                                 </div>
                                 <div className='d-flex justify-content-center mb-3'>
                                     <button className='btn btn-principal text-black me-1' onClick={handleLoginClick}>Iniciar sesión</button>

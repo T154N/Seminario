@@ -102,7 +102,7 @@ export function Login() {
                                             </div>
                                         
                                             <div className="justify-content-start gap-2 mb-1">
-                                                <span>¿Olvidaste la contraseña?</span>
+                                                <span>¿Olvidaste tu contraseña?</span>
                                                 <div className="mt-2">
                                                     <button className="btn btn-principal" onClick={mostrarCambiarContrasena}>Recuperar contraseña</button>
                                                 </div>

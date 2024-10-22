@@ -31,8 +31,8 @@ export function Info() {
                 <div className='col info-col p-3'>
                     <h1>¿CUÁLES SON LAS FORMAS DE PAGO?</h1>
                     <ul className="payment-list ps-5 text-start fs-5">
-                        <li>EFECTIVO</li><p>Los pagos en efectivo deben realizarse al momento de la entrega del pedido</p>
-                        <li>TRANSFERENCIA</li><p>Las transferencias deben realizarse al momento de realizar la compra vía web y mandar el comprobante vía WhastsApp</p>
+                        <li>EFECTIVO</li><p>Los pagos en efectivo deben realizarse al momento de la entrega del pedido.</p>
+                        <li>TRANSFERENCIA</li><p>Las transferencias deben realizarse al momento de realizar la compra vía web y mandar el comprobante vía WhastsApp.</p>
                     </ul>
                 </div>
                 </div>

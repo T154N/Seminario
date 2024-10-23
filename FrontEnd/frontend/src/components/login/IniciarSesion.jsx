@@ -42,10 +42,11 @@ export function IniciarSesion({falloIniciarSesion, navegarHaciaCatalogoLogin}) {
             </div>
             <div className="mt-2 mb-3">
                 <label className="form-label fs-4">Contraseña</label>
-                <input type="password" id="inputPassword" className="form-control" placeholder="Contraseña"{...register("password", {
+                <input type="password" id="inputPassword" className="form-control" placeholder="Contraseña"
+                        {...register("password", {
                            required: "Este campo es requerido.",
                            minLength: {
-                               value: 3, //TODO: Cambiar a 6 dígitos mínimo
+                               value: 6, //TODO: Cambiar a 6 dígitos mínimo
                                message: "La contraseña debe tener al menos 6 caracteres."
                            },
                            maxLength: {

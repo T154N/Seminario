@@ -67,7 +67,7 @@ export function Registrarse({volverALogin}) {
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="container text-start">
             <div className="row p-0">
-                    <div className="col-6 p-0">
+                    <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0 pe-2">
                             <label className="form-label fs-4">Nombre</label>
                             <input
@@ -90,7 +90,7 @@ export function Registrarse({volverALogin}) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-6 p-0">
+                    <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0">
                             <label className="form-label fs-4">Apellido</label>
                             <input
@@ -115,7 +115,7 @@ export function Registrarse({volverALogin}) {
                     </div>
                 </div>
                 <div className="row">
-                <div className="col-6 p-0">
+                <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0 pe-2">
                             <label className="form-label fs-4">DNI</label>
                             <input
@@ -139,7 +139,7 @@ export function Registrarse({volverALogin}) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-6 p-0">
+                    <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-1">
                             <label className="form-label fs-4">Telefono</label>
                             <input
@@ -228,7 +228,7 @@ export function Registrarse({volverALogin}) {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-6 p-0">
+                    <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0 pe-2">
                             <label className="form-label fs-4">Dirección de entrega</label>
                             <input className="form-control"
@@ -250,7 +250,7 @@ export function Registrarse({volverALogin}) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-6 p-0">
+                    <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0">
                             <label className="form-label fs-4">Tipo de domicilio</label>
                             <select

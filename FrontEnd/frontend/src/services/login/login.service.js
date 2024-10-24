@@ -87,7 +87,7 @@ const crearCuenta = async (nombre, apellido, dni, telefono,
         usuario_contrasena: password,
         usuario_rol_id: rolId,
         usuario_observaciones: "",
-        usuario_alta: ""
+        usuario_alta: "CLIENTE"
     });
     return response
    } catch (err) {

@@ -16,6 +16,7 @@ export function Login() {
     const [mostrarCambiarPwd, setMostrarCambiarPwd] = useState(false);
     const [mostrarIniciarSesion, setMostrarIniciarSesion] = useState(true);
     const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
+    const [titulo, setTitulo] = useState("Iniciar sesión");
 
     const [mostrarAlertaFalloIniciarSesion, setMostrarAlertaFalloIniciarSesion] = useState(false);
     const [sesionYaIniciada, setSesionYaIniciada] = useState(false);
@@ -50,6 +51,7 @@ export function Login() {
         if (sesionYaIniciada) {
             setSesionYaIniciada(false);
         }
+        setTitulo("Cambiar contraseña");
     }
 
     const volverALogin = () => {
@@ -59,6 +61,7 @@ export function Login() {
         if (loginService.estaIniciadaSesion()) {
             setSesionYaIniciada(true);
         }
+        setTitulo("Iniciar sesión");
     }
 
     const mostrarReg = () => {
@@ -69,6 +72,7 @@ export function Login() {
         if (sesionYaIniciada) {
             setSesionYaIniciada(false);
         }
+        setTitulo("Registro de cuenta");
     }
     return(
         <>
@@ -78,7 +82,7 @@ export function Login() {
                         <div className="col"/>
                             <div className="col-sm-12 col-md-10 col-lg-8 col-xl-6 col-xxl-6">
                                 <div className="">
-                                    <h1 className="fs-1">Iniciar sesión</h1>
+                                    <h1 className="fs-1">{titulo}</h1>
                                     {mostrarAlertaFalloIniciarSesion && <div className="alert alert-danger" role="alert">Fallo el inicio de sesion</div>}
                                     <div className="card border-0 shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
                                         <div className="card-body text-start px-3">

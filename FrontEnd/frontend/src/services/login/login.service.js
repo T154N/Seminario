@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 const LOGIN_API_URL = process.env.REACT_APP_SEMINARIO_BACKEND_URL;
+const ENDPOINT_NOAUTH = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
+
 
 // Error 1: Correo o contraseña incorrectos
 // Error 2: El token guardado ya no es válido
@@ -44,10 +46,62 @@ const cerrarSesion = () => {
     localStorage.removeItem('rol');
 }
 
+const getDatosParaRegistro = async () => {
+    try {
+        const response = await axios.get(`${ENDPOINT_NOAUTH}/getDatosRegistro`);
+        const datosMapeados = {
+            tipoDomicilios: response.data.body.tipoDomicilios.map((d) => ({
+                id: d.tipo_domicilio_id,
+                nombre: d.tipo_domicilio_descripcion
+            })),
+            roles: response.data.body.roles.map((r) => ({
+                id: r.rol_id,
+                nombre: r.rolNombre
+            })).filter((r) => r.nombre === "CLIENTE")
+        };
+        return datosMapeados;
+    } catch (err) {
+        return [];
+    }
+}
+
+const crearCuenta = async (nombre, apellido, dni, telefono, 
+    correo, password, direccion, idTipoDireccion, observaciones, rolId) => {
+   try {
+    const response = await axios.post(`${ENDPOINT_NOAUTH}/clientes/new`, {
+        cliente_documento: dni,
+        cliente_tipo_documento: "DNI",
+        cliente_cuit: "",
+        cliente_apellido: apellido,
+        cliente_nombre: nombre,
+        cliente_email: correo,
+        cliente_telefono: telefono,
+        cliente_observaciones: "",
+        domicilioDireccion: direccion,
+        domicilioTipoDomicilioId: idTipoDireccion,
+        domicilioBarrio: "",
+        domicilioUbicacion: observaciones,
+        domicilioLocalidadId: 545,
+        domicilioCodigoPostal: 0,
+        domicilioEsPrincipal: "Y",
+        usuario_contrasena: password,
+        usuario_rol_id: rolId,
+        usuario_observaciones: "",
+        usuario_alta: ""
+    });
+    return response
+   } catch (err) {
+       return 400;
+   }
+}
+
 const loginService = {
     iniciarSesion,
     estaIniciadaSesion,
-    cerrarSesion
+    cerrarSesion,
+    crearCuenta,
+    getDatosParaRegistro
 }
+
 
 export default loginService;

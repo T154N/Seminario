@@ -30,7 +30,6 @@ function App() {
               <Route path="/principal" element={<Principal />} />
               <Route path='/' element={<Principal />} />
               <Route path='*' element={<Principal />} />
-              //TODO: Validar que el usuario sea admin para entrar a cargarProducto
               <Route path='/cargarProducto' element={<CargarProducto/>}/>
             </Routes>
           </main>

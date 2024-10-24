@@ -12,6 +12,7 @@ import { Footer } from './components/Footer';
 import { Producto } from './components/producto/Producto';
 import { CarritoProvider } from './components/carrito/CarritoContext';
 import { CargarProducto } from "./components/cargarProducto/CargarProducto";
+import { InicioAdmin } from './components/inicioAdmin/InicioAdmin';
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
               <Route path='*' element={<Principal />} />
               //TODO: Validar que el usuario sea admin para entrar a cargarProducto
               <Route path='/cargarProducto' element={<CargarProducto/>}/>
+              <Route path='/inicioAdmin' element={<InicioAdmin/>}/>
+
             </Routes>
           </main>
 

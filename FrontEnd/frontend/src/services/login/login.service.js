@@ -61,7 +61,7 @@ const getDatosParaRegistro = async () => {
         };
         return datosMapeados;
     } catch (err) {
-        return [];
+        return {tipoDomicilios: [], roles: []};
     }
 }
 

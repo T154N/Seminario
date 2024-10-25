@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { IniciarSesion } from "./IniciarSesion";
 import { CambiarContrasena } from "./CambiarContrasena";
 import { Registrarse } from "./Registrarse";
+import { MensajesRegistro } from "./MensajesRegistro";
 
 import loginService from "../../services/login/login.service";
 
@@ -20,6 +21,9 @@ export function Login() {
 
     const [mostrarAlertaFalloIniciarSesion, setMostrarAlertaFalloIniciarSesion] = useState(false);
     const [sesionYaIniciada, setSesionYaIniciada] = useState(false);
+    const [mostrarAlertaRegistro, setMostrarAlertaRegistro] = useState(false);
+    const [mensajeRegistro, setMensajeRegistro] = useState("");
+    const [tipoError, setTipoError] = useState(0);
 
     useEffect(() => {
         if (loginService.estaIniciadaSesion()) {
@@ -48,6 +52,7 @@ export function Login() {
         setMostrarIniciarSesion(false);
         setMostrarRegistrarse(false);
         setMostrarAlertaFalloIniciarSesion(false);
+        setMostrarAlertaRegistro(false);
         if (sesionYaIniciada) {
             setSesionYaIniciada(false);
         }
@@ -58,16 +63,29 @@ export function Login() {
         setMostrarCambiarPwd(false);
         setMostrarIniciarSesion(true);
         setMostrarRegistrarse(false);
+        setMostrarAlertaRegistro(false);
         if (loginService.estaIniciadaSesion()) {
             setSesionYaIniciada(true);
         }
         setTitulo("Iniciar sesión");
     }
 
+    const mostrarMsjRegistro = (mensaje, tipoError) => {
+        setMostrarAlertaFalloIniciarSesion(false);
+        setMostrarAlertaRegistro(true);
+        setMensajeRegistro(mensaje);
+        setTipoError(tipoError);
+    }
+
+    const cerrarAlertaRegistro = () => {
+        setMostrarAlertaRegistro(false);
+    }
+
     const mostrarReg = () => {
         setMostrarRegistrarse(true);
         setMostrarIniciarSesion(false);
         setMostrarCambiarPwd(false);
+        setMostrarAlertaRegistro(false);
         setMostrarAlertaFalloIniciarSesion(false);
         if (sesionYaIniciada) {
             setSesionYaIniciada(false);
@@ -76,14 +94,15 @@ export function Login() {
     }
     return(
         <>
-            <div className=" ">
+            <div className="">
                 <div className="container">
                     <div className="row">
                         <div className="col"/>
                             <div className="col-sm-12 col-md-10 col-lg-8 col-xl-6 col-xxl-6">
                                 <div className="">
                                     <h1 className="fs-1">{titulo}</h1>
-                                    {mostrarAlertaFalloIniciarSesion && <div className="alert alert-danger" role="alert">Fallo el inicio de sesion</div>}
+                                    {mostrarAlertaFalloIniciarSesion && !mostrarAlertaRegistro && <div className="alert alert-danger" role="alert">Fallo el inicio de sesion</div>}
+                                    {mostrarAlertaRegistro && <MensajesRegistro mensaje={mensajeRegistro} tipoError={tipoError} onClose={cerrarAlertaRegistro}/>}
                                     <div className="card border-0 shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
                                         <div className="card-body text-start px-3">
                                             {sesionYaIniciada && <div className="mt-3 fs-5 text-center alert alert-success" style={{borderRadius: "15px"}}>La sesion esta iniciada</div>}
@@ -95,7 +114,7 @@ export function Login() {
                                             {mostrarCambiarPwd && !sesionYaIniciada && <CambiarContrasena volverALogin={volverALogin}/>}
         
                                             {/* Solo mostrar registrarse si la sesión no está iniciada */}
-                                            {mostrarRegistrarse && !sesionYaIniciada && <Registrarse volverALogin={volverALogin}/>}
+                                            {mostrarRegistrarse && !sesionYaIniciada && <Registrarse mostrarMsjRegistro={mostrarMsjRegistro}/>}
         
                                             {/* Mostrar botón de cerrar sesión si la sesión está iniciada */}
                                             {sesionYaIniciada &&

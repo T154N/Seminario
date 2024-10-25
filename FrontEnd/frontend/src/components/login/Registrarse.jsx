@@ -5,9 +5,9 @@ import loginService from "../../services/login/login.service";
 
 import { useState, useEffect } from "react";
 
-export function Registrarse({volverALogin}) {
+export function Registrarse({mostrarMsjRegistro}) {
 
-    const [datosRegistro, setDatosRegistro] = useState([]);
+    const [datosRegistro, setDatosRegistro] = useState({tipoDomicilios: [], roles: []});
     const [loading, setLoading] = useState(true);
 
     const {
@@ -26,7 +26,6 @@ export function Registrarse({volverALogin}) {
     }, []);
     
     const onSubmit = async (data) => {
-        console.log(data);
         if (data.password !== data.confirmPassword) {
             alert("Las contraseñas no coinciden.");
             reset({
@@ -47,15 +46,18 @@ export function Registrarse({volverALogin}) {
             data.observaciones,
             datosRegistro.roles[0].id
         );
-        console.log(response);
-        if (response.status === 409) {
-            return "Ya existe un usuario con ese correo o documento.";
-        } else if (response.status === 400 || response === 400) {
-            return "Ocurrio un error al registrar el usuario. Intentelo nuevamente."
-        } else if (response.status === 200) {
-            return "Usuario registrado exitosamente.";
-        } else if (response.status === 500) {
-            return "Ocurrio un error en el servidor. Intentelo nuevamente."
+        if (response.code === "ERR_NETWORK" || response === 400 ||response.data.status === 500 || response.data.status === 403) {
+            mostrarMsjRegistro("Ocurrio un error en el servidor. Intentelo mas tarde.", 500);
+        } else if (response.data.status === 409) {
+            reset({
+                dni: "", 
+                correo: ""
+            })
+            mostrarMsjRegistro("Ya existe un usuario con ese correo o documento.", 409);
+        } else if (response.data.status === 400) {
+            mostrarMsjRegistro("Ocurrio un error al registrar el usuario. Intentelo nuevamente.", 400);
+        } else if (response.data.status === 200) {
+            mostrarMsjRegistro("Usuario registrado exitosamente.", 200);
         }
     }
 

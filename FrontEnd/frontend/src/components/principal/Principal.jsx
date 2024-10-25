@@ -30,8 +30,8 @@ export function Principal() {
                                     <p>Para comenzar seleccioná una opción:</p>
                                 </div>
                                 <div className='d-flex justify-content-center mb-3'>
-                                    <button className='btn btn-principal text-black me-1' onClick={handleLoginClick}>Iniciar sesión</button>
-                                    <button className='btn btn-principal text-black ms-1' onClick={handleCatalogClick}>Ver catálogo</button>
+                                    <button className='btn btn-principal text-white me-1' onClick={handleLoginClick}>Iniciar sesión</button>
+                                    <button className='btn btn-principal text-white ms-1' onClick={handleCatalogClick}>Ver catálogo</button>
                                 </div>
                             </div>
                         </div>

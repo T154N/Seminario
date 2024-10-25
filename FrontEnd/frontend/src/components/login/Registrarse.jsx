@@ -43,7 +43,7 @@ export function Registrarse({volverALogin}) {
             data.correo,
             data.password,
             data.direccion,
-            data.idTipoDireccion,
+            data.tipoDomicilio,
             data.observaciones,
             datosRegistro.roles[0].id
         );

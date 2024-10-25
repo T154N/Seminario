@@ -69,28 +69,29 @@ const crearCuenta = async (nombre, apellido, dni, telefono,
     correo, password, direccion, idTipoDireccion, observaciones, rolId) => {
    try {
     const response = await axios.post(`${ENDPOINT_NOAUTH}/clientes/new`, {
-        cliente_documento: dni,
+        cliente_documento: dni.toString(),
         cliente_tipo_documento: "DNI",
         cliente_cuit: "",
-        cliente_apellido: apellido,
-        cliente_nombre: nombre,
-        cliente_email: correo,
-        cliente_telefono: telefono,
+        cliente_apellido: apellido.toString(),
+        cliente_nombre: nombre.toString(),
+        cliente_email: correo.toString(),
+        cliente_telefono: telefono.toString(),
         cliente_observaciones: "",
-        domicilioDireccion: direccion,
-        domicilioTipoDomicilioId: idTipoDireccion,
+        domicilioTipoDomicilioId: parseInt(idTipoDireccion),
+        domicilioDireccion: direccion.toString(),
         domicilioBarrio: "",
-        domicilioUbicacion: observaciones,
+        domicilioUbicacion: "",
         domicilioLocalidadId: 545,
-        domicilioCodigoPostal: 0,
+        domicilioCodigoPostal: "",
         domicilioEsPrincipal: "Y",
-        usuario_contrasena: password,
+        usuario_contrasena: password.toString(),
         usuario_rol_id: rolId,
         usuario_observaciones: "",
         usuario_alta: "CLIENTE"
     });
     return response
    } catch (err) {
+        console.log(err)
        return 400;
    }
 }

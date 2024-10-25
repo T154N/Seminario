@@ -46,19 +46,28 @@ export function Registrarse({mostrarMsjRegistro}) {
             data.observaciones,
             datosRegistro.roles[0].id
         );
-        if (response.code === "ERR_NETWORK" || response === 400 ||response.data.status === 500 || response.data.status === 403) {
-            mostrarMsjRegistro("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", 500);
+        if (response.code && response.code === "ERR_NETWORK") {
+            mostrarMsjRegistro("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
+        } else if (response && response === 400) {
+            mostrarMsjRegistro("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
+        } else if (response.data.status && (response.data.status === 500 || response.data.status === 403)) {
+            mostrarMsjRegistro("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
         } else if (response.data.status === 409) {
             reset({
                 dni: "", 
                 correo: ""
-            })
-            mostrarMsjRegistro("Ya existe un usuario con ese correo o documento.", 409);
-        } else if (response.data.status === 400) {
-            mostrarMsjRegistro("Ocurrio un error al registrar el usuario. Intentelo nuevamente.", 400);
+            });
+            mostrarMsjRegistro("Ya existe un usuario con ese correo o documento.", "alerta");
+        } else if (response.data.status === 400 && response.data.message) {
+            reset({
+                correo: "", 
+                password: ""
+            });
+            mostrarMsjRegistro(response.data.message, "alerta");
         } else if (response.data.status === 200) {
-            mostrarMsjRegistro("Usuario registrado exitosamente.", 200);
+            mostrarMsjRegistro("Sesion iniciada exitosamente. Redirigiendo al catalogo...", "exitoso");
         }
+        
     }
 
     if (loading) {
@@ -71,11 +80,12 @@ export function Registrarse({mostrarMsjRegistro}) {
             <div className="row p-0">
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0 pe-2">
-                            <label className="form-label fs-4">Nombre</label>
+                            <label className="form-label fs-4">Nombre <span style={{color: "darkred"}}>*</span></label>
                             <input
                                    className="form-control"
                                    id="inputNombre"
                                    placeholder="Nombre"
+                                   maxLength={30}
                                    {...register("nombre", {
                                        required: "Este campo es requerido.",
                                        minLength: {
@@ -94,11 +104,12 @@ export function Registrarse({mostrarMsjRegistro}) {
                     </div>
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0">
-                            <label className="form-label fs-4">Apellido</label>
+                            <label className="form-label fs-4">Apellido <span style={{color: "darkred"}}>*</span></label>
                             <input
                                    className="form-control"
                                    id="inputApellido"
                                    placeholder="Apellido"
+                                   maxLength={30}
                                    {...register("apellido", {
                                        required: "Este campo es requerido.",
                                        minLength: {
@@ -119,7 +130,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                 <div className="row">
                 <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0 pe-2">
-                            <label className="form-label fs-4">DNI</label>
+                            <label className="form-label fs-4">DNI <span style={{color: "darkred"}}>*</span></label>
                             <input
                                    className="form-control"
                                    id="inputdni"
@@ -143,11 +154,12 @@ export function Registrarse({mostrarMsjRegistro}) {
                     </div>
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-1">
-                            <label className="form-label fs-4">Telefono</label>
+                            <label className="form-label fs-4">Telefono <span style={{color: "darkred"}}>*</span></label>
                             <input
                                    className="form-control"
                                    id="inputTelefono"
                                    placeholder="Telefono fijo o celular"
+                                   maxLength={10}
                                    {...register("telefono", {
                                        required: "Este campo es requerido.",
                                        minLength: {
@@ -168,8 +180,8 @@ export function Registrarse({mostrarMsjRegistro}) {
                 <div className="row">
                     <div className="col-12 p-0">
                         <div className="mt-0 mb-1">
-                        <label className="form-label fs-4">Correo electrónico</label>
-                            <input className="form-control" id="inputCorreoReg" placeholder="correo@ejemplo.com"
+                        <label className="form-label fs-4">Correo electrónico <span style={{color: "darkred"}}>*</span></label>
+                            <input className="form-control" id="inputCorreoReg" placeholder="correo@ejemplo.com" maxLength={50}
                             {...register("correo", {
                                 required: "Este campo es requerido.",
                                 pattern: {
@@ -186,8 +198,9 @@ export function Registrarse({mostrarMsjRegistro}) {
                 <div className="row">
                     <div className="col-12 p-0">
                         <div className="mt-1 mb-0">
-                            <label className="form-label fs-4">Contraseña</label>
-                            <input type="password" id="inputPasswordReg" className="form-control" placeholder="Contraseña"{...register("password", {
+                            <label className="form-label fs-4">Contraseña <span style={{color: "darkred"}}>*</span></label>
+                            <input type="password" maxLength={20} id="inputPasswordReg" className="form-control" placeholder="Contraseña"
+                            {...register("password", {
                                        required: "Este campo es requerido.",
                                        minLength: {
                                            value: 6,
@@ -207,11 +220,12 @@ export function Registrarse({mostrarMsjRegistro}) {
                 <div className="row">
                     <div className="col-12 p-0">
                         <div className="mt-1 mb-0">
-                            <label className="form-label fs-4">Confirmar contraseña</label>
+                            <label className="form-label fs-4">Confirmar contraseña <span style={{color: "darkred"}}>*</span></label>
                             <input type="password"
                                    className="form-control"
                                    id="inputPasswordRegConf"
                                    placeholder="Confirmar contraseña"
+                                   maxLength={20}
                                    {...register("confirmPassword", {
                                        required: "Este campo es requerido.",
                                        minLength: {
@@ -232,10 +246,11 @@ export function Registrarse({mostrarMsjRegistro}) {
                 <div className="row">
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0 pe-2">
-                            <label className="form-label fs-4">Dirección de entrega</label>
+                            <label className="form-label fs-4">Dirección de entrega <span style={{color: "darkred"}}>*</span></label>
                             <input className="form-control"
                                    id="inputDireccion"
                                    placeholder="Dirección de entrega"
+                                   maxLength={30}
                                    {...register("direccion", {
                                        required: "Este campo es requerido.",
                                        pattern: {
@@ -254,7 +269,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                     </div>
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0">
-                            <label className="form-label fs-4">Tipo de domicilio</label>
+                            <label className="form-label fs-4">Tipo de domicilio <span style={{color: "darkred"}}>*</span></label>
                             <select
                                 id="inputTipoDomicilio"
                                 className={`form-select ${errors.tipoDomicilio ? 'is-invalid' : ''}`}
@@ -285,6 +300,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                                    className="form-control"
                                    id="inputObservacionesDomicilio"
                                    placeholder="Observaciones"
+                                   maxLength={50}
                                    {...register("observaciones")}/>
                             <div>
                                 {errors.observaciones && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.observaciones.message}</p>}

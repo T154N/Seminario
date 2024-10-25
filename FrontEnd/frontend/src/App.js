@@ -11,7 +11,8 @@ import { Info } from './components/info/Info';
 import { Footer } from './components/Footer';
 import { Producto } from './components/producto/Producto';
 import { CarritoProvider } from './components/carrito/CarritoContext';
-import { CargarProducto } from "./components/cargarProducto/CargarProducto";
+import { ResetPassword } from "./components/login/ResetPassword";
+// import { CargarProducto } from "./components/cargarProducto/CargarProducto";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <main>
             <Routes>
               <Route path="/login" element={<Login />} />
+              <Route path='/reset-password' element={<ResetPassword/>}/>
               <Route path="/catalogo" element={<Catalogo />} />
               <Route path="/info" element={<Info />} />
               <Route path='/productos/:categoria' element={<Producto />}/>
@@ -30,7 +32,7 @@ function App() {
               <Route path="/principal" element={<Principal />} />
               <Route path='/' element={<Principal />} />
               <Route path='*' element={<Principal />} />
-              <Route path='/cargarProducto' element={<CargarProducto/>}/>
+              {/* <Route path='/cargarProducto' element={<CargarProducto/>}/> */}
             </Routes>
           </main>
 

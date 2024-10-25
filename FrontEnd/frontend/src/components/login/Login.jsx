@@ -6,8 +6,7 @@ import { useNavigate } from "react-router";
 import { IniciarSesion } from "./IniciarSesion";
 import { CambiarContrasena } from "./CambiarContrasena";
 import { Registrarse } from "./Registrarse";
-import { MensajesRegistro } from "./MensajesRegistro";
-import { MensajesIniciarSesion } from "./MensajesIniciarSesion";
+import { MensajesLogin } from "../Mensajes/Mensajes";
 
 import loginService from "../../services/login/login.service";
 
@@ -18,14 +17,21 @@ export function Login() {
     const [mostrarCambiarPwd, setMostrarCambiarPwd] = useState(false);
     const [mostrarIniciarSesion, setMostrarIniciarSesion] = useState(true);
     const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
+
     const [titulo, setTitulo] = useState("Iniciar sesión");
 
     const [sesionYaIniciada, setSesionYaIniciada] = useState(false);
+
     const [mostrarAlertaRegistro, setMostrarAlertaRegistro] = useState(false);
-    const [mostrarAlertaInicioSesion, setMostrarAlertaInicioSesion] = useState(false);
     const [mensajeRegistro, setMensajeRegistro] = useState("");
+
+    const [mostrarAlertaInicioSesion, setMostrarAlertaInicioSesion] = useState(false);
     const [mensajeInicioSesion, setMensajeInicioSesion] = useState("");
-    const [tipoError, setTipoError] = useState(0);
+
+    const [mostrarAlertaRecuperarContrasena, setMostrarAlertaRecuperarContrasena] = useState(false);
+    const [mensajeRecuperarContrasena, setMensajeRecuperarContrasena] = useState("");
+
+    const [tipoError, setTipoError] = useState("");
 
     useEffect(() => {
         if (loginService.estaIniciadaSesion()) {
@@ -45,23 +51,44 @@ export function Login() {
         }, 4000);
     }
 
-    const mostrarCambiarContrasena = () => {
+    const mostrarCambiarContrasena = () => 
+        {
         setMostrarCambiarPwd(true);
         setMostrarIniciarSesion(false);
+
         setMostrarRegistrarse(false);
+
         setMostrarAlertaInicioSesion(false);
         setMostrarAlertaRegistro(false);
+        setMostrarAlertaRecuperarContrasena(false);
         if (sesionYaIniciada) {
             setSesionYaIniciada(false);
         }
         setTitulo("Cambiar contraseña");
     }
 
+    const mostrarReg = () => {
+        setMostrarRegistrarse(true);
+        setMostrarIniciarSesion(false);
+        setMostrarCambiarPwd(false);
+
+        setMostrarAlertaRegistro(false);
+        setMostrarAlertaInicioSesion(false);
+        setMostrarAlertaRecuperarContrasena(false);
+        if (sesionYaIniciada) {
+            setSesionYaIniciada(false);
+        }
+        setTitulo("Registro de cuenta");
+    }
+
     const volverALogin = () => {
         setMostrarCambiarPwd(false);
         setMostrarIniciarSesion(true);
         setMostrarRegistrarse(false);
+
         setMostrarAlertaRegistro(false);
+        setMostrarAlertaInicioSesion(false);
+        setMostrarAlertaRecuperarContrasena(false);
         if (loginService.estaIniciadaSesion()) {
             setSesionYaIniciada(true);
         }
@@ -71,6 +98,7 @@ export function Login() {
     const mostrarMsjRegistro = (mensaje, tipoError) => {
         setMostrarAlertaInicioSesion(false);
         setMostrarAlertaRegistro(true);
+        setMostrarAlertaRecuperarContrasena(false);
         setMensajeRegistro(mensaje);
         setTipoError(tipoError);
     }
@@ -78,12 +106,21 @@ export function Login() {
     const mostrarMsjInicioSesion = (mensaje, tipoError) => {
         setMostrarAlertaInicioSesion(true);
         setMostrarAlertaRegistro(false);
+        setMostrarAlertaRecuperarContrasena(false);
         setMensajeInicioSesion(mensaje);
         setTipoError(tipoError);
-        if (tipoError === 200) {
+        if (tipoError === "exitoso") {
             navegarHaciaCatalogoLogin();
         }
     }
+
+    const mostrarMsjRecuperarContrasena = (mensaje, tipoError) => {
+        setMostrarAlertaInicioSesion(false);
+        setMostrarAlertaRegistro(false);
+        setMostrarAlertaRecuperarContrasena(true);
+        setMensajeRecuperarContrasena(mensaje);
+        setTipoError(tipoError);
+    };
 
     const cerrarAlertaRegistro = () => {
         setMostrarAlertaRegistro(false);
@@ -93,17 +130,10 @@ export function Login() {
         setMostrarAlertaInicioSesion(false);
     }
 
-    const mostrarReg = () => {
-        setMostrarRegistrarse(true);
-        setMostrarIniciarSesion(false);
-        setMostrarCambiarPwd(false);
-        setMostrarAlertaRegistro(false);
-        setMostrarAlertaInicioSesion(false);
-        if (sesionYaIniciada) {
-            setSesionYaIniciada(false);
-        }
-        setTitulo("Registro de cuenta");
+    const cerrarAlertaRecuperarContrasena = () => {
+        setMostrarAlertaRecuperarContrasena(false);
     }
+
     return(
         <>
             <div className="">
@@ -113,8 +143,9 @@ export function Login() {
                             <div className="col-sm-12 col-md-10 col-lg-8 col-xl-6 col-xxl-6">
                                 <div className="">
                                     <h1 className="fs-1">{titulo}</h1>
-                                    {mostrarAlertaRegistro && <MensajesRegistro mensaje={mensajeRegistro} tipoError={tipoError} onClose={cerrarAlertaRegistro}/>}
-                                    {mostrarAlertaInicioSesion && <MensajesIniciarSesion mensaje={mensajeInicioSesion} tipoError={tipoError} onClose={cerrarAlertaInicioSesion}/>}
+                                    {mostrarAlertaRegistro && <MensajesLogin mensaje={mensajeRegistro} tipoError={tipoError} onClose={cerrarAlertaRegistro}/>}
+                                    {mostrarAlertaInicioSesion && <MensajesLogin mensaje={mensajeInicioSesion} tipoError={tipoError} onClose={cerrarAlertaInicioSesion}/>}
+                                    {mostrarAlertaRecuperarContrasena && <MensajesLogin mensaje={mensajeRecuperarContrasena} tipoError={tipoError} onClose={cerrarAlertaRecuperarContrasena}/>}
                                     <div className="card border-0 shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
                                         <div className="card-body text-start px-3">
                                             {sesionYaIniciada && <div className="alert alert-success mt-3 fs-5 text-center" style={{borderRadius: "10px"}}>La sesion esta iniciada</div>}
@@ -123,7 +154,7 @@ export function Login() {
                                             {mostrarIniciarSesion && !sesionYaIniciada && <IniciarSesion mostrarMsjInicioSesion={mostrarMsjInicioSesion}/>}
         
                                             {/* Solo mostrar cambiar contraseña si la sesión no está iniciada */}
-                                            {mostrarCambiarPwd && !sesionYaIniciada && <CambiarContrasena volverALogin={volverALogin}/>}
+                                            {mostrarCambiarPwd && !sesionYaIniciada && <CambiarContrasena mostrarMsjRecuperarContrasena={mostrarMsjRecuperarContrasena}/>}
         
                                             {/* Solo mostrar registrarse si la sesión no está iniciada */}
                                             {mostrarRegistrarse && !sesionYaIniciada && <Registrarse mostrarMsjRegistro={mostrarMsjRegistro}/>}
@@ -131,7 +162,7 @@ export function Login() {
                                             {/* Mostrar botón de cerrar sesión si la sesión está iniciada */}
                                             {sesionYaIniciada &&
                                                 <div className="d-grid">
-                                                    <button className="btn btn-principal" onClick={cerrarSesion}>Cerrar sesión</button>
+                                                    <button className="btn btn-principal mb-2" onClick={cerrarSesion}>Cerrar sesión</button>
                                                 </div>
                                             }
         

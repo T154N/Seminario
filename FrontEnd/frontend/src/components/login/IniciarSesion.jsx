@@ -18,23 +18,30 @@ export function IniciarSesion({mostrarMsjInicioSesion}) {
 
     const iniciarSesion = async (email, password) => {
         const response = await loginService.iniciarSesion(email, password);
-        if (response.code === "ERR_NETWORK" || response === 400 ||response.data.status === 500 || response.data.status === 403) {
-            mostrarMsjInicioSesion("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", 500);
+        console.log(response)
+        if (response.code && response.code === "ERR_NETWORK") {
+            mostrarMsjInicioSesion("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
+        }else if (response && response === 400) {
+            mostrarMsjInicioSesion("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
+        } else if (response.data.status && response.data.status === 500) {
+            mostrarMsjInicioSesion("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
+        } else if (response.data.status && response.data.status === 403) {
+            mostrarMsjInicioSesion("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
         } else if (response.data.status === 400 && response.data.message) {
             reset({
                 correo: "", 
                 password: ""
             })
-            mostrarMsjInicioSesion(response.data.message, 400);
+            mostrarMsjInicioSesion(response.data.message, "alerta");
         } else if (response.data.status === 200) {
-            mostrarMsjInicioSesion("Sesion iniciada exitosamente. Redirigiendo al catalogo...", 200);
+            mostrarMsjInicioSesion("Sesion iniciada exitosamente. Redirigiendo al catalogo...", "exitoso");
         }
     }
 
     return(
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mt-0 mb-1">
-                <label className="form-label fs-4">Correo electrónico</label>
+                <label className="form-label fs-4">Correo electrónico <span style={{color: "darkred"}}>*</span></label>
                 <input className="form-control" id="inputCorreo" placeholder="correo@ejemplo.com"
                 {...register("correo", {
                     required: "Este campo es requerido.",
@@ -48,7 +55,7 @@ export function IniciarSesion({mostrarMsjInicioSesion}) {
                 </div>
             </div>
             <div className="mt-2 mb-3">
-                <label className="form-label fs-4">Contraseña</label>
+                <label className="form-label fs-4">Contraseña <span style={{color: "darkred"}}>*</span></label>
                 <input type="password" id="inputPassword" className="form-control" placeholder="Contraseña"
                         {...register("password", {
                            required: "Este campo es requerido.",

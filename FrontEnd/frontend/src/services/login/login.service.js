@@ -1,9 +1,9 @@
 import axios from 'axios';
-import CryptoJs from "crypto-js";
+// import CryptoJs from "crypto-js";
 
 const LOGIN_API_URL = process.env.REACT_APP_SEMINARIO_BACKEND_URL;
 const ENDPOINT_NOAUTH = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
-const ENCRYPTION_KEY = process.env.REACT_APP_ENCRYPTION_KEY;
+// const ENCRYPTION_KEY = process.env.REACT_APP_ENCRYPTION_KEY;
 
 
 // Error 1: Correo o contraseña incorrectos
@@ -25,8 +25,8 @@ const iniciarSesion = async (email, password) => {
                 return response;
             }
         }
+        return response;
     } catch (err) {
-        console.log(err);
         return 400;
     }
 }
@@ -63,7 +63,7 @@ const getDatosParaRegistro = async () => {
 const crearCuenta = async (nombre, apellido, dni, telefono, 
     correo, password, direccion, idTipoDireccion, observaciones, rolId) => {
    try {
-    const encryptedPassword = CryptoJs.AES.encrypt(password, ENCRYPTION_KEY).toString();
+    // const encryptedPassword = CryptoJs.AES.encrypt(password, ENCRYPTION_KEY).toString();
     const response = await axios.post(`${ENDPOINT_NOAUTH}/clientes/new`, {
         cliente_documento: dni,
         cliente_tipo_documento: "DNI",
@@ -92,12 +92,37 @@ const crearCuenta = async (nombre, apellido, dni, telefono,
    }
 }
 
+const getCorreoRecuperacion = async (correo) => {
+    try {
+        const response = await axios.post(`${LOGIN_API_URL}/rest/auth/forgot-password?email=${correo}`);
+        return response;
+    } catch (err) {
+        return 400;
+    }
+}
+
+const confirmarResetPassword = async (token, password) => {
+    try {
+        const response = await axios.post(`${LOGIN_API_URL}/rest/auth/reset-password`, {}, {
+            params: {
+                token: token,
+                newPassword: password
+            }
+        });
+        return response;
+    } catch (err) {
+        return 400;
+    }
+}
+
 const loginService = {
     iniciarSesion,
     estaIniciadaSesion,
     cerrarSesion,
     crearCuenta,
-    getDatosParaRegistro
+    getDatosParaRegistro,
+    getCorreoRecuperacion,
+    confirmarResetPassword
 }
 
 

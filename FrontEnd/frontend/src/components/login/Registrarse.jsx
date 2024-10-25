@@ -47,7 +47,7 @@ export function Registrarse({mostrarMsjRegistro}) {
             datosRegistro.roles[0].id
         );
         if (response.code === "ERR_NETWORK" || response === 400 ||response.data.status === 500 || response.data.status === 403) {
-            mostrarMsjRegistro("Ocurrio un error en el servidor. Intentelo mas tarde.", 500);
+            mostrarMsjRegistro("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", 500);
         } else if (response.data.status === 409) {
             reset({
                 dni: "", 

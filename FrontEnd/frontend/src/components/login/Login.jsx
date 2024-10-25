@@ -7,6 +7,7 @@ import { IniciarSesion } from "./IniciarSesion";
 import { CambiarContrasena } from "./CambiarContrasena";
 import { Registrarse } from "./Registrarse";
 import { MensajesRegistro } from "./MensajesRegistro";
+import { MensajesIniciarSesion } from "./MensajesIniciarSesion";
 
 import loginService from "../../services/login/login.service";
 
@@ -19,10 +20,11 @@ export function Login() {
     const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
     const [titulo, setTitulo] = useState("Iniciar sesión");
 
-    const [mostrarAlertaFalloIniciarSesion, setMostrarAlertaFalloIniciarSesion] = useState(false);
     const [sesionYaIniciada, setSesionYaIniciada] = useState(false);
     const [mostrarAlertaRegistro, setMostrarAlertaRegistro] = useState(false);
+    const [mostrarAlertaInicioSesion, setMostrarAlertaInicioSesion] = useState(false);
     const [mensajeRegistro, setMensajeRegistro] = useState("");
+    const [mensajeInicioSesion, setMensajeInicioSesion] = useState("");
     const [tipoError, setTipoError] = useState(0);
 
     useEffect(() => {
@@ -30,10 +32,6 @@ export function Login() {
             setSesionYaIniciada(true);
         }
     }, []);
-
-    const falloIniciarSesion = () => {
-        setMostrarAlertaFalloIniciarSesion(true);
-    }
 
     const cerrarSesion = () => {
         loginService.cerrarSesion();
@@ -44,14 +42,14 @@ export function Login() {
     const navegarHaciaCatalogoLogin = () => {
         setTimeout(() => {
             navigate('/catalogo');
-        }, 1000);
+        }, 4000);
     }
 
     const mostrarCambiarContrasena = () => {
         setMostrarCambiarPwd(true);
         setMostrarIniciarSesion(false);
         setMostrarRegistrarse(false);
-        setMostrarAlertaFalloIniciarSesion(false);
+        setMostrarAlertaInicioSesion(false);
         setMostrarAlertaRegistro(false);
         if (sesionYaIniciada) {
             setSesionYaIniciada(false);
@@ -71,14 +69,28 @@ export function Login() {
     }
 
     const mostrarMsjRegistro = (mensaje, tipoError) => {
-        setMostrarAlertaFalloIniciarSesion(false);
+        setMostrarAlertaInicioSesion(false);
         setMostrarAlertaRegistro(true);
         setMensajeRegistro(mensaje);
         setTipoError(tipoError);
     }
 
+    const mostrarMsjInicioSesion = (mensaje, tipoError) => {
+        setMostrarAlertaInicioSesion(true);
+        setMostrarAlertaRegistro(false);
+        setMensajeInicioSesion(mensaje);
+        setTipoError(tipoError);
+        if (tipoError === 200) {
+            navegarHaciaCatalogoLogin();
+        }
+    }
+
     const cerrarAlertaRegistro = () => {
         setMostrarAlertaRegistro(false);
+    }
+
+    const cerrarAlertaInicioSesion = () => {
+        setMostrarAlertaInicioSesion(false);
     }
 
     const mostrarReg = () => {
@@ -86,7 +98,7 @@ export function Login() {
         setMostrarIniciarSesion(false);
         setMostrarCambiarPwd(false);
         setMostrarAlertaRegistro(false);
-        setMostrarAlertaFalloIniciarSesion(false);
+        setMostrarAlertaInicioSesion(false);
         if (sesionYaIniciada) {
             setSesionYaIniciada(false);
         }
@@ -101,14 +113,14 @@ export function Login() {
                             <div className="col-sm-12 col-md-10 col-lg-8 col-xl-6 col-xxl-6">
                                 <div className="">
                                     <h1 className="fs-1">{titulo}</h1>
-                                    {mostrarAlertaFalloIniciarSesion && !mostrarAlertaRegistro && <div className="alert alert-danger" role="alert">Fallo el inicio de sesion</div>}
                                     {mostrarAlertaRegistro && <MensajesRegistro mensaje={mensajeRegistro} tipoError={tipoError} onClose={cerrarAlertaRegistro}/>}
+                                    {mostrarAlertaInicioSesion && <MensajesIniciarSesion mensaje={mensajeInicioSesion} tipoError={tipoError} onClose={cerrarAlertaInicioSesion}/>}
                                     <div className="card border-0 shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
                                         <div className="card-body text-start px-3">
-                                            {sesionYaIniciada && <div className="mt-3 fs-5 text-center alert alert-success" style={{borderRadius: "15px"}}>La sesion esta iniciada</div>}
+                                            {sesionYaIniciada && <div className="alert alert-success mt-3 fs-5 text-center" style={{borderRadius: "10px"}}>La sesion esta iniciada</div>}
         
                                             {/* Solo mostrar iniciar sesión si la sesión no está iniciada */}
-                                            {mostrarIniciarSesion && !sesionYaIniciada && <IniciarSesion falloIniciarSesion={falloIniciarSesion} navegarHaciaCatalogoLogin={navegarHaciaCatalogoLogin}/>}
+                                            {mostrarIniciarSesion && !sesionYaIniciada && <IniciarSesion mostrarMsjInicioSesion={mostrarMsjInicioSesion}/>}
         
                                             {/* Solo mostrar cambiar contraseña si la sesión no está iniciada */}
                                             {mostrarCambiarPwd && !sesionYaIniciada && <CambiarContrasena volverALogin={volverALogin}/>}

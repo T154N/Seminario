@@ -2,13 +2,12 @@
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/mixins";
 
-// $principal: #C8FFDF;
-// $principal: $purple-500;
-$principal: $green-500;
-// $principal: #21157b;
-// $principal: $primary;
+// Define your colors
+$principal: $green-500; // Change this as needed
+$alert-login: $purple-400;
 $secundario: #FCBB3A;
 
+// Custom color map
 $custom-colors: (
     "principal": $principal,
     "secundario": $secundario,
@@ -16,4 +15,5 @@ $custom-colors: (
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
+// Import Bootstrap styles after defining custom styles
 @import "../../node_modules/bootstrap/scss/bootstrap";

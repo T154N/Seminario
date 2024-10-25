@@ -1,7 +1,9 @@
 import axios from 'axios';
+import CryptoJs from "crypto-js";
 
 const LOGIN_API_URL = process.env.REACT_APP_SEMINARIO_BACKEND_URL;
 const ENDPOINT_NOAUTH = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
+const ENCRYPTION_KEY = process.env.REACT_APP_ENCRYPTION_KEY;
 
 
 // Error 1: Correo o contraseña incorrectos
@@ -15,19 +17,12 @@ const iniciarSesion = async (email, password) => {
             email: email, 
             password: password
         });
-        console.log(response);
-        // Manejo de errores
-        // El servidor respondio correctamente
         if (response.status === 200) {
-            // El servidor respondio con un token
             if (response.data.status === 200 && response.data.body.token) {
                 localStorage.setItem('token', response.data.body.token);
                 localStorage.setItem('email', response.data.body.email);
                 localStorage.setItem('rol', response.data.body.rol);
-                return 200;
-            // El servidor respondio con un error
-            } else if (response.data.status === 400) {
-                return 1;
+                return response;
             }
         }
     } catch (err) {
@@ -68,6 +63,7 @@ const getDatosParaRegistro = async () => {
 const crearCuenta = async (nombre, apellido, dni, telefono, 
     correo, password, direccion, idTipoDireccion, observaciones, rolId) => {
    try {
+    const encryptedPassword = CryptoJs.AES.encrypt(password, ENCRYPTION_KEY).toString();
     const response = await axios.post(`${ENDPOINT_NOAUTH}/clientes/new`, {
         cliente_documento: dni,
         cliente_tipo_documento: "DNI",
@@ -89,7 +85,7 @@ const crearCuenta = async (nombre, apellido, dni, telefono,
         usuario_observaciones: "",
         usuario_alta: "CLIENTE"
     });
-    return response
+    return response;
    } catch (err) {
         console.log(err)
        return 400;

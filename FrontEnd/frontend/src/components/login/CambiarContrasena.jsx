@@ -8,9 +8,10 @@ export function CambiarContrasena({mostrarMsjRecuperarContrasena}) {
     const {
         register,
         handleSubmit,
-        formState: {errors}} = useForm();
+        formState: {errors}, reset} = useForm();
 
         const onSubmit = async (data) => {
+            mostrarMsjRecuperarContrasena("Por favor, espera mientras se envia el correo de recuperacion...", "espera");
             const response = await loginService.getCorreoRecuperacion(data.correo);
             if (response.code === "ERR_NETWORK" || response === 400 ||response.data.status === 500 || response.data.status === 403) {
                 mostrarMsjRecuperarContrasena("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
@@ -18,6 +19,9 @@ export function CambiarContrasena({mostrarMsjRecuperarContrasena}) {
                 mostrarMsjRecuperarContrasena(response.data.message, "alerta");
             } else if (response.data.status === 200) {
                 mostrarMsjRecuperarContrasena("Correo de recuperacion enviado, revise su casilla de correo.", "exitoso");
+                reset({
+                    correo: ""
+                })
             }
         }
 

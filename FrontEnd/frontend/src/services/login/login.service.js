@@ -25,8 +25,8 @@ const iniciarSesion = async (email, password) => {
                 return response;
             }
         }
+        return response;
     } catch (err) {
-        console.log(err);
         return 400;
     }
 }
@@ -101,13 +101,28 @@ const getCorreoRecuperacion = async (correo) => {
     }
 }
 
+const confirmarResetPassword = async (token, password) => {
+    try {
+        const response = await axios.post(`${LOGIN_API_URL}/rest/auth/reset-password`, {}, {
+            params: {
+                token: token,
+                newPassword: password
+            }
+        });
+        return response;
+    } catch (err) {
+        return 400;
+    }
+}
+
 const loginService = {
     iniciarSesion,
     estaIniciadaSesion,
     cerrarSesion,
     crearCuenta,
     getDatosParaRegistro,
-    getCorreoRecuperacion
+    getCorreoRecuperacion,
+    confirmarResetPassword
 }
 
 

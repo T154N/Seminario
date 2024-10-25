@@ -18,7 +18,14 @@ export function IniciarSesion({mostrarMsjInicioSesion}) {
 
     const iniciarSesion = async (email, password) => {
         const response = await loginService.iniciarSesion(email, password);
-        if (response.code === "ERR_NETWORK" || response === 400 ||response.data.status === 500 || response.data.status === 403) {
+        console.log(response)
+        if (response.code && response.code === "ERR_NETWORK") {
+            mostrarMsjInicioSesion("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
+        }else if (response && response === 400) {
+            mostrarMsjInicioSesion("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
+        } else if (response.data.status && response.data.status === 500) {
+            mostrarMsjInicioSesion("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
+        } else if (response.data.status && response.data.status === 403) {
             mostrarMsjInicioSesion("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
         } else if (response.data.status === 400 && response.data.message) {
             reset({

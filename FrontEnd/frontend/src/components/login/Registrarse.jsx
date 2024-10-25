@@ -46,19 +46,28 @@ export function Registrarse({mostrarMsjRegistro}) {
             data.observaciones,
             datosRegistro.roles[0].id
         );
-        if (response.code === "ERR_NETWORK" || response === 400 ||response.data.status === 500 || response.data.status === 403) {
+        if (response.code && response.code === "ERR_NETWORK") {
+            mostrarMsjRegistro("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
+        } else if (response && response === 400) {
+            mostrarMsjRegistro("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
+        } else if (response.data.status && (response.data.status === 500 || response.data.status === 403)) {
             mostrarMsjRegistro("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
         } else if (response.data.status === 409) {
             reset({
                 dni: "", 
                 correo: ""
-            })
+            });
             mostrarMsjRegistro("Ya existe un usuario con ese correo o documento.", "alerta");
-        } else if (response.data.status === 400) {
-            mostrarMsjRegistro("Ocurrio un error al registrar el usuario. Intentelo nuevamente.", "alerta");
+        } else if (response.data.status === 400 && response.data.message) {
+            reset({
+                correo: "", 
+                password: ""
+            });
+            mostrarMsjRegistro(response.data.message, "alerta");
         } else if (response.data.status === 200) {
-            mostrarMsjRegistro("Usuario registrado exitosamente.", "exitoso");
+            mostrarMsjRegistro("Sesion iniciada exitosamente. Redirigiendo al catalogo...", "exitoso");
         }
+        
     }
 
     if (loading) {
@@ -190,7 +199,8 @@ export function Registrarse({mostrarMsjRegistro}) {
                     <div className="col-12 p-0">
                         <div className="mt-1 mb-0">
                             <label className="form-label fs-4">Contraseña <span style={{color: "darkred"}}>*</span></label>
-                            <input type="password" maxLength={20} id="inputPasswordReg" className="form-control" placeholder="Contraseña"{...register("password", {
+                            <input type="password" maxLength={20} id="inputPasswordReg" className="form-control" placeholder="Contraseña"
+                            {...register("password", {
                                        required: "Este campo es requerido.",
                                        minLength: {
                                            value: 6,

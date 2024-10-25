@@ -71,7 +71,7 @@ export function Registrarse({mostrarMsjRegistro}) {
             <div className="row p-0">
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0 pe-2">
-                            <label className="form-label fs-4">Nombre</label>
+                            <label className="form-label fs-4">Nombre <span style={{color: "darkred"}}>*</span></label>
                             <input
                                    className="form-control"
                                    id="inputNombre"
@@ -94,7 +94,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                     </div>
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0">
-                            <label className="form-label fs-4">Apellido</label>
+                            <label className="form-label fs-4">Apellido <span style={{color: "darkred"}}>*</span></label>
                             <input
                                    className="form-control"
                                    id="inputApellido"
@@ -119,7 +119,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                 <div className="row">
                 <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0 pe-2">
-                            <label className="form-label fs-4">DNI</label>
+                            <label className="form-label fs-4">DNI <span style={{color: "darkred"}}>*</span></label>
                             <input
                                    className="form-control"
                                    id="inputdni"
@@ -143,7 +143,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                     </div>
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-1">
-                            <label className="form-label fs-4">Telefono</label>
+                            <label className="form-label fs-4">Telefono <span style={{color: "darkred"}}>*</span></label>
                             <input
                                    className="form-control"
                                    id="inputTelefono"
@@ -168,7 +168,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                 <div className="row">
                     <div className="col-12 p-0">
                         <div className="mt-0 mb-1">
-                        <label className="form-label fs-4">Correo electrónico</label>
+                        <label className="form-label fs-4">Correo electrónico <span style={{color: "darkred"}}>*</span></label>
                             <input className="form-control" id="inputCorreoReg" placeholder="correo@ejemplo.com"
                             {...register("correo", {
                                 required: "Este campo es requerido.",
@@ -186,7 +186,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                 <div className="row">
                     <div className="col-12 p-0">
                         <div className="mt-1 mb-0">
-                            <label className="form-label fs-4">Contraseña</label>
+                            <label className="form-label fs-4">Contraseña <span style={{color: "darkred"}}>*</span></label>
                             <input type="password" id="inputPasswordReg" className="form-control" placeholder="Contraseña"{...register("password", {
                                        required: "Este campo es requerido.",
                                        minLength: {
@@ -207,7 +207,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                 <div className="row">
                     <div className="col-12 p-0">
                         <div className="mt-1 mb-0">
-                            <label className="form-label fs-4">Confirmar contraseña</label>
+                            <label className="form-label fs-4">Confirmar contraseña <span style={{color: "darkred"}}>*</span></label>
                             <input type="password"
                                    className="form-control"
                                    id="inputPasswordRegConf"
@@ -232,7 +232,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                 <div className="row">
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0 pe-2">
-                            <label className="form-label fs-4">Dirección de entrega</label>
+                            <label className="form-label fs-4">Dirección de entrega <span style={{color: "darkred"}}>*</span></label>
                             <input className="form-control"
                                    id="inputDireccion"
                                    placeholder="Dirección de entrega"
@@ -254,7 +254,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                     </div>
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0">
-                            <label className="form-label fs-4">Tipo de domicilio</label>
+                            <label className="form-label fs-4">Tipo de domicilio <span style={{color: "darkred"}}>*</span></label>
                             <select
                                 id="inputTipoDomicilio"
                                 className={`form-select ${errors.tipoDomicilio ? 'is-invalid' : ''}`}

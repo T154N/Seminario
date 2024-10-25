@@ -131,7 +131,7 @@ export function Login() {
                                             {/* Mostrar botón de cerrar sesión si la sesión está iniciada */}
                                             {sesionYaIniciada &&
                                                 <div className="d-grid">
-                                                    <button className="btn btn-principal" onClick={cerrarSesion}>Cerrar sesión</button>
+                                                    <button className="btn btn-principal mb-2" onClick={cerrarSesion}>Cerrar sesión</button>
                                                 </div>
                                             }
         

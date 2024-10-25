@@ -1,6 +1,6 @@
 import React from "react";
 
-export function MensajesRegistro({mensaje, tipoError, onClose}) {
+export function MensajesLogin({mensaje, tipoError, onClose}) {
 
     return (
         <div>
@@ -15,25 +15,19 @@ export function MensajesRegistro({mensaje, tipoError, onClose}) {
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                 </symbol>
             </svg>
-            {tipoError === 409 &&
+            {tipoError === "alerta" &&
             <div className="alert alert-warning alert-dismissible fade show d-flex align-items-center" role="alert">
                 <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use href="#exclamation-triangle-fill"/></svg>
                 <div>{mensaje}</div>
                 <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={onClose}></button>
             </div>}
-            {tipoError === 400 &&
+            {tipoError === "peligro" &&
                 <div className="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
                     <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use href="#exclamation-triangle-fill"/></svg>
                 <div>{mensaje}</div>
                 <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={onClose}></button>
             </div>}
-            {tipoError === 500 &&
-            <div className="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
-                <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use href="#exclamation-triangle-fill"/></svg>
-                <div>{mensaje}</div>
-                <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={onClose}></button>
-            </div>}
-            {tipoError === 200 &&
+            {tipoError === "exitoso" &&
             <div className="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
                 <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use href="#check-circle-fill"/></svg>
             <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={onClose}></button>

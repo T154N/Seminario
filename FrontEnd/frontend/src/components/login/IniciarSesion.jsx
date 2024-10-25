@@ -4,23 +4,30 @@ import {useForm} from "react-hook-form";
 
 import loginService from "../../services/login/login.service";
 
-export function IniciarSesion({falloIniciarSesion, navegarHaciaCatalogoLogin}) {
+export function IniciarSesion({mostrarMsjInicioSesion}) {
 
     const {
         register,
         handleSubmit,
-        formState: {errors}} = useForm();
+        formState: {errors},
+        reset} = useForm();
     
     const onSubmit = async (data) => {
         iniciarSesion(data.correo, data.password);
     }
 
     const iniciarSesion = async (email, password) => {
-        const login = await loginService.iniciarSesion(email, password);
-        if (login === 200) {
-            navegarHaciaCatalogoLogin();
-        } else if (login === 1) {
-            falloIniciarSesion();
+        const response = await loginService.iniciarSesion(email, password);
+        if (response.code === "ERR_NETWORK" || response === 400 ||response.data.status === 500 || response.data.status === 403) {
+            mostrarMsjInicioSesion("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", 500);
+        } else if (response.data.status === 400 && response.data.message) {
+            reset({
+                correo: "", 
+                password: ""
+            })
+            mostrarMsjInicioSesion(response.data.message, 400);
+        } else if (response.data.status === 200) {
+            mostrarMsjInicioSesion("Sesion iniciada exitosamente. Redirigiendo al catalogo...", 200);
         }
     }
 
@@ -46,7 +53,7 @@ export function IniciarSesion({falloIniciarSesion, navegarHaciaCatalogoLogin}) {
                         {...register("password", {
                            required: "Este campo es requerido.",
                            minLength: {
-                               value: 6, //TODO: Cambiar a 6 dígitos mínimo
+                               value: 6,
                                message: "La contraseña debe tener al menos 6 caracteres."
                            },
                            maxLength: {

@@ -6,6 +6,8 @@ import { useNavigate } from "react-router";
 import { IniciarSesion } from "./IniciarSesion";
 import { CambiarContrasena } from "./CambiarContrasena";
 import { Registrarse } from "./Registrarse";
+import { MensajesRegistro } from "./MensajesRegistro";
+import { MensajesIniciarSesion } from "./MensajesIniciarSesion";
 
 import loginService from "../../services/login/login.service";
 
@@ -16,19 +18,20 @@ export function Login() {
     const [mostrarCambiarPwd, setMostrarCambiarPwd] = useState(false);
     const [mostrarIniciarSesion, setMostrarIniciarSesion] = useState(true);
     const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
+    const [titulo, setTitulo] = useState("Iniciar sesión");
 
-    const [mostrarAlertaFalloIniciarSesion, setMostrarAlertaFalloIniciarSesion] = useState(false);
     const [sesionYaIniciada, setSesionYaIniciada] = useState(false);
+    const [mostrarAlertaRegistro, setMostrarAlertaRegistro] = useState(false);
+    const [mostrarAlertaInicioSesion, setMostrarAlertaInicioSesion] = useState(false);
+    const [mensajeRegistro, setMensajeRegistro] = useState("");
+    const [mensajeInicioSesion, setMensajeInicioSesion] = useState("");
+    const [tipoError, setTipoError] = useState(0);
 
     useEffect(() => {
         if (loginService.estaIniciadaSesion()) {
             setSesionYaIniciada(true);
         }
     }, []);
-
-    const falloIniciarSesion = () => {
-        setMostrarAlertaFalloIniciarSesion(true);
-    }
 
     const cerrarSesion = () => {
         loginService.cerrarSesion();
@@ -39,59 +42,91 @@ export function Login() {
     const navegarHaciaCatalogoLogin = () => {
         setTimeout(() => {
             navigate('/catalogo');
-        }, 1000);
+        }, 4000);
     }
 
     const mostrarCambiarContrasena = () => {
         setMostrarCambiarPwd(true);
         setMostrarIniciarSesion(false);
         setMostrarRegistrarse(false);
-        setMostrarAlertaFalloIniciarSesion(false);
+        setMostrarAlertaInicioSesion(false);
+        setMostrarAlertaRegistro(false);
         if (sesionYaIniciada) {
             setSesionYaIniciada(false);
         }
+        setTitulo("Cambiar contraseña");
     }
 
     const volverALogin = () => {
         setMostrarCambiarPwd(false);
         setMostrarIniciarSesion(true);
         setMostrarRegistrarse(false);
+        setMostrarAlertaRegistro(false);
         if (loginService.estaIniciadaSesion()) {
             setSesionYaIniciada(true);
         }
+        setTitulo("Iniciar sesión");
+    }
+
+    const mostrarMsjRegistro = (mensaje, tipoError) => {
+        setMostrarAlertaInicioSesion(false);
+        setMostrarAlertaRegistro(true);
+        setMensajeRegistro(mensaje);
+        setTipoError(tipoError);
+    }
+
+    const mostrarMsjInicioSesion = (mensaje, tipoError) => {
+        setMostrarAlertaInicioSesion(true);
+        setMostrarAlertaRegistro(false);
+        setMensajeInicioSesion(mensaje);
+        setTipoError(tipoError);
+        if (tipoError === 200) {
+            navegarHaciaCatalogoLogin();
+        }
+    }
+
+    const cerrarAlertaRegistro = () => {
+        setMostrarAlertaRegistro(false);
+    }
+
+    const cerrarAlertaInicioSesion = () => {
+        setMostrarAlertaInicioSesion(false);
     }
 
     const mostrarReg = () => {
         setMostrarRegistrarse(true);
         setMostrarIniciarSesion(false);
         setMostrarCambiarPwd(false);
-        setMostrarAlertaFalloIniciarSesion(false);
+        setMostrarAlertaRegistro(false);
+        setMostrarAlertaInicioSesion(false);
         if (sesionYaIniciada) {
             setSesionYaIniciada(false);
         }
+        setTitulo("Registro de cuenta");
     }
     return(
         <>
-            <div className=" ">
+            <div className="">
                 <div className="container">
                     <div className="row">
                         <div className="col"/>
                             <div className="col-sm-12 col-md-10 col-lg-8 col-xl-6 col-xxl-6">
                                 <div className="">
-                                    <h1 className="fs-1">Iniciar sesión</h1>
-                                    {mostrarAlertaFalloIniciarSesion && <div className="alert alert-danger" role="alert">Fallo el inicio de sesion</div>}
+                                    <h1 className="fs-1">{titulo}</h1>
+                                    {mostrarAlertaRegistro && <MensajesRegistro mensaje={mensajeRegistro} tipoError={tipoError} onClose={cerrarAlertaRegistro}/>}
+                                    {mostrarAlertaInicioSesion && <MensajesIniciarSesion mensaje={mensajeInicioSesion} tipoError={tipoError} onClose={cerrarAlertaInicioSesion}/>}
                                     <div className="card border-0 shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
                                         <div className="card-body text-start px-3">
-                                            {sesionYaIniciada && <div className="mt-3 fs-5 text-center alert alert-success" style={{borderRadius: "15px"}}>La sesion esta iniciada</div>}
+                                            {sesionYaIniciada && <div className="alert alert-success mt-3 fs-5 text-center" style={{borderRadius: "10px"}}>La sesion esta iniciada</div>}
         
                                             {/* Solo mostrar iniciar sesión si la sesión no está iniciada */}
-                                            {mostrarIniciarSesion && !sesionYaIniciada && <IniciarSesion falloIniciarSesion={falloIniciarSesion} navegarHaciaCatalogoLogin={navegarHaciaCatalogoLogin}/>}
+                                            {mostrarIniciarSesion && !sesionYaIniciada && <IniciarSesion mostrarMsjInicioSesion={mostrarMsjInicioSesion}/>}
         
                                             {/* Solo mostrar cambiar contraseña si la sesión no está iniciada */}
                                             {mostrarCambiarPwd && !sesionYaIniciada && <CambiarContrasena volverALogin={volverALogin}/>}
         
                                             {/* Solo mostrar registrarse si la sesión no está iniciada */}
-                                            {mostrarRegistrarse && !sesionYaIniciada && <Registrarse volverALogin={volverALogin}/>}
+                                            {mostrarRegistrarse && !sesionYaIniciada && <Registrarse mostrarMsjRegistro={mostrarMsjRegistro}/>}
         
                                             {/* Mostrar botón de cerrar sesión si la sesión está iniciada */}
                                             {sesionYaIniciada &&

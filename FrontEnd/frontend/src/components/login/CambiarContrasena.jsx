@@ -17,7 +17,6 @@ export function CambiarContrasena({volverALogin}) {
 
  return(
     <form onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="fs-3 text-center">Recuperando contraseña</h1>
         <div className="mt-0 mb-3">
             <label className="form-label fs-4">Introduzca el correo electrónico</label>
             <input className="form-control" id="inputCorreo" placeholder="correo@ejemplo.com"

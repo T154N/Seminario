@@ -54,27 +54,25 @@ export function Producto() {
 
     // Incrementar y disminuir cantidad de un producto específico
     const incrementarCantidad = (id) => {
-        setCantidad((prevCantidad) => ({
-            ...prevCantidad,
-            [id]: (prevCantidad[id] || 0) + 1
-        }));
+        setCantidad((prevCantidad) => {
+            const nuevaCantidad = (prevCantidad[id] || 1) + 1;
+            return { ...prevCantidad, [id]: nuevaCantidad };
+        });
     };
-
+    
     const disminuirCantidad = (id) => {
-        setCantidad((prevCantidad) => ({
-            ...prevCantidad,
-            [id]: Math.max((prevCantidad[id] || 0) - 1, 0)
-        }));
+        setCantidad((prevCantidad) => {
+            const nuevaCantidad = Math.max((prevCantidad[id] || 1) - 1, 0);
+            return { ...prevCantidad, [id]: nuevaCantidad };
+        });
     };
-
-    // Manejar el cambio en el campo de entrada de cantidad
+    
     const manejarCambioCantidad = (id, e) => {
         const valor = e.target.value;
-        // Validar que el valor sea un número positivo
         if (!isNaN(valor) && valor >= 0) {
             setCantidad((prevCantidad) => ({
                 ...prevCantidad,
-                [id]: parseInt(valor) || 0
+                [id]: parseInt(valor) || 0,
             }));
         }
     };

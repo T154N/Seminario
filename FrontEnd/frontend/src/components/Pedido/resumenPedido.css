@@ -1,0 +1,130 @@
+.payment-page, .payment-options {
+    margin-top: 50px;
+}
+
+.card-title {
+    background-color: none;
+}
+
+.card-header {
+    background-color: #FCBB3A !important;
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.producto-card {
+    background-color: rgba(247, 245, 245, 0.952);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn-lg {
+    padding: 10px 20px;
+}
+
+.card {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.form-control {
+    border-radius: 5px;
+    border: solid 2px black;
+    width: 15%;
+}
+
+@media (max-width: 991px) {
+    .form-control {
+        width: 25%;
+    }
+    
+}
+
+.cantidad-control-rectangulo {
+    border: 2px solid #ccc; /* Borde del rectángulo */
+    border-radius: 8px; /* Borde redondeado opcional */
+    padding: 5px; /* Espacio interno */
+    display: inline-flex; /* Mostrar los elementos en línea */
+    justify-content: space-between; /* Separar los botones y el input */
+    align-items: center; /* Alinear verticalmente */
+}
+
+.cantidad-control-rectangulo button {
+    border: none; /* Eliminar bordes adicionales en los botones */
+    background-color: transparent; /* Fondo transparente para botones */
+}
+
+.cantidad-control-rectangulo input {
+    border: none; /* Eliminar borde del input */
+    text-align: center; /* Alinear la cantidad al centro */
+    width: 50px; /* Ajustar el ancho del input */
+}
+
+.precios-container {
+    display: flex;
+    flex-direction: column;
+    font-size: 110%; /* Los precios estarán en columnas por defecto */
+}
+
+.precio-unitario, .precio-total {
+    display: flex;
+    justify-content: space-between; /* Alinea horizontalmente el texto y el valor */
+    align-items: center; /* Alinea verticalmente el texto y el valor en el centro */
+    margin-bottom: 5px ; /* Espaciado entre los precios */
+}
+
+@media (min-width: 992px) {
+    .precios-container {
+        flex-direction: column; /* Mantiene la columna a partir de 992px */
+    }
+
+    .precio-unitario, .precio-total {
+        margin-bottom: 5px; /* Asegura un margen adecuado entre precios */
+    }
+}
+
+@media (min-width: 1200px) {
+    .precios-container {
+        flex-direction: row; /* A partir de 1200px, los precios estarán en una fila horizontal */
+        justify-content: space-between;
+    }
+
+    .precio-unitario, .precio-total {
+        margin-bottom: 0; /* Elimina el margen cuando los precios están en fila */
+    }
+}
+
+/* Oculta las flechas del input numérico */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+input[type="number"] {
+    border: none; /* Eliminar el borde predeterminado */
+    background-color: transparent; /* Fondo transparente */
+    outline: none; /* Quitar el contorno cuando el campo esté enfocado */
+    color: #333; /* Color del texto */
+    text-align: center; /* Alinear el texto en el centro */
+    padding: 0 8px; /* Añadir algo de espacio lateral */
+}
+
+input[type="number"]:focus {
+    outline: none; /* Evitar borde o contorno al hacer clic */
+}

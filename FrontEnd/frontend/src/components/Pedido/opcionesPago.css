@@ -1,0 +1,33 @@
+.card-header {
+    margin-bottom: 0; /* Elimina cualquier margen inferior del encabezado */
+    padding-bottom: 0.5rem; /* Ajusta el relleno si es necesario */
+}
+
+.accordion-item {
+    margin-top: 0; /* Elimina el margen superior de cada acordeón */
+}
+
+
+.accordion-button {
+    cursor: pointer;
+}
+
+.checkbox-margin {
+    margin-right: 10px; /* Ajusta según tus necesidades */
+}
+
+.card-title.text-center {
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+
+.card-text.text-center.text-danger {
+    color: #dc3545;
+    text-align: center;
+}
+
+.btn-success.btn-lg {
+    font-size: 1.25rem;
+    padding: .75rem 1.25rem;
+}

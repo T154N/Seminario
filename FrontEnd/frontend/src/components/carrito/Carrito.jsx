@@ -4,9 +4,27 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './carrito.css';
 import { useCarrito } from './CarritoContext';
 import carrito from '../../images/Header Icons/carrito.png';
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import { Offcanvas } from 'bootstrap'; // Importar Offcanvas
 
 export function Carrito() {
     const { productos, incrementarCantidad, disminuirCantidad, eliminarProducto, generarPedido, vaciarCarrito, total } = useCarrito();
+    const navigate = useNavigate(); // Inicializar useNavigate
+
+    const handleGenerarPedido = () => {
+        if (productos.length > 0) {
+            generarPedido(navigate); // Pasar navigate a la función generarPedido
+    
+            // Cerrar el offcanvas
+            const offcanvasElement = document.getElementById('offcanvasScrolling');
+            const offcanvasInstance = Offcanvas.getInstance(offcanvasElement);
+            if (offcanvasInstance) {
+                offcanvasInstance.hide();
+            }
+        } else {
+            alert('El carrito está vacío');
+        }
+    };
 
     return (
         <div>
@@ -78,7 +96,7 @@ export function Carrito() {
 
                 <div className="carrito-footer">
                     <h5>Total: ${total}</h5>
-                    <button className="btn btn-primary btn-carrito-compra md-2" onClick={generarPedido}>Iniciar Compra</button>
+                    <button className="btn btn-primary btn-carrito-compra md-2" onClick={handleGenerarPedido}>Iniciar Compra</button>
                     <button className="btn btn-danger btn-vaciar md-2" onClick={vaciarCarrito}>Vaciar Carrito</button>
                 </div>
             </div>

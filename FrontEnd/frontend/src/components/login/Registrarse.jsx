@@ -65,7 +65,7 @@ export function Registrarse({mostrarMsjRegistro}) {
             });
             mostrarMsjRegistro(response.data.message, "alerta");
         } else if (response.data.status === 200) {
-            mostrarMsjRegistro("Sesion iniciada exitosamente. Redirigiendo al catalogo...", "exitoso");
+            mostrarMsjRegistro("Cuenta registrada exitosamente. Redirigiendo al inicio de sesion...", "exitoso");
         }
         
     }

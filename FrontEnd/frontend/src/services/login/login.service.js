@@ -1,9 +1,11 @@
 import axios from 'axios';
-// import CryptoJs from "crypto-js";
+// import CryptoJS from "crypto-js";
 
 const LOGIN_API_URL = process.env.REACT_APP_SEMINARIO_BACKEND_URL;
 const ENDPOINT_NOAUTH = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
-// const ENCRYPTION_KEY = process.env.REACT_APP_ENCRYPTION_KEY;
+// const ENCRYPTION_KEY_NOT_PARSED = process.env.REACT_APP_ENCRYPTION_KEY;
+// const ENCRYPTION_KEY = CryptoJS.enc.Utf8.parse(ENCRYPTION_KEY_NOT_PARSED);
+
 
 
 // Error 1: Correo o contraseña incorrectos
@@ -13,9 +15,12 @@ const ENDPOINT_NOAUTH = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
 
 const iniciarSesion = async (email, password) => {
     try {
+        // const encryptedPassword = CryptoJS.AES.encrypt(password, ENCRYPTION_KEY).toString();
+        const encryptedPassword = await getEncryptedPassword(password);
+        console.log(encryptedPassword)
         const response = await axios.post(`${LOGIN_API_URL}/rest/auth/login`, {
             email: email, 
-            password: password
+            password: encryptedPassword.toString()
         });
         if (response.status === 200) {
             if (response.data.status === 200 && response.data.body.token) {
@@ -64,6 +69,7 @@ const crearCuenta = async (nombre, apellido, dni, telefono,
     correo, password, direccion, idTipoDireccion, observaciones, rolId) => {
    try {
     // const encryptedPassword = CryptoJs.AES.encrypt(password, ENCRYPTION_KEY).toString();
+    const encryptedPassword = await getEncryptedPassword(password);
     const response = await axios.post(`${ENDPOINT_NOAUTH}/clientes/new`, {
         cliente_documento: dni,
         cliente_tipo_documento: "DNI",
@@ -80,7 +86,7 @@ const crearCuenta = async (nombre, apellido, dni, telefono,
         domicilioLocalidadId: 545,
         domicilioCodigoPostal: "",
         domicilioEsPrincipal: "Y",
-        usuario_contrasena: password,
+        usuario_contrasena: encryptedPassword.toString(),
         usuario_rol_id: rolId,
         usuario_observaciones: "",
         usuario_alta: "CLIENTE"
@@ -103,13 +109,29 @@ const getCorreoRecuperacion = async (correo) => {
 
 const confirmarResetPassword = async (token, password) => {
     try {
+        const encryptedPassword = await getEncryptedPassword(password);
         const response = await axios.post(`${LOGIN_API_URL}/rest/auth/reset-password`, {}, {
             params: {
                 token: token,
-                newPassword: password
+                newPassword: encryptedPassword.toString()
             }
         });
         return response;
+    } catch (err) {
+        return 400;
+    }
+}
+
+const getEncryptedPassword = async (password) => {
+    try {
+        const pass = password.toString();
+        const response = await axios.post(`${ENDPOINT_NOAUTH}/encryption/encrypt`, pass, {
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        })
+        console.log(response.data)
+        return response.data
     } catch (err) {
         return 400;
     }

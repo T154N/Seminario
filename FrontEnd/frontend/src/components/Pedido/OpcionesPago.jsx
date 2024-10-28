@@ -1,16 +1,15 @@
-// OpcionesPago.js
-
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { usePedido } from './PedidoContext'; // Cambiar a PedidoContext
+import { usePedido } from './PedidoContext';
 import './resumenPedido.css';
 import './opcionesPago.css';
 import Collapse from 'bootstrap/js/dist/collapse';
 
 export function OpcionesPago() {
-    const { total, setMetodoPago } = usePedido(); // Cambiar a PedidoContext
+    const { pedidoActual, setMetodoPago } = usePedido(); 
     const navigate = useNavigate();
-    const [metodoSeleccionado, setMetodoSeleccionado] = useState(null);
+    const [metodoSeleccionado, setMetodoSeleccionado] = useState(pedidoActual.metodoPago);
+    const [isPedidoFinalizado, setIsPedidoFinalizado] = useState(false); // Nuevo estado
 
     const efectivoRef = useRef(null);
     const transferenciaRef = useRef(null);
@@ -31,28 +30,31 @@ export function OpcionesPago() {
         }
 
         return () => {
-            if (efectivoCollapse) efectivoCollapse.dispose();
-            if (transferenciaCollapse) transferenciaCollapse.dispose();
+            efectivoCollapse.dispose();
+            transferenciaCollapse.dispose();
         };
     }, [metodoSeleccionado]);
 
     const seleccionarMetodo = (metodo, e) => {
         e.stopPropagation();
-        if (metodoSeleccionado === metodo) {
-            setMetodoSeleccionado(null);
-        } else {
-            setMetodoSeleccionado(metodo);
-        }
+        setMetodoSeleccionado(metodoSeleccionado === metodo ? null : metodo);
     };
 
     const finalizarPedido = () => {
         if (metodoSeleccionado) {
-            setMetodoPago(metodoSeleccionado); // Almacena el método de pago en el contexto de Pedido
-            navigate('/pedido-exitoso');
+            setMetodoPago(metodoSeleccionado);
+            setIsPedidoFinalizado(true); // Marca que el pedido está listo para finalizar
+            console.log("Pedido finalizado:", pedidoActual);
         } else {
             alert('Por favor, seleccione un método de pago');
         }
     };
+
+    useEffect(() => {
+        if (isPedidoFinalizado) {
+            navigate('/pedido-detalle', { state: { pedido: pedidoActual } });
+        }
+    }, [isPedidoFinalizado, navigate, pedidoActual]);
 
     return (
         <div className="container payment-page">
@@ -148,10 +150,10 @@ export function OpcionesPago() {
                         <div className="card-body">
                             <h5 className="card-title text-center">Resumen del Pedido</h5>
                             <hr />
-                            {total > 0 ? (
+                            {pedidoActual.total > 0 ? (
                                 <p className="card-text text-center">
                                     <strong>Total: </strong>
-                                    <span className="h4">${total}</span>
+                                    <span className="h4">${pedidoActual.total}</span>
                                 </p>
                             ) : (
                                 <p className="card-text text-center text-danger">
@@ -162,7 +164,7 @@ export function OpcionesPago() {
                                 <button
                                     className="btn btn-success btn-lg mt-3"
                                     onClick={finalizarPedido}
-                                    disabled={total <= 0 || !metodoSeleccionado}
+                                    disabled={pedidoActual.total <= 0 || !metodoSeleccionado}
                                 >
                                     Finalizar Pedido
                                 </button>

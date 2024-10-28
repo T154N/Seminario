@@ -14,7 +14,7 @@ import { CarritoProvider } from './components/carrito/CarritoContext';
 import { PedidoProvider } from './components/Pedido/PedidoContext'; // Importamos PedidoProvider
 import { ResumenPedido } from "./components/Pedido/ResumenPedido";
 import { OpcionesPago } from "./components/Pedido/OpcionesPago";
-import { PedidoExitoso } from "./components/Pedido/PedidoExitoso";
+import { PedidoDetalle } from "./components/Pedido/PedidoDetalle";
 import {PedidosGrilla} from './components/Pedido/PedidosGrilla';
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
                 <Route path="/opciones-pago" element={<OpcionesPago />} />
                 <Route path="/pedidos-grilla" element={<PedidosGrilla />} />
                 <Route path="/catalogo" element={<Catalogo />} />
-                <Route path="/pedido-exitoso" element={<PedidoExitoso />} />
+                <Route path="/pedido-Detalle" element={<PedidoDetalle />} />
                 <Route path="/info" element={<Info />} />
                 <Route path='/productos/:categoria' element={<Producto />} />
                 <Route path='/productos' element={<Producto />} />

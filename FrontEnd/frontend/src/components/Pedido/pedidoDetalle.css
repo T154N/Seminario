@@ -1,0 +1,23 @@
+/* pedidoDetalle.css */
+
+.pedido-Detalle {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.pedido-Detalle .card {
+    margin-bottom: 20px;
+}
+
+.pedido-Detalle .card-title {
+    font-weight: bold;
+}
+
+.pedido-Detalle .producto-detalle {
+    padding: 10px 0;
+}
+
+.pedido-Detalle .producto-detalle p {
+    margin: 0;
+}

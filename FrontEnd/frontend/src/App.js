@@ -15,6 +15,7 @@ import { PedidoProvider } from './components/Pedido/PedidoContext'; // Importamo
 import { ResumenPedido } from "./components/Pedido/ResumenPedido";
 import { OpcionesPago } from "./components/Pedido/OpcionesPago";
 import { PedidoExitoso } from "./components/Pedido/PedidoExitoso";
+import {PedidosGrilla} from './components/Pedido/PedidosGrilla';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/pago" element={<ResumenPedido />} />
                 <Route path="/opciones-pago" element={<OpcionesPago />} />
+                <Route path="/pedidos-grilla" element={<PedidosGrilla />} />
                 <Route path="/catalogo" element={<Catalogo />} />
                 <Route path="/pedido-exitoso" element={<PedidoExitoso />} />
                 <Route path="/info" element={<Info />} />

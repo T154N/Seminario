@@ -41,7 +41,7 @@ export function InicioAdmin() {
             setContent(
                 <div>
                     <h2>Clientes Activos</h2>
-                    <button className="btn btn-primary mb-3" onClick={handleAlta}>Alta de Cliente</button>
+                    <button className="btn-admin btn btn-primary mb-3" onClick={handleAlta}>Alta de Cliente</button>
                     <div className="mb-3">
                         <input
                             type="text"
@@ -76,10 +76,10 @@ export function InicioAdmin() {
                                     <td>{cliente.cuit}</td>
                                     <td>{cliente.domicilio}</td>
                                     <td>
-                                        <button className="btn btn-warning btn-sm me-2" onClick={() => handleModify(cliente.id)}>
+                                        <button className=" btn btn-warning btn-sm me-2" onClick={() => handleModify(cliente.id)}>
                                             <FontAwesomeIcon icon={faEdit} />
                                         </button>
-                                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(cliente.id)}>
+                                        <button className=" btn btn-danger btn-sm" onClick={() => handleDelete(cliente.id)}>
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
                                     </td>
@@ -102,7 +102,7 @@ export function InicioAdmin() {
             setContent(
                 <div>
                     <h2>Productos Activos</h2>
-                    <button className="btn btn-primary mb-3" onClick={handleAlta}>Alta de Producto</button>
+                    <button className="btn-admin btn btn-primary mb-3" onClick={handleAlta}>Alta de Producto</button>
                     <div className="mb-3">
                         <input
                             type="text"
@@ -137,10 +137,10 @@ export function InicioAdmin() {
                                     <td>{producto.url}</td>
                                     <td>{producto.precio}</td>
                                     <td>
-                                        <button className="btn btn-warning btn-sm me-2" onClick={() => handleModify(producto.id)}>
+                                        <button className=" btn btn-warning btn-sm me-2" onClick={() => handleModify(producto.id)}>
                                             <FontAwesomeIcon icon={faEdit} />
                                         </button>
-                                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(producto.id)}>
+                                        <button className=" btn btn-danger btn-sm" onClick={() => handleDelete(producto.id)}>
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
                                     </td>
@@ -162,7 +162,7 @@ export function InicioAdmin() {
             setContent(
                 <div>
                     <h2>Categorías Activas</h2>
-                    <button className="btn btn-primary mb-3" onClick={handleAlta}>Alta de Categoría</button>
+                    <button className="btn-admin btn btn-primary mb-3" onClick={handleAlta}>Alta de Categoría</button>
                     <div className="mb-3">
                         <input
                             type="text"
@@ -191,10 +191,10 @@ export function InicioAdmin() {
                                     <td>{categoria.estado}</td>
                                     <td>{categoria.url}</td>
                                     <td>
-                                        <button className="btn btn-warning btn-sm me-2" onClick={() => handleModify(categoria.id)}>
+                                        <button className=" btn btn-warning btn-sm me-2" onClick={() => handleModify(categoria.id)}>
                                             <FontAwesomeIcon icon={faEdit} />
                                         </button>
-                                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(categoria.id)}>
+                                        <button className=" btn btn-danger btn-sm" onClick={() => handleDelete(categoria.id)}>
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
                                     </td>
@@ -235,10 +235,10 @@ export function InicioAdmin() {
                 <div className="col-12 col-md-2 menu">
                     <h2>Menú</h2>
                     <div className="d-flex flex-column">
-                        <button className="btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Inicio')}>Inicio</button>
-                        <button className="btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Clientes')}>Clientes</button>
-                        <button className="btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Productos')}>Productos</button>
-                        <button className="btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Categorias')}>Categorías</button>
+                        <button  className="btn-admin btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Inicio')}>Inicio</button>
+                        <button  className="btn-admin btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Clientes')}>Clientes</button>
+                        <button  className="btn-admin btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Productos')}>Productos</button>
+                        <button  className="btn-admin btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Categorias')}>Categorías</button>
                     </div>
                 </div>
 

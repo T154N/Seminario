@@ -1,18 +1,25 @@
-.btn {
+.btn-admin {
     background-color: #ffac70; /* Cambia este color a lo que desees */
     color: white; /* Cambia el color del texto si es necesario */
     border: none; /* Opcional: elimina el borde predeterminado */
     border-radius: 8px;
 }
 
-.btn:hover {
+.btn-admin:hover {
     background-color: #fd9a53; /* Cambia el color al pasar el mouse */
 }
 
+#botonAlta {
+    background-color: #ffac70; /* Cambia este color a lo que desees */
+    color: white; /* Cambia el color del texto si es necesario */
+    border: none; /* Opcional: elimina el borde predeterminado */
+    border-radius: 8px;
+}
+
 @media (max-width: 768px) {
-    .custom-btn {
-        width: 100%; /* Botones ocupan todo el ancho en pantallas pequeñas */
-    }
+  .custom-btn {
+       width: 100%; /* Botones ocupan todo el ancho en pantallas pequeñas */
+   }
 }
 
 .menu {
@@ -26,14 +33,14 @@
     height: 100vh;
 }
 
-/* Estilos para la barra de desplazamiento 
+ /*Estilos para la barra de desplazamiento*/
 .custom-scrollbar {
     max-width: 100%;          
     overflow-x: auto;        
     white-space: nowrap;      
 }
 
-/* Personalización de la barra de desplazamiento (opcional) 
+/* Personalización de la barra de desplazamiento (opcional)*/
 .custom-scrollbar::-webkit-scrollbar {
     height: 100px;               
 }
@@ -44,4 +51,4 @@
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background-color: #555;    
-}*/
+}

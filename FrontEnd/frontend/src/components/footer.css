@@ -1,7 +1,6 @@
 .footer {
     background-color: #FCBB3A !important;
     color: white; 
-    padding: 20px 0;
     text-align: center; 
     position: relative;
     margin-top: auto;
@@ -19,7 +18,7 @@
 
 .footer-links li {
     display: inline;
-    margin: 0 15px; 
+    margin: 0 0; 
 }
 
 .footer-links a {

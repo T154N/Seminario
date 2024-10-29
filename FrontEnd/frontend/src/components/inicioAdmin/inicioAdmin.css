@@ -1,14 +1,3 @@
-.btn-admin {
-    background-color: #ffac70; /* Cambia este color a lo que desees */
-    color: white; /* Cambia el color del texto si es necesario */
-    border: none; /* Opcional: elimina el borde predeterminado */
-    border-radius: 8px;
-}
-
-.btn-admin:hover {
-    background-color: #fd9a53; /* Cambia el color al pasar el mouse */
-}
-
 #botonAlta {
     background-color: #ffac70; /* Cambia este color a lo que desees */
     color: white; /* Cambia el color del texto si es necesario */

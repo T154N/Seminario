@@ -41,7 +41,7 @@ export function InicioAdmin() {
             setContent(
                 <div>
                     <h2>Clientes Activos</h2>
-                    <button className="btn-admin btn btn-primary mb-3" onClick={handleAlta}>Alta de Cliente</button>
+                    <button className="btn btn-admin text-white mb-3" onClick={handleAlta}>Alta de Cliente</button>
                     <div className="mb-3">
                         <input
                             type="text"
@@ -102,7 +102,7 @@ export function InicioAdmin() {
             setContent(
                 <div>
                     <h2>Productos Activos</h2>
-                    <button className="btn-admin btn btn-primary mb-3" onClick={handleAlta}>Alta de Producto</button>
+                    <button className="btn btn-admin text-white mb-3" onClick={handleAlta}>Alta de Producto</button>
                     <div className="mb-3">
                         <input
                             type="text"
@@ -162,7 +162,7 @@ export function InicioAdmin() {
             setContent(
                 <div>
                     <h2>Categorías Activas</h2>
-                    <button className="btn-admin btn btn-primary mb-3" onClick={handleAlta}>Alta de Categoría</button>
+                    <button className="btn btn-admin text-white mb-3" onClick={handleAlta}>Alta de Categoría</button>
                     <div className="mb-3">
                         <input
                             type="text"
@@ -235,10 +235,10 @@ export function InicioAdmin() {
                 <div className="col-12 col-md-2 menu">
                     <h2>Menú</h2>
                     <div className="d-flex flex-column">
-                        <button  className="btn-admin btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Inicio')}>Inicio</button>
-                        <button  className="btn-admin btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Clientes')}>Clientes</button>
-                        <button  className="btn-admin btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Productos')}>Productos</button>
-                        <button  className="btn-admin btn btn-success mb-2 btn-block" onClick={() => handleButtonClick('Categorias')}>Categorías</button>
+                        <button  className="btn btn-admin text-white mb-2 btn-block" onClick={() => handleButtonClick('Inicio')}>Inicio</button>
+                        <button  className="btn btn-admin text-white mb-2 btn-block" onClick={() => handleButtonClick('Clientes')}>Clientes</button>
+                        <button  className="btn btn-admin text-white mb-2 btn-block" onClick={() => handleButtonClick('Productos')}>Productos</button>
+                        <button  className="btn btn-admin text-white mb-2 btn-block" onClick={() => handleButtonClick('Categorias')}>Categorías</button>
                     </div>
                 </div>
 

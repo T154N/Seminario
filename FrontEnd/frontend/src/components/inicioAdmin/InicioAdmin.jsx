@@ -5,228 +5,54 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export function InicioAdmin() {
-    const [content, setContent] = useState('Bienvenido');
+    const [menuContent, setMenuContent] = useState('Catálogo');
+    const [catalogTab, setCatalogTab] = useState('Productos');
     const [busqueda, setBusqueda] = useState('');
+    const [filtroSeleccionado, setFiltroSeleccionado] = useState('nombre');
 
     const handleBusquedaChange = (e) => {
         setBusqueda(e.target.value);
     };
 
+    const handleFiltroChange = (e) => {
+        setFiltroSeleccionado(e.target.value);
+    };
+
     const clientesActivos = [
-        { id: 1, nombre: 'Juan', apellido: 'Perez', email: 'juan@example.com', telefono: '3517437189', cuit:'27447402756', domicilio:'Leuvuco 5291'},
-        { id: 2, nombre: 'María', apellido: 'Perez', email: 'maria@example.com', telefono: '3517437189', cuit:'27447402756', domicilio:'Leuvuco 5291'},
-        { id: 3, nombre: 'Carlos',apellido: 'Perez', email: 'carlos@example.com', telefono: '3517437189', cuit:'27447402756', domicilio:'Leuvuco 5291'},
+        { id: 1, nombre: 'Juan', apellido: 'Perez', email: 'juan@example.com', telefono: '3517437189', cuit: '27447402756', domicilio: 'Leuvuco 5291', estado: 'alta' },
+        //... otros clientes
     ];
 
     const productosActivos = [
-        { id: 1, nombre: 'Arroz', descripcion: 'abcdfghijasjdnjd', estado: 'alta', categoria: 'alimentos', url: 'https::/', precio: '$1000' },
-        { id: 2, nombre: 'Alfajor', descripcion: 'abcdfghijasjdnjd', estado: 'alta', categoria: 'alimentos', url: 'https::/', precio: '$500' },
-        { id: 3, nombre: 'Gaseosa', descripcion: 'abcdfghijasjdnjd', estado: 'alta', categoria: 'alimentos', url: 'https::/', precio: '$750' },
+        { id: 1, nombre: 'Producto 1', categoria: 'Categoria 1', precio: 100, estado: 'disponible', url: 'url-imagen-1' },
+        //... otros productos
     ];
 
     const categoriasActivas = [
-        { id: 1, nombre: 'Filos', estado:'activo', url: 'https'},
-        { id: 2, nombre: 'Copetin', estado:'activo', url: 'https'},
-        { id: 3, nombre: 'Pilas', estado:'activo', url: 'https'},
+        { id: 1, nombre: 'Categoria 1', estado: 'activa', url: 'url-imagen-1' },
+        //... otras categorías
     ];
 
-    const handleButtonClick = (newContent) => {
-        if (newContent === 'Clientes') {
-            const filteredClientes = clientesActivos.filter(cliente =>
-                cliente.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-                cliente.apellido.toLowerCase().includes(busqueda.toLowerCase()) ||
-                cliente.domicilio.toLowerCase().includes(busqueda.toLowerCase())
-            );
-
-            setContent(
-                <div>
-                    <h2>Clientes Activos</h2>
-                    <button className="btn btn-admin text-white mb-3" onClick={handleAlta}>Alta de Cliente</button>
-                    <div className="mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Buscar cliente..."
-                            value={busqueda}
-                            onChange={handleBusquedaChange}
-                        />
-                    </div>
-                    <div className="table-responsive">
-                        <table className="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Email</th>
-                                <th>Teléfono</th>
-                                <th>CUIT</th>
-                                <th>Domicilio</th>
-                                <th>Acción</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {filteredClientes.map(cliente => (
-                                <tr key={cliente.id}>
-                                    <td>{cliente.id}</td>
-                                    <td>{cliente.nombre}</td>
-                                    <td>{cliente.apellido}</td>
-                                    <td>{cliente.email}</td>
-                                    <td>{cliente.telefono}</td>
-                                    <td>{cliente.cuit}</td>
-                                    <td>{cliente.domicilio}</td>
-                                    <td>
-                                        <button className=" btn btn-warning btn-sm me-2" onClick={() => handleModify(cliente.id)}>
-                                            <FontAwesomeIcon icon={faEdit} />
-                                        </button>
-                                        <button className=" btn btn-danger btn-sm" onClick={() => handleDelete(cliente.id)}>
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            );
-        }
-
-        if (newContent === 'Productos') {
-            const filteredProductos = productosActivos.filter(producto =>
-                producto.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-                producto.estado.toLowerCase().includes(busqueda.toLowerCase()) ||
-                producto.categoria.toLowerCase().includes(busqueda.toLowerCase())
-            );
-
-            setContent(
-                <div>
-                    <h2>Productos Activos</h2>
-                    <button className="btn btn-admin text-white mb-3" onClick={handleAlta}>Alta de Producto</button>
-                    <div className="mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Buscar producto..."
-                            value={busqueda}
-                            onChange={handleBusquedaChange}
-                        />
-                    </div>
-                    <div className="table-responsive">
-                        <table className="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Estado</th>
-                                <th>Categoría</th>
-                                <th>URL</th>
-                                <th>Precio</th>
-                                <th>Acción</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {filteredProductos.map(producto => (
-                                <tr key={producto.id}>
-                                    <td>{producto.id}</td>
-                                    <td>{producto.nombre}</td>
-                                    <td>{producto.descripcion}</td>
-                                    <td>{producto.estado}</td>
-                                    <td>{producto.categoria}</td>
-                                    <td>{producto.url}</td>
-                                    <td>{producto.precio}</td>
-                                    <td>
-                                        <button className=" btn btn-warning btn-sm me-2" onClick={() => handleModify(producto.id)}>
-                                            <FontAwesomeIcon icon={faEdit} />
-                                        </button>
-                                        <button className=" btn btn-danger btn-sm" onClick={() => handleDelete(producto.id)}>
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            );
-        }
-
-        if (newContent === 'Categorias') {
-            const filteredCategorias = categoriasActivas.filter(categoria =>
-                categoria.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-                categoria.estado.toLowerCase().includes(busqueda.toLowerCase())
-            );
-
-            setContent(
-                <div>
-                    <h2>Categorías Activas</h2>
-                    <button className="btn btn-admin text-white mb-3" onClick={handleAlta}>Alta de Categoría</button>
-                    <div className="mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Buscar categoría..."
-                            value={busqueda}
-                            onChange={handleBusquedaChange}
-                        />
-                    </div>
-                    <div className="table-responsive">
-                        <table className="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Estado</th>
-                                <th>URL</th>
-                                <th>Acción</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {filteredCategorias.map(categoria => (
-                                <tr key={categoria.id}>
-                                    <td>{categoria.id}</td>
-                                    <td>{categoria.nombre}</td>
-                                    <td>{categoria.estado}</td>
-                                    <td>{categoria.url}</td>
-                                    <td>
-                                        <button className=" btn btn-warning btn-sm me-2" onClick={() => handleModify(categoria.id)}>
-                                            <FontAwesomeIcon icon={faEdit} />
-                                        </button>
-                                        <button className=" btn btn-danger btn-sm" onClick={() => handleDelete(categoria.id)}>
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            );
-        }
-
-        if (newContent === 'Inicio') {
-            setContent(
-                <div>
-                    <h2>Bienvenido de nuevo!</h2>
-                    <p>Esta es la pantalla de inicio de la administración.</p>
-                </div>
-            );
-        }
+    const filteredData = (data) => {
+        return data.filter(item => {
+            if (filtroSeleccionado === 'nombre') {
+                return item.nombre.toLowerCase().includes(busqueda.toLowerCase());
+            } else if (filtroSeleccionado === 'estado' && item.estado) {
+                return item.estado.toLowerCase().includes(busqueda.toLowerCase());
+            } else if (filtroSeleccionado === 'apellido' && item.apellido) {
+                return item.apellido.toLowerCase().includes(busqueda.toLowerCase());
+            } else if (filtroSeleccionado === 'cuit' && item.cuit) {
+                return item.cuit.includes(busqueda);
+            }
+            return false;
+        });
     };
 
-    const handleModify = (id) => {
-        alert(`Modificación de elemento con ID: ${id}`);
-    };
-
-    const handleDelete = (id) => {
-        alert(`Baja de elemento con ID: ${id}`);
-    };
-
-    const handleAlta = () => {
-        alert("Formulario de alta");
+    const dataToDisplay = () => {
+        if (menuContent === 'Catálogo' && catalogTab === 'Productos') return filteredData(productosActivos);
+        if (menuContent === 'Catálogo' && catalogTab === 'Categorias') return filteredData(categoriasActivas);
+        if (menuContent === 'Clientes') return filteredData(clientesActivos);
+        return [];
     };
 
     return (
@@ -235,15 +61,134 @@ export function InicioAdmin() {
                 <div className="col-12 col-md-2 menu">
                     <h2>Menú</h2>
                     <div className="d-flex flex-column">
-                        <button  className="btn btn-admin text-white mb-2 btn-block" onClick={() => handleButtonClick('Inicio')}>Inicio</button>
-                        <button  className="btn btn-admin text-white mb-2 btn-block" onClick={() => handleButtonClick('Clientes')}>Clientes</button>
-                        <button  className="btn btn-admin text-white mb-2 btn-block" onClick={() => handleButtonClick('Productos')}>Productos</button>
-                        <button  className="btn btn-admin text-white mb-2 btn-block" onClick={() => handleButtonClick('Categorias')}>Categorías</button>
+                        <button className="btn-admin btn btn-success mb-2 btn-block"
+                                onClick={() => setMenuContent('Catálogo')}>Catálogo
+                        </button>
+                        <button className="btn-admin btn btn-success mb-2 btn-block"
+                                onClick={() => setMenuContent('Clientes')}>Clientes
+                        </button>
+                        <button className="btn-admin btn btn-success mb-2 btn-block"
+                                onClick={() => setMenuContent('Pedidos')}>Pedidos
+                        </button>
                     </div>
                 </div>
 
                 <div className="col-12 col-md-10 contenido">
-                    <div>{content}</div>
+                    {menuContent === 'Catálogo' && (
+                        <div>
+                            <h2>Gestión del Catálogo</h2>
+                            <div className="d-flex">
+                                <button
+                                    className={`btn-tab ${catalogTab === 'Categorias' ? 'active' : ''}`}
+                                    onClick={() => setCatalogTab('Categorias')}
+                                >
+                                    Categorías
+                                </button>
+                                <button
+                                    className={`btn-tab ${catalogTab === 'Productos' ? 'active' : ''}`}
+                                    onClick={() => setCatalogTab('Productos')}
+                                >
+                                    Productos
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {menuContent === 'Clientes' && (
+                        <h2 className="text-center my-3">Gestión Clientes</h2>
+                    )}
+
+                    <div className="tab-content-area mt-3">
+                        <div className="header-section">
+                            <button className="btn-alta btn btn-primary mb-3"
+                                    onClick={() => alert(`Alta de ${menuContent === 'Clientes' ? 'Cliente' : catalogTab}`)}>
+                                Alta de {menuContent === 'Clientes' ? 'Cliente' : catalogTab}
+                            </button>
+                            <span className="header-title">
+                                {menuContent === 'Clientes' ? 'Clientes' : catalogTab}
+                            </span>
+                        </div>
+
+                        <div className="mb-3 d-flex align-items-baseline">
+                            <select className="form-select me-2 small-select" value={filtroSeleccionado}
+                                    onChange={handleFiltroChange}>
+                                <option value="nombre">Nombre</option>
+                                <option value="estado">Estado</option>
+                                {catalogTab === 'Productos' && <option value="categoria">Categoría</option>}
+                                {menuContent === 'Clientes' && <>
+                                    <option value="cuit">CUIT</option>
+                                    <option value="apellido">Apellido</option>
+                                </>}
+                            </select>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder={`Buscar ${menuContent === 'Clientes' ? 'clientes' : catalogTab.toLowerCase()}...`}
+                                value={busqueda}
+                                onChange={handleBusquedaChange}
+                            />
+                        </div>
+
+                        <div className="table-responsive scrollable-table">
+                            <table className="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    {menuContent === 'Clientes' && <>
+                                        <th>Apellido</th>
+                                        <th>CUIT</th>
+                                        <th>Domicilio</th>
+                                    </>}
+                                    {menuContent === 'Catálogo' && catalogTab === 'Productos' && <>
+                                        <th>Categoría</th>
+                                        <th>Precio</th>
+                                        <th>Estado</th>
+                                        <th>UrlImagen</th>
+                                    </>}
+                                    {menuContent === 'Catálogo' && catalogTab === 'Categorias' && <>
+                                        <th>Estado</th>
+                                        <th>UrlImagen</th>
+                                    </>}
+                                    <th>Acción</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {dataToDisplay().map(item => (
+                                    <tr key={item.id}>
+                                        <td>{item.id}</td>
+                                        <td>{item.nombre}</td>
+                                        {menuContent === 'Clientes' && <>
+                                            <td>{item.apellido}</td>
+                                            <td>{item.cuit}</td>
+                                            <td>{item.domicilio}</td>
+                                        </>}
+                                        {menuContent === 'Catálogo' && catalogTab === 'Productos' && <>
+                                            <td>{item.categoria}</td>
+                                            <td>{item.precio}</td>
+                                            <td>{item.estado}</td>
+                                            <td className="urlImagen">{item.url}</td>
+                                        </>}
+                                        {menuContent === 'Catálogo' && catalogTab === 'Categorias' && <>
+                                            <td>{item.estado}</td>
+                                            <td className="urlImagen">{item.url}</td>
+                                        </>}
+                                        <td>
+                                            <button className="btn-action btn btn-sm me-2"
+                                                    onClick={() => alert(`Modificación de ${menuContent === 'Clientes' ? 'cliente' : catalogTab.toLowerCase()} con ID: ${item.id}`)}>
+                                                <FontAwesomeIcon icon={faEdit}/>
+                                            </button>
+                                            <button className="btn-action-delete btn btn-sm"
+                                                    onClick={() => alert(`Baja de ${menuContent === 'Clientes' ? 'cliente' : catalogTab.toLowerCase()} con ID: ${item.id}`)}>
+                                                <FontAwesomeIcon icon={faTrash}/>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

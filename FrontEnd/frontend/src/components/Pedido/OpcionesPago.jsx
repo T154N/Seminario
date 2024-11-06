@@ -10,76 +10,40 @@ export function OpcionesPago() {
     const { pedidoActual, setMetodoPago } = usePedido();
     const { vaciarCarrito } = useCarrito();
     const navigate = useNavigate();
-    const [metodoSeleccionado, setMetodoSeleccionado] = useState(pedidoActual?.metodoPago);
+    const [metodoSeleccionado, setMetodoSeleccionado] = useState(pedidoActual.metodoPago);
     const [isPedidoFinalizado, setIsPedidoFinalizado] = useState(false);
 
     const efectivoRef = useRef(null);
     const transferenciaRef = useRef(null);
 
     useEffect(() => {
-        // Reset metodoSeleccionado and close accordions when the component mounts
-        setMetodoSeleccionado(null);
-
         if (efectivoRef.current && transferenciaRef.current) {
-            efectivoRef.current.classList.remove('show');
-            transferenciaRef.current.classList.remove('show');
-        }
+            const efectivoCollapse = new Collapse(efectivoRef.current, { toggle: false });
+            const transferenciaCollapse = new Collapse(transferenciaRef.current, { toggle: false });
 
-        return () => {
-            if (efectivoRef.current && transferenciaRef.current) {
-                efectivoRef.current.classList.remove('show');
-                transferenciaRef.current.classList.remove('show');
-            }
-        };
-    }, []);
-
-    useEffect(() => {
-        if (pedidoActual?.total > 0 && efectivoRef.current && transferenciaRef.current) {
-            let efectivoCollapse;
-            let transferenciaCollapse;
-
-            try {
-                efectivoCollapse = new Collapse(efectivoRef.current, { toggle: false });
-                transferenciaCollapse = new Collapse(transferenciaRef.current, { toggle: false });
-
-                if (metodoSeleccionado === "efectivo") {
-                    efectivoCollapse.show();
-                    transferenciaCollapse.hide();
-                } else if (metodoSeleccionado === "transferencia") {
-                    efectivoCollapse.hide();
-                    transferenciaCollapse.show();
-                } else {
-                    efectivoCollapse.hide();
-                    transferenciaCollapse.hide();
-                }
-            } catch (error) {
-                console.error("Error al inicializar el colapso:", error);
+            if (metodoSeleccionado === "efectivo") {
+                efectivoCollapse.show();
+                transferenciaCollapse.hide();
+            } else if (metodoSeleccionado === "transferencia") {
+                efectivoCollapse.hide();
+                transferenciaCollapse.show();
+            } else {
+                efectivoCollapse.hide();
+                transferenciaCollapse.hide();
             }
 
             // Limpieza para evitar errores cuando el componente se desmonte
             return () => {
-                if (efectivoCollapse) efectivoCollapse.dispose();
-                if (transferenciaCollapse) transferenciaCollapse.dispose();
+                efectivoCollapse.dispose();
+                transferenciaCollapse.dispose();
             };
         }
-    }, [metodoSeleccionado, pedidoActual?.total]);
-
-    useEffect(() => {
-        const handleVisibilityChange = () => {
-            if (document.hidden) {
-                setMetodoSeleccionado(null);
-            }
-        };
-
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-
-        return () => {
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        };
-    }, []);
+    }, [metodoSeleccionado]);
 
     const seleccionarMetodo = (metodo, e) => {
         e.stopPropagation();
+
+        // Evita seleccionar el mismo método repetidamente
         if (metodoSeleccionado !== metodo) {
             setMetodoSeleccionado(metodo);
         }
@@ -101,11 +65,6 @@ export function OpcionesPago() {
             navigate('/pedido-detalle', { state: { pedido: pedidoActual } });
         }
     }, [isPedidoFinalizado, navigate, pedidoActual]);
-
-    // Si no hay pedidoActual, mostrar un mensaje de carga
-    if (!pedidoActual) {
-        return <p>Cargando...</p>;
-    }
 
     return (
         <div className="container payment-page">
@@ -143,7 +102,7 @@ export function OpcionesPago() {
                                     data-bs-parent="#accordionExample"
                                 >
                                     <div className="accordion-body">
-                                        Seleccionó la opción de abonar con efectivo, presione "Finalizar pedido" para completar la solicitud del pedido.
+                                        Selecciono la opcion de abonar con efectivo, precione en "Finalizar pedido" para completar la solicitud del pedido
                                     </div>
                                 </div>
                             </div>
@@ -183,32 +142,33 @@ export function OpcionesPago() {
                                             </div>
                                         </div>
                                         <hr />
-                                        <p>Complete los siguientes campos con la información de su cuenta:</p>
+                                        <p>Complete los siguiente campos con la informacion de su cuenta:</p>
 
                                         <div className="transferencia-info">
-                                            <div className="mb-3 ">
-                                                <label htmlFor="banco" className="form-label">Seleccione su Banco o Billetera</label>
-                                                <select id="banco" className="form-select w-100">
-                                                    <option value="">Seleccione un banco...</option>
-                                                    <option value="banco1">Banco 1</option>
-                                                    <option value="banco2">Banco 2</option>
-                                                    <option value="banco3">Banco 3</option>
-                                                    <option value="Otro">Otro</option>
-                                                </select>
-                                            </div>
-                                            <div className="mb-3">
-                                                <label htmlFor="cuenta" className="form-label">Número de cuenta</label>
-                                                <input type="text" id="cuenta" className="form-control w-100" placeholder="Ingrese su número de cuenta" />
-                                            </div>
-                                            <div className="mb-3">
-                                                <label htmlFor="titular" className="form-label">Nombre del titular de la cuenta</label>
-                                                <input type="text" id="titular" className="form-control w-100" placeholder="Ingrese el nombre del titular" />
-                                            </div>
+                                        <div className="mb-3 ">
+                                            <label htmlFor="banco" className="form-label">Seleccione su Banco o Billetera</label>
+                                            <select id="banco" className="form-select w-100">
+                                                <option value="">Seleccione un banco...</option>
+                                                <option value="banco1">Banco 1</option>
+                                                <option value="banco2">Banco 2</option>
+                                                <option value="banco3">Banco 3</option>
+                                                <option value="Otro">Otro</option>
+                                            </select>
                                         </div>
-                                        <p>Una vez hecha la transferencia y llenado los campos con sus datos, presione "Finalizar pedido" para completar la solicitud del pedido.</p>
+                                        <div className="mb-3">
+                                            <label htmlFor="cuenta" className="form-label">Número de cuenta</label>
+                                            <input type="text" id="cuenta" className="form-control w-100" placeholder="Ingrese su número de cuenta" />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label htmlFor="titular" className="form-label">Nombre del titular de la cuenta</label>
+                                            <input type="text" id="titular" className="form-control w-100" placeholder="Ingrese el nombre del titular" />
+                                        </div>
+                                        </div>
+                                        <p>Una vez hecha la transferencia y llenado los campos con sus datos presione en "Finalizar pedido" para completar la solicitud del pedido </p>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

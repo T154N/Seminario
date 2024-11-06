@@ -142,7 +142,7 @@ export function PedidosUsuario() {
                                 <td className="pedidos-usuario-data" data-label="Nro de pedido">{pedido.id}</td>
                                 <td className="pedidos-usuario-data" data-label="Fecha de solicitud">{pedido.fecha}</td>
                                 <td className="pedidos-usuario-data" data-label="Método de Pago">{pedido.metodoPago}</td>
-                                <td className="pedidos-usuario-data">
+                                <td className="pedidos-usuario-data" data-label="Estado">
                                     <span className="pedidos-usuario-estado">
                                         {pedido.estado}
                                         <span

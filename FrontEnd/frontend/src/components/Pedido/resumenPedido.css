@@ -27,6 +27,9 @@
 .card-body {
     padding: 20px;
 }
+.card-body .card-text {
+    margin-bottom: 0.5rem;
+}
 
 .btn-lg {
     padding: 10px 20px;
@@ -74,9 +77,12 @@
 }
 
 .cantidad-control-rectangulo input {
-    border: none; /* Eliminar borde del input */
-    text-align: center; /* Alinear la cantidad al centro */
-    width: 50px; /* Ajustar el ancho del input */
+    border: none;
+    text-align: center;
+    min-width: 100px; /* Define un ancho mínimo para el input */
+    max-width: 100%; /* Ajuste del ancho máximo */
+    padding: 0 8px;
+    
 }
 
 .precios-container {
@@ -131,10 +137,28 @@ input[type="number"] {
     outline: none; /* Quitar el contorno cuando el campo esté enfocado */
     color: #333; /* Color del texto */
     text-align: center; /* Alinear el texto en el centro */
-    padding: 0 8px; /* Añadir algo de espacio lateral */
+    padding: 0 20px;  /* Añadir algo de espacio lateral */
+    width: 50px !important; /* Ajustar el ancho del input */
 
 }
 
 input[type="number"]:focus {
     outline: none; /* Evitar borde o contorno al hacer clic */
+}
+
+
+.nombre-cliente,
+.direccion-entrega {
+    font-weight: normal;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.separador {
+    border-top: 2.5px solid #c2c1c1;
+    margin: 0.5rem 0;
+}
+.total-pedido {
+    font-size: 1.2rem;
+    margin-top: 1rem;
 }

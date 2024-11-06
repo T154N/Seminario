@@ -30,4 +30,31 @@
 .btn-success.btn-lg {
     font-size: 1.25rem;
     padding: .75rem 1.25rem;
+
 }
+
+.btn-success.btn-lg:disabled {
+    background-color: #3c493f; /* Mantiene el color verde al estar desactivado */
+    opacity: 0.65; /* Ajusta la opacidad si quieres un efecto visual de desactivado */
+    cursor: not-allowed; /* Muestra el cursor de no permitido */
+}
+
+.transferencia-info {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.transferencia-info p {
+    margin: 5px 0;
+}
+
+.transferencia-info strong {
+    color: #333;
+}
+
+.form-select,
+.form-control {
+    margin-top: 8px;
+}
+

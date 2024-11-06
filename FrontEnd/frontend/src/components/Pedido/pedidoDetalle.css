@@ -193,3 +193,11 @@
 }
 
 
+@media (min-width: 768px) {
+/* Ajuste para el nombre en la tabla de productos */
+.pedido-detalle .tabla-productos td[data-label="Nombre"] {
+    max-width: 150px; /* Ajusta este valor según el espacio que quieras asignar */
+    word-wrap: break-word; /* Ajusta el texto para que se rompa y siga en una nueva línea */
+    white-space: normal; /* Permite que el texto ocupe varias líneas */
+}
+}

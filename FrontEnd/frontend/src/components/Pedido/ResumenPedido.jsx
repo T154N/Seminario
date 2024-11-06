@@ -108,22 +108,27 @@ export function ResumenPedido() {
                 </div>
 
                 <div className="col-md-4">
-                    <div className="card shadow-sm mb-4">
-                        <div className="card-body">
-                            <h5 className="card-title text-center">Resumen del Pedido</h5>
-                            <hr />
-                            <p className="card-text text-center">
-                                <strong>Total: </strong>
-                                <span className="h4">${pedidoActual.total}</span>
-                            </p>
-                            <div className="d-grid">
-                                <button className="btn btn-success btn-lg mt-3" onClick={continuarPago}>
-                                    Continuar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div className="card shadow-sm mb-4">
+        <div className="card-body">
+            <h5 className="card-title text-center">Detalles del Pedido</h5>
+            <hr />
+            <p className="card-text"><strong>Cliente:</strong></p>
+            <p className="card-text nombre-cliente">Nombre del cliente</p>
+            <hr className="separador" />
+            <p className="card-text"><strong>Dirección de entrega:</strong></p>
+            <p className="card-text direccion-entrega">Avenida Siempreviva 2130</p>
+            <hr className="separador" />
+            <p className="card-text total-pedido text-center">
+                <strong>Total:</strong> <span className="h4">${pedidoActual.total}</span>
+            </p>
+            <div className="d-grid">
+                <button className="btn btn-success btn-lg mt-3" onClick={continuarPago}>
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
         </div>
     );

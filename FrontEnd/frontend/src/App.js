@@ -11,8 +11,6 @@ import { Info } from './components/info/Info';
 import { Footer } from './components/Footer';
 import { Producto } from './components/producto/Producto';
 import { CarritoProvider } from './components/carrito/CarritoContext';
-
-
 import { ResetPassword } from "./components/login/ResetPassword";
 import {InicioAdmin} from "./components/inicioAdmin/InicioAdmin";
 import {InicioClientes} from "./components/inicioAdmin/inicioClientes";
@@ -38,11 +36,7 @@ function App() {
               <Route path="/principal" element={<Principal />} />
               <Route path='/' element={<Principal />} />
               <Route path='*' element={<Principal />} />
-
-
-
               {/* <Route path='/cargarProducto' element={<CargarProducto/>}/> */}
-
             </Routes>
           </main>
 

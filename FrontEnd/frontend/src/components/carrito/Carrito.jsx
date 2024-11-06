@@ -4,16 +4,16 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './carrito.css';
 import { useCarrito } from './CarritoContext';
 import carrito from '../../images/Header Icons/carrito.png';
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate
-import { Offcanvas } from 'bootstrap'; // Importar Offcanvas
+import { useNavigate } from 'react-router-dom'; 
+import { Offcanvas } from 'bootstrap'; 
 
 export function Carrito() {
     const { productos, incrementarCantidad, disminuirCantidad, eliminarProducto, generarPedido, vaciarCarrito, total } = useCarrito();
-    const navigate = useNavigate(); // Inicializar useNavigate
+    const navigate = useNavigate(); 
 
     const handleGenerarPedido = () => {
         if (productos.length > 0) {
-            generarPedido(navigate); // Pasar navigate a la función generarPedido
+            generarPedido(navigate); 
     
             // Cerrar el offcanvas
             const offcanvasElement = document.getElementById('offcanvasScrolling');

@@ -51,6 +51,17 @@ export const PedidoProvider = ({ children }) => {
         setPedidoActual((prev) => ({ ...prev, id }));
     };
 
+    const eliminarDelPedido = (id) => {
+        setPedidoActual((prev) => {
+            const productosActualizados = prev.productos.filter((producto) => producto.id !== id);
+            return {
+                ...prev,
+                productos: productosActualizados,
+                total: calcularTotal(productosActualizados)
+            };
+        });
+    };
+
     return (
         <PedidoContext.Provider
             value={{
@@ -59,7 +70,8 @@ export const PedidoProvider = ({ children }) => {
                 actualizarCantidad,
                 setMetodoPago,
                 setEstadoPedido,
-                setPedidoId
+                setPedidoId,
+                eliminarDelPedido 
             }}
         >
             {children}

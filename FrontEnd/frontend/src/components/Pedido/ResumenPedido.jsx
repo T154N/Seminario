@@ -1,11 +1,20 @@
 import React from "react";
 import { usePedido } from "./PedidoContext";
+import { useCarrito } from '../carrito/CarritoContext';
 import { useNavigate } from 'react-router-dom';
 import './resumenPedido.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export function ResumenPedido() {
-    const { pedidoActual, actualizarCantidad } = usePedido();
+    const { pedidoActual, actualizarCantidad, eliminarDelPedido } = usePedido();
+    const { eliminarDelCarrito } = useCarrito();
     const navigate = useNavigate();
+
+    const eliminarProducto = (id) => {
+        eliminarDelPedido(id);
+        eliminarDelCarrito(id);
+    }
 
     const disminuirCantidad = (id) => {
         const producto = pedidoActual.productos.find((producto) => producto.id === id);
@@ -50,13 +59,13 @@ export function ResumenPedido() {
                             No hay productos en el pedido.
                         </div>
                     ) : (
-                        <div className="card shadow-sm mb-4">
+                        <div className="card shadow-sm mb-0"> 
                             <div className="card-header bg-primary text-white">
                                 <h5 className="mb-0">Productos en el pedido</h5>
                             </div>
-                            <div className="card-body">
+                            <div className="card-body p-0"> 
                                 {pedidoActual.productos.map((producto) => (
-                                    <div className="card mb-3 producto-card" key={producto.id}>
+                                    <div className="producto-card" key={producto.id}>
                                         <div className="row g-0">
                                             <div className="col-md-4">
                                                 <img src={producto.imagen} className="img-fluid rounded-start" alt={producto.nombre} />
@@ -83,6 +92,10 @@ export function ResumenPedido() {
                                                         <p className="precio-total">
                                                             <strong>Precio total:</strong> ${producto.precioUnitario * producto.cantidad}
                                                         </p>
+
+                                                        <button className="btn btn-danger btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
+                                                            <FontAwesomeIcon icon={faTrash} />
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>

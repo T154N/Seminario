@@ -1,0 +1,144 @@
+.pedidos-usuario {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.pedidos-usuario-title {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 1.9rem;
+}
+
+.pedidos-usuario-table-responsive {
+  border-radius: 5px;
+}
+
+.pedidos-usuario-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.pedidos-usuario-header {
+  background-color: #f5a70a;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.pedidos-usuario-data {
+  background-color: #ffffff;
+  color: #333;
+  padding: 0.4rem;
+  font-size: 1rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.pedidos-usuario-estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pedidos-usuario-estado-indicador {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.pedidos-usuario-btn-link {
+  color: #2685c5;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.pedidos-usuario-btn-link:hover {
+  color: #ff8c42;
+}
+
+.pedidos-usuario-pagination {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
+.pedidos-usuario-page-item.active .pedidos-usuario-page-link {
+  background-color: #ff8c42;
+  border-color: #ff8c42;
+  color: #fff;
+}
+
+.pedidos-usuario-page-link {
+  color: #333;
+  padding: 0.5rem 0.75rem;
+  margin: 0 0.25rem;
+  border-radius: 4px;
+}
+
+.pedidos-usuario-page-link:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .pedidos-usuario {
+    padding: 1rem;
+  }
+
+  .pedidos-usuario-table-responsive {
+    overflow-x: auto;
+  }
+
+  .pedidos-usuario-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .pedidos-usuario-table thead {
+    display: none;
+  }
+
+  .pedidos-usuario-table tbody,
+  .pedidos-usuario-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  .pedidos-usuario-table tbody tr {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+  }
+
+  .pedidos-usuario-data {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .pedidos-usuario-data::before {
+    content: attr(data-label);
+    font-weight: 500;
+    color: #666;
+    margin-right: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .pedidos-usuario-pagination {
+    flex-wrap: wrap;
+  }
+
+  .pedidos-usuario-page-link {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.85rem;
+  }
+}

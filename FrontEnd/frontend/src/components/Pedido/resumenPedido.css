@@ -12,12 +12,20 @@
     font-size: 1.5rem;
     padding: 12px;
     border-radius: 5px;
-    margin-bottom: 20px;
 }
+
 .producto-card {
     background-color: rgba(247, 245, 245, 0.952);
     border: 1px solid #ddd;
     border-radius: 5px;
+    margin-top: 0 ;
+    margin-bottom: 15px; 
+    border-left-width: 1.25 rem;
+    max-height: 50%;
+}
+
+.card-body {
+    padding: 20px;
 }
 
 .btn-lg {
@@ -25,13 +33,14 @@
 }
 
 .card {
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+
 }
 
-.card-body {
-    padding: 20px;
+.alert {
+    margin-bottom: 0; 
 }
-
 .card-title {
     font-weight: bold;
     font-size: 1.2rem;
@@ -123,6 +132,7 @@ input[type="number"] {
     color: #333; /* Color del texto */
     text-align: center; /* Alinear el texto en el centro */
     padding: 0 8px; /* Añadir algo de espacio lateral */
+
 }
 
 input[type="number"]:focus {

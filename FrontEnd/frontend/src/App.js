@@ -11,16 +11,16 @@ import { Info } from './components/info/Info';
 import { Footer } from './components/Footer';
 import { Producto } from './components/producto/Producto';
 import { CarritoProvider } from './components/carrito/CarritoContext';
-import { PedidoProvider } from './components/Pedido/PedidoContext'; // Importamos PedidoProvider
+import { PedidoProvider } from './components/Pedido/PedidoContext'; 
 import { ResumenPedido } from "./components/Pedido/ResumenPedido";
 import { OpcionesPago } from "./components/Pedido/OpcionesPago";
 import { PedidoDetalle } from "./components/Pedido/PedidoDetalle";
-import {PedidosGrilla} from './components/Pedido/PedidosGrilla';
+import {PedidosUsuario} from './components/Pedido/PedidosUsuario';
 
 function App() {
   return (
     <BrowserRouter>
-      <PedidoProvider> {/* Agregamos PedidoProvider envolviendo a CarritoProvider */}
+      <PedidoProvider> 
         <CarritoProvider>
           <div className="App fondo">
             <Header />
@@ -29,7 +29,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/pago" element={<ResumenPedido />} />
                 <Route path="/opciones-pago" element={<OpcionesPago />} />
-                <Route path="/pedidos-grilla" element={<PedidosGrilla />} />
+                <Route path="/pedidos-usuario" element={<PedidosUsuario />} />
                 <Route path="/catalogo" element={<Catalogo />} />
                 <Route path="/pedido-Detalle" element={<PedidoDetalle />} />
                 <Route path="/info" element={<Info />} />

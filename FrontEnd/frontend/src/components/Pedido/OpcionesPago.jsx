@@ -4,9 +4,11 @@ import { usePedido } from './PedidoContext';
 import './resumenPedido.css';
 import './opcionesPago.css';
 import Collapse from 'bootstrap/js/dist/collapse';
+import { useCarrito } from "../carrito/CarritoContext";
 
 export function OpcionesPago() {
-    const { pedidoActual, setMetodoPago } = usePedido(); 
+    const { pedidoActual, setMetodoPago } = usePedido();
+    const { vaciarCarrito } = useCarrito(); 
     const navigate = useNavigate();
     const [metodoSeleccionado, setMetodoSeleccionado] = useState(pedidoActual.metodoPago);
     const [isPedidoFinalizado, setIsPedidoFinalizado] = useState(false); // Nuevo estado
@@ -42,6 +44,7 @@ export function OpcionesPago() {
 
     const finalizarPedido = () => {
         if (metodoSeleccionado) {
+            vaciarCarrito();
             setMetodoPago(metodoSeleccionado);
             setIsPedidoFinalizado(true); // Marca que el pedido está listo para finalizar
             console.log("Pedido finalizado:", pedidoActual);
@@ -122,12 +125,13 @@ export function OpcionesPago() {
                                     <div className="accordion-body">
                                         <p>Seleccione esta opción si desea pagar mediante transferencia bancaria.</p>
                                         <div className="mb-3">
-                                            <label htmlFor="banco" className="form-label">Seleccione su banco</label>
+                                            <label htmlFor="banco" className="form-label">Seleccione su Banco o Billetera</label>
                                             <select id="banco" className="form-select w-100">
                                                 <option value="">Seleccione un banco...</option>
                                                 <option value="banco1">Banco 1</option>
                                                 <option value="banco2">Banco 2</option>
                                                 <option value="banco3">Banco 3</option>
+                                                <option value="Otro">Otro</option>
                                             </select>
                                         </div>
                                         <div className="mb-3">

@@ -39,7 +39,7 @@ export const CarritoProvider = ({ children }) => {
         });
     };
 
-    const eliminarProducto = (id) => {
+    const eliminarDelCarrito = (id) => {
         setProductos((prevProductos) => prevProductos.filter(producto => producto.id !== id));
     };
 
@@ -54,8 +54,7 @@ export const CarritoProvider = ({ children }) => {
     const total = calcularTotal();
 
     const generarPedido = (navigate) => {
-        iniciarPedido(productos); // Mandamos los datos al PedidoContext
-        setProductos([]); 
+        iniciarPedido(productos); // Mandamos los datos al PedidoContext 
         navigate('/pago'); // Navegar a la página de pago
     };
 
@@ -66,7 +65,7 @@ export const CarritoProvider = ({ children }) => {
                 agregarProducto,
                 incrementarCantidad,
                 disminuirCantidad,
-                eliminarProducto,
+                eliminarDelCarrito,
                 vaciarCarrito,
                 generarPedido,
                 total

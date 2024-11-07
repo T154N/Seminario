@@ -12,7 +12,7 @@
 }
 
 .scrollable-table {
-    max-height: 400px; /* Ajusta la altura máxima según lo necesites */
+    max-height: 500px; /* Ajusta la altura máxima según lo necesites */
     overflow-y: auto; /* Activa el scroll vertical */
     border: 1px solid #ccc; /* Agrega un borde con color */
 
@@ -205,7 +205,6 @@
     display: inline-flex;
     align-items: center;
 
-
 }
 
 .boton-eliminar-filtro {
@@ -213,7 +212,7 @@
     color: white;
     border: none;
     border-radius: 20px;
-    padding: 0.5px 5px;
+    padding: 0.5px 6px;
 
 }
     .titulo-filtro{
@@ -224,3 +223,10 @@
     margin-bottom: 10px;
 }
 
+.estado-indicador {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 8px;
+}

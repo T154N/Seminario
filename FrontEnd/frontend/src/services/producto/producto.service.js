@@ -22,7 +22,29 @@ const getAllProductos = async () => {
 
     } catch (error) {
         return []
-    };
+    }
+};
+
+const getAllProductosBaja = async () => {
+    try {
+        const response = await axios.get(`${ENDPOINT_PRODUCTO_URL}/productos/baja`);
+        console.log(response);
+        return response.data.body.map((c) => {
+            return {
+                id: c.id,
+                nombre: c.nombre,
+                descripcion: c.descripcion ? c.descripcion : "Producto sin descripción",
+                precioUnitario: c.precio,
+                observaciones: c.observaciones,
+                categoria: c.categoriaNombre,
+                imagen: c.urlImagen ? c.urlImagen : sinImagen,
+                estado: c.productoEstado
+            }
+        })
+
+    } catch (error) {
+        return []
+    }
 };
 
 const getProductosCategoria = async (categoriaId) => {
@@ -57,7 +79,8 @@ const postNuevoProducto = async (data) => {
 const productoService = {
     getAllProductos,
     getProductosCategoria,
-    postNuevoProducto
+    postNuevoProducto,
+    getAllProductosBaja
 }
 
 export default productoService;

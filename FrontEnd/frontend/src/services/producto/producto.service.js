@@ -3,6 +3,36 @@ import sinImagen from '../../images/Other Icons/sinImagen.png';
 
 const ENDPOINT_PRODUCTO_URL = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
 
+
+const getProductoById = async (id) => {
+    try {
+        const response = await axios.get(`${ENDPOINT_PRODUCTO_URL}/productos/${id}`);
+        console.log(response);
+
+        // Verificar que response.data.body sea un objeto y no un array
+        if (response.data.body) {
+            const c = response.data.body;
+            return {
+                id: c.id,
+                nombre: c.nombre,
+                descripcion: c.descripcion ? c.descripcion : "Producto sin descripción",
+                precioUnitario: c.precio,
+                observaciones: c.observaciones,
+                categoria: c.categoriaNombre,
+                imagen: c.urlImagen ? c.urlImagen : sinImagen,
+                estado: c.productoEstado
+            };
+        }
+
+    } catch (error) {
+        console.error(error);
+        return null; // Puedes devolver un objeto vacío o algo más adecuado para manejar el error
+    }
+};
+
+
+
+
 const getAllProductos = async () => {
     try {
         const response = await axios.get(`${ENDPOINT_PRODUCTO_URL}/productos`);
@@ -80,7 +110,8 @@ const productoService = {
     getAllProductos,
     getProductosCategoria,
     postNuevoProducto,
-    getAllProductosBaja
+    getAllProductosBaja,
+    getProductoById
 }
 
 export default productoService;

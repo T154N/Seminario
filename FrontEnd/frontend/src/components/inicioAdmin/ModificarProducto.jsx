@@ -12,18 +12,20 @@ const ModificarContenido = ({ registro, onSave, onCancel }) => {
         categoria: '',
         precioUnitario: '',
         imagen: '',
-        estado: 1
+        estado: 1,
+        descripcion: ''
     });
 
     const [isLoading, setIsLoading] = useState(true); // Nuevo estado para controlar la carga
     const [categorias, setCategorias] = useState([]);
 
-    const fetchCategorias = async () => {
-        const categorias = await categoriaService.getAllCategorias();
-        setCategorias(categorias);
-    };
-    fetchCategorias();
-
+    useEffect(() => {
+        const fetchCategorias = async () => {
+            const categorias = await categoriaService.getAllCategorias();
+            setCategorias(categorias);
+        };
+        fetchCategorias();
+    }, [categorias]);
 
     useEffect(() => {
         const fetchProducto = async () => {
@@ -82,9 +84,10 @@ const ModificarContenido = ({ registro, onSave, onCancel }) => {
                     <select
                         className="form-select"
                         name="categoria"
-                        value={formData.categoria}
+                        value={formData.categoria} // Este valor se debe emparejar con la categoría del producto
                         onChange={handleChange}
                     >
+                        <option value="" disabled>Seleccionar Categoría</option>
                         {categorias.map((categoria) => (
                             <option key={categoria.id} value={categoria.nombre}>
                                 {categoria.nombre}

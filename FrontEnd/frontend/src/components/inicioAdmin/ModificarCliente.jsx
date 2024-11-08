@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './inicioAdmin.css';
+import clienteService from '../../services/cliente/cliente.service';
 
-const ModificarContenido = ({ registro, onSave, onCancel }) => {
+
+const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
     const [formData, setFormData] = useState({
         nombre: '',
         apellido: '',
@@ -17,12 +19,6 @@ const ModificarContenido = ({ registro, onSave, onCancel }) => {
     });
 
     const [isLoading, setIsLoading] = useState(true); // Nuevo estado para controlar la carga
-    
-    const fetchClientes = async () => {
-        const clientes = await clienteService.getAllClientes();
-        setClientes(clientes);
-    };
-    fetchClientes();
 
 
     useEffect(() => {
@@ -171,4 +167,4 @@ const ModificarContenido = ({ registro, onSave, onCancel }) => {
     );
 };
 
-export default ModificarContenido;
+export default ModificarContenidoCliente;

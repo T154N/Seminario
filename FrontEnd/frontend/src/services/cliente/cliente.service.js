@@ -7,13 +7,15 @@ const getAllClientes = async () => {
         console.log(response);
         return response.data.body.map((c) => {
             return {
+                id: c.cliente_id,
                 nombre: c.cliente_nombre,
                 apellido: c.cliente_apellido,
+                cuit: c.cliente_cuit,
                 telefono: c.cliente_telefono,
-                domicilio: c.domicilio,
+                email:c.cliente_email,
+                observaciones: c.cliente_observaciones,
+                domicilio: c.domicilios,
                 estado: c.cliente_estado_id
-
-
             }
         })
     }catch (error) {
@@ -21,8 +23,36 @@ const getAllClientes = async () => {
     }
 
 }
+const getClienteById = async (id) => {
+    try {
+        const response = await axios.get(`${ENDPOINT_CLIENTE_URL}/clientes/${id}`);
+        console.log(response);
+
+        if (response.data.body) {
+            const c = response.data.body;
+            return {
+                id: c.cliente_id,
+                nombre: c.cliente_nombre,
+                apellido: c.cliente_apellido,
+                cuit: c.cliente_cuit,
+                telefono: c.cliente_telefono,
+                email:c.cliente_email,
+                observaciones: c.cliente_observaciones,
+                domicilio: c.domicilios,
+                estado: c.cliente_estado_id
+            };
+        }
+
+    } catch (error) {
+        console.error(error);
+        return null; // Puedes devolver un objeto vacío o algo más adecuado para manejar el error
+    }
+};
+
+
 const clienteService = {
-    getAllClientes
+    getAllClientes,
+    getClienteById
 }
 
 export default clienteService;

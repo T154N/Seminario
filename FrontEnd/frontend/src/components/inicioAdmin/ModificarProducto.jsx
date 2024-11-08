@@ -68,86 +68,98 @@ const ModificarContenido = ({ registro, onSave, onCancel }) => {
         <div className="modificar-contenido">
             <h2>Modificar {registro ? registro.nombre : 'Contenido'}</h2>
             <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label className="form-label">Nombre</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="nombre"
-                        value={formData.nombre}
-                        onChange={handleChange}
-                        required
-                    />
+                <div className="row mb-3">
+                    <div className="col-6">
+                        <label className="form-label">Nombre</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="nombre"
+                            value={formData.nombre}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Categoría</label>
-                    <select
-                        className="form-select"
-                        name="categoria"
-                        value={formData.categoria} // Este valor se debe emparejar con la categoría del producto
-                        onChange={handleChange}
-                    >
-                        <option value="" disabled>Seleccionar Categoría</option>
-                        {categorias.map((categoria) => (
-                            <option key={categoria.id} value={categoria.nombre}>
-                                {categoria.nombre}
-                            </option>
-                        ))}
-                    </select>
+                    <div className="col-3">
+                        <label className="form-label">Precio Unitario</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            name="precioUnitario"
+                            value={formData.precioUnitario}
+                            onChange={handleChange}
+                        />
+                    </div>
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">Precio Unitario</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        name="precioUnitario"
-                        value={formData.precioUnitario}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Url Imagen</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="imagen"
-                        value={formData.imagen}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                        <div className="row mb-3">
+                            <div className="col-6">
+                                <label className="form-label">Categoría</label>
+                                <select
+                                    className="form-select"
+                                    name="categoria"
+                                    value={formData.categoria} // Este valor se debe emparejar con la categoría del producto
+                                    onChange={handleChange}
+                                >
+                                    <option value="" disabled>Seleccionar Categoría</option>
+                                    {categorias.map((categoria) => (
+                                        <option key={categoria.id} value={categoria.nombre}>
+                                            {categoria.nombre}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
 
                 <div className="mb-3">
-                    <label className="form-label">Estado</label>
-                    <select
-                        className="form-select"
-                        name="estado"
-                        value={formData.estado}
-                        onChange={handleChange}
-                    >
-                        <option value={1}>Activo</option>
-                        <option value={0}>Inactivo</option>
-                    </select>
+                    <div className="col-6">
+                        <label className="form-label">Url Imagen</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="imagen"
+                            value={formData.imagen}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Descripción</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="descripcion"
-                        value={formData.descripcion}
-                        onChange={handleChange}
-                        required
-                    />
+                    <div className="col-6">
+                        <label className="form-label">Estado</label>
+                        <select
+                            className="form-select"
+                            name="estado"
+                            value={formData.estado}
+                            onChange={handleChange}
+                        >
+                            <option value={1}>Activo</option>
+                            <option value={0}>Inactivo</option>
+                        </select>
+                    </div>
                 </div>
-                <div className="d-flex justify-content-between">
-                    <button type="submit" className="btn btn-success">
-                        <FontAwesomeIcon icon={faSave}/> Guardar
-                    </button>
-                    <button type="button" className="btn btn-danger" onClick={onCancel}>
-                        <FontAwesomeIcon icon={faTimes}/> Cancelar
-                    </button>
+                <div className="mb-3">
+                    <div className="col-6">
+                        <label className="form-label">Descripción</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="descripcion"
+                            value={formData.descripcion}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
                 </div>
+                    <div className="d-flex justify-content-between">
+                        <button type="submit" className="btn btn-success">
+                            <FontAwesomeIcon icon={faSave}/> Guardar
+                        </button>
+                        <button type="button" className="btn btn-danger" onClick={onCancel}>
+                            <FontAwesomeIcon icon={faTimes}/> Cancelar
+                        </button>
+                    </div>
 
 
             </form>

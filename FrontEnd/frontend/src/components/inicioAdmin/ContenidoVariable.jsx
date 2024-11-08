@@ -98,6 +98,12 @@ const ContenidoVariable = ({
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
+                        {menuContent === 'Clientes' && <>
+                            <th>Apellido</th>
+                            <th>CUIT</th>
+                            <th>Domicilio</th>
+                            <th>Estado</th>
+                        </>}
                         {menuContent === 'Catálogo' && catalogTab === 'Productos' && (
                             <>
                                 <th>Categoría</th>
@@ -119,6 +125,7 @@ const ContenidoVariable = ({
                         <tr key={item.id}>
                             <td>{item.id}</td>
                             <td>{item.nombre}</td>
+
                             {menuContent === 'Catálogo' && catalogTab === 'Productos' && (
                                 <>
                                     <td>{item.categoria}</td>

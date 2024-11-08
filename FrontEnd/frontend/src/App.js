@@ -12,13 +12,15 @@ import { Footer } from './components/Footer';
 import { Producto } from './components/producto/Producto';
 import { CarritoProvider } from './components/carrito/CarritoContext';
 import { ResetPassword } from "./components/login/ResetPassword";
+import { InicioAdmin } from "./components/inicioAdmin/InicioAdmin";
+import { InicioAdminPrueba } from "./components/inicioAdmin/InicioAdminPrueba";
 // import { CargarProducto } from "./components/cargarProducto/CargarProducto";
 
 function App() {
   return (
     <BrowserRouter>
       <CarritoProvider> {/* CarritoProvider envuelve todas las rutas */}
-        <div className="App fondo">
+        <div className="App fondo scrollable-table">
           <Header />
 
           <main>
@@ -29,6 +31,8 @@ function App() {
               <Route path="/info" element={<Info />} />
               <Route path='/productos/:categoria' element={<Producto />}/>
               <Route path='/productos' element={<Producto />}/>
+              <Route path="/inicioAdminPrueba" element={<InicioAdminPrueba />} />
+              <Route path="/inicioAdmin" element={<InicioAdmin />} />
               <Route path="/principal" element={<Principal />} />
               <Route path='/' element={<Principal />} />
               <Route path='*' element={<Principal />} />

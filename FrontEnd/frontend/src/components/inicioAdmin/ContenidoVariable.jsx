@@ -119,6 +119,17 @@ const ContenidoVariable = ({
                             </>)
                         }
 
+
+                        {menuContent === 'Clientes' && 
+                            <>
+                                <th>Apellido</th>
+                                <th>CUIT</th>
+                                <th>Domicilio</th>
+                                <th>Estado</th>
+                            </>
+                        }
+
+
                         <th>Acción</th>
                     </tr>
                     </thead>
@@ -157,6 +168,26 @@ const ContenidoVariable = ({
                                     </td>
                                 </>)
                             }
+                            
+
+                            
+                            {menuContent === 'Clientes' && (
+                                <>
+                                    <td>{item.apellido}</td>
+                                    <td>{item.cuit}</td>
+                                    <td>{item.domicilio}</td>
+                                    <td data-label="Estado">
+                                        <span>
+                                            {item.estado === 1 ? 'Activo' : 'Inactivo'}
+                                            <span
+                                                className="estado-indicador"
+                                                style={{backgroundColor: getIndicatorColor(item.estado === 1 ? 'Activo' : 'Inactivo')}}
+                                            />
+                                        </span>
+                                    </td>
+                                </>
+                            )}
+
                             <td>
                                 <button className="btn btn-primary btn btn-sm me-2 btn-dollar">
                                     <FontAwesomeIcon icon={faDollarSign}/>

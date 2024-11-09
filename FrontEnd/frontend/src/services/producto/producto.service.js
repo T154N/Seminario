@@ -20,7 +20,8 @@ const getProductoById = async (id) => {
                 observaciones: c.observaciones,
                 categoria: c.categoriaNombre,
                 imagen: c.urlImagen ? c.urlImagen : sinImagen,
-                estado: c.productoEstado
+                estado: c.productoEstado,
+                categoriaId: c.categoriaId,
             };
         }
 
@@ -106,12 +107,32 @@ const postNuevoProducto = async (data) => {
     }
 }
 
+const updateProducto = async (producto_id, producto_nombre, producto_descripcion, producto_precio, producto_url_imagen, Categoria, producto_usuario_modificacion) => {
+    try {
+        const response = await axios.put(`${ENDPOINT_PRODUCTO_URL}/productos/mod`, {
+            producto_id: producto_id.toString(),
+            producto_nombre: producto_nombre.toString(),
+            producto_descripcion: producto_descripcion.toString(),
+            producto_precio: producto_precio.toString(),
+            producto_url_imagen: producto_url_imagen.toString(),
+            categoria: {
+                categoriaId: Categoria.toString()
+            },
+            producto_usuario_modificacion: producto_usuario_modificacion.toString()
+        });
+        console.log(response);
+        return response;
+    } catch (error) {
+        return 500;
+    }
+}
 const productoService = {
     getAllProductos,
     getProductosCategoria,
     postNuevoProducto,
     getAllProductosBaja,
-    getProductoById
+    getProductoById,
+    updateProducto
 }
 
 export default productoService;

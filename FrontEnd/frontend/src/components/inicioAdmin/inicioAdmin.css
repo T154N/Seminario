@@ -1,3 +1,4 @@
+
 #botonAlta {
     background-color: #ffac70; /* Cambia este color a lo que desees */
     color: white; /* Cambia el color del texto si es necesario */
@@ -255,4 +256,38 @@
 .checkbox-container .form-check-label {
 
     font-weight: bold;
+}
+.btn-aceptar{
+    background-color: #FFC107;
+    color: white;
+    border: none;
+}
+.btn-aceptar:hover {
+    background-color: #e0a800; /* Color naranja más oscuro */
+}
+
+.btn-cancelar{
+    background-color: #DC3545;
+    color: white;
+    border: none;
+}
+.btn-cancelar:hover {
+    background-color: #b74d4f; /* Color más claro para el hover */
+}
+
+.notification-font {
+    font-family: 'Bree Serif', serif; /* Ajusta la fuente según sea necesario */
+    font-size: 14px; /* Ajusta el tamaño de la fuente según sea necesario */
+
+}
+
+
+.btn-pedidos {
+    background-color: #0d6efb; /* Cambia este color al que desees */
+    color: white;
+    border: none;
+}
+
+.btn-pedidos:hover {
+    background-color: #0a58ca; /* Cambia este color al que desees */
 }

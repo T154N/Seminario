@@ -7,6 +7,7 @@ import './inicioAdmin.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faTimes, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import ModificarProducto from './ModificarProducto';
+import ModificarCategoria from './ModificarCategoria';
 export function InicioAdmin() {
     //-------------------------------------------------------------------------------------
     const [menuContent, setMenuContent] = useState('Catálogo');
@@ -21,6 +22,7 @@ export function InicioAdmin() {
     const [registroSeleccionado, setRegistroSeleccionado] = useState(null);
     const [modoEdicion, setModoEdicion] = useState(false);
     const [catalogoMenu, setCatalogoMenu] = useState(true);
+
 
     //-------------------------------------------------------------------------------------
 
@@ -49,8 +51,11 @@ export function InicioAdmin() {
             fetchProductos();
         }
     }, [menuContent, catalogTab]);
-    //--------Carga Productos Baja------------------------------------------
-
+    //--------Recargar Productos------------------------------------------
+    const recargarProductos = async () => {
+        const productos = await productoService.getAllProductos();
+        setProductosActivos(productos);
+    };
     //--------Carga Categorias------------------------------------------
     useEffect(() => {
         const fetchCategorias = async () => {
@@ -63,6 +68,11 @@ export function InicioAdmin() {
         }
     }, [menuContent, catalogTab]);
 
+    const recargarCategorias = async () => {
+        const categorias = await categoriaService.getAllCategorias();
+        setCategoriasActivas(categorias);
+    };
+   //--------------------------------------------------
     useEffect(() => {
         // Actualiza los filtros activos al cambiar la búsqueda o el filtro seleccionado
         const nuevosFiltros = filtrosActivos.filter(filtro => filtro.filtro !== filtroSeleccionado); // Elimina el filtro anterior
@@ -119,10 +129,17 @@ export function InicioAdmin() {
     };
 
     const handleSave = async (formData) => {
-        await productoService.updateProducto(registroSeleccionado.id, formData);
+        if (catalogTab === 'Productos') {
+            await productoService.updateProducto(registroSeleccionado.id, formData);
+            await recargarProductos(); // Recargar productos después de guardar
+        } else if (catalogTab === 'Categorias') {
+            await categoriaService.updateCategoria(registroSeleccionado.id, formData);
+            await recargarCategorias(); // Recargar categorías después de guardar
+        }
         setModoEdicion(false);
-        // Aquí puedes agregar lógica adicional para actualizar la lista de productos o mostrar un mensaje de éxito
+        setCatalogoMenu(true);
     };
+
     //------------------------------------------------------------------------------------------
 
     return (
@@ -132,14 +149,17 @@ export function InicioAdmin() {
                     <div className="col-12 col-md-2 menu">
                         <h2>Menú</h2>
                         <div className="d-flex flex-column">
-                            <button className="btn-admin btn btn-success mb-2 btn-block" onClick={() => setMenuContent('Catálogo')}>
+                            <button className="btn-admin btn btn-success mb-2 btn-block btn-pedidos"
+                                    onClick={() => setMenuContent('Pedidos')}>
+                                Pedidos
+                            </button>
+                            <button className="btn-admin btn btn-success mb-2 btn-block"
+                                    onClick={() => setMenuContent('Catálogo')}>
                                 Catálogo
                             </button>
-                            <button className="btn-admin btn btn-success mb-2 btn-block" onClick={() => setMenuContent('Clientes')}>
+                            <button className="btn-admin btn btn-success mb-2 btn-block"
+                                    onClick={() => setMenuContent('Clientes')}>
                                 Clientes
-                            </button>
-                            <button className="btn-admin btn btn-success mb-2 btn-block" onClick={() => setMenuContent('Pedidos')}>
-                                Pedidos
                             </button>
                         </div>
                     </div>
@@ -166,8 +186,10 @@ export function InicioAdmin() {
                         )}
 
                         <div className="tab-content-area mt-3">
-                            {modoEdicion ? (
+                            {modoEdicion && catalogTab === 'Productos' ? (
                                 <ModificarProducto registro={registroSeleccionado} onSave={handleSave} onCancel={handleCancel} />
+                            ) : modoEdicion && catalogTab === 'Categorias' ? (
+                                <ModificarCategoria registro={registroSeleccionado} onSave={handleSave} onCancel={handleCancel} />
                             ) : (
                                 <ContenidoVariable
                                     menuContent={menuContent}

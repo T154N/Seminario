@@ -1,27 +1,26 @@
+// CarritoContext.js
 import React, { createContext, useState, useContext } from "react";
+import { usePedido } from '../Pedido/PedidoContext'; // Importamos PedidoContext
 
 const CarritoContext = createContext();
 
 export const useCarrito = () => useContext(CarritoContext);
 
 export const CarritoProvider = ({ children }) => {
+    const { iniciarPedido } = usePedido();
     const [productos, setProductos] = useState([]);
 
     const agregarProducto = (producto) => {
         setProductos((prevProductos) => {
-            // Filtra el producto existente para eliminarlo
             const productosSinDuplicados = prevProductos.filter(p => p.id !== producto.id);
-            // Devuelve el nuevo array con el producto agregado
             return [...productosSinDuplicados, producto];
         });
     };
 
     const incrementarCantidad = (id) => {
         setProductos((prevProductos) => {
-            return prevProductos.map((producto) => 
-                producto.id === id 
-                ? { ...producto, cantidad: producto.cantidad + 1 }
-                : producto
+            return prevProductos.map((producto) =>
+                producto.id === id ? { ...producto, cantidad: producto.cantidad + 1 } : producto
             );
         });
     };
@@ -30,11 +29,9 @@ export const CarritoProvider = ({ children }) => {
         setProductos((prevProductos) => {
             return prevProductos.map((producto) => {
                 if (producto.id === id) {
-                    // Si la cantidad es mayor a 1, permite disminuirla
                     if (producto.cantidad > 1) {
                         return { ...producto, cantidad: producto.cantidad - 1 };
                     }
-                    // Si la cantidad ya es 1, no la cambia
                     return producto;
                 }
                 return producto;
@@ -42,13 +39,8 @@ export const CarritoProvider = ({ children }) => {
         });
     };
 
-    const eliminarProducto = (id) => {
+    const eliminarDelCarrito = (id) => {
         setProductos((prevProductos) => prevProductos.filter(producto => producto.id !== id));
-    };
-
-    const generarPedido = () => {
-        console.log("Generando pedido...", productos);
-        setProductos([]);
     };
 
     const vaciarCarrito = () => {
@@ -61,6 +53,11 @@ export const CarritoProvider = ({ children }) => {
 
     const total = calcularTotal();
 
+    const generarPedido = (navigate) => {
+        iniciarPedido(productos); // Mandamos los datos al PedidoContext 
+        navigate('/pago'); // Navegar a la página de pago
+    };
+
     return (
         <CarritoContext.Provider
             value={{
@@ -68,10 +65,10 @@ export const CarritoProvider = ({ children }) => {
                 agregarProducto,
                 incrementarCantidad,
                 disminuirCantidad,
-                eliminarProducto,
-                generarPedido,
+                eliminarDelCarrito,
                 vaciarCarrito,
-                total,
+                generarPedido,
+                total
             }}
         >
             {children}

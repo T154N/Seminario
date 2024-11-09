@@ -27,7 +27,7 @@ export function Carrito() {
                     ></button>
                 </div>
 
-                <div className="offcanvas-body carrito-body">
+                <div className="offcanvas-body carrito-body" style={{backgroundColor: "#fff3ef"}}>
                     {productos.length === 0 ? (
                         <p className="mensaje-carrito-vacio">No hay productos en el carrito</p>
                     ) : (
@@ -35,7 +35,8 @@ export function Carrito() {
                             <div className="card producto-card" key={producto.id}>
                                 <div className="row g-0">
                                     <div className="col-12 col-md-3">
-                                        <img src={producto.imagen} className="img-fluid rounded-start" alt={producto.nombre} />
+                                        <img src={producto.imagen} className="img-fluid rounded-start"
+                                             alt={producto.nombre}/>
                                     </div>
                                     <div className="col-12 col-md-6">
                                         <div className="card-body">
@@ -58,7 +59,7 @@ export function Carrito() {
                                                 <span className="d-block">${(producto.precioUnitario * producto.cantidad).toFixed(2)}</span>
                                             </p>
                                         </div>
-                                        <button className="btn btn-danger btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
+                                        <button className="btn btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
                                     </div>

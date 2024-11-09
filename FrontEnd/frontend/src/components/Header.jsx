@@ -21,7 +21,7 @@ export function Header() {
 
     return (
         <div>
-          <header className="">
+          <header>
 
             <nav className="navbar navbar-light navbar-expand-lg" style={{backgroundColor: "#FCBB3A"}}>
               <div className="d-flex justify-content-between w-100 ms-2 me-2">
@@ -52,8 +52,8 @@ export function Header() {
 
                   <div className="offcanvas-body">
                     <ul className="navbar-nav ms-auto justify-content-end flex-grow-1 text-start">
-                      <li className="nav-item">
-                        <button className="btn fs-5" onClick={goToInformacion}>
+                      <li className="nav-item me-1 mb-1">
+                        <button className="btn btn-header fs-5" onClick={goToInformacion}>
                             <img src={informacion} style={{
                                 width: "30px",
                                 height: "auto",
@@ -62,8 +62,8 @@ export function Header() {
                             Informacion
                         </button>
                       </li>
-                        <li className="nav-item">
-                            <button className="btn fs-5" onClick={goToUserProfile}>
+                        <li className="nav-item me-1 mb-1">
+                            <button className="btn btn-header fs-5" onClick={goToUserProfile}>
                                 <img src={usuario} style={{
                                     width: "30px",
                                     height: "auto",
@@ -73,8 +73,8 @@ export function Header() {
                                 Usuario
                             </button>
                         </li>
-                        <li className="nav-item">
-                            <button className="btn fs-5" onClick={goToCatalogue}>
+                        <li className="nav-item me-1 mb-1">
+                            <button className="btn btn-header fs-5" onClick={goToCatalogue}>
                                 <img src={catalogo} style={{
                                     width: "30px",
                                     height: "auto",
@@ -85,8 +85,8 @@ export function Header() {
                                 Catalogo
                             </button>
                         </li>
-                        <li className="nav-item">
-                            <button className="btn fs-5" data-bs-toggle="offcanvas"
+                        <li className="nav-item me-1 mb-1">
+                            <button className="btn btn-header fs-5" data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
                                 <img src={carrito} alt="Carrito" style={{
                                     width: "30px",

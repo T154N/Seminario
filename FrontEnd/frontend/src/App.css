@@ -3,11 +3,11 @@
     font-family: 'Bree Serif', serif;
     min-height: 100vh;
     display: grid;
-    grid-template-rows: auto 1fr auto; /* Crea una cuadrícula con 3 filas */
+    grid-template-rows: auto 1fr auto;
   }
   
   main {
-    flex: 1;                 /* Permite que el main ocupe el espacio restante */
+    flex: 1;
     padding: 20px;
   }
   
@@ -32,17 +32,6 @@
     .App-logo {
       animation: App-logo-spin infinite 20s linear;
     }
-  }
-  
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
   }
   
   .App-link {

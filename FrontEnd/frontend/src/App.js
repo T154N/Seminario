@@ -19,7 +19,7 @@ import { InicioAdminPrueba } from "./components/inicioAdmin/InicioAdminPrueba";
 function App() {
   return (
     <BrowserRouter>
-      <CarritoProvider> {/* CarritoProvider envuelve todas las rutas */}
+      <CarritoProvider>
         <div className="App fondo scrollable-table">
           <Header />
 
@@ -36,7 +36,6 @@ function App() {
               <Route path="/principal" element={<Principal />} />
               <Route path='/' element={<Principal />} />
               <Route path='*' element={<Principal />} />
-              {/* <Route path='/cargarProducto' element={<CargarProducto/>}/> */}
             </Routes>
           </main>
 

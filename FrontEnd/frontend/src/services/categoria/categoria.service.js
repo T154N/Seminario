@@ -11,7 +11,8 @@ const getAllCategorias = async () => {
                 return {
                     id: c.categoriaId,
                     nombre: c.categoriaNombre.toUpperCase(),
-                    imagen: c.categoriaUrlImagen ? c.categoriaUrlImagen : sinImagen
+                    imagen: c.categoriaUrlImagen ? c.categoriaUrlImagen : sinImagen,
+                    estado: c.categoriaEstado
                 };
             })
             .sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordenar alfabéticamente por nombre

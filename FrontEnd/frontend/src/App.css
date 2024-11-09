@@ -57,3 +57,21 @@
       transform: rotate(360deg);
     }
   }
+
+/* inicioAdmin.css */
+.scrollable-table::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-table::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scrollable-table::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.scrollable-table::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

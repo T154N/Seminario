@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faTimes, faDollarSign, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faDollarSign, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 const ContenidoVariable = ({
                                menuContent,
                                catalogTab,
@@ -18,7 +19,7 @@ const ContenidoVariable = ({
         <div className="contenido-variable">
             <div>
                 <span className="fs-3 fw-bold mt-0">
-                    {menuContent === 'Clientes' ? 'Clientes' : catalogTab}
+                    {menuContent === 'Clientes' ? 'Clientes' : menuContent === 'Pedidos' ? 'Pedidos' : catalogTab}
                 </span>
             </div>
 
@@ -48,13 +49,14 @@ const ContenidoVariable = ({
                             </button>
                         </div>
 
-                        <div className="form-check ms-3  mb-0 btn-action checkbox-container">
-                            <input className="bi form-check-input me-1 mb-0 mt-0 " type="checkbox" id="inactivosCheckbox" />
-                            <label className="form-check-label me-1 mb-0 mt-0" htmlFor="inactivosCheckbox">
-                                Inactivos
-                            </label>
-                        </div>
-
+                        {menuContent !== 'Pedidos' && (
+                            <div className="form-check ms-3  mb-0 btn-action checkbox-container">
+                                <input className="bi form-check-input me-1 mb-0 mt-0 " type="checkbox" id="inactivosCheckbox" />
+                                <label className="form-check-label me-1 mb-0 mt-0" htmlFor="inactivosCheckbox">
+                                    Inactivos
+                                </label>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -129,7 +131,7 @@ const ContenidoVariable = ({
                             {menuContent === 'Catálogo' && catalogTab === 'Productos' && (
                                 <>
                                     <td>{item.categoria}</td>
-                                    <td>{"$" + item.precioUnitario}</td>
+                                    <td>{"$" + item.precioUnitario.toFixed(2)}</td>
                                     <td data-label="Estado">
                                         <span>
                                             {item.estado === 1 ? 'Activo' : 'Inactivo'}

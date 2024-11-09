@@ -1,32 +1,32 @@
 
 .footer {
     background-color: #FCBB3A !important;
-    color: white; 
-    text-align: center; 
+    color: white;
+    text-align: center;
     position: relative;
     margin-top: auto;
 }
 
 .footer-content {
-    max-width: 1200px; 
-    margin: 0 auto; 
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .footer-links {
-    list-style: none; 
-    padding: 0; 
+    list-style: none;
+    padding: 0;
 }
 
 .footer-links li {
     display: inline;
-    margin: 0 0; 
+    margin: 0 0;
 }
 
 .footer-links a {
-    color: white; 
-    text-decoration: none; 
+    color: white;
+    text-decoration: none;
 }
 
 .footer-links a:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
 }

@@ -26,14 +26,18 @@ export function Header() {
             <nav className="navbar navbar-light navbar-expand-lg" style={{backgroundColor: "#FCBB3A"}}>
               <div className="d-flex justify-content-between w-100 ms-2 me-2">
 
-                <img src={CMLogo} style={{
-                    width: "80px",
-                    height: "auto",
-                    marginRight: "3px",
-                    verticalAlign: "middle"}} onClick={goToHomePage} alt="Logo"/>
+                  <button className="btn logo-button">
+                      <img src={CMLogo} style={{
+                          width: "150px",
+                          height: "auto",
+                          marginRight: "3px",
+                          verticalAlign: "middle",
+                          outline: "none"
+                      }} onClick={goToHomePage} alt="Logo"/>
+                  </button>
 
-                <button className="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                  <button className="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas"
+                          data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                   <span className="navbar-toggler-icon"></span>
                 </button>
 

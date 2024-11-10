@@ -3,99 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import './pedidosUsuario.css';
+import { pedidosSimulados } from '../../services/pedido/pedido.mock';
 
 export function PedidosUsuario() {
     const [currentPage, setCurrentPage] = useState(1);
     const pedidosPerPage = 6;
     const navigate = useNavigate();
 
-
-    const pedidosSimulados = [
-        {
-            id: 1,
-            fecha: '2023-10-01',
-            total: 50140,
-            estado: 'Rechazado',
-            metodoPago: 'Efectivo',
-            productos: [
-                { id: 101, nombre: 'Producto A', cantidad: 2, precioUnitario: 10000 },
-                { id: 102, nombre: 'Producto B', cantidad: 1, precioUnitario: 30140 }
-            ]
-        },
-        {
-            id: 2,
-            fecha: '2024-11-03',
-            total: 1200,
-            estado: 'Pendiente',
-            metodoPago: 'Transferencia Bancaria',
-            productos: [
-                { id: 103, nombre: 'Producto C', cantidad: 3, precioUnitario: 400 }
-            ]
-        },
-        {
-            id: 3,
-            fecha: '2024-10-05',
-            total: 78250,
-            estado: 'Pendiente',
-            metodoPago: 'Efectivo',
-            productos: [
-                { id: 104, nombre: 'Producto D', cantidad: 5, precioUnitario: 10000 },
-                { id: 105, nombre: 'Producto E', cantidad: 2, precioUnitario: 14125 }
-            ]
-        },
-        {
-            id: 4,
-            fecha: '2024-10-07',
-            total: 62540,
-            estado: 'Confirmado',
-            metodoPago: 'Transferencia Bancaria',
-            productos: [
-                { id: 106, nombre: 'Producto F', cantidad: 3, precioUnitario: 20847 },
-                { id: 107, nombre: 'Producto G', cantidad: 1, precioUnitario: 5000 }
-            ]
-        },
-        {
-            id: 5,
-            fecha: '2024-12-10',
-            total: 90360,
-            estado: 'Confirmado',
-            metodoPago: 'Efectivo',
-            productos: [
-                { id: 108, nombre: 'Producto H', cantidad: 4, precioUnitario: 22590 },
-                { id: 109, nombre: 'Producto I', cantidad: 2, precioUnitario: 11390 }
-            ]
-        },
-        {
-            id: 6,
-            fecha: '2024-10-15',
-            total: 12250,
-            estado: 'Rechazado',
-            metodoPago: 'Transferencia Bancaria',
-            productos: [
-                { id: 110, nombre: 'Producto J', cantidad: 1, precioUnitario: 12250 }
-            ]
-        },
-        {
-            id: 7,
-            fecha: '2024-01-20',
-            total: 45350,
-            estado: 'Pendiente',
-            metodoPago: 'Efectivo',
-            productos: [
-                { id: 111, nombre: 'Producto K', cantidad: 10, precioUnitario: 4535 }
-            ]
-        },
-        {
-            id: 8,
-            fecha: '2024-10-25',
-            total: 99250,
-            estado: 'Confirmado',
-            metodoPago: 'Transferencia Bancaria',
-            productos: [
-                { id: 112, nombre: 'Producto L', cantidad: 5, precioUnitario: 19850 }
-            ]
-        }
-    ];
+    const estadoMapping = {
+        0: { label: 'Confirmado', color: 'green' },
+        1: { label: 'Pendiente', color: 'yellow' },
+        2: { label: 'Rechazado', color: 'red' }
+    };
 
     const pedidosOrdenados = pedidosSimulados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
     const indexOfLastPedido = currentPage * pedidosPerPage;
@@ -103,19 +22,6 @@ export function PedidosUsuario() {
     const pedidosActuales = pedidosOrdenados.slice(indexOfFirstPedido, indexOfLastPedido);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    const getIndicatorColor = (estado) => {
-        switch (estado) {
-            case 'Confirmado':
-                return 'green';
-            case 'Rechazado':
-                return 'red';
-            case 'Pendiente':
-                return 'yellow';
-            default:
-                return 'gray';
-        }
-    };
 
     const navigateToDetail = (pedido) => {
         navigate('/pedido-detalle', { state: { pedido } });
@@ -144,10 +50,10 @@ export function PedidosUsuario() {
                                 <td className="pedidos-usuario-data" data-label="Método de Pago">{pedido.metodoPago}</td>
                                 <td className="pedidos-usuario-data" data-label="Estado">
                                     <span className="pedidos-usuario-estado">
-                                        {pedido.estado}
+                                        {estadoMapping[pedido.estado].label}
                                         <span
                                             className="pedidos-usuario-estado-indicador"
-                                            style={{ backgroundColor: getIndicatorColor(pedido.estado) }}
+                                            style={{ backgroundColor: estadoMapping[pedido.estado].color }}
                                         />
                                     </span>
                                 </td>

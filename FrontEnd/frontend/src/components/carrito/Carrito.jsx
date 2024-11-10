@@ -7,21 +7,21 @@ import { useNavigate } from 'react-router-dom';
 
 export function Carrito() {
     const { productos, incrementarCantidad, disminuirCantidad, eliminarProducto, generarPedido, vaciarCarrito, total } = useCarrito();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const handleGenerarPedido = () => {
-    if (productos.length > 0) {
-        generarPedido(navigate);
+        if (productos.length > 0) {
+            generarPedido(navigate);
 
-        // Cerrar el offcanvas usando data-bs-toggle
-        const toggleButton = document.getElementById('toggleOffcanvasButton');
-        if (toggleButton) {
-            toggleButton.click();
+            // Cerrar el offcanvas usando data-bs-toggle
+            const toggleButton = document.getElementById('toggleOffcanvasButton');
+            if (toggleButton) {
+                toggleButton.click();
+            }
+        } else {
+            alert('El carrito está vacío');
         }
-    } else {
-        alert('El carrito está vacío');
-    }
-};
+    };
 
     return (
         <div>
@@ -43,7 +43,7 @@ export function Carrito() {
                     ></button>
                 </div>
 
-                <div className="offcanvas-body carrito-body" style={{backgroundColor: "#fff3ef"}}>
+                <div className="offcanvas-body carrito-body" style={{backgroundColor: "#fff3ef", paddingBottom: "100px"}}>
                     {productos.length === 0 ? (
                         <p className="mensaje-carrito-vacio">No hay productos en el carrito</p>
                     ) : (

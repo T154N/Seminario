@@ -50,12 +50,12 @@
 /*    width: 15%;*/
 /*}*/
 
-@media (max-width: 991px) {
-    .form-control {
-        width: 25%;
-    }
-    
-}
+/*@media (max-width: 991px) {*/
+/*    .form-control {*/
+/*        width: 25%;*/
+/*    }*/
+/*    */
+/*}*/
 
 .cantidad-control-rectangulo {
     border: 2px solid #ccc; /* Borde del rectángulo */

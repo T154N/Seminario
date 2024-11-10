@@ -71,13 +71,13 @@ export function Header() {
                       </li>
                         <li className="nav-item me-1 mb-1">
                             <button className="btn btn-header fs-5" onClick={goToUserProfile}>
-                                <img src={usuario} alt="Usuario" style={{
+                                <img src={usuario} alt="Login" style={{
                                     width: "30px",
                                     height: "auto",
                                     marginRight: "3px",
                                     verticalAlign: "middle"
                                 }}/>
-                                Usuario
+                                Login
                             </button>
                         </li>
                         <li className="nav-item me-1 mb-1">

@@ -137,6 +137,10 @@ const getEncryptedPassword = async (password) => {
     }
 }
 
+const getEmailUsuario = () => {
+    return localStorage.getItem('email');
+}
+
 const loginService = {
     iniciarSesion,
     estaIniciadaSesion,
@@ -144,7 +148,8 @@ const loginService = {
     crearCuenta,
     getDatosParaRegistro,
     getCorreoRecuperacion,
-    confirmarResetPassword
+    confirmarResetPassword,
+    getEmailUsuario
 }
 
 

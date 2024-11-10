@@ -1,15 +1,29 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { usePedido } from "./PedidoContext";
 import { useCarrito } from '../carrito/CarritoContext';
 import { useNavigate } from 'react-router-dom';
 import './resumenPedido.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import clienteService from "../../services/cliente/cliente.service";
 
 export function ResumenPedido() {
     const { pedidoActual, actualizarCantidad, eliminarDelPedido } = usePedido();
     const { eliminarDelCarrito } = useCarrito();
     const navigate = useNavigate();
+
+    const [datosCliente, setDatosCliente] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    useEffect( () => {
+        const fetchData = async () => {
+            const cliente = await clienteService.getDatosClientePedido();
+            console.log("e", datosCliente)
+            setDatosCliente(cliente);
+            setLoading(false)
+        }
+        fetchData();
+    }, []);
 
     const eliminarProducto = (id) => {
         eliminarDelPedido(id);
@@ -47,6 +61,10 @@ export function ResumenPedido() {
     const continuarPago = () => {
         navigate('/opciones-pago');
     };
+
+    if (loading) {
+        return <div className="fs-3">Cargando datos...</div>
+    }
 
     return (
         <div className="container payment-page">
@@ -113,10 +131,10 @@ export function ResumenPedido() {
             <h5 className="card-title text-center">Detalles del Pedido</h5>
             <hr />
             <p className="card-text"><strong>Cliente:</strong></p>
-            <p className="card-text nombre-cliente">Nombre del cliente</p>
+            <p className="card-text nombre-cliente">{datosCliente.nombre}</p>
             <hr className="separador" />
             <p className="card-text"><strong>Dirección de entrega:</strong></p>
-            <p className="card-text direccion-entrega">Avenida Siempreviva 2130</p>
+            <p className="card-text direccion-entrega">{datosCliente.domicilioNombre}</p>
             <hr className="separador" />
             <p className="card-text total-pedido text-center">
                 <strong>Total:</strong> <span className="h4">${pedidoActual.total}</span>

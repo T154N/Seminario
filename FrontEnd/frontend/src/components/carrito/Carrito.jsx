@@ -3,28 +3,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './carrito.css';
 import { useCarrito } from './CarritoContext';
-import carrito from '../../images/Header Icons/carrito.png';
-import { useNavigate } from 'react-router-dom'; 
-import { Offcanvas } from 'bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export function Carrito() {
     const { productos, incrementarCantidad, disminuirCantidad, eliminarProducto, generarPedido, vaciarCarrito, total } = useCarrito();
     const navigate = useNavigate(); 
 
     const handleGenerarPedido = () => {
-        if (productos.length > 0) {
-            generarPedido(navigate); 
-    
-            // Cerrar el offcanvas
-            const offcanvasElement = document.getElementById('offcanvasScrolling');
-            const offcanvasInstance = Offcanvas.getInstance(offcanvasElement);
-            if (offcanvasInstance) {
-                offcanvasInstance.hide();
-            }
-        } else {
-            alert('El carrito está vacío');
+    if (productos.length > 0) {
+        generarPedido(navigate);
+
+        // Cerrar el offcanvas usando data-bs-toggle
+        const toggleButton = document.getElementById('toggleOffcanvasButton');
+        if (toggleButton) {
+            toggleButton.click();
         }
-    };
+    } else {
+        alert('El carrito está vacío');
+    }
+};
 
     return (
         <div>

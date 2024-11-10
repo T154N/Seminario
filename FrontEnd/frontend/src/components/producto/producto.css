@@ -4,6 +4,15 @@
     margin-bottom: 10px;     
 }
 
+.cantidad-control-rectangulo {
+    border: 2px solid #ccc; /* Borde del rectángulo */
+    border-radius: 8px; /* Borde redondeado opcional */
+    padding: 5px; /* Espacio interno */
+    display: inline-flex; /* Mostrar los elementos en línea */
+    justify-content: space-between; /* Separar los botones y el input */
+    align-items: center; /* Alinear verticalmente */
+}
+
 /* Ocultar flechas solo para campos de entrada de tipo number con la clase .input-cantidad */
 
 /* Para navegadores Webkit (Chrome, Safari) */

@@ -65,7 +65,7 @@ export function ResumenPedido() {
                             </div>
                             <div className="card-body p-0"> 
                                 {pedidoActual.productos.map((producto) => (
-                                    <div className="producto-card" key={producto.id}>
+                                    <div className="producto-resumen-card border-0 rounded-0 border-bottom" key={producto.id}>
                                         <div className="row g-0">
                                             <div className="col-md-4">
                                                 <img src={producto.imagen} className="img-fluid rounded-start" alt={producto.nombre} />
@@ -87,10 +87,10 @@ export function ResumenPedido() {
                                                     </div>
                                                     <div className="precios-container mt-2">
                                                         <p className="precio-unitario">
-                                                            <strong>Precio unitario:</strong> ${producto.precioUnitario}
+                                                            <strong>Precio unitario:</strong> ${producto.precioUnitario.toFixed(2)}
                                                         </p>
                                                         <p className="precio-total">
-                                                            <strong>Precio total:</strong> ${producto.precioUnitario * producto.cantidad}
+                                                            <strong>Precio total:</strong> ${(producto.precioUnitario * producto.cantidad).toFixed(2)}
                                                         </p>
 
                                                         <button className="btn btn-danger btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>

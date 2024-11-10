@@ -33,7 +33,7 @@ export function Header() {
     return (
         <div>
             <header>
-                <nav className="navbar navbar-light" style={{ backgroundColor: "#FCBB3A" }}>
+                <nav className="navbar navbar-light navbar-expand-xxl" style={{ backgroundColor: "#FCBB3A" }}>
                     <div className="d-flex justify-content-between w-100 ms-2 me-2">
                         <button className="btn logo-button">
                             <img src={CMLogo} style={{
@@ -59,7 +59,7 @@ export function Header() {
                                 <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas"
                                         aria-label="Close"></button>
                             </div>
-                            <div className="offcanvas-body" style={{backgroundColor: "#ffe5d0"}}>
+                            <div className="offcanvas-body">
                                 <ul className="navbar-nav ms-auto justify-content-end flex-grow-1 text-start">
                                     <li className="nav-item me-1 mb-2">
                                         <button className="btn btn-header fs-5" onClick={goToInformacion}>
@@ -112,7 +112,7 @@ export function Header() {
                                     </li>
                                     {loginService.esAdmin() &&
                                         <li className="nav-item me-1 mb-2">
-                                        <button className="btn btn-secundario fs-5" onClick={goToAdminConfig}>
+                                        <button className="btn btn-info fs-5" onClick={goToAdminConfig}>
                                             <img src={config} alt="Carrito" style={{
                                                 width: "30px",
                                                 height: "auto",

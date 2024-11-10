@@ -9,7 +9,7 @@ import {useState} from "react";
 import {MensajesLogin} from "../Mensajes/Mensajes";
 
 export function Carrito() {
-    const { productos, incrementarCantidad, disminuirCantidad, eliminarProducto, generarPedido, vaciarCarrito, total } = useCarrito();
+    const { productos, incrementarCantidad, disminuirCantidad, eliminarDelCarrito, generarPedido, vaciarCarrito, total } = useCarrito();
     const navigate = useNavigate();
 
     const [mostrarAlertaLogin, setMostrarAlertaLogin] = useState(false);
@@ -90,7 +90,7 @@ export function Carrito() {
                                                 <span className="d-block">${(producto.precioUnitario * producto.cantidad).toFixed(2)}</span>
                                             </p>
                                         </div>
-                                        <button className="btn btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
+                                        <button className="btn btn-eliminar mt-3" onClick={() => eliminarDelCarrito(producto.id)}>
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
                                     </div>

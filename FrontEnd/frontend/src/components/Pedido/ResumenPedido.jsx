@@ -1,34 +1,34 @@
-import React, {useEffect, useState} from "react";
+// ResumenPedido.jsx
+import React, { useEffect, useState } from "react";
 import { usePedido } from "./PedidoContext";
 import { useCarrito } from '../carrito/CarritoContext';
 import { useNavigate } from 'react-router-dom';
 import './resumenPedido.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import clienteService from "../../services/cliente/cliente.service";
 
 export function ResumenPedido() {
     const { pedidoActual, actualizarCantidad, eliminarDelPedido } = usePedido();
-    const { eliminarDelCarrito } = useCarrito();
+    const { eliminarDelCarrito, cargandoProductosACarrito } = useCarrito();
     const navigate = useNavigate();
-
-    const [datosCliente, setDatosCliente] = useState({});
     const [loading, setLoading] = useState(true);
 
-    useEffect( () => {
+    const [datosCliente, setDatosCliente] = useState({});
+
+    useEffect(() => {
         const fetchData = async () => {
             const cliente = await clienteService.getDatosClientePedido();
-            console.log("e", datosCliente)
             setDatosCliente(cliente);
-            setLoading(false)
-        }
+            setLoading(false);
+        };
         fetchData();
     }, []);
 
     const eliminarProducto = (id) => {
         eliminarDelPedido(id);
         eliminarDelCarrito(id);
-    }
+    };
 
     const disminuirCantidad = (id) => {
         const producto = pedidoActual.productos.find((producto) => producto.id === id);
@@ -62,8 +62,8 @@ export function ResumenPedido() {
         navigate('/opciones-pago');
     };
 
-    if (loading) {
-        return <div className="fs-3">Cargando datos...</div>
+    if (loading || cargandoProductosACarrito) {
+        return <div className="fs-3">Generando carrito, por favor espere...</div>;
     }
 
     return (
@@ -77,11 +77,11 @@ export function ResumenPedido() {
                             No hay productos en el pedido.
                         </div>
                     ) : (
-                        <div className="card shadow-sm mb-0"> 
+                        <div className="card shadow-sm mb-0">
                             <div className="card-header bg-primary text-white">
                                 <h5 className="mb-0">Productos en el pedido</h5>
                             </div>
-                            <div className="card-body p-0"> 
+                            <div className="card-body p-0">
                                 {pedidoActual.productos.map((producto) => (
                                     <div className="producto-resumen-card border-0 rounded-0 border-bottom" key={producto.id}>
                                         <div className="row g-0">
@@ -126,27 +126,27 @@ export function ResumenPedido() {
                 </div>
 
                 <div className="col-md-4">
-    <div className="card shadow-sm mb-4">
-        <div className="card-body">
-            <h5 className="card-title text-center">Detalles del Pedido</h5>
-            <hr />
-            <p className="card-text"><strong>Cliente:</strong></p>
-            <p className="card-text nombre-cliente">{datosCliente.nombre}</p>
-            <hr className="separador" />
-            <p className="card-text"><strong>Dirección de entrega:</strong></p>
-            <p className="card-text direccion-entrega">{datosCliente.domicilioNombre}</p>
-            <hr className="separador" />
-            <p className="card-text total-pedido text-center">
-                <strong>Total:</strong> <span className="h4">${pedidoActual.total}</span>
-            </p>
-            <div className="d-grid">
-                <button className="btn btn-success btn-lg mt-3" onClick={continuarPago}>
-                    Continuar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+                    <div className="card shadow-sm mb-4">
+                        <div className="card-body">
+                            <h5 className="card-title text-center">Detalles del Pedido</h5>
+                            <hr />
+                            <p className="card-text"><strong>Cliente:</strong></p>
+                            <p className="card-text nombre-cliente">{datosCliente.nombre}</p>
+                            <hr className="separador" />
+                            <p className="card-text"><strong>Dirección de entrega:</strong></p>
+                            <p className="card-text direccion-entrega">{datosCliente.domicilioNombre}</p>
+                            <hr className="separador" />
+                            <p className="card-text total-pedido text-center">
+                                <strong>Total:</strong> <span className="h4">${pedidoActual.total}</span>
+                            </p>
+                            <div className="d-grid">
+                                <button className="btn btn-success btn-lg mt-3" onClick={continuarPago}>
+                                    Continuar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

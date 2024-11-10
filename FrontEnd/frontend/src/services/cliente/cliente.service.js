@@ -21,7 +21,7 @@ const getAllClientes = async () => {
                 estado: c.cliente_estado_id
             }
         })
-    }catch (error) {
+    } catch (error) {
         return []
     }
 

@@ -23,8 +23,14 @@ export function Header() {
     const goToAdminConfig = () => navigate('/inicioAdmin');
 
     const mostrarCarrito = () => {
+        const offcanvasNavbarCloseButton = document.getElementById('offcanvasNavbarCloseButton');
         const offcanvasElement = document.getElementById('offcanvasScrolling');
         const offcanvasInstance = Offcanvas.getInstance(offcanvasElement);
+
+        if (offcanvasNavbarCloseButton) {
+            offcanvasNavbarCloseButton.click();
+        }
+
         if (offcanvasInstance) {
             offcanvasInstance.show();
         }
@@ -33,7 +39,7 @@ export function Header() {
     return (
         <div>
             <header>
-                <nav className="navbar navbar-light navbar-expand-xxl" style={{ backgroundColor: "#FCBB3A" }}>
+                <nav className="navbar navbar-light" style={{ backgroundColor: "#FCBB3A" }}>
                     <div className="d-flex justify-content-between w-100 ms-2 me-2">
                         <button className="btn logo-button">
                             <img src={CMLogo} style={{
@@ -57,7 +63,7 @@ export function Header() {
                             <div className="offcanvas-header text-black">
                                 <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Menu de opciones</h5>
                                 <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                        aria-label="Close"></button>
+                                        aria-label="Close" id="offcanvasNavbarCloseButton"></button>
                             </div>
                             <div className="offcanvas-body">
                                 <ul className="navbar-nav ms-auto justify-content-end flex-grow-1 text-start">

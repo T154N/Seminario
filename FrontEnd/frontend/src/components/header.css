@@ -8,6 +8,12 @@
     padding: 0 0px;
 }
 
+.offcanvas-backdrop {
+    background-color: rgba(0, 0, 0, 0.1) !important; /* Ajusta el último valor (0.1) para una mayor o menor opacidad */
+}
+
+
+
 @media (max-width: 768px) {
     .sidebar {
         background-color: white;

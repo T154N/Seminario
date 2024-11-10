@@ -9,15 +9,15 @@ import {useState} from "react";
 import {MensajesLogin} from "../Mensajes/Mensajes";
 
 export function Carrito() {
-    const { productos, incrementarCantidad, disminuirCantidad, eliminarProducto, generarPedido, vaciarCarrito, total } = useCarrito();
+    const { productos, incrementarCantidad, disminuirCantidad, eliminarDelCarrito, generarPedido, vaciarCarrito, total } = useCarrito();
     const navigate = useNavigate();
 
-    const [mostrarAlertaLogin, setMostrarAlertaLogin] = useState(false);
+    const [mostrarAlerta, setmostrarAlerta] = useState(false);
     const [mensajeRegistro, setMensajeRegistro] = useState("");
     const [tipoError, setTipoError] = useState("");
 
     const cerrarAlerta = () => {
-        setMostrarAlertaLogin(false);
+        setmostrarAlerta(false);
     }
 
     const handleGenerarPedido = () => {
@@ -25,7 +25,7 @@ export function Carrito() {
 
         if (productos.length > 0) {
             if (!loginService.estaIniciadaSesion()) {
-                setMostrarAlertaLogin(true);
+                setmostrarAlerta(true);
                 setMensajeRegistro("Debes iniciar sesión para realizar el pedido.");
                 setTipoError("alerta")
             } else {
@@ -33,7 +33,9 @@ export function Carrito() {
                 toggleButton.click()
             }
         } else {
-            alert('El carrito está vacío');
+            setmostrarAlerta(true);
+            setMensajeRegistro("No hay productos en el carrito.");
+            setTipoError("alerta")
         }
 };
 
@@ -56,9 +58,10 @@ export function Carrito() {
                         aria-label="Close"
                     ></button>
                 </div>
-                {mostrarAlertaLogin && <MensajesLogin mensaje={mensajeRegistro} tipoError={tipoError} onClose={cerrarAlerta}/>}
+                {mostrarAlerta && <MensajesLogin mensaje={mensajeRegistro}
+                                                 tipoError={tipoError} onClose={cerrarAlerta} bordeRedondeado={true}/>}
 
-                <div className="offcanvas-body carrito-body" style={{backgroundColor: "#fff3ef", paddingBottom: "100px"}}>
+                <div className="offcanvas-body carrito-body" style={{backgroundColor: "#fad892", paddingBottom: "100px"}}>
                     {productos.length === 0 ? (
                         <p className="mensaje-carrito-vacio">No hay productos en el carrito</p>
                     ) : (
@@ -90,7 +93,7 @@ export function Carrito() {
                                                 <span className="d-block">${(producto.precioUnitario * producto.cantidad).toFixed(2)}</span>
                                             </p>
                                         </div>
-                                        <button className="btn btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
+                                        <button className="btn btn-eliminar mt-3" onClick={() => eliminarDelCarrito(producto.id)}>
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
                                     </div>

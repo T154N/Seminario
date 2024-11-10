@@ -1,6 +1,7 @@
 import React from "react";
 
-export function MensajesLogin({mensaje, tipoError, onClose}) {
+export function MensajesLogin({ mensaje, tipoError, onClose, bordeRedondeado = false }) {
+    const alertClass = `alert ${bordeRedondeado ? "rounded-0" : ""}`;
 
     return (
         <div>
@@ -20,25 +21,25 @@ export function MensajesLogin({mensaje, tipoError, onClose}) {
                 </symbol>
             </svg>
             {tipoError === "alerta" &&
-            <div className="alert alert-warning alert-dismissible fade show d-flex align-items-center" role="alert">
+            <div className={`${alertClass} alert-warning alert-dismissible fade show d-flex align-items-center`} role="alert">
                 <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use href="#exclamation-triangle-fill"/></svg>
                 <div>{mensaje}</div>
                 <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={onClose}></button>
             </div>}
             {tipoError === "peligro" &&
-                <div className="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+                <div className={`${alertClass} alert-danger alert-dismissible fade show d-flex align-items-center`} role="alert">
                     <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use href="#exclamation-triangle-fill"/></svg>
                 <div>{mensaje}</div>
                 <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={onClose}></button>
             </div>}
             {tipoError === "exitoso" &&
-            <div className="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
+            <div className={`${alertClass} alert-success alert-dismissible fade show d-flex align-items-center`} role="alert">
                 <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use href="#check-circle-fill"/></svg>
             <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={onClose}></button>
             <div>{mensaje}</div>
             </div>}
             {tipoError === "espera" && (
-                <div className="alert alert-secondary show d-flex align-items-center" role="alert">
+                <div className={`${alertClass} alert-secondary show d-flex align-items-center`} role="alert">
                     <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Clock:">
                         <use href="#clock" />
                     </svg>

@@ -3,7 +3,7 @@ import './footer.css'; // Importa el CSS para el footer si lo tienes
 
 export function Footer() {
     return (
-        <footer className="footer pt-3">
+        <footer className="footer pt-3 pb-0">
             <div className="footer-content">
                 <p>&copy; {new Date().getFullYear()} CM Distribuidora. Todos los derechos reservados.</p>
                 {/* <ul className="footer-links">

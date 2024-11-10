@@ -17,29 +17,33 @@ export function OpcionesPago() {
     const transferenciaRef = useRef(null);
 
     useEffect(() => {
-        if (pedidoActual?.total > 0 && efectivoRef.current && transferenciaRef.current) {
+        if (pedidoActual?.total > 0) {
             let efectivoCollapse;
             let transferenciaCollapse;
 
             try {
-                efectivoCollapse = new Collapse(efectivoRef.current, { toggle: false });
-                transferenciaCollapse = new Collapse(transferenciaRef.current, { toggle: false });
+                if (efectivoRef.current) {
+                    efectivoCollapse = new Collapse(efectivoRef.current, { toggle: false });
+                }
+                if (transferenciaRef.current) {
+                    transferenciaCollapse = new Collapse(transferenciaRef.current, { toggle: false });
+                }
 
-                if (metodoSeleccionado === "efectivo") {
+                if (metodoSeleccionado === "efectivo" && efectivoCollapse) {
                     efectivoCollapse.show();
-                    transferenciaCollapse.hide();
-                } else if (metodoSeleccionado === "transferencia") {
-                    efectivoCollapse.hide();
+                    if (transferenciaCollapse) transferenciaCollapse.hide();
+                } else if (metodoSeleccionado === "transferencia" && transferenciaCollapse) {
                     transferenciaCollapse.show();
+                    if (efectivoCollapse) efectivoCollapse.hide();
                 } else {
-                    efectivoCollapse.hide();
-                    transferenciaCollapse.hide();
+                    if (efectivoCollapse) efectivoCollapse.hide();
+                    if (transferenciaCollapse) transferenciaCollapse.hide();
                 }
             } catch (error) {
-                console.error("Error al inicializar el colapso:", error);
+                console.error("Error initializing collapse:", error);
             }
 
-            // Limpieza para evitar errores cuando el componente se desmonte
+            // Cleanup to avoid errors when the component unmounts
             return () => {
                 if (efectivoCollapse) efectivoCollapse.dispose();
                 if (transferenciaCollapse) transferenciaCollapse.dispose();
@@ -142,7 +146,7 @@ export function OpcionesPago() {
                                     <div className="accordion-body">
                                         <div className="mb-3">
                                             <p>Transfiera el total indicado a la siguiente cuenta bancaria:</p>
-                                            
+
                                             <div className="transferencia-info">
                                                 <p><strong>Alias:</strong> <span>mi.alias.bancario</span></p>
                                                 <p><strong>CBU:</strong> <span>1234567890123456789012</span></p>

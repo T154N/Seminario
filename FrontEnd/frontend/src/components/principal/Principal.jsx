@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import pedidoflex from '../../images/Header Icons/PedidoFlexlineal.png';
+import pedidoflex from '../../images/PedidoFlex Icons/PedidoFlexlineal.png';
 
 export function Principal() {
 

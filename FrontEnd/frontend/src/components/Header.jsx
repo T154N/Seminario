@@ -51,35 +51,33 @@ export function Header() {
                 </button>
 
                 <div className="sidebar offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar"
-                     aria-labelledby="offcanvasNavbarLabel">
-
+                     aria-labelledby="offcanvasNavbarLabel" inert>
                   <div className="offcanvas-header text-black">
                     <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Menu de opciones</h5>
                     <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas"
                             aria-label="Close"></button>
                   </div>
-
                   <div className="offcanvas-body">
                     <ul className="navbar-nav ms-auto justify-content-end flex-grow-1 text-start">
                       <li className="nav-item me-1 mb-1">
                         <button className="btn btn-header fs-5" onClick={goToInformacion}>
-                            <img src={informacion} alt="Informacion" style={{
-                                width: "30px",
-                                height: "auto",
-                                marginRight: "3px",
-                                verticalAlign: "middle"}}/>
-                            Informacion
+                          <img src={informacion} alt="Informacion" style={{
+                              width: "30px",
+                              height: "auto",
+                              marginRight: "3px",
+                              verticalAlign: "middle"}}/>
+                          Informacion
                         </button>
                       </li>
                         <li className="nav-item me-1 mb-1">
                             <button className="btn btn-header fs-5" onClick={goToUserProfile}>
-                                <img src={usuario} alt="Usuario" style={{
+                                <img src={usuario} alt="Login" style={{
                                     width: "30px",
                                     height: "auto",
                                     marginRight: "3px",
                                     verticalAlign: "middle"
                                 }}/>
-                                Usuario
+                                Login
                             </button>
                         </li>
                         <li className="nav-item me-1 mb-1">
@@ -96,18 +94,18 @@ export function Header() {
                         </li>
                         <li className="nav-item me-1 mb-1">
                             <button id="toggleOffcanvasButton" className="btn btn-header fs-5" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"
-                                onClick={mostrarCarrito}>
-                            <img src={carrito} alt="Carrito" style={{
-                                width: "30px",
-                                height: "auto",
-                                marginRight: "3px",
-                                verticalAlign: "middle",
-                                padding: 0
-                            }}/>
-                            Carrito
-                        </button>
-                      </li>
+                                    data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"
+                                    onClick={mostrarCarrito}>
+                                <img src={carrito} alt="Carrito" style={{
+                                    width: "30px",
+                                    height: "auto",
+                                    marginRight: "3px",
+                                    verticalAlign: "middle",
+                                    padding: 0
+                                }}/>
+                                Carrito
+                            </button>
+                        </li>
                     </ul>
                   </div>
                 </div>

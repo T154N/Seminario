@@ -1,5 +1,8 @@
 import axios from 'axios';
+import loginService from "../login/login.service";
+
 const ENDPOINT_CLIENTE_URL = process.env.REACT_APP_SEMINARIO_BACKEND_URL;
+const ENDPOINT_NOAUTH = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
 
 const getAllClientes = async () => {
     try {
@@ -49,10 +52,39 @@ const getClienteById = async (id) => {
     }
 };
 
+const getDatosClientePedido = async () => {
+    try {
+        const email = loginService.getEmailUsuario();
+        const response = await axios.post(`${ENDPOINT_NOAUTH}/cliente/filter`, {
+            id: 0,
+            nombre: "",
+            apellido: "",
+            email: email.toString(),
+            telefono: "",
+            direccion: "",
+            estadoId: 0,
+            documento: ""
+        });
+        const cliente = response.data.body.map((c) => {
+            return {
+                nombre: c.cliente_nombre,
+                clienteId: c.cliente_id,
+                domicilioId: c.domicilios[0].domicilio_id,
+                domicilioNombre: c.domicilios[0].domicilioDireccion
+            };
+        });
+        return cliente[0]
+    } catch (error) {
+        console.error(error);
+        return 400;
+    }
+};
+
 
 const clienteService = {
     getAllClientes,
-    getClienteById
+    getClienteById,
+    getDatosClientePedido
 }
 
 export default clienteService;

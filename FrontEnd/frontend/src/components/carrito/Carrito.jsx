@@ -4,23 +4,37 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './carrito.css';
 import { useCarrito } from './CarritoContext';
 import { useNavigate } from 'react-router-dom';
+import loginService from "../../services/login/login.service";
+import {useState} from "react";
+import {MensajesLogin} from "../Mensajes/Mensajes";
 
 export function Carrito() {
     const { productos, incrementarCantidad, disminuirCantidad, eliminarProducto, generarPedido, vaciarCarrito, total } = useCarrito();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
+
+    const [mostrarAlertaLogin, setMostrarAlertaLogin] = useState(false);
+    const [mensajeRegistro, setMensajeRegistro] = useState("");
+    const [tipoError, setTipoError] = useState("");
+
+    const cerrarAlerta = () => {
+        setMostrarAlertaLogin(false);
+    }
 
     const handleGenerarPedido = () => {
-    if (productos.length > 0) {
-        generarPedido(navigate);
-
-        // Cerrar el offcanvas usando data-bs-toggle
         const toggleButton = document.getElementById('toggleOffcanvasButton');
-        if (toggleButton) {
-            toggleButton.click();
+
+        if (productos.length > 0) {
+            if (!loginService.estaIniciadaSesion()) {
+                setMostrarAlertaLogin(true);
+                setMensajeRegistro("Debes iniciar sesión para realizar el pedido.");
+                setTipoError("alerta")
+            } else {
+                generarPedido(navigate);
+                toggleButton.click()
+            }
+        } else {
+            alert('El carrito está vacío');
         }
-    } else {
-        alert('El carrito está vacío');
-    }
 };
 
     return (
@@ -42,8 +56,9 @@ export function Carrito() {
                         aria-label="Close"
                     ></button>
                 </div>
+                {mostrarAlertaLogin && <MensajesLogin mensaje={mensajeRegistro} tipoError={tipoError} onClose={cerrarAlerta}/>}
 
-                <div className="offcanvas-body carrito-body" style={{backgroundColor: "#fff3ef"}}>
+                <div className="offcanvas-body carrito-body" style={{backgroundColor: "#fff3ef", paddingBottom: "100px"}}>
                     {productos.length === 0 ? (
                         <p className="mensaje-carrito-vacio">No hay productos en el carrito</p>
                     ) : (

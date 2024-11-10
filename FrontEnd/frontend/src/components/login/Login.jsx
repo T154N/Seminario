@@ -146,7 +146,7 @@ export function Login() {
                                     {mostrarAlertaRegistro && <MensajesLogin mensaje={mensajeRegistro} tipoError={tipoError} onClose={cerrarAlertaRegistro}/>}
                                     {mostrarAlertaInicioSesion && <MensajesLogin mensaje={mensajeInicioSesion} tipoError={tipoError} onClose={cerrarAlertaInicioSesion}/>}
                                     {mostrarAlertaRecuperarContrasena && <MensajesLogin mensaje={mensajeRecuperarContrasena} tipoError={tipoError} onClose={cerrarAlertaRecuperarContrasena}/>}
-                                    <div className="card border-0 shadow" style={{background: "#FCBB3A", borderRadius: "30px"}}>
+                                    <div className="card border-0 shadow mt-3" style={{background: "#FCBB3A", borderRadius: "30px"}}>
                                         <div className="card-body text-start px-3">
                                             {sesionYaIniciada && <div className="alert alert-success mt-3 fs-5 text-center" style={{borderRadius: "10px"}}>La sesion esta iniciada</div>}
         
@@ -161,7 +161,7 @@ export function Login() {
         
                                             {/* Mostrar botón de cerrar sesión si la sesión está iniciada */}
                                             {sesionYaIniciada &&
-                                                <div className="d-grid">
+                                                <div className="d-grid mt-2">
                                                     <button className="btn btn-principal mb-2" onClick={cerrarSesion}>Cerrar sesión</button>
                                                 </div>
                                             }

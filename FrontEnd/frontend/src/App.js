@@ -14,35 +14,42 @@ import { CarritoProvider } from './components/carrito/CarritoContext';
 import { ResetPassword } from "./components/login/ResetPassword";
 import { InicioAdmin } from "./components/inicioAdmin/InicioAdmin";
 import { InicioAdminPrueba } from "./components/inicioAdmin/InicioAdminPrueba";
-// import { CargarProducto } from "./components/cargarProducto/CargarProducto";
+import { PedidoProvider } from './components/Pedido/PedidoContext'; 
+import { ResumenPedido } from "./components/Pedido/ResumenPedido";
+import { OpcionesPago } from "./components/Pedido/OpcionesPago";
+import { PedidoDetalle } from "./components/Pedido/PedidoDetalle";
+import {PedidosUsuario} from './components/Pedido/PedidosUsuario';
 
 function App() {
   return (
     <BrowserRouter>
-      <CarritoProvider>
-        <div className="App fondo scrollable-table">
-          <Header />
-
-          <main>
-            <Routes>
-              <Route path="/login" element={<Login />} /> 
-              <Route path='/reset-password' element={<ResetPassword/>}/>
-              <Route path="/catalogo" element={<Catalogo />} />
-              <Route path="/info" element={<Info />} />
-              <Route path='/productos/:categoria' element={<Producto />}/>
-              <Route path='/productos' element={<Producto />}/>
-              <Route path="/inicioAdminPrueba" element={<InicioAdminPrueba />} />
-              <Route path="/inicioAdmin" element={<InicioAdmin />} />
-              <Route path="/principal" element={<Principal />} />
-              <Route path='/' element={<Principal />} />
-              <Route path='*' element={<Principal />} />
-            </Routes>
-          </main>
-
-          <Footer />
-        </div>
-
-      </CarritoProvider>
+      <PedidoProvider> 
+        <CarritoProvider>
+          <div className="App fondo">
+            <Header />
+            <main>
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path='/reset-password' element={<ResetPassword/>}/>
+                <Route path="/pago" element={<ResumenPedido />} />
+                <Route path="/opciones-pago" element={<OpcionesPago />} />
+                <Route path="/pedidos-usuario" element={<PedidosUsuario />} />
+                <Route path="/catalogo" element={<Catalogo />} />
+                <Route path="/pedido-Detalle" element={<PedidoDetalle />} />
+                <Route path="/info" element={<Info />} />
+                <Route path='/productos/:categoria' element={<Producto />} />
+                <Route path='/productos' element={<Producto />} />
+                <Route path="/principal" element={<Principal />} />
+                <Route path="/inicioAdminPrueba" element={<InicioAdminPrueba />} />
+                <Route path="/inicioAdmin" element={<InicioAdmin />} />
+                <Route path='/' element={<Principal />} />
+                <Route path='*' element={<Principal />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </CarritoProvider>
+      </PedidoProvider>
     </BrowserRouter>
   );
 }

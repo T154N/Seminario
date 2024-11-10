@@ -10,6 +10,7 @@ import carrito from '../images/Header Icons/carrito.png';
 import informacion from '../images/Header Icons/informacion.png'
 import usuario from '../images/Header Icons/usuario.png'
 import catalogo from '../images/Header Icons/catalogo.png'
+import {Offcanvas} from "bootstrap";
 
 export function Header() {
     const navigate = useNavigate();
@@ -18,6 +19,14 @@ export function Header() {
     const goToCatalogue = () => navigate('/catalogo');
     const goToInformacion = () => navigate('/info');
     const goToHomePage = () => navigate('/');
+
+    const mostrarCarrito = () => {
+        const offcanvasElement = document.getElementById('offcanvasScrolling');
+        const offcanvasInstance = Offcanvas.getInstance(offcanvasElement);
+        if (offcanvasInstance) {
+            offcanvasInstance.show();
+        }
+    }
 
     return (
         <div>
@@ -54,7 +63,7 @@ export function Header() {
                     <ul className="navbar-nav ms-auto justify-content-end flex-grow-1 text-start">
                       <li className="nav-item me-1 mb-1">
                         <button className="btn btn-header fs-5" onClick={goToInformacion}>
-                            <img src={informacion} style={{
+                            <img src={informacion} alt="Informacion" style={{
                                 width: "30px",
                                 height: "auto",
                                 marginRight: "3px",
@@ -64,7 +73,7 @@ export function Header() {
                       </li>
                         <li className="nav-item me-1 mb-1">
                             <button className="btn btn-header fs-5" onClick={goToUserProfile}>
-                                <img src={usuario} style={{
+                                <img src={usuario} alt="Usuario" style={{
                                     width: "30px",
                                     height: "auto",
                                     marginRight: "3px",
@@ -75,7 +84,7 @@ export function Header() {
                         </li>
                         <li className="nav-item me-1 mb-1">
                             <button className="btn btn-header fs-5" onClick={goToCatalogue}>
-                                <img src={catalogo} style={{
+                                <img src={catalogo} alt="Catalogo" style={{
                                     width: "30px",
                                     height: "auto",
                                     marginRight: "3px",
@@ -86,16 +95,17 @@ export function Header() {
                             </button>
                         </li>
                         <li className="nav-item me-1 mb-1">
-                            <button className="btn btn-header fs-5" data-bs-toggle="offcanvas"
-                                    data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
-                                <img src={carrito} alt="Carrito" style={{
-                                    width: "30px",
-                                    height: "auto",
-                                    marginRight: "3px",
-                                    verticalAlign: "middle",
-                                    padding: 0
-                                }}/>
-                                Carrito
+                            <button id="toggleOffcanvasButton" className="btn btn-header fs-5" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"
+                                onClick={mostrarCarrito}>
+                            <img src={carrito} alt="Carrito" style={{
+                                width: "30px",
+                                height: "auto",
+                                marginRight: "3px",
+                                verticalAlign: "middle",
+                                padding: 0
+                            }}/>
+                            Carrito
                         </button>
                       </li>
                     </ul>

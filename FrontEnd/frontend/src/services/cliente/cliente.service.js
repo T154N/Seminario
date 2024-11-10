@@ -68,6 +68,7 @@ const getDatosClientePedido = async () => {
         const cliente = response.data.body.map((c) => {
             return {
                 nombre: c.cliente_nombre,
+                apellido: c.cliente_apellido,
                 clienteId: c.cliente_id,
                 domicilioId: c.domicilios[0].domicilio_id,
                 domicilioNombre: c.domicilios[0].domicilioDireccion

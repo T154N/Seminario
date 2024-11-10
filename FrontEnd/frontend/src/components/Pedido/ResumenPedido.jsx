@@ -68,12 +68,25 @@ export function ResumenPedido() {
 
     return (
         <div className="container payment-page">
+            <svg xmlns="http://www.w3.org/2000/svg" style={{display: "none"}}>
+                <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                    <path
+                        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091
+                        1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0
+                        .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1
+                        1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </symbol>
+            </svg>
             <h1 className="text-center mb-4">Resumen del Pedido</h1>
 
             <div className="row">
                 <div className="col-md-8">
                     {pedidoActual.productos.length === 0 ? (
                         <div className="alert alert-warning text-center" role="alert">
+                            <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+                                 aria-label="Warning:">
+                                <use href="#exclamation-triangle-fill"/>
+                            </svg>
                             No hay productos en el pedido.
                         </div>
                     ) : (
@@ -83,16 +96,21 @@ export function ResumenPedido() {
                             </div>
                             <div className="card-body p-0">
                                 {pedidoActual.productos.map((producto) => (
-                                    <div className="producto-resumen-card border-0 rounded-0 border-bottom" key={producto.id}>
+                                    <div className="producto-resumen-card border-0 rounded-0 border-bottom"
+                                         key={producto.id}>
                                         <div className="row g-0">
                                             <div className="col-md-4">
-                                                <img src={producto.imagen} className="img-fluid rounded-start" alt={producto.nombre} />
+                                                <img src={producto.imagen} className="img-fluid rounded-start"
+                                                     alt={producto.nombre}/>
                                             </div>
                                             <div className="col-md-8">
                                                 <div className="card-body">
                                                     <h5 className="card-title">{producto.nombre}</h5>
-                                                    <div className="cantidad-control-rectangulo d-flex align-items-center">
-                                                        <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>
+                                                    <div
+                                                        className="cantidad-control-rectangulo d-flex align-items-center">
+                                                        <button className="btn btn-outline-secondary"
+                                                                onClick={() => disminuirCantidad(producto.id)}>-
+                                                        </button>
                                                         <input
                                                             type="number"
                                                             className="form-control mx-2 no-arrows"
@@ -101,18 +119,23 @@ export function ResumenPedido() {
                                                             onBlur={(e) => handleBlur(producto.id, e.target.value)}
                                                             min="1"
                                                         />
-                                                        <button className="btn btn-outline-secondary" onClick={() => incrementarCantidad(producto.id)}>+</button>
+                                                        <button className="btn btn-outline-secondary"
+                                                                onClick={() => incrementarCantidad(producto.id)}>+
+                                                        </button>
                                                     </div>
                                                     <div className="precios-container mt-2">
                                                         <p className="precio-unitario">
-                                                            <strong>Precio unitario:</strong> ${producto.precioUnitario.toFixed(2)}
+                                                            <strong>Precio
+                                                                unitario:</strong> ${producto.precioUnitario.toFixed(2)}
                                                         </p>
                                                         <p className="precio-total">
-                                                            <strong>Precio total:</strong> ${(producto.precioUnitario * producto.cantidad).toFixed(2)}
+                                                            <strong>Precio
+                                                                total:</strong> ${(producto.precioUnitario * producto.cantidad).toFixed(2)}
                                                         </p>
 
-                                                        <button className="btn btn-danger btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
-                                                            <FontAwesomeIcon icon={faTrash} />
+                                                        <button className="btn btn-danger btn-eliminar mt-3"
+                                                                onClick={() => eliminarProducto(producto.id)}>
+                                                            <FontAwesomeIcon icon={faTrash}/>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -129,18 +152,18 @@ export function ResumenPedido() {
                     <div className="card shadow-sm mb-4">
                         <div className="card-body">
                             <h5 className="card-title text-center">Detalles del Pedido</h5>
-                            <hr />
+                            <hr/>
                             <p className="card-text"><strong>Cliente:</strong></p>
-                            <p className="card-text nombre-cliente">{datosCliente.nombre}</p>
-                            <hr className="separador" />
+                            <p className="card-text nombre-cliente">{datosCliente.nombre + " " + datosCliente.apellido}</p>
+                            <hr className="separador"/>
                             <p className="card-text"><strong>Dirección de entrega:</strong></p>
                             <p className="card-text direccion-entrega">{datosCliente.domicilioNombre}</p>
-                            <hr className="separador" />
+                            <hr className="separador"/>
                             <p className="card-text total-pedido text-center">
                                 <strong>Total:</strong> <span className="h4">${pedidoActual.total}</span>
                             </p>
                             <div className="d-grid">
-                                <button className="btn btn-success btn-lg mt-3" onClick={continuarPago}>
+                                <button className="btn btn-secundario text-white btn-lg mt-3" onClick={continuarPago}>
                                     Continuar
                                 </button>
                             </div>

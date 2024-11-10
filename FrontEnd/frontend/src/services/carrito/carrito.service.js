@@ -44,11 +44,12 @@ const crearNuevoCarrito = async (usuarioTransaccion) => {
 
 const cargarProductosAlCarrito = async (carritoId, productos, usuarioTransaccion) => {
     try {
+        console.log("Cargando carritos al producto")
         for (let i = 0; i < productos.length; i++) {
             console.log("Productos", productos)
-            let res = await addCarrito(carritoId, productos[i].cantidad, usuarioTransaccion,
+            await addCarrito(carritoId, productos[i].cantidad, usuarioTransaccion,
                 productos[i].id, productos[i].nombre, productos[i].precioUnitario, productos[i].categoriaNombre);
-            console.log("Cargando Producto:", productos[i].id)
+            // console.log("Cargando Producto:", productos[i].id)
         }
     } catch (err) {
         return 400

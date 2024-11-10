@@ -58,7 +58,7 @@ export function Carrito() {
                 </div>
                 {mostrarAlertaLogin && <MensajesLogin mensaje={mensajeRegistro} tipoError={tipoError} onClose={cerrarAlerta}/>}
 
-                <div className="offcanvas-body carrito-body" style={{backgroundColor: "#fff3ef", paddingBottom: "100px"}}>
+                <div className="offcanvas-body carrito-body" style={{backgroundColor: "#fad892", paddingBottom: "100px"}}>
                     {productos.length === 0 ? (
                         <p className="mensaje-carrito-vacio">No hay productos en el carrito</p>
                     ) : (

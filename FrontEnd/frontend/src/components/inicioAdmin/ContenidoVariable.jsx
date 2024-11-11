@@ -177,13 +177,11 @@ const ContenidoVariable = ({
                                         <td>${item.montoTotal}</td>
                                         <td data-label="Estado">
                                             <span>
-                                                {item.estado}
-                                                <span
-                                                    className="estado-indicador"
-                                                    style={{
-                                                        backgroundColor: getIndicatorColor(item.estado),
-                                                    }}
-                                                />
+                                            {item.estado === 13 ? "Aceptado" : item.estado === 9 ? "Rechazado" : 
+                                                item.estado === 7 ? "Pendiente" : "Inactivo"} 
+                                            <span className="estado-indicador" 
+                                            style={{ backgroundColor: getIndicatorColor( item.estado === 13 ? "Aceptado" : item.estado === 9 ? "Rechazado" : item.estado === 7 ? "Pendiente" : "Inactivo" ), }} 
+                                            /> 
                                             </span>
                                         </td>
                                     </>
@@ -262,9 +260,11 @@ const ContenidoVariable = ({
                                                     <Dropdown.Item onClick={() => handleEstadoChange(item, "Aceptado")} >
                                                         Aceptado
                                                     </Dropdown.Item>
-                                                    <Dropdown.Item onClick={() => handleEstadoChange(item, "Rechazado") }
-                                                    >
+                                                    <Dropdown.Item onClick={() => handleEstadoChange(item, "Rechazado") }>
                                                         Rechazado
+                                                    </Dropdown.Item>
+                                                    <Dropdown.Item onClick={() => handleEstadoChange(item, "Inactivo") }>
+                                                        Inactivo
                                                     </Dropdown.Item>
                                                 </Dropdown.Menu>
                                             </Dropdown>

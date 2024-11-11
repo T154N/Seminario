@@ -123,8 +123,8 @@ const updatePedido = async (pedidoId, data) => {
 const updatePedidoEstado = async (pedidoId, estadoId, usuarioTransaccion, estado) => {
     try {
         const response = await axios.put(
-            `${ENDPOINT_PEDIDO_URL}/pedidos/updatestatus`, 
-            null,  // No enviamos cuerpo, pero necesitamos incluir `null` para agregar los query params.
+            `${ENDPOINT_PEDIDO_URL}/pedidos/updatestatus`,
+            null,  // No enviamos cuerpo, pero necesitamos incluir null para agregar los query params.
             {
                 params: {
                     pedidoId,
@@ -134,12 +134,14 @@ const updatePedidoEstado = async (pedidoId, estadoId, usuarioTransaccion, estado
                 }
             }
         );
-        console.log(response);
+        console.log("Pedido actualizado exitosamente:", response.data);
+        console.log(estadoId)
         return response.status;
     } catch (error) {
-        console.error("Error al actualizar el estado del pedido:", error);
-        return 500;
+        console.error("Error al actualizar el estado del pedido:", error?.response?.data || error.message);
+        return error?.response?.status || 500;
     }
+    
 };
 
 // Obtener pedidos con estado de baja (si es necesario)

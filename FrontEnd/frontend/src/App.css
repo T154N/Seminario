@@ -1,63 +1,80 @@
 .App {
-  text-align: center;
-  font-family: 'Bree Serif', serif;
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr auto; /* Crea una cuadrícula con 3 filas */
-}
+    text-align: center;
+    font-family: 'Bree Serif', serif;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
 
-main {
-  flex: 1;                 /* Permite que el main ocupe el espacio restante */
-  padding: 20px;          /* Añade algo de padding si lo deseas */
-}
+  main {
+    flex: 1;
+    padding: 20px;
+  }
 
-.fondo {
-  background: #fff3ef;
-  background: linear-gradient(180deg, #ffefe3, #ffac70);
-  min-height: 100vh;
-}
+  .fondo {
+    background: #fff3ef;
+    min-height: 100vh;
+  }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: auto;
-}
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+  }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    height: 40vmin;
+    pointer-events: none;
   }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+
+
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+
+
+ 
+  .App-link {
+    color: #61dafb;
+  }
+
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+/* inicioAdmin.css */
+.scrollable-table::-webkit-scrollbar {
+  width: 6px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.scrollable-table::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
-
-
-
-.App-link {
-  color: #61dafb;
+.scrollable-table::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.scrollable-table::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

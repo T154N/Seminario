@@ -73,8 +73,8 @@ export function PedidoDetalle() {
                                         <tr key={producto.id}>
                                             <td data-label="Nombre">{producto.nombre}</td>
                                             <td data-label="Cantidad">{producto.cantidad}</td>
-                                            <td data-label="Precio Unitario">${producto.precioUnitario}</td>
-                                            <td data-label="Subtotal">${producto.precioUnitario * producto.cantidad}</td>
+                                            <td data-label="Precio Unitario">${producto.precioUnitario.toFixed(2)}</td>
+                                            <td data-label="Subtotal">${(producto.precioUnitario * producto.cantidad).toFixed(2)}</td>
                                         </tr>
                                     )) || (
                                         <tr>

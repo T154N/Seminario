@@ -1,0 +1,293 @@
+
+#botonAlta {
+    background-color: #ffac70; /* Cambia este color a lo que desees */
+    color: white; /* Cambia el color del texto si es necesario */
+    border: none; /* Opcional: elimina el borde predeterminado */
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .custom-btn {
+       width: 100%; /* Botones ocupan todo el ancho en pantallas pequeñas */
+   }
+}
+
+.scrollable-table {
+    max-height: 500px; /* Ajusta la altura máxima según lo necesites */
+    overflow-y: auto; /* Activa el scroll vertical */
+    border: 1px solid #ccc; /* Agrega un borde con color */
+
+}
+
+.small-select {
+    width: 150px; /* Ajusta el tamaño a tu preferencia */
+}
+
+.menu {
+    padding: 20px;
+    border-right: 2px solid #ddd;
+    height: 100vh;
+}
+
+.contenido {
+    padding: 20px;
+    height: 100vh;
+}
+
+ /*Estilos para la barra de desplazamiento*/
+.custom-scrollbar {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+/* Personalización de la barra de desplazamiento (opcional)*/
+.custom-scrollbar::-webkit-scrollbar {
+    height: 100px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+/* Ensure the container takes at least the full height of the viewport */
+.container-fluid {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make the content area flexible to push the footer down */
+.contenido {
+    flex: 1;
+}
+
+/* Style the footer */
+.footer {
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+/* inicioAdmin.css */
+/* inicioAdmin.css */
+
+.header-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.btn-alta {
+    align-self: flex-start;
+}
+
+.btn-tab {
+    color: #333;
+    background-color: #c9c7c7;
+    border: none;
+    margin-right: 5px;
+    padding: 6px 10px;
+    border-radius: 5px;
+}
+
+.btn-tab.active {
+    color: #fff;
+    background-color: #ffbb33; /* Color activo */
+
+}
+
+.tab-content-area {
+    border: 2px solid #ffbb33; /* Borde naranja para el área activa */
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff8e1; /* Fondo claro */
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.btn-action {
+    background-color: #ffc107;
+    border: none;
+    color: #fff;
+}
+
+.btn-action-delete {
+    background-color: #dc3545;
+    border: none;
+    color: #fff;
+}
+
+
+/* inicioAdmin.css */
+
+.header-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.header-title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.btn-alta {
+    align-self: flex-start;
+}
+
+.header-section {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Asegura que todo esté centrado horizontalmente */
+    gap: 10px; /* Espacio entre el botón y el título */
+    margin-bottom: 15px;
+    position: relative; /* Permite un mejor control del centrado */
+}
+
+.header-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    position: relative;
+
+
+}
+
+.btn-alta {
+    align-self: flex-start; /* Alinea el botón al principio */
+}
+
+
+.urlImagen {
+    max-width: 150px; /* Ajusta el ancho máximo según sea necesario */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* inicioAdmin.css */
+.scrollable-table::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-table::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.scrollable-table::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.scrollable-table::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.filtro-activo {
+    background-color: #ffac70;
+    color: white;
+    border-radius: 5px;
+    padding: 1px 2px;
+    display: inline-flex;
+    align-items: center;
+
+}
+
+.boton-eliminar-filtro {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5px 6px;
+
+}
+    .titulo-filtro{
+        position: relative;
+        top: -2px;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.estado-indicador {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 8px;
+}
+
+
+.btn-dollar {
+    background-color: green;
+    color: white;
+    border: none;
+}
+
+.btn-dollar:hover {
+    background-color: darkgreen;
+}
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    background-color: #FFC107; /* Color amarillo similar al botón */
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.checkbox-container .form-check-input {
+    margin-left: auto;
+}
+
+.checkbox-container .form-check-label {
+
+    font-weight: bold;
+}
+.btn-aceptar{
+    background-color: #FFC107;
+    color: white;
+    border: none;
+}
+.btn-aceptar:hover {
+    background-color: #e0a800; /* Color naranja más oscuro */
+}
+
+.btn-cancelar{
+    background-color: #DC3545;
+    color: white;
+    border: none;
+}
+.btn-cancelar:hover {
+    background-color: #b74d4f; /* Color más claro para el hover */
+}
+
+.notification-font {
+    font-family: 'Bree Serif', serif; /* Ajusta la fuente según sea necesario */
+    font-size: 14px; /* Ajusta el tamaño de la fuente según sea necesario */
+
+}
+
+
+.btn-pedidos {
+    background-color: #0d6efb; /* Cambia este color al que desees */
+    color: white;
+    border: none;
+}
+
+.btn-pedidos:hover {
+    background-color: #0a58ca; /* Cambia este color al que desees */
+}

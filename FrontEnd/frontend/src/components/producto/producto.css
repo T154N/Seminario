@@ -4,6 +4,15 @@
     margin-bottom: 10px;     
 }
 
+.cantidad-control-rectangulo {
+    border: 2px solid #ccc; /* Borde del rectángulo */
+    border-radius: 8px; /* Borde redondeado opcional */
+    padding: 5px; /* Espacio interno */
+    display: inline-flex; /* Mostrar los elementos en línea */
+    justify-content: space-between; /* Separar los botones y el input */
+    align-items: center; /* Alinear verticalmente */
+}
+
 /* Ocultar flechas solo para campos de entrada de tipo number con la clase .input-cantidad */
 
 /* Para navegadores Webkit (Chrome, Safari) */
@@ -15,8 +24,11 @@
 
 /* Para Firefox */
 .input-cantidad {
-    -moz-appearance: textfield; /* Cambia la apariencia a campo de texto */
+    appearance: textfield; /* Propiedad estándar */
+    -moz-appearance: textfield; /* Para compatibilidad con Firefox */
+    -webkit-appearance: none; /* Para compatibilidad con Webkit (Chrome, Safari) */
 }
+
 
 .input-cantidad {
     text-align: center; /* Centrar el texto */
@@ -45,11 +57,3 @@
     color: white;
     /* border: 2px solid white; */
 }
-
-/* @media (min-width: 1200px) {
-    .imagen-centrada {
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-    }
-} */

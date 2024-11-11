@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import pedidoflex from '../../images/Header Icons/PedidoFlexlineal.png';
+import pedidoflex from '../../images/PedidoFlex Icons/PedidoFlexlineal.png';
 
 export function Principal() {
 
@@ -21,17 +21,17 @@ export function Principal() {
                     <div className="col"></div>
                     <div className="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 col-xxl-8">
                         <div className="justify-content-center">
-                            <div className='card shadow mt-5' style={{background: "#FCBB3A", borderRadius: "40px"}}>
+                            <div className='card border-0 shadow mt-5' style={{background: "#FCBB3A", borderRadius: "40px"}}>
                                 <div className="text-center fs-1 fw-bold mx-3 my-2">
-                                    <h1>Bienvenid@ a</h1>
+                                    <h1>Bienvenido a</h1>
                                     <img src={pedidoflex} alt='logoPF' className='img-fluid'></img>
                                 </div>
                                 <div className='text-center fs-4'>
-                                    <p>Para comenzar seleccioná una opción</p>
+                                    <p>Para comenzar seleccioná una opción:</p>
                                 </div>
                                 <div className='d-flex justify-content-center mb-3'>
-                                    <button className='btn btn-aceptar text-black me-1' onClick={handleLoginClick}>Iniciar sesión</button>
-                                    <button className='btn btn-aceptar text-black ms-1' onClick={handleCatalogClick}>Ver catálogo</button>
+                                    <button className='btn btn-principal text-white me-1' onClick={handleLoginClick}>Iniciar sesión</button>
+                                    <button className='btn btn-principal text-white ms-1' onClick={handleCatalogClick}>Ver catálogo</button>
                                 </div>
                             </div>
                         </div>

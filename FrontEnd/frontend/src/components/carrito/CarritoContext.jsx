@@ -1,6 +1,8 @@
 // CarritoContext.js
 import React, { createContext, useState, useContext } from "react";
-import { usePedido } from '../Pedido/PedidoContext'; // Importamos PedidoContext
+import { usePedido } from '../Pedido/PedidoContext';
+import carritoService from "../../services/carrito/carrito.service";
+import loginService from "../../services/login/login.service";
 
 const CarritoContext = createContext();
 
@@ -9,6 +11,7 @@ export const useCarrito = () => useContext(CarritoContext);
 export const CarritoProvider = ({ children }) => {
     const { iniciarPedido } = usePedido();
     const [productos, setProductos] = useState([]);
+    const [cargandoProductosACarrito, setCargandoProductosACarrito] = useState(false);
 
     const agregarProducto = (producto) => {
         setProductos((prevProductos) => {
@@ -48,14 +51,24 @@ export const CarritoProvider = ({ children }) => {
     };
 
     const calcularTotal = () => {
-        return productos.reduce((acc, producto) => acc + (producto.precioUnitario * producto.cantidad), 0);
-    };    
+        return productos.reduce((acc, producto) => acc + (producto.precioUnitario * producto.cantidad), 0).toFixed(2);
+    };
 
     const total = calcularTotal();
 
-    const generarPedido = (navigate) => {
-        iniciarPedido(productos); // Mandamos los datos al PedidoContext 
-        navigate('/pago'); // Navegar a la página de pago
+    const generarPedido = async (navigate) => {
+        setCargandoProductosACarrito(true);
+        navigate('/pago');
+        iniciarPedido(productos);
+        const carrito = await carritoService.crearNuevoCarrito(
+            loginService.getEmailUsuario()
+        );
+        await carritoService.cargarProductosAlCarrito(
+            carrito,
+            productos,
+            loginService.getEmailUsuario()
+        );
+        setCargandoProductosACarrito(false);
     };
 
     return (
@@ -68,7 +81,9 @@ export const CarritoProvider = ({ children }) => {
                 eliminarDelCarrito,
                 vaciarCarrito,
                 generarPedido,
-                total
+                total,
+                setCargandoProductosACarrito,
+                cargandoProductosACarrito
             }}
         >
             {children}

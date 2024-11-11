@@ -36,7 +36,7 @@ export const PedidoProvider = ({ children }) => {
     };
 
     const calcularTotal = (productos) => {
-        return productos.reduce((acc, producto) => acc + producto.precioUnitario * producto.cantidad, 0);
+        return productos.reduce((acc, producto) => acc + producto.precioUnitario * producto.cantidad, 0).toFixed(2);
     };
 
     const setMetodoPago = (metodo) => {

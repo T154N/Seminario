@@ -3,38 +3,44 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './carrito.css';
 import { useCarrito } from './CarritoContext';
-import carrito from '../../images/Header Icons/carrito.png';
-import { useNavigate } from 'react-router-dom'; 
-import { Offcanvas } from 'bootstrap'; 
+import { useNavigate } from 'react-router-dom';
+import loginService from "../../services/login/login.service";
+import {useState} from "react";
+import {MensajesLogin} from "../Mensajes/Mensajes";
 
 export function Carrito() {
-    const { productos, incrementarCantidad, disminuirCantidad, eliminarProducto, generarPedido, vaciarCarrito, total } = useCarrito();
-    const navigate = useNavigate(); 
+    const { productos, incrementarCantidad, disminuirCantidad, eliminarDelCarrito, generarPedido, vaciarCarrito, total } = useCarrito();
+    const navigate = useNavigate();
+
+    const [mostrarAlerta, setmostrarAlerta] = useState(false);
+    const [mensajeRegistro, setMensajeRegistro] = useState("");
+    const [tipoError, setTipoError] = useState("");
+
+    const cerrarAlerta = () => {
+        setmostrarAlerta(false);
+    }
 
     const handleGenerarPedido = () => {
+        const toggleButton = document.getElementById('toggleOffcanvasButton');
+
         if (productos.length > 0) {
-            generarPedido(navigate); 
-    
-            // Cerrar el offcanvas
-            const offcanvasElement = document.getElementById('offcanvasScrolling');
-            const offcanvasInstance = Offcanvas.getInstance(offcanvasElement);
-            if (offcanvasInstance) {
-                offcanvasInstance.hide();
+            if (!loginService.estaIniciadaSesion()) {
+                setmostrarAlerta(true);
+                setMensajeRegistro("Debes iniciar sesión para realizar el pedido.");
+                setTipoError("alerta")
+            } else {
+                generarPedido(navigate);
+                toggleButton.click()
             }
         } else {
-            alert('El carrito está vacío');
+            setmostrarAlerta(true);
+            setMensajeRegistro("No hay productos en el carrito.");
+            setTipoError("alerta")
         }
-    };
+};
 
     return (
         <div>
-            <button className="icon-button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasScrolling"
-                aria-controls="offcanvasScrolling">
-                <img src={carrito} alt="Carrito" className="carrito" />
-            </button>
-
             <div className="offcanvas offcanvas-end custom-offcanvas-width"
                 data-bs-scroll="true"
                 data-bs-backdrop="false"
@@ -52,8 +58,10 @@ export function Carrito() {
                         aria-label="Close"
                     ></button>
                 </div>
+                {mostrarAlerta && <MensajesLogin mensaje={mensajeRegistro}
+                                                 tipoError={tipoError} onClose={cerrarAlerta} bordeRedondeado={true}/>}
 
-                <div className="offcanvas-body carrito-body">
+                <div className="offcanvas-body carrito-body" style={{backgroundColor: "#fad892", paddingBottom: "100px"}}>
                     {productos.length === 0 ? (
                         <p className="mensaje-carrito-vacio">No hay productos en el carrito</p>
                     ) : (
@@ -61,7 +69,8 @@ export function Carrito() {
                             <div className="card producto-card" key={producto.id}>
                                 <div className="row g-0">
                                     <div className="col-12 col-md-3">
-                                        <img src={producto.imagen} className="img-fluid rounded-start" alt={producto.nombre} />
+                                        <img src={producto.imagen} className="img-fluid rounded-start"
+                                             alt={producto.nombre}/>
                                     </div>
                                     <div className="col-12 col-md-6">
                                         <div className="card-body">
@@ -77,14 +86,14 @@ export function Carrito() {
                                         <div className="text-start producto-precios">
                                             <p className="mb-1">
                                                 Precio unitario:
-                                                <span className="d-block">${producto.precioUnitario}</span>
+                                                <span className="d-block">${producto.precioUnitario.toFixed(2)}</span>
                                             </p>
                                             <p className="mb-1">
                                                 Precio total:
-                                                <span className="d-block">${producto.precioUnitario * producto.cantidad}</span>
+                                                <span className="d-block">${(producto.precioUnitario * producto.cantidad).toFixed(2)}</span>
                                             </p>
                                         </div>
-                                        <button className="btn btn-danger btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
+                                        <button className="btn btn-eliminar mt-3" onClick={() => eliminarDelCarrito(producto.id)}>
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
                                     </div>

@@ -11,6 +11,9 @@ import { Info } from './components/info/Info';
 import { Footer } from './components/Footer';
 import { Producto } from './components/producto/Producto';
 import { CarritoProvider } from './components/carrito/CarritoContext';
+import { ResetPassword } from "./components/login/ResetPassword";
+import { InicioAdmin } from "./components/inicioAdmin/InicioAdmin";
+import { InicioAdminPrueba } from "./components/inicioAdmin/InicioAdminPrueba";
 import { PedidoProvider } from './components/Pedido/PedidoContext'; 
 import { ResumenPedido } from "./components/Pedido/ResumenPedido";
 import { OpcionesPago } from "./components/Pedido/OpcionesPago";
@@ -27,6 +30,7 @@ function App() {
             <main>
               <Routes>
                 <Route path="/login" element={<Login />} />
+                <Route path='/reset-password' element={<ResetPassword/>}/>
                 <Route path="/pago" element={<ResumenPedido />} />
                 <Route path="/opciones-pago" element={<OpcionesPago />} />
                 <Route path="/pedidos-usuario" element={<PedidosUsuario />} />
@@ -36,6 +40,8 @@ function App() {
                 <Route path='/productos/:categoria' element={<Producto />} />
                 <Route path='/productos' element={<Producto />} />
                 <Route path="/principal" element={<Principal />} />
+                <Route path="/inicioAdminPrueba" element={<InicioAdminPrueba />} />
+                <Route path="/inicioAdmin" element={<InicioAdmin />} />
                 <Route path='/' element={<Principal />} />
                 <Route path='*' element={<Principal />} />
               </Routes>

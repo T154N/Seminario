@@ -32,7 +32,7 @@ export function InicioAdminPrueba() {
 
             case 'Inactivo':
                 return 'red';
-            
+
             case 'Rechazado':
                 return 'red';
 
@@ -132,18 +132,24 @@ export function InicioAdminPrueba() {
 
     // Cambiar el estado del pedido
     const handleEstadoChange = (pedido, nuevoEstado) => {
-
         const estados = {
             'Rechazado': { estadoId: 3, estado: false },
             'Pendiente': { estadoId: 1, estado: true },
             'Aceptado': { estadoId: 2, estado: true }
         };
+
         const estadoData = estados[nuevoEstado];
+
+        // Verificar si el estadoData existe
+        if (!estadoData) {
+            console.error(`El estado "${nuevoEstado}" no es válido`);
+            return;
+        }
 
         pedidoService.updatePedidoEstado(pedido.id, estadoData.estadoId, "Admin", estadoData.estado)
             .then(response => {
                 console.log("Estado actualizado:", response);
-               
+
                 setPedidosActivos((prevPedidos) =>
                     prevPedidos.map((p) =>
                         p.id === pedido.id
@@ -156,6 +162,7 @@ export function InicioAdminPrueba() {
                 console.error("Error al cambiar el estado:", error);
             });
     };
+
 
     const handleEditClick = (registro) => {
         setRegistroSeleccionado(registro);

@@ -108,19 +108,24 @@ export function InicioAdminPrueba() {
     };
 
     const filteredData = (data) => {
-        return data.filter(item => {
-            return filtrosActivos.every(filtro => {
-                if (filtro.filtro === 'nombre') {
-                    return item.nombre.toLowerCase().includes(filtro.valor.toLowerCase());
-                } else if (filtro.filtro === 'categoria' && item.categoria) {
-                    return item.categoria.toLowerCase().includes(filtro.valor.toLowerCase());
-                } else if (filtro.filtro === 'estado') {
-                    return item.estado.toString() === filtro.valor;
-                }
-                return true;
-            });
+    return data.filter(item => {
+        return filtrosActivos.every(filtro => {
+            if (filtro.filtro === 'nombre') {
+                return item.nombre.toLowerCase().includes(filtro.valor.toLowerCase());
+            } else if (filtro.filtro === 'categoria' && item.categoria) {
+                return item.categoria.toLowerCase().includes(filtro.valor.toLowerCase());
+            } else if (filtro.filtro === 'estadoPedido' && menuContent === 'Pedidos') {
+                const estadoNombre = item.estado === 13 ? 'Aceptado' :
+                                     item.estado === 9 ? 'Rechazado' :
+                                     item.estado === 7 ? 'Pendiente' : 'Inactivo';
+                return estadoNombre.toLowerCase().includes(filtro.valor.toLowerCase());
+            } else if (filtro.filtro === 'estado') {
+                return item.estado.toString() === filtro.valor;
+            }
+            return true;
         });
-    };
+    });
+};
 
     const dataToDisplay = () => {
         if (menuContent === 'Catálogo' && catalogTab === 'Productos') return filteredData(productosActivos);

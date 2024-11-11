@@ -91,14 +91,14 @@ const ContenidoVariable = ({
                     )}
                     {menuContent === "Pedidos" && (
                         <>
-                            <option value="estado">Estado</option>
+                            <option value="estadoPedido">Estado</option>
                         </>
                     )}
                 </select>
                 <input
                     type="text"
                     className="form-control"
-                    placeholder={`Buscar ${menuContent === "Clientes" ? "clientes" : catalogTab.toLowerCase()
+                    placeholder={`Buscar ${menuContent === "Clientes" ? "clientes" : menuContent === "Pedidos" ? "pedido" : catalogTab.toLowerCase()
                         }...`}
                     value={busqueda}
                     onChange={handleBusquedaChange}

@@ -134,10 +134,6 @@ const removeCarrito = async (carritoId, usuarioTransaccion) => {
     }
 };
 
-const getCarritoId = () => {
-    return localStorage.getItem('carritoId');
-}
-
 const carritoService = {
     findByCliente,
     getDetalleCarrito,
@@ -147,7 +143,6 @@ const carritoService = {
     newCarrito,
     crearNuevoCarrito,
     cargarProductosAlCarrito,
-    getCarritoId
 
 }
 

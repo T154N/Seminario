@@ -1,7 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
 import carritoService from "../../services/carrito/carrito.service";
-import loginService from "../../services/login/login.service";
-import clienteService from "../../services/cliente/cliente.service";
 import pedidoService from "../../services/pedido.service";
 
 const PedidoContext = createContext();
@@ -15,7 +13,8 @@ export const PedidoProvider = ({ children }) => {
         total: 0,
         estado: 'Pendiente', 
         metodoPago: null,
-        productos: []
+        productos: [],
+        direccionEnvio: null
     });
 
     const iniciarPedido = (productos) => {
@@ -55,11 +54,15 @@ export const PedidoProvider = ({ children }) => {
         setPedidoActual((prev) => ({ ...prev, id }));
     };
 
+    const setDireccionEnvio = (direccion) => {
+        setPedidoActual((prev) => ({ ...prev, direccionEnvio: direccion }));
+    };
+
     const eliminarDelPedido = async (id) => {
         await carritoService.removeCarrito(
-            carritoService.getCarritoId(),
+            localStorage.getItem('carritoId'),
             id,
-            loginService.getEmailUsuario()
+            localStorage.getItem('email')
         );
         setPedidoActual( (prev) => {
             const productosActualizados = prev.productos.filter((producto) => producto.id !== id);
@@ -73,12 +76,14 @@ export const PedidoProvider = ({ children }) => {
 
     const finalizarPedido = async () => {
         try {
-            const carritoId = carritoService.getCarritoId();
-            const domicilioId = clienteService.getClienteDomicilioId();
+            const carritoId = localStorage.getItem('carritoId');
+            const domicilioId = localStorage.getItem('domicilioId');
             const medioPagoId = pedidoActual.metodoPago;
-            const usuarioTransaccion = loginService.getEmailUsuario();
+            console.log("Metodo de pago pedidoContext: ", medioPagoId);
+            const usuarioTransaccion = localStorage.getItem('email');
             const pedidoHecho = await pedidoService.crearPedido(carritoId, domicilioId, medioPagoId, usuarioTransaccion);
             setPedidoId(pedidoHecho.pedidoId);
+            setDireccionEnvio(localStorage.getItem('direccionNombre'));
             return pedidoHecho;
         } catch (err) {
             console.error(err);

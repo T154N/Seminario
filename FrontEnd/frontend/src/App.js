@@ -49,7 +49,7 @@ function App() {
                 <Route path='*' element={<Principal />} />
               </Routes>
             </main>
-            <Footer />
+            {/** <Footer/> **/}
           </div>
         </CarritoProvider>
       </PedidoProvider>

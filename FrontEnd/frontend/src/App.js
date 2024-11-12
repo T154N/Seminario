@@ -14,6 +14,7 @@ import { CarritoProvider } from './components/carrito/CarritoContext';
 import { ResetPassword } from "./components/login/ResetPassword";
 import { InicioAdmin } from "./components/inicioAdmin/InicioAdmin";
 import { InicioAdminPrueba } from "./components/inicioAdmin/InicioAdminPrueba";
+import AgregarProducto from "./components/inicioAdmin/agregarProducto";
 // import { CargarProducto } from "./components/cargarProducto/CargarProducto";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
               <Route path="/inicioAdminPrueba" element={<InicioAdminPrueba />} />
               <Route path="/inicioAdmin" element={<InicioAdmin />} />
               <Route path="/principal" element={<Principal />} />
+              <Route path="/agregarProducto" element={<AgregarProducto />} />
               <Route path='/' element={<Principal />} />
               <Route path='*' element={<Principal />} />
               {/* <Route path='/cargarProducto' element={<CargarProducto/>}/> */}

@@ -4,27 +4,31 @@ import productoService from '../../services/producto/producto.service';
 import categoriaService from '../../services/categoria/categoria.service';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './inicioAdmin.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash, faTimes, faDollarSign } from '@fortawesome/free-solid-svg-icons';
-import ModificarProducto from './ModificarProducto';
+ import ModificarProducto from './ModificarProducto';
 import ModificarCategoria from './ModificarCategoria';
+import AgregarProducto from './agregarProducto';
+import AgregarCategoria from './agregarCategoria';
+import ConfirmModal from './ConfirmModal';
+
 export function InicioAdmin() {
-    //-------------------------------------------------------------------------------------
     const [menuContent, setMenuContent] = useState('Catálogo');
     const [catalogTab, setCatalogTab] = useState('Productos');
     const [busqueda, setBusqueda] = useState('');
     const [filtrosActivos, setFiltrosActivos] = useState([]);
     const [filtroSeleccionado, setFiltroSeleccionado] = useState('nombre');
-    //-------------------------------------------------------------------------------------
     const [productosActivos, setProductosActivos] = useState([]);
     const [categoriasActivos, setCategoriasActivas] = useState([]);
-    //-------------------------------------------------------------------------------------
     const [registroSeleccionado, setRegistroSeleccionado] = useState(null);
     const [modoEdicion, setModoEdicion] = useState(false);
     const [catalogoMenu, setCatalogoMenu] = useState(true);
-
-
-    //-------------------------------------------------------------------------------------
+    const [checkboxState, setCheckboxState] = useState(false);
+    const [savedFiltros, setSavedFiltros] = useState([]);
+    const [savedCheckboxState, setSavedCheckboxState] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState(null);
+    const storedUser = localStorage.getItem('email');
+    const usuarioMod = storedUser ?? 'ADMIN';
+    const [modoAlta, setModoAlta] = useState(false);
 
 
     const getIndicatorColor = (estado) => {
@@ -40,42 +44,122 @@ export function InicioAdmin() {
         }
     };
 
-    //--------Carga Productos------------------------------------------
     useEffect(() => {
         const fetchProductos = async () => {
-            const productos = await productoService.getAllProductos();
-            setProductosActivos(productos);
+            const productos = await productoService.getAllProductosAdmin();
+            if (checkboxState) {
+                const productosEstado2 = productos.filter(producto => producto.estado === 2);
+                setProductosActivos(productosEstado2);
+            } else {
+                const productosEstado1 = productos.filter(producto => producto.estado === 1);
+                setProductosActivos(productosEstado1);
+            }
         };
 
         if (menuContent === 'Catálogo' && catalogTab === 'Productos') {
             fetchProductos();
         }
-    }, [menuContent, catalogTab]);
-    //--------Recargar Productos------------------------------------------
+    }, [menuContent, catalogTab, checkboxState]);
+
     const recargarProductos = async () => {
-        const productos = await productoService.getAllProductos();
-        setProductosActivos(productos);
+        const productos = await productoService.getAllProductosAdmin();
+        if (checkboxState) {
+            const productosEstado2 = productos.filter(producto => producto.estado === 2);
+            setProductosActivos(filteredData(productosEstado2));
+        } else {
+            const productosEstado1 = productos.filter(producto => producto.estado === 1);
+            setProductosActivos(filteredData(productosEstado1));
+        }
     };
-    //--------Carga Categorias------------------------------------------
+
+    useEffect(() => {
+        if (typeof recargarProductos === 'function') {
+            console.log('recargarProductos está disponible');
+        } else {
+            console.error('recargarProductos no es una función');
+        }
+    }, [recargarProductos]);
+
     useEffect(() => {
         const fetchCategorias = async () => {
-            const categorias = await categoriaService.getAllCategorias();
-            setCategoriasActivas(categorias);
+            const categorias = await categoriaService.getAllCategoriasAdmin();
+            if (checkboxState) {
+                const categoriasEstado2 = categorias.filter(categoria => categoria.estado === 2);
+                setCategoriasActivas(categoriasEstado2);
+            } else {
+                const categoriasEstado1 = categorias.filter(categoria => categoria.estado === 1);
+                setCategoriasActivas(categoriasEstado1);
+            }
         };
 
         if (menuContent === 'Catálogo' && catalogTab === 'Categorias') {
             fetchCategorias();
         }
-    }, [menuContent, catalogTab]);
+    }, [menuContent, catalogTab, checkboxState]);
 
     const recargarCategorias = async () => {
-        const categorias = await categoriaService.getAllCategorias();
-        setCategoriasActivas(categorias);
+        const categorias = await categoriaService.getAllCategoriasAdmin();
+        if (checkboxState) {
+            const categoriasEstado2 = categorias.filter(categoria => categoria.estado === 2);
+            setCategoriasActivas(filteredData(categoriasEstado2));
+        } else {
+            const categoriasEstado1 = categorias.filter(categoria => categoria.estado === 1);
+            setCategoriasActivas(filteredData(categoriasEstado1));
+        }
     };
-   //--------------------------------------------------
+
+    const handleInactivosChange = async (event) => {
+        setCheckboxState(event.target.checked);
+        if (menuContent === 'Catálogo' && catalogTab === 'Productos') {
+            if (event.target.checked) {
+                const productosInactivos = await productoService.getAllProductosAdmin();
+                const productosEstado2 = productosInactivos.filter(producto => producto.estado === 2);
+                setProductosActivos(productosEstado2);
+            } else {
+                const productos = await productoService.getAllProductosAdmin();
+                const productosEstado1 = productos.filter(producto => producto.estado === 1);
+                setProductosActivos(productosEstado1);
+            }
+        } else if (menuContent === 'Catálogo' && catalogTab === 'Categorias') {
+            if (event.target.checked) {
+                const categoriasInactivas = await categoriaService.getAllCategoriasAdmin();
+                const categoriasEstado2 = categoriasInactivas.filter(categoria => categoria.estado === 2);
+                setCategoriasActivas(categoriasEstado2);
+            } else {
+                const categoriasActivas = await categoriaService.getAllCategoriasAdmin();
+                const categoriasEstado1 = categoriasActivas.filter(categoria => categoria.estado === 1);
+                setCategoriasActivas(categoriasEstado1);
+            }
+        }
+    };
+
+
+
+    const handleDeleteClick = (item) => {
+        setItemToDelete(item);
+        setShowConfirmModal(true);
+    };
+    const handleConfirmDelete = async () => {
+        if (catalogTab === 'Productos') {
+            await productoService.setBajaProducto(itemToDelete.id, usuarioMod);
+            recargarProductos();
+        } else if (catalogTab === 'Categorias') {
+            await categoriaService.setBajaCategoria(itemToDelete.id, usuarioMod);
+            recargarCategorias();
+        }
+        setShowConfirmModal(false);
+        setItemToDelete(null);
+    };
+
+    const handleCancelDelete = () => {
+        setShowConfirmModal(false);
+        setItemToDelete(null);
+    };
+
+
+
     useEffect(() => {
-        // Actualiza los filtros activos al cambiar la búsqueda o el filtro seleccionado
-        const nuevosFiltros = filtrosActivos.filter(filtro => filtro.filtro !== filtroSeleccionado); // Elimina el filtro anterior
+        const nuevosFiltros = filtrosActivos.filter(filtro => filtro.filtro !== filtroSeleccionado);
         if (busqueda.trim() !== '') {
             nuevosFiltros.push({ filtro: filtroSeleccionado, valor: busqueda });
         }
@@ -88,7 +172,7 @@ export function InicioAdmin() {
 
     const handleFiltroChange = (e) => {
         setFiltroSeleccionado(e.target.value);
-        setBusqueda('');  // Borra la barra de búsqueda al cambiar el filtro
+        setBusqueda('');
     };
 
     const handleRemoveFiltro = (filtroAEliminar) => {
@@ -117,8 +201,14 @@ export function InicioAdmin() {
         return [];
     };
 
-    //------------------------------------------------------------------------------------------
+    const handlePost = async () => {
+        setModoAlta(true);
+        setCatalogoMenu(false);
+    }
+
     const handleEditClick = (registro) => {
+        setSavedFiltros(filtrosActivos);
+        setSavedCheckboxState(checkboxState);
         setRegistroSeleccionado(registro);
         setCatalogoMenu(false);
         setModoEdicion(true);
@@ -126,21 +216,25 @@ export function InicioAdmin() {
 
     const handleCancel = () => {
         setModoEdicion(false);
+        setModoAlta(false);
+        setFiltrosActivos(savedFiltros);
+        setCheckboxState(savedCheckboxState);
     };
 
     const handleSave = async (formData) => {
         if (catalogTab === 'Productos') {
             await productoService.updateProducto(registroSeleccionado.id, formData);
-            await recargarProductos(); // Recargar productos después de guardar
+            await recargarProductos();
         } else if (catalogTab === 'Categorias') {
             await categoriaService.updateCategoria(registroSeleccionado.id, formData);
-            await recargarCategorias(); // Recargar categorías después de guardar
+            await recargarCategorias();
         }
         setModoEdicion(false);
+        setModoAlta(false);
         setCatalogoMenu(true);
+        setFiltrosActivos(savedFiltros);
+        setCheckboxState(savedCheckboxState);
     };
-
-    //------------------------------------------------------------------------------------------
 
     return (
         <div>
@@ -186,10 +280,16 @@ export function InicioAdmin() {
                         )}
 
                         <div className="tab-content-area mt-3">
-                            {modoEdicion && catalogTab === 'Productos' ? (
-                                <ModificarProducto registro={registroSeleccionado} onSave={handleSave} onCancel={handleCancel} />
+                            {modoAlta && catalogTab === 'Productos' ? (
+                                <AgregarProducto onSave={handleSave} onCancel={handleCancel}/>
+                            ) : modoAlta && catalogTab === 'Categorias' ? (
+                                <AgregarCategoria onSave={handleSave} onCancel={handleCancel}/>
+                            ) : modoEdicion && catalogTab === 'Productos' ? (
+                                <ModificarProducto registro={registroSeleccionado} onSave={handleSave}
+                                                   onCancel={handleCancel}/>
                             ) : modoEdicion && catalogTab === 'Categorias' ? (
-                                <ModificarCategoria registro={registroSeleccionado} onSave={handleSave} onCancel={handleCancel} />
+                                <ModificarCategoria registro={registroSeleccionado} onSave={handleSave}
+                                                    onCancel={handleCancel}/>
                             ) : (
                                 <ContenidoVariable
                                     menuContent={menuContent}
@@ -203,12 +303,23 @@ export function InicioAdmin() {
                                     dataToDisplay={dataToDisplay}
                                     getIndicatorColor={getIndicatorColor}
                                     handleEditClick={handleEditClick}
+                                    handleInactivosChange={handleInactivosChange}
+                                    checkboxState={checkboxState}
+                                    handleDeleteClick={handleDeleteClick}
+                                    handlePost={handlePost}
+                                    recargarProductos={recargarProductos}
                                 />
                             )}
                         </div>
                     </div>
                 </div>
             </div>
+            <ConfirmModal
+                show={showConfirmModal}
+                onConfirm={handleConfirmDelete}
+                onHide={handleCancelDelete}
+                message={`¿Estás seguro de que deseas dar de baja: ${itemToDelete?.nombre}?`}
+            />
         </div>
     );
 }

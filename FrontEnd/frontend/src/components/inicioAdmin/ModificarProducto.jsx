@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './inicioAdmin.css';
 import './ModificarProducto.css';
 
+
 import productoService from '../../services/producto/producto.service';
 import categoriaService from '../../services/categoria/categoria.service';
 import ConfirmModal from './ConfirmModal';
@@ -123,13 +124,14 @@ const ModificarContenido = ({ registro, onSave, onCancel }) => {
                         </select>
                     </div>
 
+
                     <div className="col-3">
                         <label className="form-label">Precio Unitario</label>
                         <div className="input-group">
                             <span className="input-group-text">$</span>
                             <input
                                 type="number"
-                                className="form-control"
+                                className="form-control numero-input"
                                 name="precioUnitario"
                                 value={formData.precioUnitario}
                                 onChange={handleChange}

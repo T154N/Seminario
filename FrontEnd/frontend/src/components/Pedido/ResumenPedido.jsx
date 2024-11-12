@@ -127,7 +127,7 @@ export function ResumenPedido() {
                                                         </button>
                                                         <input
                                                             type="number"
-                                                            className="form-control mx-2 no-arrows"
+                                                            className="form-control mx-2 no-arrows pedidoinp"
                                                             value={producto.cantidad || ""}
                                                             onChange={(e) => handleInputChange(producto.id, e.target.value)}
                                                             onBlur={(e) => handleBlur(producto.id, e.target.value)}

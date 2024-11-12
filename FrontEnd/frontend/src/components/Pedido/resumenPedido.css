@@ -37,7 +37,7 @@
 /*}*/
 
 .alert {
-    margin-bottom: 0; 
+    margin-bottom: 0;
 }
 .card-title {
     font-weight: bold;
@@ -77,7 +77,7 @@
     min-width: 100px; /* Define un ancho mínimo para el input */
     max-width: 100%; /* Ajuste del ancho máximo */
     padding: 0 8px;
-    
+
 }
 
 .precios-container {
@@ -121,12 +121,13 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0;
 }
 
-input[type="number"] {
+
+.pedidoinp[type="number"] {
     appearance: none;
     -moz-appearance: textfield;
 }
 
-input[type="number"] {
+.pedidoinp[type="number"] {
     border: none; /* Eliminar el borde predeterminado */
     background-color: transparent; /* Fondo transparente */
     outline: none; /* Quitar el contorno cuando el campo esté enfocado */
@@ -136,7 +137,6 @@ input[type="number"] {
     width: 50px !important; /* Ajustar el ancho del input */
 
 }
-
 input[type="number"]:focus {
     outline: none; /* Evitar borde o contorno al hacer clic */
 }

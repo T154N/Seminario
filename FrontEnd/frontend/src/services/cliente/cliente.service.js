@@ -75,6 +75,7 @@ const getDatosClientePedido = async () => {
             };
         });
         localStorage.setItem('domicilioId', cliente[0].domicilioId);
+        localStorage.setItem('direccionNombre', cliente[0].domicilioNombre);
         return cliente[0]
     } catch (error) {
         console.error(error);

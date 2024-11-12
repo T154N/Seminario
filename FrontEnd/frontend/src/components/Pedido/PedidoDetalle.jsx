@@ -60,7 +60,7 @@ export function PedidoDetalle() {
                                         <tbody>
                                         <tr>
                                             <td><strong>Método de Pago:</strong></td>
-                                            <td>{pedido.metodoPago === 1 ? "Efectivo" : pedido.metodoPago === 2 ? "Transferencia" : "Método de pago desconocido"}</td>
+                                            <td>{pedido.metodoPago === 1 ? "Transferencia" : pedido.metodoPago === 2 ? "Efectivo" : "Método de pago desconocido"}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Estado:</strong></td>

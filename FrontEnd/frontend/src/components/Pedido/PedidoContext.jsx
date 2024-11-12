@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
 import carritoService from "../../services/carrito/carrito.service";
-import pedidoService from "../../services/pedido.service";
+import pedidoService from "../../services/pedido/pedido.service";
 
 const PedidoContext = createContext();
 
@@ -79,7 +79,6 @@ export const PedidoProvider = ({ children }) => {
             const carritoId = localStorage.getItem('carritoId');
             const domicilioId = localStorage.getItem('domicilioId');
             const medioPagoId = pedidoActual.metodoPago;
-            console.log("Metodo de pago pedidoContext: ", medioPagoId);
             const usuarioTransaccion = localStorage.getItem('email');
             const pedidoHecho = await pedidoService.crearPedido(carritoId, domicilioId, medioPagoId, usuarioTransaccion);
             setPedidoId(pedidoHecho.pedidoId);

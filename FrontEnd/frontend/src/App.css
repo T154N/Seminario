@@ -3,11 +3,11 @@
     font-family: 'Bree Serif', serif;
     min-height: 100vh;
     display: grid;
-    grid-template-rows: auto 1fr auto; /* Crea una cuadrícula con 3 filas */
+    grid-template-rows: auto 1fr auto;
   }
 
   main {
-    flex: 1;                 /* Permite que el main ocupe el espacio restante */
+    flex: 1;
     padding: 20px;
   }
 
@@ -34,6 +34,7 @@
     }
   }
 
+
   .App-header {
     background-color: #282c34;
     min-height: 100vh;
@@ -45,6 +46,8 @@
     color: white;
   }
 
+
+ 
   .App-link {
     color: #61dafb;
   }

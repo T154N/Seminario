@@ -20,13 +20,13 @@ import AgregarProducto from "./components/inicioAdmin/agregarProducto";
 function App() {
   return (
     <BrowserRouter>
-      <CarritoProvider> {/* CarritoProvider envuelve todas las rutas */}
+      <CarritoProvider>
         <div className="App fondo scrollable-table">
           <Header />
 
           <main>
             <Routes>
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<Login />} /> 
               <Route path='/reset-password' element={<ResetPassword/>}/>
               <Route path="/catalogo" element={<Catalogo />} />
               <Route path="/info" element={<Info />} />
@@ -38,7 +38,6 @@ function App() {
               <Route path="/agregarProducto" element={<AgregarProducto />} />
               <Route path='/' element={<Principal />} />
               <Route path='*' element={<Principal />} />
-              {/* <Route path='/cargarProducto' element={<CargarProducto/>}/> */}
             </Routes>
           </main>
 

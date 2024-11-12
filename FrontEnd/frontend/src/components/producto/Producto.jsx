@@ -136,7 +136,7 @@ export function Producto() {
                                     <div>
                                         <h5 className="card-title">{producto.nombre}</h5>
                                         <p className="card-text">{producto.descripcion}</p>
-                                        <p className="card-text">$ {producto.precioUnitario}</p>
+                                        <p className="card-text">$ {producto.precioUnitario.toFixed(2)}</p>
                                     </div>
                                     <div className="d-flex justify-content-center align-items-center mt-auto">
                                         <button className="btn btn-outline-secondary" onClick={() => disminuirCantidad(producto.id)}>-</button>

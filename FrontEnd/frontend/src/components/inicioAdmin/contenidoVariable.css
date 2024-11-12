@@ -11,3 +11,8 @@
 .btn-estado:active {
     background-color: blue;
   }
+
+.btn-info {
+    background-color: none;  
+    border-color: #000000; /* Color de borde más oscuro para el botón */
+}

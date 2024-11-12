@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faTimes,
@@ -9,6 +10,7 @@ import {
     faCheck,
     faCaretDown,
     faRotate,
+    faInfoCircle
 } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown } from "react-bootstrap"; // Asegúrate de importar Bootstrap o la biblioteca de tu elección.
 import "./contenidoVariable.css";
@@ -26,7 +28,8 @@ const ContenidoVariable = ({
     getIndicatorColor,
     handleEditClick,
     handleEstadoChange,
-    handleAgregarPedidoClick, // Nueva función para manejar el click en el botón de agregar pedido
+    handleAgregarPedidoClick,
+    navigateToDetail,
 }) => {
     return (
         <div className="contenido-variable">
@@ -268,6 +271,15 @@ const ContenidoVariable = ({
                                                     </Dropdown.Item>
                                                 </Dropdown.Menu>
                                             </Dropdown>
+
+
+                                        <button
+                                            className="pedidos-usuario-btn-link"
+                                            onClick={() => navigateToDetail(item)}
+                                            title="Info"
+                                        >
+                                            <FontAwesomeIcon icon={faInfoCircle} />
+                                        </button>
                                         </>
                                     )}
                                 </td>

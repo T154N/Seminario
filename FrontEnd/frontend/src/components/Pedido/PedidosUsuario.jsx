@@ -14,7 +14,7 @@ export function PedidosUsuario() {
         {
             id: 1,
             fecha: '2023-10-01',
-            total: 50140,
+            montoTotal: 50140,
             estado: 'Rechazado',
             metodoPago: 'Efectivo',
             productos: [
@@ -25,7 +25,7 @@ export function PedidosUsuario() {
         {
             id: 2,
             fecha: '2024-11-03',
-            total: 1200,
+            montoTotal: 1200,
             estado: 'Pendiente',
             metodoPago: 'Transferencia Bancaria',
             productos: [
@@ -35,7 +35,7 @@ export function PedidosUsuario() {
         {
             id: 3,
             fecha: '2024-10-05',
-            total: 78250,
+            montoTotal: 78250,
             estado: 'Pendiente',
             metodoPago: 'Efectivo',
             productos: [
@@ -46,7 +46,7 @@ export function PedidosUsuario() {
         {
             id: 4,
             fecha: '2024-10-07',
-            total: 62540,
+            montoTotal: 62540,
             estado: 'Confirmado',
             metodoPago: 'Transferencia Bancaria',
             productos: [
@@ -57,7 +57,7 @@ export function PedidosUsuario() {
         {
             id: 5,
             fecha: '2024-12-10',
-            total: 90360,
+            montoTotal: 90360,
             estado: 'Confirmado',
             metodoPago: 'Efectivo',
             productos: [
@@ -68,7 +68,7 @@ export function PedidosUsuario() {
         {
             id: 6,
             fecha: '2024-10-15',
-            total: 12250,
+            montoTotal: 12250,
             estado: 'Rechazado',
             metodoPago: 'Transferencia Bancaria',
             productos: [
@@ -78,7 +78,7 @@ export function PedidosUsuario() {
         {
             id: 7,
             fecha: '2024-01-20',
-            total: 45350,
+            montoTotal: 45350,
             estado: 'Pendiente',
             metodoPago: 'Efectivo',
             productos: [
@@ -88,7 +88,7 @@ export function PedidosUsuario() {
         {
             id: 8,
             fecha: '2024-10-25',
-            total: 99250,
+            montoTotal: 99250,
             estado: 'Confirmado',
             metodoPago: 'Transferencia Bancaria',
             productos: [
@@ -151,7 +151,7 @@ export function PedidosUsuario() {
                                         />
                                     </span>
                                 </td>
-                                <td className="pedidos-usuario-data" data-label="Total">${pedido.total}</td>
+                                <td className="pedidos-usuario-data" data-label="Total">${pedido.montoTotal}</td>
                                 <td className="pedidos-usuario-data" data-label="Detalles">
                                     <button onClick={() => navigateToDetail(pedido)} className="pedidos-usuario-btn-link">
                                         <FontAwesomeIcon icon={faInfoCircle} />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ContenidoVariable from './ContenidoVariable';
 import productoService from '../../services/producto/producto.service';
 import categoriaService from '../../services/categoria/categoria.service';
@@ -7,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './inicioAdmin.css';
 import ModificarProducto from './ModificarProducto';
 import ModificarCategoria from './ModificarCategoria';
+
 
 export function InicioAdminPrueba() {
     //-------------------------------------------------------------------------------------
@@ -105,6 +107,12 @@ export function InicioAdminPrueba() {
     const handleRemoveFiltro = (filtroAEliminar) => {
         const nuevosFiltros = filtrosActivos.filter(filtro => filtro !== filtroAEliminar);
         setFiltrosActivos(nuevosFiltros);
+    };
+    const navigate = useNavigate();
+
+    
+    const navigateToDetail = (pedido) => {
+        navigate('/pedido-detalle', { state: { pedido } });
     };
 
     const filteredData = (data) => {
@@ -256,6 +264,7 @@ export function InicioAdminPrueba() {
                                     getIndicatorColor={getIndicatorColor}
                                     handleEditClick={handleEditClick}
                                     handleEstadoChange={handleEstadoChange}
+                                    navigateToDetail={navigateToDetail}
                                 />
                             )}
                         </div>

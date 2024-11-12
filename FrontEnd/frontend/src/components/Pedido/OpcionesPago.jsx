@@ -7,7 +7,7 @@ import Collapse from 'bootstrap/js/dist/collapse';
 import { useCarrito } from "../carrito/CarritoContext";
 
 export function OpcionesPago() {
-    const { pedidoActual, setMetodoPago } = usePedido();
+    const { pedidoActual, setMetodoPago, finalizarPedido } = usePedido();
     const { vaciarCarrito } = useCarrito();
     const navigate = useNavigate();
     const [metodoSeleccionado, setMetodoSeleccionado] = useState(pedidoActual?.metodoPago);
@@ -15,6 +15,8 @@ export function OpcionesPago() {
 
     const efectivoRef = useRef(null);
     const transferenciaRef = useRef(null);
+
+    const [creandoPedido, setCreandoPedido] = useState(false);
 
     useEffect(() => {
         if (pedidoActual?.total > 0) {
@@ -58,12 +60,18 @@ export function OpcionesPago() {
         }
     };
 
-    const finalizarPedido = () => {
+    const handleFinalizarPedido = async () => {
         if (metodoSeleccionado) {
-            vaciarCarrito();
             setMetodoPago(metodoSeleccionado);
-            setIsPedidoFinalizado(true);
-            console.log("Pedido finalizado:", pedidoActual);
+            try {
+                setCreandoPedido(true);
+                await finalizarPedido();
+                vaciarCarrito();
+                setCreandoPedido(false);
+                setIsPedidoFinalizado(true);
+            } catch (error) {
+                console.error("Error al finalizar el pedido:", error);
+            }
         } else {
             alert('Por favor, seleccione un método de pago');
         }
@@ -78,6 +86,10 @@ export function OpcionesPago() {
     // Si no hay pedidoActual, mostrar un mensaje de carga
     if (!pedidoActual) {
         return <p>Cargando...</p>;
+    }
+
+    if (creandoPedido) {
+        return <div className='fs-3'>Creando pedido, por favor espere...</div>;
     }
 
     return (
@@ -96,12 +108,12 @@ export function OpcionesPago() {
                                 <h2 className="accordion-header">
                                     <label
                                         className="accordion-button collapsed"
-                                        onClick={(e) => seleccionarMetodo("efectivo", e)}
+                                        onClick={(e) => seleccionarMetodo(2, e)}
                                         style={{ cursor: 'pointer' }}
                                     >
                                         <input
                                             type="checkbox"
-                                            checked={metodoSeleccionado === "efectivo"}
+                                            checked={metodoSeleccionado === 2}
                                             readOnly
                                             onClick={(e) => e.stopPropagation()}
                                             className="checkbox-margin"
@@ -124,12 +136,12 @@ export function OpcionesPago() {
                                 <h2 className="accordion-header">
                                     <label
                                         className="accordion-button collapsed"
-                                        onClick={(e) => seleccionarMetodo("transferencia", e)}
+                                        onClick={(e) => seleccionarMetodo(1, e)}
                                         style={{ cursor: 'pointer' }}
                                     >
                                         <input
                                             type="checkbox"
-                                            checked={metodoSeleccionado === "transferencia"}
+                                            checked={metodoSeleccionado === 1}
                                             readOnly
                                             onClick={(e) => e.stopPropagation()}
                                             className="checkbox-margin"
@@ -212,12 +224,12 @@ export function OpcionesPago() {
                             )}
                             <div className="d-grid">
                                 <button
-                                    className="btn btn-success btn-lg mt-3"
-                                    onClick={finalizarPedido}
-                                    disabled={pedidoActual.total <= 0 || !metodoSeleccionado}
-                                >
-                                    Finalizar Pedido
-                                </button>
+                                className="btn btn-success btn-lg mt-3"
+                                onClick={handleFinalizarPedido}
+                                disabled={pedidoActual.total <= 0 || !metodoSeleccionado}
+                            >
+                                Finalizar Pedido
+                            </button>
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ import './resumenPedido.css';
 import './opcionesPago.css';
 import Collapse from 'bootstrap/js/dist/collapse';
 import { useCarrito } from "../carrito/CarritoContext";
+import {MensajesLogin} from "../Mensajes/Mensajes";
 
 export function OpcionesPago() {
     const { pedidoActual, setMetodoPago, finalizarPedido } = usePedido();
@@ -83,19 +84,31 @@ export function OpcionesPago() {
         }
     }, [isPedidoFinalizado, navigate, pedidoActual]);
 
+    const handleVolverCatalogo = () => {
+        navigate("/catalogo");
+    };
+
     // Si no hay pedidoActual, mostrar un mensaje de carga
     if (!pedidoActual) {
         return <p>Cargando...</p>;
     }
 
     if (creandoPedido) {
-        return <div className='fs-3'>Creando pedido, por favor espere...</div>;
+        return <MensajesLogin mensaje="Creando pedido, por favor espere..." tipoError="espera" />;
     }
 
     return (
         <div className="container payment-page">
             <h1 className="text-center mb-4">Opciones de Pago</h1>
-
+            <div className="row mb-3">
+                <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
+                    <div className="d-flex align-items-start">
+                        <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>Volver al
+                            catálogo
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div className="row">
                 <div className="col-md-8">
                     <div className="card shadow-sm mb-4">
@@ -109,7 +122,7 @@ export function OpcionesPago() {
                                     <label
                                         className="accordion-button collapsed"
                                         onClick={(e) => seleccionarMetodo(2, e)}
-                                        style={{ cursor: 'pointer' }}
+                                        style={{cursor: 'pointer'}}
                                     >
                                         <input
                                             type="checkbox"
@@ -128,7 +141,8 @@ export function OpcionesPago() {
                                     data-bs-parent="#accordionExample"
                                 >
                                     <div className="accordion-body">
-                                        Seleccionó la opción de abonar con efectivo, presione "Finalizar pedido" para completar la solicitud del pedido.
+                                        Seleccionó la opción de abonar con efectivo, presione "Finalizar pedido" para
+                                        completar la solicitud del pedido.
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +151,7 @@ export function OpcionesPago() {
                                     <label
                                         className="accordion-button collapsed"
                                         onClick={(e) => seleccionarMetodo(1, e)}
-                                        style={{ cursor: 'pointer' }}
+                                        style={{cursor: 'pointer'}}
                                     >
                                         <input
                                             type="checkbox"
@@ -167,12 +181,13 @@ export function OpcionesPago() {
                                                 <p><strong>Titular de la cuenta:</strong> <span>Juan Pérez</span></p>
                                             </div>
                                         </div>
-                                        <hr />
+                                        <hr/>
                                         <p>Complete los siguientes campos con la información de su cuenta:</p>
 
                                         <div className="transferencia-info">
                                             <div className="mb-3 ">
-                                                <label htmlFor="banco" className="form-label">Seleccione su Banco o Billetera</label>
+                                                <label htmlFor="banco" className="form-label">Seleccione su Banco o
+                                                    Billetera</label>
                                                 <select id="banco" className="form-select w-100">
                                                     <option value="">Seleccione un banco...</option>
                                                     <option value="banco1">Banco 1</option>
@@ -183,14 +198,18 @@ export function OpcionesPago() {
                                             </div>
                                             <div className="mb-3">
                                                 <label htmlFor="cuenta" className="form-label">Número de cuenta</label>
-                                                <input type="text" id="cuenta" className="form-control w-100" placeholder="Ingrese su número de cuenta" />
+                                                <input type="text" id="cuenta" className="form-control w-100"
+                                                       placeholder="Ingrese su número de cuenta"/>
                                             </div>
                                             <div className="mb-3">
-                                                <label htmlFor="titular" className="form-label">Nombre del titular de la cuenta</label>
-                                                <input type="text" id="titular" className="form-control w-100" placeholder="Ingrese el nombre del titular" />
+                                                <label htmlFor="titular" className="form-label">Nombre del titular de la
+                                                    cuenta</label>
+                                                <input type="text" id="titular" className="form-control w-100"
+                                                       placeholder="Ingrese el nombre del titular"/>
                                             </div>
                                         </div>
-                                        <p>Una vez hecha la transferencia y llenado los campos con sus datos, presione "Finalizar pedido" para completar la solicitud del pedido.</p>
+                                        <p>Una vez hecha la transferencia y llenado los campos con sus datos, presione
+                                            "Finalizar pedido" para completar la solicitud del pedido.</p>
                                     </div>
                                 </div>
                             </div>
@@ -203,15 +222,15 @@ export function OpcionesPago() {
                     <div className="card shadow-sm mb-4">
                         <div className="card-body">
                             <h5 className="card-title text-center">Detalles del Pedido</h5>
-                            <hr />
+                            <hr/>
                             {pedidoActual.total > 0 ? (
                                 <>
                                     <p className="card-text"><strong>Cliente:</strong></p>
                                     <p className="card-text nombre-cliente">Nombre del cliente</p>
-                                    <hr className="separador" />
+                                    <hr className="separador"/>
                                     <p className="card-text"><strong>Dirección de entrega:</strong></p>
                                     <p className="card-text direccion-entrega">Avenida Siempreviva 2130</p>
-                                    <hr className="separador" />
+                                    <hr className="separador"/>
                                     <p className="card-text total-pedido text-center">
                                         <strong>Total: </strong>
                                         <span className="h4">${pedidoActual.total}</span>
@@ -224,12 +243,12 @@ export function OpcionesPago() {
                             )}
                             <div className="d-grid">
                                 <button
-                                className="btn btn-success btn-lg mt-3"
-                                onClick={handleFinalizarPedido}
-                                disabled={pedidoActual.total <= 0 || !metodoSeleccionado}
-                            >
-                                Finalizar Pedido
-                            </button>
+                                    className="btn btn-success btn-lg mt-3"
+                                    onClick={handleFinalizarPedido}
+                                    disabled={pedidoActual.total <= 0 || !metodoSeleccionado}
+                                >
+                                    Finalizar Pedido
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -7,6 +7,7 @@ import './resumenPedido.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import clienteService from "../../services/cliente/cliente.service";
+import {MensajesLogin} from "../Mensajes/Mensajes";
 
 export function ResumenPedido() {
     const { pedidoActual, actualizarCantidad, eliminarDelPedido } = usePedido();
@@ -62,8 +63,12 @@ export function ResumenPedido() {
         navigate('/opciones-pago');
     };
 
+    const handleVolverCatalogo = () => {
+        navigate("/catalogo");
+    };
+
     if (loading || cargandoProductosACarrito) {
-        return <div className="fs-3">Generando carrito, por favor espere...</div>;
+        return <MensajesLogin mensaje="Generando carrito, por favor espere..." tipoError="espera" />;
     }
 
     return (
@@ -79,6 +84,15 @@ export function ResumenPedido() {
             </svg>
             <h1 className="text-center mb-4">Resumen del Pedido</h1>
 
+            <div className="row mb-3">
+                <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
+                    <div className="d-flex align-items-start">
+                        <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>Volver
+                            al catálogo
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div className="row">
                 <div className="col-md-8">
                     {pedidoActual.productos.length === 0 ? (

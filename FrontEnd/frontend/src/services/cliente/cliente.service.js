@@ -82,16 +82,10 @@ const getDatosClientePedido = async () => {
     }
 };
 
-const getClienteDomicilioId = () => {
-    return localStorage.getItem('domicilioId');
-};
-
-
 const clienteService = {
     getAllClientes,
     getClienteById,
     getDatosClientePedido,
-    getClienteDomicilioId
 }
 
 export default clienteService;

@@ -4,13 +4,24 @@ const PedidoContext = createContext();
 
 export const usePedido = () => useContext(PedidoContext);
 
+const storedUser = localStorage.getItem('email');
+const usuarioMod = storedUser ?? 'ADMIN';
+
+const generarNumeroAleatorio = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const IDpedidoA = generarNumeroAleatorio(1000, 9999);
+
 export const PedidoProvider = ({ children }) => {
     const [pedidoActual, setPedidoActual] = useState({
         id: null,
         fecha: new Date().toISOString().split('T')[0], // formato YYYY-MM-DD
-        total: 0,
-        estado: 'Pendiente', 
+        montoTotal: 0,
+        estado: 'Pendiente',
+        direccionEntrega: 'Avenida libertad 2587', 
         metodoPago: null,
+        nombre: 'UsuarioPrueba',
         productos: []
     });
 
@@ -18,7 +29,7 @@ export const PedidoProvider = ({ children }) => {
         setPedidoActual((prev) => ({
             ...prev,
             productos,
-            total: calcularTotal(productos)
+            montoTotal: calcularTotal(productos)
         }));
     };
 
@@ -30,7 +41,7 @@ export const PedidoProvider = ({ children }) => {
             return {
                 ...prev,
                 productos: productosActualizados,
-                total: calcularTotal(productosActualizados)
+                montoTotal: calcularTotal(productosActualizados)
             };
         });
     };
@@ -57,7 +68,7 @@ export const PedidoProvider = ({ children }) => {
             return {
                 ...prev,
                 productos: productosActualizados,
-                total: calcularTotal(productosActualizados)
+                montoTotal: calcularTotal(productosActualizados)
             };
         });
     };

@@ -110,7 +110,31 @@ export function InicioAdminPrueba() {
     };
     const navigate = useNavigate();
 
+    const mostrarDetalles = async (pedido) => {
+        try {
+            // Obtener los detalles del pedido
+            const detalles = await pedidoService.getPedidoDetalles(pedido.id);
+            
+            // Añadir los detalles como un array en el pedido
+            const pedidoConDetalles = {
+                ...pedido,
+                productos: detalles.map(detalle => ({
+                    id: detalle.productoID,
+                    nombre: detalle.productoName,
+                    cantidad: detalle.cantidad,
+                    precioUnitario: detalle.precioIndividual,
+                    subtotal: detalle.subtotal,
+                    medioPagoID: detalle.medioPagoID,
+                    medioPagoName: detalle.medioPagoName
+                }))
+            };
     
+            // Navegar al componente de detalles pasando el pedido con la lista de productos
+            navigateToDetail(pedidoConDetalles);
+        } catch (error) {
+            console.error("Error al mostrar los detalles del pedido:", error);
+        }
+    };
     const navigateToDetail = (pedido) => {
         navigate('/pedido-detalle', { state: { pedido } });
     };
@@ -265,6 +289,7 @@ export function InicioAdminPrueba() {
                                     handleEditClick={handleEditClick}
                                     handleEstadoChange={handleEstadoChange}
                                     navigateToDetail={navigateToDetail}
+                                    mostrarDetalles={mostrarDetalles}
                                 />
                             )}
                         </div>

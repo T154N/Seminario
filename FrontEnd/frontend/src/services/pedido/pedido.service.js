@@ -10,7 +10,7 @@ const getPedidoById = async (id) => {
 
         if (response.data.body) {
             const p = response.data.body;
-            console.log(p); 
+            console.log(p);
             return {
                 id: p.id,
                 cliente: p.clienteNombre,
@@ -48,21 +48,21 @@ const getAllPedidos = async () => {
             productos: p.productos || [],//verificar si se puede hacer un map de productos
             observaciones: p.observaciones || "Sin observaciones",
 
-            productos: [
-                { id: 101, nombre: 'Pila', cantidad: 2, precioUnitario: 10000 },
-                { id: 102, nombre: 'Producto B', cantidad: 1, precioUnitario: 30140 },        
-                { id: 103, nombre: 'Producto C', cantidad: 3, precioUnitario: 15000 },
-        { id: 104, nombre: 'Producto D', cantidad: 4, precioUnitario: 20000 },
-        { id: 105, nombre: 'Producto E', cantidad: 5, precioUnitario: 25000 },
-        { id: 106, nombre: 'Producto F', cantidad: 6, precioUnitario: 30000 },
-        { id: 107, nombre: 'Producto G', cantidad: 7, precioUnitario: 35000 },
-        { id: 108, nombre: 'Producto H', cantidad: 8, precioUnitario: 40000 },
-        { id: 109, nombre: 'Producto I', cantidad: 9, precioUnitario: 45000 },
-        { id: 110, nombre: 'Producto J', cantidad: 10, precioUnitario: 50000 },
-        { id: 111, nombre: 'Producto K', cantidad: 11, precioUnitario: 55000 }]
+            //productos: [
+            //    { id: 101, nombre: 'Pila', cantidad: 2, precioUnitario: 10000 },
+            //    { id: 102, nombre: 'Producto B', cantidad: 1, precioUnitario: 30140 },
+            //    { id: 103, nombre: 'Producto C', cantidad: 3, precioUnitario: 15000 },
+            //    { id: 104, nombre: 'Producto D', cantidad: 4, precioUnitario: 20000 },
+            //    { id: 105, nombre: 'Producto E', cantidad: 5, precioUnitario: 25000 },
+            //    { id: 106, nombre: 'Producto F', cantidad: 6, precioUnitario: 30000 },
+            //    { id: 107, nombre: 'Producto G', cantidad: 7, precioUnitario: 35000 },
+            //    { id: 108, nombre: 'Producto H', cantidad: 8, precioUnitario: 40000 },
+            //    { id: 109, nombre: 'Producto I', cantidad: 9, precioUnitario: 45000 },
+            //    { id: 110, nombre: 'Producto J', cantidad: 10, precioUnitario: 50000 },
+            //    { id: 111, nombre: 'Producto K', cantidad: 11, precioUnitario: 55000 }]
 
         }));
- 
+
 
 
         console.log("Listado de todos los pedidos:", pedidos);
@@ -73,6 +73,36 @@ const getAllPedidos = async () => {
         return [];
     }
 };
+
+
+const getPedidoDetalles = async (pedidoID) => {
+    try {
+        const response = await axios.get(`${ENDPOINT_PEDIDO_URL}/pedidos/detalle`, {
+            params: { pedidoID }
+        });
+
+        // Estructura de los detalles de pedido
+        const detalles = response.data.body.map(detalle => ({
+            pedidoID: detalle.pedidoID,
+            detalleID: detalle.detalleID,
+            cantidad: detalle.cantidad,
+            precioIndividual: detalle.precioIndividual,
+            subtotal: detalle.subtotal,
+            productoID: detalle.productoID,
+            productoName: detalle.productoName,
+            medioPagoID: detalle.medioPagoID,
+            medioPagoName: detalle.medioPagoName
+        }));
+
+        console.log("Detalles del pedido:", detalles);
+        return detalles;
+
+    } catch (error) {
+        console.error("Error al obtener los detalles del pedido:", error);
+        return [];
+    }
+};
+
 
 // Obtener pedidos filtrados por cliente
 const getPedidosPorCliente = async (clienteId) => {
@@ -162,7 +192,7 @@ const updatePedidoEstado = async (pedidoId, estadoId, usuarioTransaccion, estado
         console.error("Error al actualizar el estado del pedido:", error?.response?.data || error.message);
         return error?.response?.status || 500;
     }
-    
+
 };
 
 // Obtener pedidos con estado de baja (si es necesario)
@@ -195,7 +225,8 @@ const pedidoService = {
     postNuevoPedido,
     updatePedido,
     updatePedidoEstado, // Agregado aquí
-    getAllPedidosBaja
+    getAllPedidosBaja,
+    getPedidoDetalles
 };
 
 export default pedidoService;

@@ -11,6 +11,7 @@ import informacion from '../images/Header Icons/info-circle.svg';
 import usuario from '../images/Header Icons/person.svg';
 import catalogo from '../images/Header Icons/catalogo.png';
 import config from '../images/Header Icons/config.svg';
+import { FaBox } from 'react-icons/fa'; // Importa el ícono de paquete de FontAwesome
 import { Offcanvas } from 'bootstrap';
 
 export function Header() {
@@ -45,6 +46,11 @@ export function Header() {
 
     const goToAdminConfig = () => {
         navigate('/inicioAdmin');
+        closeOffcanvasNavbar();
+    };
+
+    const goToPedidosSolicitados = () => {
+        navigate('/pedidos-usuario');
         closeOffcanvasNavbar();
     };
 
@@ -148,6 +154,21 @@ export function Header() {
                                                     padding: 0
                                                 }}/>
                                                 Catalogo
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li className="nav-item me-1 mb-2">
+                                        <div className="d-grid">
+                                            <button className="btn btn-header fs-5" onClick={goToPedidosSolicitados}>
+                                                <FaBox style={{
+                                                    width: "30px",
+                                                    height: "auto",
+                                                    marginRight: "3px",
+                                                    verticalAlign: "middle",
+                                            
+                                
+                                                }} size="xs"/>
+                                                Pedidos Solicitados
                                             </button>
                                         </div>
                                     </li>

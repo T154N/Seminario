@@ -17,7 +17,7 @@ export function OpcionesPago() {
     const transferenciaRef = useRef(null);
 
     useEffect(() => {
-        if (pedidoActual?.total > 0) {
+        if (pedidoActual?.montoTotal > 0) {
             let efectivoCollapse;
             let transferenciaCollapse;
 
@@ -49,7 +49,7 @@ export function OpcionesPago() {
                 if (transferenciaCollapse) transferenciaCollapse.dispose();
             };
         }
-    }, [metodoSeleccionado, pedidoActual?.total]);
+    }, [metodoSeleccionado, pedidoActual?.montoTotal]);
 
     const seleccionarMetodo = (metodo, e) => {
         e.stopPropagation();
@@ -192,7 +192,7 @@ export function OpcionesPago() {
                         <div className="card-body">
                             <h5 className="card-title text-center">Detalles del Pedido</h5>
                             <hr />
-                            {pedidoActual.total > 0 ? (
+                            {pedidoActual.montoTotal > 0 ? (
                                 <>
                                     <p className="card-text"><strong>Cliente:</strong></p>
                                     <p className="card-text nombre-cliente">Nombre del cliente</p>
@@ -202,7 +202,7 @@ export function OpcionesPago() {
                                     <hr className="separador" />
                                     <p className="card-text total-pedido text-center">
                                         <strong>Total: </strong>
-                                        <span className="h4">${pedidoActual.total}</span>
+                                        <span className="h4">${pedidoActual.montoTotal}</span>
                                     </p>
                                 </>
                             ) : (
@@ -214,7 +214,7 @@ export function OpcionesPago() {
                                 <button
                                     className="btn btn-success btn-lg mt-3"
                                     onClick={finalizarPedido}
-                                    disabled={pedidoActual.total <= 0 || !metodoSeleccionado}
+                                    disabled={pedidoActual.montoTotal <= 0 || !metodoSeleccionado}
                                 >
                                     Finalizar Pedido
                                 </button>

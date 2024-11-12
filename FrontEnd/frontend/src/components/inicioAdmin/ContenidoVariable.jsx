@@ -29,7 +29,7 @@ const ContenidoVariable = ({
     handleEditClick,
     handleEstadoChange,
     handleAgregarPedidoClick,
-    navigateToDetail,
+    mostrarDetalles,
 }) => {
     return (
         <div className="contenido-variable">
@@ -274,8 +274,8 @@ const ContenidoVariable = ({
 
 
                                         <button
-                                            className="pedidos-usuario-btn-link"
-                                            onClick={() => navigateToDetail(item)}
+                                            className="pedidos-info-btn-link"
+                                            onClick={() => mostrarDetalles(item)}
                                             title="Info"
                                         >
                                             <FontAwesomeIcon icon={faInfoCircle} />

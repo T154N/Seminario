@@ -160,7 +160,7 @@ export function ResumenPedido() {
                             <p className="card-text direccion-entrega">{datosCliente.domicilioNombre}</p>
                             <hr className="separador"/>
                             <p className="card-text total-pedido text-center">
-                                <strong>Total:</strong> <span className="h4">${pedidoActual.total}</span>
+                                <strong>Total:</strong> <span className="h4">${pedidoActual.montoTotal}</span>
                             </p>
                             <div className="d-grid">
                                 <button className="btn btn-secundario text-white btn-lg mt-3" onClick={continuarPago}>

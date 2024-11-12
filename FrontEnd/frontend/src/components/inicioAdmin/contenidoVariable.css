@@ -12,7 +12,11 @@
     background-color: blue;
   }
 
-.btn-info {
-    background-color: none;  
-    border-color: #000000; /* Color de borde más oscuro para el botón */
+.pedidos-info-btn-link {
+    margin-top: 10px;
+    background-color: #479ff1;  
+    border-color: #000000;
+    color: white;
+    border-radius: 5px;
+     /* Color de borde más oscuro para el botón */
 }

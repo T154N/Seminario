@@ -15,19 +15,25 @@ export function PedidosUsuario() {
             id: 1,
             fecha: '2023-10-01',
             montoTotal: 50140,
-            estado: 'Rechazado',
-            metodoPago: 'Efectivo',
-            productos: [
-                { id: 101, nombre: 'Producto A', cantidad: 2, precioUnitario: 10000 },
-                { id: 102, nombre: 'Producto B', cantidad: 1, precioUnitario: 30140 }
-            ]
+            estado: 9,
+            metodoPago: 2,
+            nombre: 'Usuario prueba',
+            direccionEntrega: 'Mariano moreno 2354',
+            productos: Array.from({ length: 70 }, (_, i) => ({
+                id: 101 + i,
+                nombre: `Producto ${String.fromCharCode(65 + (i % 26))}`,
+                cantidad: 1,
+                precioUnitario: 1000
+            }))
         },
         {
             id: 2,
             fecha: '2024-11-03',
             montoTotal: 1200,
-            estado: 'Pendiente',
-            metodoPago: 'Transferencia Bancaria',
+            estado: 7,
+            metodoPago: 1,
+            nombre: 'Usuario prueba',
+            direccionEntrega: 'Mariano moreno 2354',
             productos: [
                 { id: 103, nombre: 'Producto C', cantidad: 3, precioUnitario: 400 }
             ]
@@ -36,8 +42,10 @@ export function PedidosUsuario() {
             id: 3,
             fecha: '2024-10-05',
             montoTotal: 78250,
-            estado: 'Pendiente',
-            metodoPago: 'Efectivo',
+            estado: 7,
+            metodoPago: 2,
+            nombre: 'Usuario prueba',
+            direccionEntrega: 'Mariano moreno 2354',
             productos: [
                 { id: 104, nombre: 'Producto D', cantidad: 5, precioUnitario: 10000 },
                 { id: 105, nombre: 'Producto E', cantidad: 2, precioUnitario: 14125 }
@@ -47,8 +55,10 @@ export function PedidosUsuario() {
             id: 4,
             fecha: '2024-10-07',
             montoTotal: 62540,
-            estado: 'Confirmado',
-            metodoPago: 'Transferencia Bancaria',
+            estado: 13,
+            metodoPago: 1,
+            nombre: 'Usuario prueba',
+            direccionEntrega: 'Mariano moreno 2354',
             productos: [
                 { id: 106, nombre: 'Producto F', cantidad: 3, precioUnitario: 20847 },
                 { id: 107, nombre: 'Producto G', cantidad: 1, precioUnitario: 5000 }
@@ -58,8 +68,10 @@ export function PedidosUsuario() {
             id: 5,
             fecha: '2024-12-10',
             montoTotal: 90360,
-            estado: 'Confirmado',
-            metodoPago: 'Efectivo',
+            estado: 13,
+            metodoPago: 2,
+            nombre: 'Usuario prueba',
+            direccionEntrega: 'Mariano moreno 2354',
             productos: [
                 { id: 108, nombre: 'Producto H', cantidad: 4, precioUnitario: 22590 },
                 { id: 109, nombre: 'Producto I', cantidad: 2, precioUnitario: 11390 }
@@ -69,8 +81,10 @@ export function PedidosUsuario() {
             id: 6,
             fecha: '2024-10-15',
             montoTotal: 12250,
-            estado: 'Rechazado',
-            metodoPago: 'Transferencia Bancaria',
+            estado: 9,
+            metodoPago: 1,
+            nombre: 'Usuario prueba',
+            direccionEntrega: 'Mariano moreno 2354',
             productos: [
                 { id: 110, nombre: 'Producto J', cantidad: 1, precioUnitario: 12250 }
             ]
@@ -79,8 +93,10 @@ export function PedidosUsuario() {
             id: 7,
             fecha: '2024-01-20',
             montoTotal: 45350,
-            estado: 'Pendiente',
-            metodoPago: 'Efectivo',
+            estado: 7,
+            metodoPago: 2,
+            nombre: 'Usuario prueba',
+            direccionEntrega: 'Mariano moreno 2354',
             productos: [
                 { id: 111, nombre: 'Producto K', cantidad: 10, precioUnitario: 4535 }
             ]
@@ -89,8 +105,10 @@ export function PedidosUsuario() {
             id: 8,
             fecha: '2024-10-25',
             montoTotal: 99250,
-            estado: 'Confirmado',
-            metodoPago: 'Transferencia Bancaria',
+            estado: 13,
+            metodoPago: 1,
+            nombre: 'Usuario prueba',
+            direccionEntrega: 'Mariano moreno 2354',
             productos: [
                 { id: 112, nombre: 'Producto L', cantidad: 5, precioUnitario: 19850 }
             ]
@@ -106,17 +124,40 @@ export function PedidosUsuario() {
 
     const getIndicatorColor = (estado) => {
         switch (estado) {
-            case 'Confirmado':
+            case 13:
                 return 'green';
-            case 'Rechazado':
+            case 9:
                 return 'red';
-            case 'Pendiente':
+            case 7:
                 return 'yellow';
             default:
                 return 'gray';
         }
     };
 
+    const getMetodoPago = (metodoPago) => {
+        switch (metodoPago) {
+            case 1:
+                return 'Transferencia bancaria';
+            case 2:
+                return 'Efectivo';
+            default:
+                return 'No especificado';
+        }
+    };       
+
+    const getEstado = (nroEstado) => {
+        switch (nroEstado) {
+            case 7:
+                return 'Pendiente';
+            case 9:
+                return 'Rechazado';
+            case 13:
+                return 'Aceptado';
+            default:
+                return 'No especificado';
+        }
+    };   
     const navigateToDetail = (pedido) => {
         navigate('/pedido-detalle', { state: { pedido } });
     };
@@ -141,10 +182,10 @@ export function PedidosUsuario() {
                             <tr key={pedido.id}>
                                 <td className="pedidos-usuario-data" data-label="Nro de pedido">{pedido.id}</td>
                                 <td className="pedidos-usuario-data" data-label="Fecha de solicitud">{pedido.fecha}</td>
-                                <td className="pedidos-usuario-data" data-label="Método de Pago">{pedido.metodoPago}</td>
+                                <td className="pedidos-usuario-data" data-label="Método de Pago">{getMetodoPago(pedido.metodoPago)}</td>
                                 <td className="pedidos-usuario-data" data-label="Estado">
                                     <span className="pedidos-usuario-estado">
-                                        {pedido.estado}
+                                        {getEstado(pedido.estado)}
                                         <span
                                             className="pedidos-usuario-estado-indicador"
                                             style={{ backgroundColor: getIndicatorColor(pedido.estado) }}

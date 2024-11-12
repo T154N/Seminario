@@ -192,6 +192,27 @@
 
 }
 
+.btn-imprimir {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Espacio entre el icono y el texto */
+    background-color: #f1a815;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-imprimir i {
+    font-size: 20px; /* Ajusta el tamaño del icono */
+}
+
+.btn-imprimir:hover {
+    background-color: #e08c0d;
+    color: white;
+}
 
 @media (min-width: 768px) {
 /* Ajuste para el nombre en la tabla de productos */

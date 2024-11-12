@@ -55,7 +55,7 @@ const getClienteById = async (id) => {
 const getDatosClientePedido = async () => {
     try {
         const email = loginService.getEmailUsuario();
-        const response = await axios.post(`${ENDPOINT_NOAUTH}/cliente/filter`, {
+        const response = await axios.post(`${ENDPOINT_NOAUTH}/clientes/filter`, {
             id: 0,
             nombre: "",
             apellido: "",
@@ -74,6 +74,7 @@ const getDatosClientePedido = async () => {
                 domicilioNombre: c.domicilios[0].domicilioDireccion
             };
         });
+        localStorage.setItem('domicilioId', cliente[0].domicilioId);
         return cliente[0]
     } catch (error) {
         console.error(error);
@@ -81,11 +82,16 @@ const getDatosClientePedido = async () => {
     }
 };
 
+const getClienteDomicilioId = () => {
+    return localStorage.getItem('domicilioId');
+};
+
 
 const clienteService = {
     getAllClientes,
     getClienteById,
-    getDatosClientePedido
+    getDatosClientePedido,
+    getClienteDomicilioId
 }
 
 export default clienteService;

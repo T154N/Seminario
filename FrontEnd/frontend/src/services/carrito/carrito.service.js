@@ -29,12 +29,14 @@ const crearNuevoCarrito = async (usuarioTransaccion) => {
             // Crea un nuevo carrito
             const nuevoCarrito = await newCarrito(datosCliente.clienteId, usuarioTransaccion)
             console.log("Nuevo carrito", nuevoCarrito.data.body.carrito_id)
+            localStorage.setItem('carritoId', nuevoCarrito.data.body.carrito_id);
             return nuevoCarrito.data.body.carrito_id;
         } else {
             // Ya tiene un carrito creado
             await removeCarrito(datosCliente.clienteId, usuarioTransaccion);
             const nuevoCarrito = await newCarrito(datosCliente.clienteId, usuarioTransaccion);
             console.log("Nuevo carrito", nuevoCarrito.data.body.carrito_id)
+            localStorage.setItem('carritoId', nuevoCarrito.data.body.carrito_id);
             return nuevoCarrito.data.body.carrito_id;
         }
     } catch (err) {
@@ -132,6 +134,10 @@ const removeCarrito = async (carritoId, usuarioTransaccion) => {
     }
 };
 
+const getCarritoId = () => {
+    return localStorage.getItem('carritoId');
+}
+
 const carritoService = {
     findByCliente,
     getDetalleCarrito,
@@ -140,7 +146,8 @@ const carritoService = {
     addCarrito,
     newCarrito,
     crearNuevoCarrito,
-    cargarProductosAlCarrito
+    cargarProductosAlCarrito,
+    getCarritoId
 
 }
 

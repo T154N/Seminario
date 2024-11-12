@@ -6,6 +6,7 @@ import './opcionesPago.css';
 import Collapse from 'bootstrap/js/dist/collapse';
 import { useCarrito } from "../carrito/CarritoContext";
 import {MensajesLogin} from "../Mensajes/Mensajes";
+import {useLocation} from "react-router-dom";
 
 export function OpcionesPago() {
     const { pedidoActual, setMetodoPago, finalizarPedido } = usePedido();
@@ -18,6 +19,9 @@ export function OpcionesPago() {
     const transferenciaRef = useRef(null);
 
     const [creandoPedido, setCreandoPedido] = useState(false);
+
+    const location = useLocation();
+    const { datosCliente } = location.state || {};
 
     useEffect(() => {
         if (pedidoActual?.total > 0) {
@@ -226,10 +230,10 @@ export function OpcionesPago() {
                             {pedidoActual.total > 0 ? (
                                 <>
                                     <p className="card-text"><strong>Cliente:</strong></p>
-                                    <p className="card-text nombre-cliente">Nombre del cliente</p>
+                                    <p className="card-text nombre-cliente">{datosCliente.nombre + " " + datosCliente.apellido}</p>
                                     <hr className="separador"/>
                                     <p className="card-text"><strong>Dirección de entrega:</strong></p>
-                                    <p className="card-text direccion-entrega">Avenida Siempreviva 2130</p>
+                                    <p className="card-text direccion-entrega">{datosCliente.domicilioNombre}</p>
                                     <hr className="separador"/>
                                     <p className="card-text total-pedido text-center">
                                         <strong>Total: </strong>

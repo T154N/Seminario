@@ -60,8 +60,8 @@ export function ResumenPedido() {
     };
 
     const continuarPago = () => {
-        navigate('/opciones-pago');
-    };
+    navigate('/opciones-pago', { state: { datosCliente } });
+};
 
     const handleVolverCatalogo = () => {
         navigate("/catalogo");

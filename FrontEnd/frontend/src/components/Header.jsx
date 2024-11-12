@@ -1,8 +1,7 @@
-// Header.jsx
-
+import React, { useContext } from 'react';
+import { UserContext } from '../components/login/UserContext';
 import './header.css';
 import CMLogo from '../images/PedidoFlex Icons/CMDistribuidoraLogo.png';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Carrito } from './carrito/Carrito';
 import loginService from "../services/login/login.service";
@@ -15,6 +14,7 @@ import { Offcanvas } from 'bootstrap';
 
 export function Header() {
     const navigate = useNavigate();
+    const { isLoggedIn, logout } = useContext(UserContext);
 
     const closeOffcanvasNavbar = () => {
         const offcanvasNavbarCloseButton = document.getElementById('offcanvasNavbarCloseButton');
@@ -60,6 +60,13 @@ export function Header() {
         if (offcanvasInstance) {
             offcanvasInstance.show();
         }
+    };
+
+    const handleLogout = () => {
+        loginService.cerrarSesion();
+        logout();
+        navigate('/');
+        closeOffcanvasNavbar();
     };
 
     return (
@@ -126,14 +133,14 @@ export function Header() {
                                     </li>
                                     <li className="nav-item me-1 mb-2">
                                         <div className="d-grid">
-                                            <button className="btn btn-header fs-5" onClick={goToUserProfile}>
+                                            <button className="btn btn-header fs-5" onClick={isLoggedIn ? handleLogout : goToUserProfile}>
                                                 <img src={usuario} alt="Login" style={{
                                                     width: "30px",
                                                     height: "auto",
                                                     marginRight: "3px",
                                                     verticalAlign: "middle"
                                                 }}/>
-                                                Login
+                                                {isLoggedIn ? 'Cerrar sesión' : 'Login'}
                                             </button>
                                         </div>
                                     </li>

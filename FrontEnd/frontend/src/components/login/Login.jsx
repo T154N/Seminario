@@ -1,36 +1,29 @@
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import "./login.css";
 import "../../scss/custom.css";
 import { useNavigate } from "react-router";
-
 import { IniciarSesion } from "./IniciarSesion";
 import { CambiarContrasena } from "./CambiarContrasena";
 import { Registrarse } from "./Registrarse";
 import { MensajesLogin } from "../Mensajes/Mensajes";
-
 import loginService from "../../services/login/login.service";
+import { UserContext } from "./UserContext";
 
 export function Login() {
-
     const navigate = useNavigate();
+    const { login, logout } = useContext(UserContext);
 
     const [mostrarCambiarPwd, setMostrarCambiarPwd] = useState(false);
     const [mostrarIniciarSesion, setMostrarIniciarSesion] = useState(true);
     const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
-
     const [titulo, setTitulo] = useState("Iniciar sesión");
-
     const [sesionYaIniciada, setSesionYaIniciada] = useState(false);
-
     const [mostrarAlertaRegistro, setMostrarAlertaRegistro] = useState(false);
     const [mensajeRegistro, setMensajeRegistro] = useState("");
-
     const [mostrarAlertaInicioSesion, setMostrarAlertaInicioSesion] = useState(false);
     const [mensajeInicioSesion, setMensajeInicioSesion] = useState("");
-
     const [mostrarAlertaRecuperarContrasena, setMostrarAlertaRecuperarContrasena] = useState(false);
     const [mensajeRecuperarContrasena, setMensajeRecuperarContrasena] = useState("");
-
     const [tipoError, setTipoError] = useState("");
 
     useEffect(() => {
@@ -42,6 +35,7 @@ export function Login() {
     const cerrarSesion = () => {
         loginService.cerrarSesion();
         setSesionYaIniciada(false);
+        logout();
         volverALogin();
     }
 
@@ -51,13 +45,10 @@ export function Login() {
         }, 4000);
     }
 
-    const mostrarCambiarContrasena = () => 
-        {
+    const mostrarCambiarContrasena = () => {
         setMostrarCambiarPwd(true);
         setMostrarIniciarSesion(false);
-
         setMostrarRegistrarse(false);
-
         setMostrarAlertaInicioSesion(false);
         setMostrarAlertaRegistro(false);
         setMostrarAlertaRecuperarContrasena(false);
@@ -71,7 +62,6 @@ export function Login() {
         setMostrarRegistrarse(true);
         setMostrarIniciarSesion(false);
         setMostrarCambiarPwd(false);
-
         setMostrarAlertaRegistro(false);
         setMostrarAlertaInicioSesion(false);
         setMostrarAlertaRecuperarContrasena(false);
@@ -85,7 +75,6 @@ export function Login() {
         setMostrarCambiarPwd(false);
         setMostrarIniciarSesion(true);
         setMostrarRegistrarse(false);
-
         setMostrarAlertaRegistro(false);
         setMostrarAlertaInicioSesion(false);
         setMostrarAlertaRecuperarContrasena(false);
@@ -110,6 +99,7 @@ export function Login() {
         setMensajeInicioSesion(mensaje);
         setTipoError(tipoError);
         if (tipoError === "exitoso") {
+            login();
             navegarHaciaCatalogoLogin();
         }
     }
@@ -134,7 +124,7 @@ export function Login() {
         setMostrarAlertaRecuperarContrasena(false);
     }
 
-    return(
+    return (
         <>
             <div className="">
                 <div className="container">
@@ -149,23 +139,23 @@ export function Login() {
                                     <div className="card border-0 shadow mt-3" style={{background: "#FCBB3A", borderRadius: "30px"}}>
                                         <div className="card-body text-start px-3">
                                             {sesionYaIniciada && <div className="alert alert-success mt-3 fs-5 text-center" style={{borderRadius: "10px"}}>La sesion esta iniciada</div>}
-        
+
                                             {/* Solo mostrar iniciar sesión si la sesión no está iniciada */}
                                             {mostrarIniciarSesion && !sesionYaIniciada && <IniciarSesion mostrarMsjInicioSesion={mostrarMsjInicioSesion}/>}
-        
+
                                             {/* Solo mostrar cambiar contraseña si la sesión no está iniciada */}
                                             {mostrarCambiarPwd && !sesionYaIniciada && <CambiarContrasena mostrarMsjRecuperarContrasena={mostrarMsjRecuperarContrasena}/>}
-        
+
                                             {/* Solo mostrar registrarse si la sesión no está iniciada */}
                                             {mostrarRegistrarse && !sesionYaIniciada && <Registrarse mostrarMsjRegistro={mostrarMsjRegistro}/>}
-        
+
                                             {/* Mostrar botón de cerrar sesión si la sesión está iniciada */}
                                             {sesionYaIniciada &&
                                                 <div className="d-grid mt-2">
                                                     <button className="btn btn-principal mb-2" onClick={cerrarSesion}>Cerrar sesión</button>
                                                 </div>
                                             }
-        
+
                                             {/* Solo mostrar opciones de registro y recuperación de contraseña si la sesión no está iniciada */}
                                             {!sesionYaIniciada && !mostrarCambiarPwd && !mostrarRegistrarse &&
                                             <div className="mt-2 text-start fs-6 px-0">
@@ -175,7 +165,7 @@ export function Login() {
                                                         <button className="btn btn-principal" onClick={mostrarReg}>Registrate</button>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div className="justify-content-start gap-2 mb-1">
                                                     <span>¿Olvidaste tu contraseña?</span>
                                                     <div className="mt-2">
@@ -183,7 +173,7 @@ export function Login() {
                                                     </div>
                                                 </div>
                                             </div>}
-        
+
                                             {/* Botón para volver al login si se muestra registrarse o cambiar contraseña */}
                                             {(mostrarRegistrarse || mostrarCambiarPwd) &&
                                             <div className="mt-2">
@@ -201,5 +191,4 @@ export function Login() {
             </div>
         </>
     )
-    
 }

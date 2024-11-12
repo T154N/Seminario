@@ -3,56 +3,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './inicioAdmin.css';
-import './ModificarProducto.css';
 
-import productoService from '../../services/producto/producto.service';
-import categoriaService from '../../services/categoria/categoria.service';
-import ConfirmModal from './ConfirmModal';
+import categoriaService from "../../services/categoria/categoria.service";
+import ConfirmModal from "./ConfirmModal";
+import productoService from "../../services/producto/producto.service";
 
-const ModificarContenido = ({ registro, onSave, onCancel }) => {
+const AgregarProducto = ({ onSave, onCancel }) => {
     const [formData, setFormData] = useState({
         nombre: '',
-        categoria: '',
+        descripcion: '',
         precioUnitario: '',
-        imagen: '',
-        estado: 1,
-        descripcion: ''
+        urlImagen: '',
+        categoria: '',
+        usuarioAlta: ''
     });
-
     const [isLoading, setIsLoading] = useState(true);
     const [categorias, setCategorias] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const storedUser = localStorage.getItem('email');
     const usuarioMod = storedUser ?? 'ADMIN';
 
-
-
     useEffect(() => {
         const fetchCategorias = async () => {
             const categorias = await categoriaService.getAllCategorias();
             setCategorias(categorias);
+            setIsLoading(false);
         };
         fetchCategorias();
     }, []);
-
-    useEffect(() => {
-        const fetchProducto = async () => {
-            if (registro && registro.id) {
-                const producto = await productoService.getProductoByIdAdmin(registro.id);
-                setFormData({
-                    nombre: producto.nombre || '',
-                    categoria: producto.categoriaId || '',
-                    precioUnitario: producto.precioUnitario || '',
-                    imagen: producto.imagen || '',
-                    estado: producto.estado || 1,
-                    descripcion: producto.descripcion || '',
-                });
-                setIsLoading(false);
-            }
-        };
-
-        fetchProducto();
-    }, [registro]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -62,37 +40,40 @@ const ModificarContenido = ({ registro, onSave, onCancel }) => {
         });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         setShowModal(true);
     };
 
     const handleConfirm = async () => {
-        await productoService.updateProducto(
-            registro.id,
+        await productoService.postProducto(
             formData.nombre,
             formData.descripcion,
             formData.precioUnitario,
-            formData.imagen,
+            formData.urlImagen,
             formData.categoria,
-            usuarioMod,
-            formData.estado
+            usuarioMod
         );
         setShowModal(false);
-        onSave(formData);
+        if (onSave) {
+            onSave();
+        }
     };
 
     const handleCancel = () => {
+        if (onCancel) {
+            onCancel();
+        }
         setShowModal(false);
     };
 
-    if (isLoading) {
-        return <div>Cargando...</div>;
-    }
+   // if (isLoading) {
+    //    return <div>Cargando...</div>;
+    //}
 
     return (
         <div>
-            <h2>Modificar Producto: {registro ? registro.nombre : 'Contenido'}</h2>
+            <h2>Registrar Producto</h2>
             <form onSubmit={handleSubmit}>
                 <div className="row mb-3 mt-4">
                     <div className="col-6">
@@ -123,19 +104,27 @@ const ModificarContenido = ({ registro, onSave, onCancel }) => {
                         </select>
                     </div>
 
-                    <div className="col-3">
-                        <label className="form-label">Precio Unitario</label>
-                        <div className="input-group">
-                            <span className="input-group-text">$</span>
-                            <input
-                                type="number"
-                                className="form-control"
-                                name="precioUnitario"
-                                value={formData.precioUnitario}
-                                onChange={handleChange}
-                            />
-                        </div>
+                   <div className="col-3">
+                    <label className="form-label">Precio Unitario</label>
+                    <div className="input-group">
+                        <span className="input-group-text">$</span>
+                        <input
+                            type="number"
+                            className="form-control"
+                            name="precioUnitario"
+                            value={formData.precioUnitario}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                setFormData({
+                                    ...formData,
+                                    precioUnitario: value
+                                });
+                            }}
+                            required
+                        />
+
                     </div>
+                </div>
                 </div>
 
                 <div className="row mb-3">
@@ -144,8 +133,8 @@ const ModificarContenido = ({ registro, onSave, onCancel }) => {
                         <input
                             type="text"
                             className="form-control"
-                            name="imagen"
-                            value={formData.imagen}
+                            name="urlImagen"
+                            value={formData.urlImagen}
                             onChange={handleChange}
                             required
                         />
@@ -164,24 +153,8 @@ const ModificarContenido = ({ registro, onSave, onCancel }) => {
                         />
                     </div>
                 </div>
-
-                <div className="mb-5">
-                    <div className="col-1 col-md-2 col-sm-1">
-                        <label className="form-label">Estado</label>
-                        <select
-                            className="form-select text-center"
-                            name="estado"
-                            value={formData.estado}
-                            onChange={handleChange}
-                        >
-                            <option value={1}>Activo</option>
-                            <option value={2}>Inactivo</option>
-                        </select>
-                    </div>
-                </div>
-
                 <div className="d-flex justify-content-between">
-                    <button type="button" className="btn btn-danger" onClick={onCancel}>
+                    <button type="button" className="btn btn-danger" onClick={handleCancel}>
                         <FontAwesomeIcon icon={faTimes}/> Cancelar
                     </button>
 
@@ -190,15 +163,14 @@ const ModificarContenido = ({ registro, onSave, onCancel }) => {
                     </button>
                 </div>
             </form>
-
             <ConfirmModal
                 show={showModal}
                 onHide={handleCancel}
                 onConfirm={handleConfirm}
-                message="¿Estás seguro de que deseas guardar los cambios?"
+                message="¿Estás seguro de que deseas registrar el producto?"
             />
         </div>
     );
 };
 
-export default ModificarContenido;
+export default AgregarProducto;

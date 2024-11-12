@@ -1,42 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './inicioAdmin.css';
 
+
 import categoriaService from "../../services/categoria/categoria.service";
 import ConfirmModal from "./ConfirmModal";
 
 
-
-const ModificarCategoria = ({ registro, onSave, onCancel }) => {
+const AgregarCategoria = ({ onSave, onCancel }) => {
     const [formData, setFormData] = useState({
         nombre: '',
-        observaciones: '',
-        urlImagen: '',
-        estado: 1
+        descripcion: '',
+        usuarioAlta: '',
+        urlImagen: ''
+
     });
     const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
-
     const storedUser = localStorage.getItem('email');
     const usuarioMod = storedUser ?? 'ADMIN';
-
-    useEffect(() => {
-        const fetchCategoria = async () => {
-            if (registro && registro.id) {
-                const categoria = await categoriaService.getCategoriaByIdAdmin(registro.id);
-                setFormData({
-                    nombre: categoria.nombre || '',
-                    observaciones: categoria.observaciones || '',
-                    urlImagen: categoria.imagen || '',
-                    estado: categoria.estado || 1
-                });
-                setIsLoading(false);
-            }
-        };
-        fetchCategoria();
-    }, [registro]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -48,33 +32,32 @@ const ModificarCategoria = ({ registro, onSave, onCancel }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setShowModal(true); // Muestra el modal de confirmación
+        setShowModal(true);
     };
 
     const handleConfirm = async () => {
-        await categoriaService.updateCategoria(
-            registro.id,
+        await categoriaService.postCategoria(
             formData.nombre,
-            formData.observaciones,
-            formData.urlImagen,
+            formData.descripcion,
             usuarioMod,
-            formData.estado
+            formData.urlImagen
         );
         setShowModal(false);
-        onSave(formData);
+        if (onSave) {
+            onSave();
+        }
     };
 
-    const handleHideModal = () => {
-        setShowModal(false); // Cierra el modal sin guardar cambios
+    const handleCancel = () => {
+        if (onCancel) {
+            onCancel();
+        }
+        setShowModal(false);
     };
-
-    if (isLoading) {
-        return <div>Cargando...</div>;
-    }
 
     return (
         <div>
-            <h2>Modificar Categoria: {registro ? registro.nombre : 'Contenido'}</h2>
+            <h2>Registrar Categoria</h2>
             <form onSubmit={handleSubmit}>
                 <div className="row mb-3 mt-4">
                     <div className="form-group col-6">
@@ -116,24 +99,8 @@ const ModificarCategoria = ({ registro, onSave, onCancel }) => {
                         />
                     </div>
                 </div>
-
-                <div className="mb-5">
-                    <div className="col-2 col-md-1 col-sm-2">
-                        <label className="form-label">Estado</label>
-                        <select
-                            className="form-select text-center"
-                            name="estado"
-                            value={formData.estado}
-                            onChange={handleChange}
-                        >
-                            <option value={1}>Activo</option>
-                            <option value={2}>Inactivo</option>
-                        </select>
-                    </div>
-                </div>
-
                 <div className="d-flex justify-content-between">
-                    <button type="button" className="btn btn-danger" onClick={onCancel}>
+                    <button type="button" className="btn btn-danger" onClick={handleCancel}>
                         <FontAwesomeIcon icon={faTimes}/> Cancelar
                     </button>
                     <button type="submit" className="btn btn-success">
@@ -144,12 +111,11 @@ const ModificarCategoria = ({ registro, onSave, onCancel }) => {
 
             <ConfirmModal
                 show={showModal}
-                onHide={handleHideModal}
+                onHide={handleCancel}
                 onConfirm={handleConfirm}
-                message="¿Estás seguro de que deseas guardar los cambios en la categoría?"
+                message="¿Estás seguro de que deseas registrar la categoria?"
             />
         </div>
     );
 };
-
-export default ModificarCategoria;
+export default AgregarCategoria;

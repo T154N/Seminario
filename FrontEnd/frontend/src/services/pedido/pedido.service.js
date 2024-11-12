@@ -79,10 +79,6 @@ const crearPedido = async (carritoId, domicilioId, medioPagoId, usuarioTransacci
     }
 };
 
-const carritoService = {
-    crearPedido
-};
-
 const pedidoService = {
     findAllPedido,
     generatePedido,
@@ -91,22 +87,4 @@ const pedidoService = {
     crearPedido
 }
 
-
-
 export default pedidoService;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

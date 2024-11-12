@@ -3,9 +3,41 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './carrito.css';
 import { useCarrito } from './CarritoContext';
+import { useNavigate } from 'react-router-dom';
+import loginService from "../../services/login/login.service";
+import {useState} from "react";
+import {MensajesLogin} from "../Mensajes/Mensajes";
 
 export function Carrito() {
-    const { productos, incrementarCantidad, disminuirCantidad, eliminarProducto, generarPedido, vaciarCarrito, total } = useCarrito();
+    const { productos, incrementarCantidad, disminuirCantidad, eliminarDelCarrito, generarPedido, vaciarCarrito, total } = useCarrito();
+    const navigate = useNavigate();
+
+    const [mostrarAlerta, setmostrarAlerta] = useState(false);
+    const [mensajeRegistro, setMensajeRegistro] = useState("");
+    const [tipoError, setTipoError] = useState("");
+
+    const cerrarAlerta = () => {
+        setmostrarAlerta(false);
+    }
+
+    const handleGenerarPedido = () => {
+        const toggleButton = document.getElementById('toggleOffcanvasButton');
+
+        if (productos.length > 0) {
+            if (!loginService.estaIniciadaSesion()) {
+                setmostrarAlerta(true);
+                setMensajeRegistro("Debes iniciar sesión para realizar el pedido.");
+                setTipoError("alerta")
+            } else {
+                generarPedido(navigate);
+                toggleButton.click()
+            }
+        } else {
+            setmostrarAlerta(true);
+            setMensajeRegistro("No hay productos en el carrito.");
+            setTipoError("alerta")
+        }
+};
 
     return (
         <div>
@@ -26,8 +58,10 @@ export function Carrito() {
                         aria-label="Close"
                     ></button>
                 </div>
+                {mostrarAlerta && <MensajesLogin mensaje={mensajeRegistro}
+                                                 tipoError={tipoError} onClose={cerrarAlerta} bordeRedondeado={true}/>}
 
-                <div className="offcanvas-body carrito-body">
+                <div className="offcanvas-body carrito-body" style={{backgroundColor: "#fad892", paddingBottom: "100px"}}>
                     {productos.length === 0 ? (
                         <p className="mensaje-carrito-vacio">No hay productos en el carrito</p>
                     ) : (
@@ -35,7 +69,8 @@ export function Carrito() {
                             <div className="card producto-card" key={producto.id}>
                                 <div className="row g-0">
                                     <div className="col-12 col-md-3">
-                                        <img src={producto.imagen} className="img-fluid rounded-start" alt={producto.nombre} />
+                                        <img src={producto.imagen} className="img-fluid rounded-start"
+                                             alt={producto.nombre}/>
                                     </div>
                                     <div className="col-12 col-md-6">
                                         <div className="card-body">
@@ -58,7 +93,7 @@ export function Carrito() {
                                                 <span className="d-block">${(producto.precioUnitario * producto.cantidad).toFixed(2)}</span>
                                             </p>
                                         </div>
-                                        <button className="btn btn-danger btn-eliminar mt-3" onClick={() => eliminarProducto(producto.id)}>
+                                        <button className="btn btn-eliminar mt-3" onClick={() => eliminarDelCarrito(producto.id)}>
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
                                     </div>
@@ -69,8 +104,8 @@ export function Carrito() {
                 </div>
 
                 <div className="carrito-footer">
-                    <h5>Total: $ {total}</h5>
-                    <button className="btn btn-primary btn-carrito-compra md-2" onClick={generarPedido}>Iniciar Compra</button>
+                    <h5>Total: ${total}</h5>
+                    <button className="btn btn-primary btn-carrito-compra md-2" onClick={handleGenerarPedido}>Iniciar Compra</button>
                     <button className="btn btn-danger btn-vaciar md-2" onClick={vaciarCarrito}>Vaciar Carrito</button>
                 </div>
             </div>

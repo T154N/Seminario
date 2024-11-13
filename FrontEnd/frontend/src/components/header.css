@@ -8,11 +8,21 @@
     padding: 0 0px;
 }
 
+.offcanvas {
+    transition: none !important; /* Deshabilita la transición */
+}
+
 .offcanvas-backdrop {
     background-color: rgba(0, 0, 0, 0.1) !important; /* Ajusta el último valor (0.1) para una mayor o menor opacidad */
 }
 
+.offcanvas-body {
+    background-color: #FCBB3A; /* Default background color */
+}
 
+.bg-color .offcanvas-body {
+    background-color: #fad892; /* Background color when offcanvas is shown */
+}
 
 @media (max-width: 768px) {
     .sidebar {

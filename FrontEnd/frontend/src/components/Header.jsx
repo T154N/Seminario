@@ -1,8 +1,7 @@
-// Header.jsx
-
+import React, { useContext, useEffect } from 'react';
+import { UserContext } from '../components/login/UserContext';
 import './header.css';
 import CMLogo from '../images/PedidoFlex Icons/CMDistribuidoraLogo.png';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Carrito } from './carrito/Carrito';
 import loginService from "../services/login/login.service";
@@ -15,6 +14,28 @@ import { Offcanvas } from 'bootstrap';
 
 export function Header() {
     const navigate = useNavigate();
+    const { isLoggedIn, logout } = useContext(UserContext);
+
+    useEffect(() => {
+        const offcanvasElement = document.getElementById('offcanvasNavbar');
+        const offcanvasInstance = Offcanvas.getInstance(offcanvasElement);
+
+        const handleShow = () => {
+            offcanvasElement.classList.add('bg-color');
+        };
+
+        const handleHide = () => {
+            offcanvasElement.classList.remove('bg-color');
+        };
+
+        offcanvasElement.addEventListener('show.bs.offcanvas', handleShow);
+        offcanvasElement.addEventListener('hide.bs.offcanvas', handleHide);
+
+        return () => {
+            offcanvasElement.removeEventListener('show.bs.offcanvas', handleShow);
+            offcanvasElement.removeEventListener('hide.bs.offcanvas', handleHide);
+        };
+    }, []);
 
     const closeOffcanvasNavbar = () => {
         const offcanvasNavbarCloseButton = document.getElementById('offcanvasNavbarCloseButton');
@@ -62,10 +83,17 @@ export function Header() {
         }
     };
 
+    const handleLogout = () => {
+        loginService.cerrarSesion();
+        logout();
+        navigate('/');
+        closeOffcanvasNavbar();
+    };
+
     return (
         <div>
             <header>
-                <nav className="navbar navbar-light" style={{ backgroundColor: "#FCBB3A" }}>
+                <nav className="navbar navbar-light navbar-expand-lg" style={{ backgroundColor: "#FCBB3A" }}>
                     <div className="d-flex justify-content-between w-100 ms-2 me-2">
                         <button className="btn logo-button">
                             <img src={CMLogo} style={{
@@ -78,7 +106,7 @@ export function Header() {
                         </button>
 
                         <div className="d-flex align-items-center">
-                            <button id="toggleOffcanvasButton" className="btn btn-header fs-5"
+                            <button id="toggleOffcanvasButton" className="btn btn-header fs-5 d-lg-none"
                                     data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasScrolling"
                                     aria-controls="offcanvasScrolling"
@@ -109,7 +137,7 @@ export function Header() {
                                 <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas"
                                         aria-label="Close" id="offcanvasNavbarCloseButton"></button>
                             </div>
-                            <div className="offcanvas-body" style={{backgroundColor: "#fad892"}}>
+                            <div className="offcanvas-body">
                                 <ul className="navbar-nav ms-auto justify-content-end flex-grow-1 text-start">
                                     <li className="nav-item me-1 mb-2">
                                         <div className="d-grid">
@@ -126,14 +154,14 @@ export function Header() {
                                     </li>
                                     <li className="nav-item me-1 mb-2">
                                         <div className="d-grid">
-                                            <button className="btn btn-header fs-5" onClick={goToUserProfile}>
+                                            <button className="btn btn-header fs-5" onClick={isLoggedIn ? handleLogout : goToUserProfile}>
                                                 <img src={usuario} alt="Login" style={{
                                                     width: "30px",
                                                     height: "auto",
                                                     marginRight: "3px",
                                                     verticalAlign: "middle"
                                                 }}/>
-                                                Login
+                                                {isLoggedIn ? 'Cerrar sesión' : 'Login'}
                                             </button>
                                         </div>
                                     </li>
@@ -166,6 +194,24 @@ export function Header() {
                                                 </button>
                                             </div>
                                         </li>}
+                                    <li className="nav-item me-1 mb-2 d-lg-block d-none">
+                                        <div className="d-grid">
+                                            <button className="btn btn-header fs-5"
+                                                    data-bs-toggle="offcanvas"
+                                                    data-bs-target="#offcanvasScrolling"
+                                                    aria-controls="offcanvasScrolling"
+                                                    onClick={mostrarCarrito}>
+                                                <img src={carrito} alt="Carrito" style={{
+                                                    width: "30px",
+                                                    height: "auto",
+                                                    marginRight: "3px",
+                                                    verticalAlign: "middle",
+                                                    padding: 0
+                                                }}/>
+                                                Carrito
+                                            </button>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

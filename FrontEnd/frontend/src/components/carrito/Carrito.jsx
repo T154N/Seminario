@@ -105,7 +105,7 @@ export function Carrito() {
 
                 <div className="carrito-footer">
                     <h5>Total: ${total}</h5>
-                    <button className="btn btn-primary btn-carrito-compra md-2" onClick={handleGenerarPedido}>Iniciar Compra</button>
+                    <button className="btn btn-primary md-2" onClick={handleGenerarPedido}>Iniciar Compra</button>
                     <button className="btn btn-danger btn-vaciar md-2" onClick={vaciarCarrito}>Vaciar Carrito</button>
                 </div>
             </div>

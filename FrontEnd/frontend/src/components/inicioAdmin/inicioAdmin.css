@@ -7,9 +7,9 @@
 }
 
 @media (max-width: 768px) {
-  .custom-btn {
-       width: 100%; /* Botones ocupan todo el ancho en pantallas pequeñas */
-   }
+    .custom-btn {
+        width: 100%; /* Botones ocupan todo el ancho en pantallas pequeñas */
+    }
 }
 
 .scrollable-table {
@@ -34,7 +34,7 @@
     height: 100vh;
 }
 
- /*Estilos para la barra de desplazamiento*/
+/*Estilos para la barra de desplazamiento*/
 .custom-scrollbar {
     max-width: 100%;
     overflow-x: auto;
@@ -213,12 +213,12 @@
     color: white;
     border: none;
     border-radius: 20px;
-    padding: 0.5px 6px;
+    padding: 1px 6px;
 
 }
-    .titulo-filtro{
-        position: relative;
-        top: -2px;
+.titulo-filtro{
+    position: relative;
+    top: -2px;
     font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 10px;
@@ -255,7 +255,7 @@
 
 .checkbox-container .form-check-label {
 
-    font-weight: bold;
+
 }
 .btn-aceptar{
     background-color: #FFC107;

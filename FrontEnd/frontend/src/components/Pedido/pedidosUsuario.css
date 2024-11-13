@@ -14,14 +14,14 @@
 }
 
 .pedidos-usuario-table-responsive {
-  border-radius: 8px; 
+  border-radius: 8px;
   overflow: hidden;
 }
 
 .pedidos-usuario-table {
   border-collapse: collapse;
   width: 100%;
-  border-radius: 8px; 
+  border-radius: 8px;
   overflow: hidden;
 }
 
@@ -40,7 +40,7 @@
   text-align: center;
   vertical-align: middle;
   overflow: hidden;
-  border: 0.001rem solid #ddd; 
+  border: 0.001rem solid #ddd;
 }
 
 .pedidos-usuario-table tbody tr:nth-child(odd) {
@@ -93,8 +93,8 @@
 
 .pedidos-usuario-page-link {
   color: #000000;
-  background-color: #ffffff; 
-  padding: 0.6rem 1rem; 
+  background-color: #ffffff;
+  padding: 0.6rem 1rem;
   margin: 0 0.25rem;
   border-radius: 5px;
   transition: background-color 0.3s ease;
@@ -102,14 +102,14 @@
 }
 
 .pedidos-usuario-page-link:hover {
-  background-color: #ff8c42; 
+  background-color: #ff8c42;
   color: #fff;
 }
 
 .pedidos-usuario-page-item.active .pedidos-usuario-page-link {
-  background-color: #ff8c42; 
+  background-color: #ff8c42;
   color: #fff;
-  
+
 }
 
 

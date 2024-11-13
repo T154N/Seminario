@@ -1,16 +1,7 @@
 .card-title {
-    font-size: 1.5rem;       
-    font-weight: bold;       
-    margin-bottom: 10px;     
-}
-
-.cantidad-control-rectangulo {
-    border: 2px solid #ccc; /* Borde del rectángulo */
-    border-radius: 8px; /* Borde redondeado opcional */
-    padding: 5px; /* Espacio interno */
-    display: inline-flex; /* Mostrar los elementos en línea */
-    justify-content: space-between; /* Separar los botones y el input */
-    align-items: center; /* Alinear verticalmente */
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 /* Ocultar flechas solo para campos de entrada de tipo number con la clase .input-cantidad */
@@ -37,9 +28,9 @@
 
 
 .card-text {
-    font-size: 1.1rem;         
-    color: #6c757d;            
-    margin-bottom: 8px;       
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 8px;
 }
 
 .btn-success {
@@ -49,7 +40,7 @@
     padding: 10px 15px;
     border-radius: 5px;
     /* border: 2px solid black; */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .btn-success:hover {

@@ -44,6 +44,7 @@ const cerrarSesion = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
     localStorage.removeItem('rol');
+    localStorage.removeItem('email');
 }
 
 const getDatosParaRegistro = async () => {

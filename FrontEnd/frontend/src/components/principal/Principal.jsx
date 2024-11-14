@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
+import loginService from "../../services/login/login.service";
 import pedidoflex from '../../images/PedidoFlex Icons/PedidoFlexlineal.png';
 
 export function Principal() {
@@ -8,6 +8,11 @@ export function Principal() {
 
     const handleLoginClick = () => {
         navigate('/login'); 
+    };
+
+    const handleCloseSessionClick = () => {
+        loginService.cerrarSesion();
+        navigate('..');
     };
 
     const handleCatalogClick = () => {
@@ -30,7 +35,9 @@ export function Principal() {
                                     <p>Para comenzar seleccioná una opción:</p>
                                 </div>
                                 <div className='d-flex justify-content-center mb-3'>
-                                    <button className='btn btn-principal text-white me-1' onClick={handleLoginClick}>Iniciar sesión</button>
+                                {loginService.estaIniciadaSesion() ? (
+                                    <button className='btn btn-principal text-white me-1' onClick={handleCloseSessionClick}>Cerrar sesión</button>) : 
+                                    ( <button className='btn btn-principal text-white me-1' onClick={handleLoginClick}>Iniciar sesión</button>)}
                                     <button className='btn btn-principal text-white ms-1' onClick={handleCatalogClick}>Ver catálogo</button>
                                 </div>
                             </div>

@@ -139,6 +139,53 @@ export function Header() {
                             </div>
                             <div className="offcanvas-body">
                                 <ul className="navbar-nav ms-auto justify-content-end flex-grow-1 text-start">
+                                {loginService.esAdmin() &&
+                                        <li className="nav-item me-1 mb-2">
+                                            <div className="d-grid">
+                                                <button className="btn btn-info fs-5" onClick={goToAdminConfig}>
+                                                    <img src={config} alt="Carrito" style={{
+                                                        width: "30px",
+                                                        height: "auto",
+                                                        marginRight: "3px",
+                                                        verticalAlign: "middle",
+                                                        padding: 0
+                                                    }}/>
+                                                    Administrador
+                                                </button>
+                                            </div>
+                                        </li>}
+                                    <li className="nav-item me-1 mb-2">
+                                        <div className="d-grid">
+                                            <button className="btn btn-header fs-5" onClick={goToCatalogue}>
+                                                <img src={catalogo} alt="Catalogo" style={{
+                                                    width: "30px",
+                                                    height: "auto",
+                                                    marginRight: "3px",
+                                                    verticalAlign: "middle",
+                                                    padding: 0
+                                                }}/>
+                                                Catalogo
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li className="nav-item me-1 mb-2 d-lg-block d-none">
+                                        <div className="d-grid">
+                                            <button className="btn btn-header fs-5"
+                                                    data-bs-toggle="offcanvas"
+                                                    data-bs-target="#offcanvasScrolling"
+                                                    aria-controls="offcanvasScrolling"
+                                                    onClick={mostrarCarrito}>
+                                                <img src={carrito} alt="Carrito" style={{
+                                                    width: "30px",
+                                                    height: "auto",
+                                                    marginRight: "3px",
+                                                    verticalAlign: "middle",
+                                                    padding: 0
+                                                }}/>
+                                                Carrito
+                                            </button>
+                                        </div>
+                                    </li>
                                     <li className="nav-item me-1 mb-2">
                                         <div className="d-grid">
                                             <button className="btn btn-header fs-5" onClick={goToInformacion}>
@@ -162,53 +209,6 @@ export function Header() {
                                                     verticalAlign: "middle"
                                                 }}/>
                                                 {isLoggedIn ? 'Cerrar sesión' : 'Login'}
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li className="nav-item me-1 mb-2">
-                                        <div className="d-grid">
-                                            <button className="btn btn-header fs-5" onClick={goToCatalogue}>
-                                                <img src={catalogo} alt="Catalogo" style={{
-                                                    width: "30px",
-                                                    height: "auto",
-                                                    marginRight: "3px",
-                                                    verticalAlign: "middle",
-                                                    padding: 0
-                                                }}/>
-                                                Catalogo
-                                            </button>
-                                        </div>
-                                    </li>
-                                    {loginService.esAdmin() &&
-                                        <li className="nav-item me-1 mb-2">
-                                            <div className="d-grid">
-                                                <button className="btn btn-info fs-5" onClick={goToAdminConfig}>
-                                                    <img src={config} alt="Carrito" style={{
-                                                        width: "30px",
-                                                        height: "auto",
-                                                        marginRight: "3px",
-                                                        verticalAlign: "middle",
-                                                        padding: 0
-                                                    }}/>
-                                                    Administrador
-                                                </button>
-                                            </div>
-                                        </li>}
-                                    <li className="nav-item me-1 mb-2 d-lg-block d-none">
-                                        <div className="d-grid">
-                                            <button className="btn btn-header fs-5"
-                                                    data-bs-toggle="offcanvas"
-                                                    data-bs-target="#offcanvasScrolling"
-                                                    aria-controls="offcanvasScrolling"
-                                                    onClick={mostrarCarrito}>
-                                                <img src={carrito} alt="Carrito" style={{
-                                                    width: "30px",
-                                                    height: "auto",
-                                                    marginRight: "3px",
-                                                    verticalAlign: "middle",
-                                                    padding: 0
-                                                }}/>
-                                                Carrito
                                             </button>
                                         </div>
                                     </li>

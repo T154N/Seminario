@@ -1,5 +1,4 @@
 // Header.jsx
-
 import './header.css';
 import CMLogo from '../images/PedidoFlex Icons/CMDistribuidoraLogo.png';
 import React from 'react';
@@ -11,12 +10,14 @@ import informacion from '../images/Header Icons/info-circle.svg';
 import usuario from '../images/Header Icons/person.svg';
 import catalogo from '../images/Header Icons/catalogo.png';
 import config from '../images/Header Icons/config.svg';
-import { FaBox } from 'react-icons/fa'; // Importa el ícono de paquete de FontAwesome
+import { FaBox } from 'react-icons/fa';
 import { Offcanvas } from 'bootstrap';
+import { useCarrito } from './carrito/CarritoContext'; // Importa tu contexto del carrito
 
 export function Header() {
     const navigate = useNavigate();
-
+    const { productos } = useCarrito(); // Obtener productos del carrito
+    const totalProductos = productos.length; // Assuming productos is an array
     const closeOffcanvasNavbar = () => {
         const offcanvasNavbarCloseButton = document.getElementById('offcanvasNavbarCloseButton');
         if (offcanvasNavbarCloseButton) {
@@ -24,33 +25,8 @@ export function Header() {
         }
     };
 
-    const goToUserProfile = () => {
-        navigate('/login');
-        closeOffcanvasNavbar();
-    };
-
-    const goToCatalogue = () => {
-        navigate('/catalogo');
-        closeOffcanvasNavbar();
-    };
-
-    const goToInformacion = () => {
-        navigate('/info');
-        closeOffcanvasNavbar();
-    };
-
-    const goToHomePage = () => {
-        navigate('/');
-        closeOffcanvasNavbar();
-    };
-
-    const goToAdminConfig = () => {
-        navigate('/inicioAdmin');
-        closeOffcanvasNavbar();
-    };
-
-    const goToPedidosSolicitados = () => {
-        navigate('/pedidos-usuario');
+    const goToPage = (path) => {
+        navigate(path);
         closeOffcanvasNavbar();
     };
 
@@ -73,17 +49,17 @@ export function Header() {
             <header>
                 <nav className="navbar navbar-light" style={{ backgroundColor: "#FCBB3A" }}>
                     <div className="d-flex justify-content-between w-100 ms-2 me-2">
-                        <button className="btn logo-button">
+                        <button className="btn logo-button" onClick={() => goToPage('/')}>
                             <img src={CMLogo} style={{
                                 width: "150px",
                                 height: "auto",
                                 marginRight: "3px",
                                 verticalAlign: "middle",
                                 outline: "none"
-                            }} onClick={goToHomePage} alt="Logo"/>
+                            }} alt="Logo"/>
                         </button>
 
-                        <div className="d-flex align-items-center">
+                        <div className="d-flex align-items-center position-relative">
                             <button id="toggleOffcanvasButton" className="btn btn-header fs-5"
                                     data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasScrolling"
@@ -97,19 +73,22 @@ export function Header() {
                                     padding: 0
                                 }}/>
                                 Carrito
+                                {totalProductos > 0 && (
+                                   <span className={totalProductos > 99 ? 'badge-circle-large' : 'badge-circle'}>
+                                   {totalProductos > 99 ? '99+' : totalProductos}
+                               </span>
+                                )}
                             </button>
 
-                        <button className="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-
+                            <button className="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                                <span className="navbar-toggler-icon"></span>
+                            </button>
                         </div>
 
                         <div className="sidebar offcanvas offcanvas-end custom-backdrop" tabIndex="-1"
                              id="offcanvasNavbar"
                              aria-labelledby="offcanvasNavbarLabel" data-bs-backdrop="false" inert>
-
                             <div className="offcanvas-header text-black">
                                 <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Menu de opciones</h5>
                                 <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas"
@@ -119,7 +98,7 @@ export function Header() {
                                 <ul className="navbar-nav ms-auto justify-content-end flex-grow-1 text-start">
                                     <li className="nav-item me-1 mb-2">
                                         <div className="d-grid">
-                                            <button className="btn btn-header fs-5" onClick={goToInformacion}>
+                                            <button className="btn btn-header fs-5" onClick={() => goToPage('/info')}>
                                                 <img src={informacion} alt="Informacion" style={{
                                                     width: "30px",
                                                     height: "auto",
@@ -132,7 +111,7 @@ export function Header() {
                                     </li>
                                     <li className="nav-item me-1 mb-2">
                                         <div className="d-grid">
-                                            <button className="btn btn-header fs-5" onClick={goToUserProfile}>
+                                            <button className="btn btn-header fs-5" onClick={() => goToPage('/login')}>
                                                 <img src={usuario} alt="Login" style={{
                                                     width: "30px",
                                                     height: "auto",
@@ -145,7 +124,7 @@ export function Header() {
                                     </li>
                                     <li className="nav-item me-1 mb-2">
                                         <div className="d-grid">
-                                            <button className="btn btn-header fs-5" onClick={goToCatalogue}>
+                                            <button className="btn btn-header fs-5" onClick={() => goToPage('/catalogo')}>
                                                 <img src={catalogo} alt="Catalogo" style={{
                                                     width: "30px",
                                                     height: "auto",
@@ -159,14 +138,12 @@ export function Header() {
                                     </li>
                                     <li className="nav-item me-1 mb-2">
                                         <div className="d-grid">
-                                            <button className="btn btn-header fs-5" onClick={goToPedidosSolicitados}>
+                                            <button className="btn btn-header fs-5" onClick={() => goToPage('/pedidos-usuario')}>
                                                 <FaBox style={{
                                                     width: "30px",
                                                     height: "auto",
                                                     marginRight: "3px",
                                                     verticalAlign: "middle",
-                                            
-                                
                                                 }} size="xs"/>
                                                 Pedidos Solicitados
                                             </button>
@@ -175,8 +152,8 @@ export function Header() {
                                     {loginService.esAdmin() &&
                                         <li className="nav-item me-1 mb-2">
                                             <div className="d-grid">
-                                                <button className="btn btn-info fs-5" onClick={goToAdminConfig}>
-                                                    <img src={config} alt="Carrito" style={{
+                                                <button className="btn btn-info fs-5" onClick={() => goToPage('/inicioAdmin')}>
+                                                    <img src={config} alt="Admin" style={{
                                                         width: "30px",
                                                         height: "auto",
                                                         marginRight: "3px",

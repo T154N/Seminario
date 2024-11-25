@@ -71,3 +71,54 @@
 }
 
 
+.d-flex.align-items-center.position-relative {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-header {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge-circle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    color: white;
+    font-size: 85%;
+    font-weight: 500;
+    padding: 0; /* Eliminamos el padding para un control más estricto */
+    border-radius: 50%;
+    height: 22px; /* Ajusta el tamaño del círculo si es necesario */
+    width: 22px;
+    transform: translateX(50%) translateY(-28%);
+    line-height: 18px; /* Asegura que el texto esté centrado verticalmente */
+    margin-left: -10px; /* Ajusta el margen según tu diseño */
+    margin-top: -5px;
+}
+
+.badge-circle-large{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    color: white;
+    font-size: 70%;
+    font-weight: 500;
+    padding: 0; /* Eliminamos el padding para un control más estricto */
+    border-radius: 50%;
+    height: 22px; /* Ajusta el tamaño del círculo si es necesario */
+    width: 25px;
+    transform: translateX(40%) translateY(-28%);
+    overflow: hidden; /* Oculta el desbordamiento */
+    text-align: center; /* Centra el texto horizontalmente */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    line-height: 18px; /* Asegura que el texto esté centrado verticalmente */
+    margin-left: -10px; /* Ajusta el margen según tu diseño */
+    margin-top: -5px;
+}

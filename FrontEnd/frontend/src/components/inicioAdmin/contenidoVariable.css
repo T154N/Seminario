@@ -1,0 +1,22 @@
+.btn-estado {
+    background-color: #f39c12;  /* Amarillo oscuro */
+    border-color: #e67e22; /* Color de borde más oscuro para el botón */
+}
+
+.btn-estado:hover {
+    background-color: #e67e22;  /* Un tono más oscuro al pasar el mouse */
+    border-color: #f39c12;
+}
+
+.btn-estado:active {
+    background-color: blue;
+  }
+
+.pedidos-info-btn-link {
+    margin-top: 10px;
+    background-color: #479ff1;  
+    border-color: #000000;
+    color: white;
+    border-radius: 5px;
+     /* Color de borde más oscuro para el botón */
+}

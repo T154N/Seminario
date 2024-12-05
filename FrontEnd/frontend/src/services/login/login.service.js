@@ -1,25 +1,21 @@
 import axios from 'axios';
+import clienteService from "../cliente/cliente.service";
+import carritoService from "../carrito/carrito.service";
 // import CryptoJS from "crypto-js";
 
 const LOGIN_API_URL = process.env.REACT_APP_SEMINARIO_BACKEND_URL;
 const ENDPOINT_NOAUTH = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
-// const ENCRYPTION_KEY_NOT_PARSED = process.env.REACT_APP_ENCRYPTION_KEY;
-// const ENCRYPTION_KEY = CryptoJS.enc.Utf8.parse(ENCRYPTION_KEY_NOT_PARSED);
-
-
 
 // Error 1: Correo o contraseña incorrectos
 // Error 2: El token guardado ya no es válido
 // Respuesta 200: Inicio de sesión correcto
 // Respuesta 400: Error en el servidor
 
-const iniciarSesion = async (email, password) => {
+const iniciarSesion = async (email, password, agregarProducto) => {
     try {
-        // const encryptedPassword = CryptoJS.AES.encrypt(password, ENCRYPTION_KEY).toString();
         const encryptedPassword = await getEncryptedPassword(password);
-        console.log(encryptedPassword)
         const response = await axios.post(`${LOGIN_API_URL}/rest/auth/login`, {
-            email: email, 
+            email: email,
             password: encryptedPassword.toString()
         });
         if (response.status === 200) {
@@ -27,6 +23,9 @@ const iniciarSesion = async (email, password) => {
                 localStorage.setItem('token', response.data.body.token);
                 localStorage.setItem('email', response.data.body.email);
                 localStorage.setItem('rol', response.data.body.rol);
+                const datosCliente = await clienteService.getDatosClientePedido();
+                localStorage.setItem('clienteId', datosCliente.clienteId);
+                await carritoService.cargarCarrito(agregarProducto);
                 return response;
             }
         }
@@ -44,6 +43,7 @@ const cerrarSesion = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
     localStorage.removeItem('rol');
+    localStorage.removeItem('clienteId');
 }
 
 const getDatosParaRegistro = async () => {
@@ -130,7 +130,6 @@ const getEncryptedPassword = async (password) => {
                 'Content-Type': 'text/plain'
             }
         })
-        console.log(response.data)
         return response.data
     } catch (err) {
         return 400;

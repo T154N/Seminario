@@ -11,10 +11,12 @@ import usuario from '../images/Header Icons/person.svg';
 import catalogo from '../images/Header Icons/catalogo.png';
 import config from '../images/Header Icons/config.svg';
 import { Offcanvas } from 'bootstrap';
+import { useCarrito } from '../components/carrito/CarritoContext';
 
 export function Header() {
     const navigate = useNavigate();
     const { isLoggedIn, logout } = useContext(UserContext);
+    const { vaciarCarritoLogout } = useCarrito();
 
     useEffect(() => {
         const offcanvasElement = document.getElementById('offcanvasNavbar');
@@ -84,6 +86,7 @@ export function Header() {
 
     const handleLogout = () => {
         loginService.cerrarSesion();
+        vaciarCarritoLogout();
         logout();
         navigate('/');
         closeOffcanvasNavbar();
@@ -160,7 +163,7 @@ export function Header() {
                                                     marginRight: "3px",
                                                     verticalAlign: "middle"
                                                 }}/>
-                                                {isLoggedIn ? 'Cerrar sesión' : 'Login'}
+                                                {isLoggedIn ? 'Cerrar sesión' : 'Iniciar sesión'}
                                             </button>
                                         </div>
                                     </li>

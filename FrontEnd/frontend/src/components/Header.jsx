@@ -11,10 +11,12 @@ import usuario from '../images/Header Icons/person.svg';
 import catalogo from '../images/Header Icons/catalogo.png';
 import config from '../images/Header Icons/config.svg';
 import { Offcanvas } from 'bootstrap';
+import { useCarrito } from '../components/carrito/CarritoContext';
 
 export function Header() {
     const navigate = useNavigate();
     const { isLoggedIn, logout } = useContext(UserContext);
+    const { vaciarCarritoLogout } = useCarrito();
 
     useEffect(() => {
         const offcanvasElement = document.getElementById('offcanvasNavbar');
@@ -84,6 +86,7 @@ export function Header() {
 
     const handleLogout = () => {
         loginService.cerrarSesion();
+        vaciarCarritoLogout();
         logout();
         navigate('/');
         closeOffcanvasNavbar();
@@ -94,7 +97,7 @@ export function Header() {
             <header>
                 <nav className="navbar navbar-light navbar-expand-lg" style={{ backgroundColor: "#FCBB3A" }}>
                     <div className="d-flex justify-content-between w-100 ms-2 me-2">
-                        <button className="btn logo-button">
+                        <button className="btn">
                             <img src={CMLogo} style={{
                                 width: "150px",
                                 height: "auto",
@@ -137,34 +140,9 @@ export function Header() {
                                         aria-label="Close" id="offcanvasNavbarCloseButton"></button>
                             </div>
                             <div className="offcanvas-body">
+                                {/* Botones que se muestran solo en pantallas chicas */}
                                 <ul className="navbar-nav ms-auto justify-content-end flex-grow-1 text-start">
-                                    <li className="nav-item me-1 mb-2">
-                                        <div className="d-grid">
-                                            <button className="btn btn-header fs-5" onClick={goToInformacion}>
-                                                <img src={informacion} alt="Informacion" style={{
-                                                    width: "30px",
-                                                    height: "auto",
-                                                    marginRight: "3px",
-                                                    verticalAlign: "middle"
-                                                }}/>
-                                                Informacion
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li className="nav-item me-1 mb-2">
-                                        <div className="d-grid">
-                                            <button className="btn btn-header fs-5" onClick={isLoggedIn ? handleLogout : goToUserProfile}>
-                                                <img src={usuario} alt="Login" style={{
-                                                    width: "30px",
-                                                    height: "auto",
-                                                    marginRight: "3px",
-                                                    verticalAlign: "middle"
-                                                }}/>
-                                                {isLoggedIn ? 'Cerrar sesión' : 'Login'}
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li className="nav-item me-1 mb-2">
+                                    <li className="nav-item me-1 mb-2 d-lg-none">
                                         <div className="d-grid">
                                             <button className="btn btn-header fs-5" onClick={goToCatalogue}>
                                                 <img src={catalogo} alt="Catalogo" style={{
@@ -178,8 +156,35 @@ export function Header() {
                                             </button>
                                         </div>
                                     </li>
+                                    <li className="nav-item me-1 mb-2 d-lg-none">
+                                        <div className="d-grid">
+                                            <button className="btn btn-header fs-5"
+                                                    onClick={isLoggedIn ? handleLogout : goToUserProfile}>
+                                                <img src={usuario} alt="Login" style={{
+                                                    width: "30px",
+                                                    height: "auto",
+                                                    marginRight: "3px",
+                                                    verticalAlign: "middle"
+                                                }}/>
+                                                {isLoggedIn ? 'Cerrar sesión' : 'Iniciar sesión'}
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li className="nav-item me-1 mb-2 d-lg-none">
+                                        <div className="d-grid">
+                                            <button className="btn btn-header fs-5" onClick={goToInformacion}>
+                                                <img src={informacion} alt="Informacion" style={{
+                                                    width: "30px",
+                                                    height: "auto",
+                                                    marginRight: "3px",
+                                                    verticalAlign: "middle"
+                                                }}/>
+                                                Informacion
+                                            </button>
+                                        </div>
+                                    </li>
                                     {loginService.esAdmin() &&
-                                        <li className="nav-item me-1 mb-2">
+                                        <li className="nav-item me-1 mb-2 d-lg-none">
                                             <div className="d-grid">
                                                 <button className="btn btn-info fs-5" onClick={goToAdminConfig}>
                                                     <img src={config} alt="Carrito" style={{
@@ -192,7 +197,66 @@ export function Header() {
                                                     Administrador
                                                 </button>
                                             </div>
-                                        </li>}
+                                        </li>
+                                    }
+                                    {/* Botones que se muestran solo en pantallas grandes */}
+                                    <li className="nav-item me-0 d-none d-lg-block">
+                                        <button className="nav-link btn active fs-5"
+                                                onClick={goToCatalogue}>
+                                            <img className="me-1" src={catalogo} alt="Catalogo" style={{
+                                                width: "40px",
+                                                height: "auto",
+                                                marginRight: "3px",
+                                                verticalAlign: "middle",
+                                                padding: 0
+                                            }}/>
+                                            Catálogo
+                                        </button>
+                                    </li>
+
+                                    <li className="nav-item me-0 d-none d-lg-block">
+                                        <button className="nav-link btn active fs-5"
+                                                onClick={isLoggedIn ? handleLogout : goToUserProfile}>
+                                            <img src={usuario} alt="Login" style={{
+                                                width: "30px",
+                                                height: "auto",
+                                                marginRight: "3px",
+                                                verticalAlign: "middle"
+                                            }}/>
+                                            {isLoggedIn ? 'Mi cuenta' : 'Iniciar sesión'}</button>
+                                    </li>
+
+                                    <li className="nav-item me-0 d-none d-lg-block">
+                                        <button className="nav-link btn active fs-5"
+                                                onClick={goToInformacion}>
+                                            <img className="me-1" src={informacion} alt="Informacion" style={{
+                                                width: "30px",
+                                                height: "auto",
+                                                marginRight: "3px",
+                                                verticalAlign: "middle"
+                                            }}/>
+                                            Información
+                                        </button>
+                                    </li>
+
+                                    {loginService.esAdmin() &&
+                                        <li className="nav-item me-0 d-none d-lg-block">
+                                            <button className="nav-link btn active fs-5 text-white"
+                                                    onClick={goToAdminConfig}>
+                                                <img className="colorTuerca" src={config} alt="Carrito" style={{
+                                                    width: "30px",
+                                                    height: "auto",
+                                                    marginRight: "3px",
+                                                    verticalAlign: "middle",
+                                                    padding: 0,
+                                                    filter: "invert(1)"
+                                                }}/>
+                                                Administrador
+                                            </button>
+                                        </li>
+                                    }
+
+                                    {/* Carrito */}
                                     <li className="nav-item me-1 mb-2 d-lg-block d-none">
                                         <div className="d-grid">
                                             <button className="btn btn-header fs-5"

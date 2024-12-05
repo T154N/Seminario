@@ -1,8 +1,31 @@
 import axios from "axios";
 
-import clienteService from "../cliente/cliente.service";
-
 const ENDPOINT_CARRITO_URL = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
+
+const cargarCarrito = async (agregarProducto) => {
+    try {
+        const clienteId = localStorage.getItem('clienteId');
+        const carritoYaExistente = await findByCliente(clienteId);
+        if (carritoYaExistente === 404) {
+            // No tiene ningun carrito
+            return 404;
+        } else if (carritoYaExistente.carritoId) {
+            // Ya tiene un carrito creado
+            localStorage.setItem('carritoId', carritoYaExistente.carritoId);
+            const productosDelCarrito = await getDetalleCarrito(carritoYaExistente.carritoId);
+            console.log("ID del carrito: ", carritoYaExistente.carritoId);
+            console.log("Detalle carrito", productosDelCarrito);
+            // Cargar los productos del carrito al carritoContext
+            productosDelCarrito.forEach(producto => {
+                agregarProducto(producto);
+            });
+        } else {
+            return 400;
+        }
+    } catch (err) {
+        return 400;
+    }
+}
 
 const findByCliente = async (clienteId) => {
     try {
@@ -21,24 +44,18 @@ const findByCliente = async (clienteId) => {
 
 const crearNuevoCarrito = async (usuarioTransaccion) => {
     try {
-        const datosCliente = await clienteService.getDatosClientePedido()
-        // console.log("Datos del cliente", datosCliente)
-        const carritoYaExistente = await findByCliente(datosCliente.clienteId);
-        // console.log("Datos del carrito", carritoYaExistente)
+        const clienteId = localStorage.getItem('clienteId');
+        const carritoYaExistente = await findByCliente(clienteId);
         // No tiene ningun carrito creado
         if (carritoYaExistente === 404) {
             // Crea un nuevo carrito
-            const nuevoCarrito = await newCarrito(datosCliente.clienteId, usuarioTransaccion)
+            const nuevoCarrito = await newCarrito(clienteId, usuarioTransaccion)
             console.log("Nuevo carrito", nuevoCarrito.data.body.carrito_id)
             localStorage.setItem('carritoId', nuevoCarrito.data.body.carrito_id);
             return nuevoCarrito.data.body.carrito_id;
         } else {
             // Ya tiene un carrito creado
-            await removeCarrito(datosCliente.clienteId, usuarioTransaccion);
-            const nuevoCarrito = await newCarrito(datosCliente.clienteId, usuarioTransaccion);
-            console.log("Nuevo carrito", nuevoCarrito.data.body.carrito_id)
-            localStorage.setItem('carritoId', nuevoCarrito.data.body.carrito_id);
-            return nuevoCarrito.data.body.carrito_id;
+            return localStorage.getItem('carritoId');
         }
     } catch (err) {
         return 400;
@@ -62,7 +79,18 @@ const cargarProductosAlCarrito = async (carritoId, productos, usuarioTransaccion
 const getDetalleCarrito = async (carritoId) => {
     try {
         const response = await axios.get(`${ENDPOINT_CARRITO_URL}/carrito/detalle/${carritoId}`);
-        return response.data.body;
+        return response.data.body.map((p) => {
+            return {
+                id: p.productoID,
+                nombre: p.productoName,
+                precioUnitario: p.precio_individual,
+                cantidad: p.cantidad,
+                descripcion: p.descripcion ? p.descripcion : "Producto sin descripción",
+                categoria: null,
+                imagen: null,
+                estado: null
+            }
+        });
     } catch (error) {
         return 400
     }
@@ -144,6 +172,7 @@ const carritoService = {
     newCarrito,
     crearNuevoCarrito,
     cargarProductosAlCarrito,
+    cargarCarrito
 
 }
 

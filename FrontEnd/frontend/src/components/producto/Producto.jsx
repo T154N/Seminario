@@ -3,6 +3,7 @@ import './producto.css';
 import productoService from "../../services/producto/producto.service";
 import { useParams, useNavigate, useLocation } from "react-router";
 import { useCarrito } from '../carrito/CarritoContext';
+import loginService from "../../services/login/login.service";
 
 export function Producto() {
     const navigate = useNavigate();
@@ -15,6 +16,7 @@ export function Producto() {
     const { agregarProducto } = useCarrito();
     const [categoriaNombre, setCategoriaNombre] = useState(location.state?.categoriaNombre || null);
     const [productoAgregado, setProductoAgregado] = useState({});
+    const [sesionIniciada, setSesionIniciada] = useState(false);
 
     useEffect(() => {
         if (!categoriaNombre) {
@@ -23,25 +25,34 @@ export function Producto() {
     }, [categoriaNombre]);
 
     useEffect(() => {
-    const fetchData = async () => {
-        setLoading(true);
+        const fetchData = async () => {
+            setLoading(true);
 
-        if (!categoriaNombre || categoriaNombre === "Todos los productos") {
-            const productos = await productoService.getAllProductos();
-            setProductos(productos);
-            if (!categoriaNombre) {
-                setCategoriaNombre("Todos los productos");
+            if (!categoriaNombre || categoriaNombre === "Todos los productos") {
+                const productos = await productoService.getAllProductos();
+                setProductos(productos);
+                if (!categoriaNombre) {
+                    setCategoriaNombre("Todos los productos");
+                }
+            } else {
+                const productos = await productoService.getProductosCategoria(categoriaId);
+                setProductos(productos);
             }
-        } else {
-            const productos = await productoService.getProductosCategoria(categoriaId);
-            setProductos(productos);
-        }
 
-        setLoading(false);
-    };
+            setLoading(false);
+        };
 
-    fetchData();
-}, [categoriaId, categoriaNombre]);
+        fetchData();
+    }, [categoriaId, categoriaNombre]);
+
+    useEffect(() => {
+        const verificarSesion = async () => {
+            const sesion = await loginService.estaIniciadaSesion();
+            setSesionIniciada(sesion);
+        };
+
+        verificarSesion();
+    }, []);
 
     const handleBusquedaChange = (e) => {
         setBusqueda(e.target.value);
@@ -146,9 +157,14 @@ export function Producto() {
                                         />
                                         <button className="btn btn-outline-secondary" onClick={() => incrementarCantidad(producto.id)}>+</button>
                                     </div>
-                                    <button className="btn btn-secundario text-white mt-3 w-100" onClick={() => agregarAlCarrito(producto)}>
-                                        {!productoAgregado[producto.id] && "🛒 Agregar al carrito"}
-                                        {productoAgregado[producto.id] && "✔️ Producto agregado"}
+                                    <button
+                                        className={`${!sesionIniciada ? 'btn btn-secondary btn-producto-disabled text-black mt-3 w-100' : 'btn btn-secundario text-white mt-3 w-100'}`}
+                                        onClick={() => agregarAlCarrito(producto)}
+                                        disabled={!sesionIniciada}
+                                    >
+                                        {!sesionIniciada && "🔒 Inicie sesión para agregar"}
+                                        {sesionIniciada && !productoAgregado[producto.id] && "🛒 Agregar al carrito"}
+                                        {sesionIniciada && productoAgregado[producto.id] && "✔️ Producto agregado"}
                                     </button>
                                 </div>
                             </div>

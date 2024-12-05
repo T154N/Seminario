@@ -42,17 +42,27 @@ export const CarritoProvider = ({ children }) => {
         });
     };
 
-    const eliminarDelCarrito = (id) => {
+    const eliminarDelCarrito = async (id) => {
+        if (localStorage.getItem('carritoId')) {
+            await carritoService.removeItemFromCarrito(localStorage.getItem('carritoId'), id, localStorage.getItem('email'));
+        }
         setProductos((prevProductos) => prevProductos.filter(producto => producto.id !== id));
     };
 
-    const vaciarCarrito = () => {
+    const vaciarCarrito = async () => {
+        if (localStorage.getItem('carritoId')) {
+            await carritoService.removeCarrito(localStorage.getItem('carritoId'), localStorage.getItem('email'));
+        }
         setProductos([]);
     };
 
     const calcularTotal = () => {
         return productos.reduce((acc, producto) => acc + (producto.precioUnitario * producto.cantidad), 0).toFixed(2);
     };
+
+    const vaciarCarritoLogout = () => {
+        setProductos([]);
+    }
 
     const total = calcularTotal();
 
@@ -83,7 +93,8 @@ export const CarritoProvider = ({ children }) => {
                 generarPedido,
                 total,
                 setCargandoProductosACarrito,
-                cargandoProductosACarrito
+                cargandoProductosACarrito,
+                vaciarCarritoLogout
             }}
         >
             {children}

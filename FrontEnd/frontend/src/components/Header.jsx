@@ -18,7 +18,6 @@ export function Header() {
 
     useEffect(() => {
         const offcanvasElement = document.getElementById('offcanvasNavbar');
-        const offcanvasInstance = Offcanvas.getInstance(offcanvasElement);
 
         const handleShow = () => {
             offcanvasElement.classList.add('bg-color');
@@ -175,7 +174,7 @@ export function Header() {
                                                     verticalAlign: "middle",
                                                     padding: 0
                                                 }}/>
-                                                Catalogo
+                                                Catálogo
                                             </button>
                                         </div>
                                     </li>

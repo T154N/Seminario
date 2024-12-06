@@ -28,8 +28,7 @@ const getAllClientes = async () => {
 }
 const getClienteById = async (id) => {
     try {
-        const response = await axios.get(`${ENDPOINT_CLIENTE_URL}/clientes/${id}`);
-        console.log(response);
+        const response = await axios.get(`${ENDPOINT_NOAUTH}/clientes/${id}`);
 
         if (response.data.body) {
             const c = response.data.body;

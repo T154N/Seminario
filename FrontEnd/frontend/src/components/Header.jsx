@@ -70,6 +70,11 @@ export function Header() {
         closeOffcanvasNavbar();
     };
 
+    const goToPerfil = () => {
+        navigate('/mi-cuenta');
+        closeOffcanvasNavbar();
+    }
+
     const mostrarCarrito = () => {
         const offcanvasNavbarCloseButton = document.getElementById('offcanvasNavbarCloseButton');
         const offcanvasElement = document.getElementById('offcanvasScrolling');
@@ -156,20 +161,58 @@ export function Header() {
                                             </button>
                                         </div>
                                     </li>
-                                    <li className="nav-item me-1 mb-2 d-lg-none">
-                                        <div className="d-grid">
-                                            <button className="btn btn-header fs-5"
-                                                    onClick={isLoggedIn ? handleLogout : goToUserProfile}>
-                                                <img src={usuario} alt="Login" style={{
-                                                    width: "30px",
-                                                    height: "auto",
-                                                    marginRight: "3px",
-                                                    verticalAlign: "middle"
-                                                }}/>
-                                                {isLoggedIn ? 'Cerrar Sesión' : 'Iniciar Sesión'}
-                                            </button>
-                                        </div>
-                                    </li>
+                                    {!isLoggedIn &&
+                                        <li className="nav-item me-1 mb-2 d-lg-none">
+                                            <div className="d-grid">
+                                                <button className="btn btn-header fs-5"
+                                                        onClick={goToUserProfile}>
+                                                    <img src={usuario} alt="Login" style={{
+                                                        width: "30px",
+                                                        height: "auto",
+                                                        marginRight: "3px",
+                                                        verticalAlign: "middle"
+                                                    }}/>
+                                                    Iniciar Sesión
+                                                </button>
+                                            </div>
+                                        </li>
+                                    }
+                                    {/* Dropdown con mi cuenta */}
+                                    {isLoggedIn &&
+                                        <li className="nav-item me-1 mb-2 d-lg-none">
+                                            <div className="dropdown d-grid">
+                                                <button className="btn dropdown-toggle fs-5 btn-header" type="button"
+                                                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                    <img src={usuario} alt="Login" style={{
+                                                        width: "30px",
+                                                        height: "auto",
+                                                        marginRight: "3px",
+                                                        verticalAlign: "middle"
+                                                    }}/>
+                                                    {isLoggedIn ? 'Mi Cuenta' : 'Iniciar Sesión'}
+                                                </button>
+                                                <ul className="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton1" style={{backgroundColor: "#fff3cd"}}>
+                                                    <li>
+                                                        <button className="dropdown-item"
+                                                                onClick={goToPerfil}>Perfil
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button className="dropdown-item"
+                                                                onClick={goToUserProfile}>Mis Pedidos
+                                                        </button>
+                                                    </li>
+                                                    <li><hr className="dropdown-divider"/></li>
+                                                    <li>
+                                                        <button className="dropdown-item" onClick={handleLogout}>Cerrar
+                                                            Sesión
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    }
                                     <li className="nav-item me-1 mb-2 d-lg-none">
                                         <div className="d-grid">
                                             <button className="btn btn-header fs-5" onClick={goToInformacion}>
@@ -213,18 +256,55 @@ export function Header() {
                                             Catálogo
                                         </button>
                                     </li>
-
-                                    <li className="nav-item me-0 d-none d-lg-block">
-                                        <button className="nav-link btn active fs-5"
-                                                onClick={isLoggedIn ? handleLogout : goToUserProfile}>
-                                            <img src={usuario} alt="Login" style={{
-                                                width: "30px",
-                                                height: "auto",
-                                                marginRight: "3px",
-                                                verticalAlign: "middle"
-                                            }}/>
-                                            {isLoggedIn ? 'Mi cuenta' : 'Iniciar Sesión'}</button>
-                                    </li>
+                                    {!isLoggedIn &&
+                                        <li className="nav-item me-0 d-none d-lg-block">
+                                            <button className="nav-link btn active fs-5"
+                                                    onClick={goToUserProfile}>
+                                                <img src={usuario} alt="Login" style={{
+                                                    width: "30px",
+                                                    height: "auto",
+                                                    marginRight: "3px",
+                                                    verticalAlign: "middle"
+                                                }}/>
+                                                Iniciar Sesión</button>
+                                        </li>
+                                    }
+                                    {/* Dropdown con mi cuenta */}
+                                    {isLoggedIn &&
+                                        <li className="nav-item me-0 d-none d-lg-block">
+                                            <div className="dropdown">
+                                                <button className="btn dropdown-toggle fs-5" type="button"
+                                                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                    <img src={usuario} alt="Login" style={{
+                                                        width: "30px",
+                                                        height: "auto",
+                                                        marginRight: "3px",
+                                                        verticalAlign: "middle"
+                                                    }}/>
+                                                    {isLoggedIn ? 'Mi Cuenta' : 'Iniciar Sesión'}
+                                                </button>
+                                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li>
+                                                        <button className="dropdown-item"
+                                                                onClick={goToPerfil}>Perfil
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button className="dropdown-item"
+                                                                onClick={goToUserProfile}>Mis Pedidos
+                                                        </button>
+                                                    </li>
+                                                    <li><hr className="dropdown-divider"/></li>
+                                                    <li>
+                                                        <button className="dropdown-item" onClick={handleLogout}>Cerrar
+                                                            Sesión
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    }
 
                                     <li className="nav-item me-0 d-none d-lg-block">
                                         <button className="nav-link btn active fs-5"

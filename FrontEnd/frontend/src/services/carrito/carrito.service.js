@@ -86,9 +86,9 @@ const getDetalleCarrito = async (carritoId) => {
                 precioUnitario: p.precio_individual,
                 cantidad: p.cantidad,
                 descripcion: p.descripcion ? p.descripcion : "Producto sin descripción",
-                categoria: null,
-                imagen: null,
-                estado: null
+                categoria: p.categoriaId,
+                imagen: p.urlImage,
+                estado: p.estadoId
             }
         });
     } catch (error) {

@@ -166,7 +166,7 @@ export function Header() {
                                                     marginRight: "3px",
                                                     verticalAlign: "middle"
                                                 }}/>
-                                                {isLoggedIn ? 'Cerrar sesión' : 'Iniciar sesión'}
+                                                {isLoggedIn ? 'Cerrar Sesión' : 'Iniciar Sesión'}
                                             </button>
                                         </div>
                                     </li>
@@ -223,7 +223,7 @@ export function Header() {
                                                 marginRight: "3px",
                                                 verticalAlign: "middle"
                                             }}/>
-                                            {isLoggedIn ? 'Mi cuenta' : 'Iniciar sesión'}</button>
+                                            {isLoggedIn ? 'Mi cuenta' : 'Iniciar Sesión'}</button>
                                     </li>
 
                                     <li className="nav-item me-0 d-none d-lg-block">

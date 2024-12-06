@@ -16,7 +16,7 @@ export function Login() {
     const [mostrarCambiarPwd, setMostrarCambiarPwd] = useState(false);
     const [mostrarIniciarSesion, setMostrarIniciarSesion] = useState(true);
     const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
-    const [titulo, setTitulo] = useState("Iniciar sesión");
+    const [titulo, setTitulo] = useState("Iniciar Sesión");
     const [sesionYaIniciada, setSesionYaIniciada] = useState(false);
     const [mostrarAlertaRegistro, setMostrarAlertaRegistro] = useState(false);
     const [mensajeRegistro, setMensajeRegistro] = useState("");
@@ -81,7 +81,7 @@ export function Login() {
         if (loginService.estaIniciadaSesion()) {
             setSesionYaIniciada(true);
         }
-        setTitulo("Iniciar sesión");
+        setTitulo("Iniciar Sesión");
     }
 
     const mostrarMsjRegistro = (mensaje, tipoError) => {

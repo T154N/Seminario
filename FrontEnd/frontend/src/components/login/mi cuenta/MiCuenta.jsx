@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import clienteService from "../../../services/cliente/cliente.service";
-import {useForm} from "react-hook-form";
+import {ModificarDatos} from "./ModificarDatos";
 
 export function MiCuenta() {
     const { isLoggedIn } = useContext(UserContext);
@@ -21,17 +21,10 @@ export function MiCuenta() {
         const getDatosCliente = async () => {
             const datosCliente = await clienteService.getClienteById(localStorage.getItem('clienteId'));
             setDatosUsuario(datosCliente);
-            console.log("Datos del cliente: ", datosUsuario);
             setLoading(false);
         };
         getDatosCliente();
-    }, []);
-
-    const {
-        register,
-        handleSubmit,
-        formState: {errors},
-        reset} = useForm();
+    }, [datosUsuario]);
 
     if (!isLoggedIn) {
         return null;
@@ -39,10 +32,6 @@ export function MiCuenta() {
 
     if (loading) {
         return <div className="fs-3">Cargando tus datos...</div>
-    }
-
-    const onSubmit = async (data) => {
-        console.log(data);
     }
 
     return (
@@ -59,15 +48,7 @@ export function MiCuenta() {
                                     style={{ background: "#FCBB3A", borderRadius: "30px" }}>
                                     <div className="card-body text-start px-3">
 
-                                        <form onSubmit={handleSubmit(onSubmit)}>
-                                            <div className="container text-start">
-
-                                                <div className="row p-0">
-
-                                                </div>
-
-                                            </div>
-                                        </form>
+                                        <ModificarDatos datosUsuario={datosUsuario} />
 
                                     </div>
                                 </div>

@@ -41,7 +41,8 @@ const getClienteById = async (id) => {
                 email:c.cliente_email,
                 observaciones: c.cliente_observaciones,
                 domicilio: c.domicilios,
-                estado: c.cliente_estado_id
+                estado: c.cliente_estado_id,
+                dni: c.cliente_documento
             };
         }
 

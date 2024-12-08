@@ -1,44 +1,41 @@
 import axios from 'axios';
 import loginService from "../login/login.service";
 
-const ENDPOINT_CLIENTE_URL = process.env.REACT_APP_SEMINARIO_BACKEND_URL;
+
 const ENDPOINT_NOAUTH = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
 
 const getClienteById = async (id) => { // Agregar el parámetro `id` para buscar cliente por ID.
     try {
-        const response = await axios.get(`${ENDPOINT_CLIENTE_URL}/clientes/${id}`);
+        const response = await axios.get(`${ENDPOINT_NOAUTH}/clientes/${id}`);
         if (response.data.status === 400) {
             return 400;
         }
         if (response.data.body) {
             const c = response.data.body;
             return {
-                id: c.cliente_id,
-                documento: c.cliente_documento,
-                tipoDocumento: c.cliente_tipo_documento,
-                cuit: c.cliente_cuit,
-                apellido: c.cliente_apellido,
-                nombre: c.cliente_nombre,
-                email: c.cliente_email,
-                telefono: c.cliente_telefono,
-                estado: c.cliente_estado_id,
-                fechaAlta: c.cliente_fecha_alta,
-                fechaModificacion: c.cliente_fecha_modificacion,
-                fechaBaja: c.cliente_fecha_baja,
-                usuarioAlta: c.cliente_usuario_alta,
-                usuarioModificacion: c.cliente_usuario_modificacion,
-                usuarioBaja: c.cliente_usuario_baja,
-                observaciones: c.cliente_observaciones,
-                domicilios: c.domicilios?.map((domicilio) => ({ // Uso de c.domicilios con validación opcional.
-                    id: domicilio.domicilio_id,
-                    tipo: domicilio.domicilioTipoDomicilioId.tipo_domicilio_descripcion,
-                    direccion: domicilio.domicilioDireccion,
-                    barrio: domicilio.domicilioBarrio,
-                    localidadId: domicilio.domicilioLocalidadId,
-                    estadoId: domicilio.domicilioEstadoId,
-                    codigoPostal: domicilio.domicilioCodigoPostal,
-                    esPrincipal: domicilio.domicilioEsPrincipal === "Y",
-                })) || [],
+                id: c.clienteId,
+                documento: c.clienteDocumento,
+                tipoDocumento: c.clienteTipoDocumento,
+                cuit: c.clienteCuit,
+                apellido: c.clienteApellido,
+                nombre: c.clienteNombre,
+                email: c.clienteEmail,
+                telefono: c.clienteTelefono,
+                estado: c.clienteEstadoId,
+                fechaAlta: c.clienteFechaAlta,
+                fechaModificacion: c.clienteFechaModificacion,
+                fechaBaja: c.clienteFechaBaja,
+                usuarioAlta: c.clienteUsuarioAlta,
+                usuarioModificacion: c.clienteUsuarioModificacion,
+                usuarioBaja: c.clienteUsuarioBaja,
+                observaciones: c.clienteObservaciones,
+                barrio: c.domicilioBarrio,
+                codigoPostal: c.domicilioCodigoPostal,
+                direccion: c.domicilioDireccion,
+                ubicaion: c.domicilioUbicacion,
+                localidad: c.localidadNombre,
+                provincia: c.provinciaNombre,
+                tipoDomicilio: c.tipoDomicilioDescripcion,
                 pedidos: c.pedidos || [], // Validación para evitar undefined.
                 carritos: c.carritos || [],
             };
@@ -51,7 +48,7 @@ const getClienteById = async (id) => { // Agregar el parámetro `id` para buscar
 
 const getAllClientes = async () => { // Cambiar función para que obtenga todos los clientes sin filtrar por ID.
     try {
-        const response = await axios.get(`${ENDPOINT_CLIENTE_URL}/api/v1/clientes`);
+        const response = await axios.get(`${ENDPOINT_NOAUTH}/getclientes`);
         console.log(response);
 
         console.log(response.data.body);
@@ -60,38 +57,35 @@ const getAllClientes = async () => { // Cambiar función para que obtenga todos 
         }
         if (response.data.body) {
             return response.data.body.map((c) => ({
-                id: c.cliente_id,
-                documento: c.cliente_documento,
-                tipoDocumento: c.cliente_tipo_documento,
-                cuit: c.cliente_cuit,
-                apellido: c.cliente_apellido,
-                nombre: c.cliente_nombre,
-                email: c.cliente_email,
-                telefono: c.cliente_telefono,
-                estado: c.cliente_estado_id,
-                fechaAlta: c.cliente_fecha_alta,
-                fechaModificacion: c.cliente_fecha_modificacion,
-                fechaBaja: c.cliente_fecha_baja,
-                usuarioAlta: c.cliente_usuario_alta,
-                usuarioModificacion: c.cliente_usuario_modificacion,
-                usuarioBaja: c.cliente_usuario_baja,
-                observaciones: c.cliente_observaciones,
-                domicilios: c.domicilios?.map((domicilio) => ({
-                    id: domicilio.domicilio_id,
-                    tipo: domicilio.domicilioTipoDomicilioId.tipo_domicilio_descripcion,
-                    direccion: domicilio.domicilioDireccion,
-                    barrio: domicilio.domicilioBarrio,
-                    localidadId: domicilio.domicilioLocalidadId,
-                    estadoId: domicilio.domicilioEstadoId,
-                    codigoPostal: domicilio.domicilioCodigoPostal,
-                    esPrincipal: domicilio.domicilioEsPrincipal === "Y",
-                })) || [],
-                pedidos: c.pedidos || [],
+                id: c.clienteId,
+                documento: c.clienteDocumento,
+                tipoDocumento: c.clienteTipoDocumento,
+                cuit: c.clienteCuit,
+                apellido: c.clienteApellido,
+                nombre: c.clienteNombre,
+                email: c.clienteEmail,
+                telefono: c.clienteTelefono,
+                estado: c.clienteEstadoId,
+                fechaAlta: c.clienteFechaAlta,
+                fechaModificacion: c.clienteFechaModificacion,
+                fechaBaja: c.clienteFechaBaja,
+                usuarioAlta: c.clienteUsuarioAlta,
+                usuarioModificacion: c.clienteUsuarioModificacion,
+                usuarioBaja: c.clienteUsuarioBaja,
+                observaciones: c.clienteObservaciones,
+                barrio: c.domicilioBarrio,
+                codigoPostal: c.domicilioCodigoPostal,
+                direccion: c.domicilioDireccion,
+                ubicaion: c.domicilioUbicacion,
+                localidad: c.localidadNombre,
+                provincia: c.provinciaNombre,
+                tipoDomicilio: c.tipoDomicilioDescripcion,
+                pedidos: c.pedidos || [], // Validación para evitar undefined.
                 carritos: c.carritos || [],
             }));
         }
     } catch (error) {
-        console.error("Error fetching all clientes:", error);
+        console.error("Error fetching all clientes nose que pasaaaaaaa:", error);
         return { error: error.message };
     }
 };
@@ -109,7 +103,13 @@ const getDatosClientePedido = async () => {
             estadoId: 0,
             documento: ""
         });
-        const cliente = response.data.body.map((c) => {
+
+        const clientes = response.data.body;
+        if (!Array.isArray(clientes)) {
+            throw new Error("Se esperaba un arreglo de clientes");
+        }
+
+        const cliente = clientes.map((c) => {
             return {
                 nombre: c.cliente_nombre,
                 apellido: c.cliente_apellido,
@@ -118,15 +118,14 @@ const getDatosClientePedido = async () => {
                 domicilioNombre: c.domicilios[0]?.domicilioDireccion // Validación de existencia.
             };
         });
-        localStorage.setItem('domicilioId', cliente[0]?.domicilioId || '');
+
         localStorage.setItem('direccionNombre', cliente[0]?.domicilioNombre || '');
         return cliente[0];
     } catch (error) {
-        console.error("Error fetching datos cliente pedido:", error);
+        console.error("Error al obtener datos del cliente pedido:", error);
         return 400;
     }
 };
-
 const clienteService = {
     getAllClientes,
     getClienteById,

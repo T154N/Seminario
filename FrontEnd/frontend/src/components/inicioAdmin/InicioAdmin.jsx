@@ -11,6 +11,7 @@ import ModificarProducto from './ModificarProducto';
 import ModificarCategoria from './ModificarCategoria';
 import AgregarProducto from './agregarProducto';
 import AgregarCategoria from './agregarCategoria';
+import PedidoAdmin from './PedidoAdmin';
 import ConfirmModal from './ConfirmModal';
 
 export function InicioAdmin() {
@@ -343,7 +344,7 @@ export function InicioAdmin() {
                     <div className="col-12 col-md-2 menu">
                         <h2>Menú</h2>
                         <div className="d-flex flex-column">
-                            {['Pedidos', 'Catálogo', 'Clientes',"aaaaaa"].map((item) => (
+                            {['Pedidos', 'Catálogo', 'Clientes'].map((item) => (
                                 <button
                                     key={item}
                                     className="btn-admin btn btn-success mb-2 btn-block"
@@ -375,7 +376,9 @@ export function InicioAdmin() {
 
                         <div className="tab-content-area mt-3">
                             {modoAlta ? (
-                                catalogTab === 'Productos' ? (
+                                menuContent === 'Pedidos' ? (
+                                    <PedidoAdmin onSave={handleSave} onCancel={handleCancel} />
+                                ) : catalogTab === 'Productos' ? (
                                     <AgregarProducto onSave={handleSave} onCancel={handleCancel} />
                                 ) : (
                                     <AgregarCategoria onSave={handleSave} onCancel={handleCancel} />

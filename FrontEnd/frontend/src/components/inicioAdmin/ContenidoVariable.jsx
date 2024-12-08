@@ -289,7 +289,7 @@ const ContenidoVariable = ({
             {/* Botones y filtro */}
             <div className="header-section d-flex justify-content-start">
                 <button className="btn-action btn-alta btn btn-primary" onClick={handlePost}>
-                    Agregar {menuContent === 'Clientes' ? 'Cliente' : catalogTab}
+                    Agregar {menuContent === 'Clientes' ? 'Cliente' : menuContent === 'Catálogo' ? catalogTab : 'Pedido'}
                 </button>
 
                 {menuContent !== 'Pedidos' && (

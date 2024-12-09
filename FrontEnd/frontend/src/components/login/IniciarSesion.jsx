@@ -14,6 +14,7 @@ export function IniciarSesion({ mostrarMsjInicioSesion }) {
     }
 
     const iniciarSesion = async (email, password) => {
+
         setMostrandoMensaje(true);
         mostrarMsjInicioSesion("Iniciando sesión, por favor espere...", "info");
 

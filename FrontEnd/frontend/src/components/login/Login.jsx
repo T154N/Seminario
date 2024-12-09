@@ -162,7 +162,7 @@ export function Login() {
                                                 <div className="justify-content-start gap-2 mb-3">
                                                     <span>¿No tenés cuenta?</span>
                                                     <div className="mt-2">
-                                                        <button className="btn btn-principal" onClick={mostrarReg}>Registrate</button>
+                                                        <button className="btn btn-principal" onClick={mostrarReg}>Regístrate</button>
                                                     </div>
                                                 </div>
 

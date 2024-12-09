@@ -152,7 +152,7 @@ export function Login() {
                                             {/* Mostrar botón de cerrar sesión si la sesión está iniciada */}
                                             {sesionYaIniciada &&
                                                 <div className="d-grid mt-2">
-                                                    <button className="btn btn-principal mb-2" onClick={cerrarSesion}>Cerrar sesión</button>
+                                                    <button className="btn btn-principal mb-2" onClick={cerrarSesion}>Cerrar Sesión</button>
                                                 </div>
                                             }
 
@@ -169,7 +169,7 @@ export function Login() {
                                                 <div className="justify-content-start gap-2 mb-1">
                                                     <span>¿Olvidaste tu contraseña?</span>
                                                     <div className="mt-2">
-                                                        <button className="btn btn-principal" onClick={mostrarCambiarContrasena}>Recuperar contraseña</button>
+                                                        <button className="btn btn-principal" onClick={mostrarCambiarContrasena}>Recuperar Contraseña</button>
                                                     </div>
                                                 </div>
                                             </div>}

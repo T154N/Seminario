@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import usuariosService from "../../../services/usuarios/usuario.service";
+import clienteService from "../../../services/cliente/cliente.service";
 import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -19,16 +19,14 @@ export function ModificarDatos({ datosUsuario }) {
     }, [datosUsuario, reset]);
 
     const onSubmit = async (data) => {
-        console.log("Datos a modificar: ",data);
-        const response = await usuariosService.modificarDatosUsuario(
-            localStorage.getItem('usuarioId'),
+        const response = await clienteService.modificarDatosCliente(
+            localStorage.getItem('clienteId'),
             data.dni,
             data.nombre,
             data.apellido,
             data.telefono,
             data.email,
         );
-        console.log(response);
         setIsEditing(false);
     };
 
@@ -99,7 +97,7 @@ export function ModificarDatos({ datosUsuario }) {
                                     id="inputdni"
                                     placeholder="Documento"
                                     maxLength={8}
-                                    disabled={!isEditing}
+                                    disabled="true"
                                     {...register("dni", {
                                         required: "Este campo es requerido.",
                                         minLength: {
@@ -153,7 +151,7 @@ export function ModificarDatos({ datosUsuario }) {
                                     id="inputCorreoReg"
                                     placeholder="correo@ejemplo.com"
                                     maxLength={50}
-                                    disabled={!isEditing}
+                                    disabled="true"
                                     {...register("email", {
                                         required: "Este campo es requerido.",
                                         pattern: {

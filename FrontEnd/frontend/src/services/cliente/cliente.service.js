@@ -83,10 +83,31 @@ const getDatosClientePedido = async () => {
     }
 };
 
+const modificarDatosCliente = async (usuarioId, clienteDocumento, clienteNombre, clienteApellido, clienteTelefono,
+                                     clienteEmail) => {
+    try {
+        const response = await axios.put(`${ENDPOINT_NOAUTH}/clientes/updClienteContacto/?setbaja=false`, {
+            clienteId: usuarioId,
+            clienteNombre: clienteNombre,
+            clienteApellido: clienteApellido,
+            clienteDocumento: clienteDocumento.toString(),
+            clienteTipoDocumento: "",
+            clienteCuit: "",
+            clienteTelefono: clienteTelefono.toString(),
+            usuarioUpdate: localStorage.getItem('email'),
+            clienteEmail: clienteEmail,
+        });
+        return response
+    } catch (err) {
+        return 400;
+    }
+};
+
 const clienteService = {
     getAllClientes,
     getClienteById,
     getDatosClientePedido,
+    modificarDatosCliente
 }
 
 export default clienteService;

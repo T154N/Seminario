@@ -4,7 +4,7 @@ import clienteService from "../../../services/cliente/cliente.service";
 import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export function ModificarDatos({ datosUsuario }) {
+export function ModificarDatos({ datosUsuario, mostrarMsjMiCuenta }) {
     const [isEditing, setIsEditing] = useState(false);
 
     const {
@@ -27,6 +27,16 @@ export function ModificarDatos({ datosUsuario }) {
             data.telefono,
             data.email,
         );
+        if (response.code && response.code === "ERR_NETWORK") {
+            mostrarMsjMiCuenta("Ocurrió un error en el servidor. Inténtelo de nuevo más tarde.", "peligro");
+        } else if (response && response === 400) {
+            mostrarMsjMiCuenta("Ocurrió un error en el servidor. Inténtelo de nuevo más tarde.", "peligro");
+        } else if (response.data.status && response.data.status === 500) {
+            mostrarMsjMiCuenta("Ocurrió un error en el servidor. Inténtelo de nuevo más tarde.", "peligro");
+        } else if (response.data.status && response.data.status === 200) {
+            mostrarMsjMiCuenta("Datos actualizados correctamente.", "exitoso");
+        }
+
         setIsEditing(false);
     };
 
@@ -97,7 +107,7 @@ export function ModificarDatos({ datosUsuario }) {
                                     id="inputdni"
                                     placeholder="Documento"
                                     maxLength={8}
-                                    disabled="true"
+                                    disabled={true}
                                     {...register("dni", {
                                         required: "Este campo es requerido.",
                                         minLength: {
@@ -151,7 +161,7 @@ export function ModificarDatos({ datosUsuario }) {
                                     id="inputCorreoReg"
                                     placeholder="correo@ejemplo.com"
                                     maxLength={50}
-                                    disabled="true"
+                                    disabled={true}
                                     {...register("email", {
                                         required: "Este campo es requerido.",
                                         pattern: {

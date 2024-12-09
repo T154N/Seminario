@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import clienteService from "../../../services/cliente/cliente.service";
 import {ModificarDatos} from "./ModificarDatos";
+import {MensajesLogin} from "../../Mensajes/Mensajes";
 
 export function MiCuenta() {
     const { isLoggedIn } = useContext(UserContext);
@@ -10,6 +11,10 @@ export function MiCuenta() {
 
     const [loading, setLoading] = useState(true);
     const [datosUsuario, setDatosUsuario] = useState({});
+
+    const [mensajeMiCuenta, setMensajeMiCuenta] = useState("");
+    const [tipoError, setTipoError] = useState("");
+    const [mostrarMensaje, setMostrarMensaje] = useState(false);
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -25,6 +30,16 @@ export function MiCuenta() {
         };
         getDatosCliente();
     }, [datosUsuario]);
+
+    const mostrarMsjMiCuenta = (mensaje, tipoError) => {
+        setMensajeMiCuenta(mensaje);
+        setTipoError(tipoError);
+        setMostrarMensaje(true);
+    };
+
+    const cerrarAlertaMiCuenta = () => {
+        setMostrarMensaje(false);
+    };
 
     if (!isLoggedIn) {
         return null;
@@ -44,11 +59,13 @@ export function MiCuenta() {
                             <div className="">
                                 <h1 className="fs-1">Perfil</h1>
                                 {/* Aca van los mensajes */}
+                                {mostrarMensaje && <MensajesLogin mensaje={mensajeMiCuenta} tipoError={tipoError} onClose={cerrarAlertaMiCuenta}/>}
+
                                 <div className="card border-0 shadow mt-3"
                                     style={{ background: "#FCBB3A", borderRadius: "30px" }}>
                                     <div className="card-body text-start px-3">
 
-                                        <ModificarDatos datosUsuario={datosUsuario} />
+                                        <ModificarDatos datosUsuario={datosUsuario} mostrarMsjMiCuenta={mostrarMsjMiCuenta}/>
 
                                     </div>
                                 </div>

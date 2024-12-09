@@ -26,24 +26,30 @@ const getAllClientes = async () => {
     }
 
 }
+
 const getClienteById = async (id) => {
     try {
         const response = await axios.get(`${ENDPOINT_NOAUTH}/clientes/${id}`);
 
         if (response.data.body) {
             const c = response.data.body;
-            return {
-                id: c.cliente_id,
-                nombre: c.cliente_nombre,
-                apellido: c.cliente_apellido,
-                cuit: c.cliente_cuit,
-                telefono: c.cliente_telefono,
-                email:c.cliente_email,
-                observaciones: c.cliente_observaciones,
-                domicilio: c.domicilios,
-                estado: c.cliente_estado_id,
-                dni: c.cliente_documento
-            };
+            if (c.cliente_estado_id === 1) {
+                const domiciliosFiltrados = c.domicilios.filter(d => d.domicilioEstadoId === 1);
+                return {
+                    id: c.cliente_id,
+                    nombre: c.cliente_nombre,
+                    apellido: c.cliente_apellido,
+                    cuit: c.cliente_cuit,
+                    telefono: c.cliente_telefono,
+                    email: c.cliente_email,
+                    observaciones: c.cliente_observaciones,
+                    domicilio: domiciliosFiltrados,
+                    estado: c.cliente_estado_id,
+                    dni: c.cliente_documento
+                };
+            } else {
+                return null; // or handle it as needed
+            }
         }
 
     } catch (error) {
@@ -83,10 +89,31 @@ const getDatosClientePedido = async () => {
     }
 };
 
+const modificarDatosCliente = async (usuarioId, clienteDocumento, clienteNombre, clienteApellido, clienteTelefono,
+                                     clienteEmail) => {
+    try {
+        const response = await axios.put(`${ENDPOINT_NOAUTH}/clientes/updClienteContacto/?setbaja=false`, {
+            clienteId: usuarioId,
+            clienteNombre: clienteNombre,
+            clienteApellido: clienteApellido,
+            clienteDocumento: clienteDocumento.toString(),
+            clienteTipoDocumento: "",
+            clienteCuit: "",
+            clienteTelefono: clienteTelefono.toString(),
+            usuarioUpdate: localStorage.getItem('email'),
+            clienteEmail: clienteEmail,
+        });
+        return response
+    } catch (err) {
+        return 400;
+    }
+};
+
 const clienteService = {
     getAllClientes,
     getClienteById,
     getDatosClientePedido,
+    modificarDatosCliente
 }
 
 export default clienteService;

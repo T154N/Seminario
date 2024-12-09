@@ -217,12 +217,12 @@ export function Header() {
                                         <div className="d-grid">
                                             <button className="btn btn-header fs-5" onClick={goToInformacion}>
                                                 <img src={informacion} alt="Informacion" style={{
-                                                    width: "30px",
+                                                    width: "25px",
                                                     height: "auto",
                                                     marginRight: "3px",
                                                     verticalAlign: "middle"
                                                 }}/>
-                                                Informacion
+                                                Información
                                             </button>
                                         </div>
                                     </li>
@@ -247,7 +247,7 @@ export function Header() {
                                         <button className="nav-link btn active fs-5"
                                                 onClick={goToCatalogue}>
                                             <img className="me-1" src={catalogo} alt="Catalogo" style={{
-                                                width: "40px",
+                                                width: "35px",
                                                 height: "auto",
                                                 marginRight: "3px",
                                                 verticalAlign: "middle",

@@ -14,11 +14,11 @@ export function IniciarSesion({ mostrarMsjInicioSesion }) {
     }
 
     const iniciarSesion = async (email, password) => {
+
         setMostrandoMensaje(true);
         mostrarMsjInicioSesion("Iniciando sesión, por favor espere...", "info");
 
         const response = await loginService.iniciarSesion(email, password, agregarProducto);
-        console.log(response);
 
         setMostrandoMensaje(false);
 
@@ -77,7 +77,7 @@ export function IniciarSesion({ mostrarMsjInicioSesion }) {
             </div>
 
             <div className="d-grid">
-                <button className="btn btn-principal" disabled={mostrandoMensaje}>Iniciar sesión</button>
+                <button className="btn btn-principal" disabled={mostrandoMensaje}>Iniciar Sesión</button>
             </div>
         </form>
     );

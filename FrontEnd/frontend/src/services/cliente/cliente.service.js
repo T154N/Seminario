@@ -46,21 +46,21 @@ const getClienteById = async (id) => { // Agregar el parámetro `id` para buscar
     }
 };
 
-const getAllClientes = async () => { // Cambiar función para que obtenga todos los clientes sin filtrar por ID.
+const getAllClientes = async () => {
     try {
         const response = await axios.get(`${ENDPOINT_NOAUTH}/getclientes`);
         console.log(response);
 
-        console.log(response.data.body);
         if (response.data.status === 400) {
             return 400;
         }
+
         if (response.data.body) {
             return response.data.body.map((c) => ({
                 id: c.clienteId,
                 documento: c.clienteDocumento,
                 tipoDocumento: c.clienteTipoDocumento,
-                cuit: c.clienteCuit,
+                cuit: c.clienteCuit, // No se usa en los ejemplos, pero mantenido por consistencia
                 apellido: c.clienteApellido,
                 nombre: c.clienteNombre,
                 email: c.clienteEmail,
@@ -69,26 +69,27 @@ const getAllClientes = async () => { // Cambiar función para que obtenga todos 
                 fechaAlta: c.clienteFechaAlta,
                 fechaModificacion: c.clienteFechaModificacion,
                 fechaBaja: c.clienteFechaBaja,
-                usuarioAlta: c.clienteUsuarioAlta,
-                usuarioModificacion: c.clienteUsuarioModificacion,
-                usuarioBaja: c.clienteUsuarioBaja,
+                usuarioAlta: c.clienteUsuarioAlta, // Parece no estar en uso
+                usuarioModificacion: c.clienteUsuarioModificacion, // Parece no estar en uso
+                usuarioBaja: c.clienteUsuarioBaja, // Parece no estar en uso
                 observaciones: c.clienteObservaciones,
                 barrio: c.domicilioBarrio,
                 codigoPostal: c.domicilioCodigoPostal,
                 direccion: c.domicilioDireccion,
-                ubicaion: c.domicilioUbicacion,
+                ubicacion: c.domicilioUbicacion, // Corregido typo de "ubicaion" a "ubicacion"
                 localidad: c.localidadNombre,
                 provincia: c.provinciaNombre,
                 tipoDomicilio: c.tipoDomicilioDescripcion,
-                pedidos: c.pedidos || [], // Validación para evitar undefined.
-                carritos: c.carritos || [],
+                pedidos: c.pedidos || [], // Atributo opcional que no aparece en el ejemplo actual
+                carritos: c.carritos || [], // Atributo opcional que no aparece en el ejemplo actual
             }));
         }
     } catch (error) {
-        console.error("Error fetching all clientes nose que pasaaaaaaa:", error);
+        console.error("Error fetching all clientes:", error);
         return { error: error.message };
     }
 };
+
 
 const getDatosClientePedido = async () => {
     try {
@@ -126,10 +127,79 @@ const getDatosClientePedido = async () => {
         return 400;
     }
 };
+
+const createClienteConUsuarioYDomicilios = async (clienteData) => {
+    console.log("Se activo la funcion de crear cliente", clienteData);
+    try {
+        const response = await axios.post(`${ENDPOINT_NOAUTH}/clientes/new`, clienteData);
+        console.log(response);
+        console.log(response.data);
+        console.log(response.data.body);
+        console.log('Se creo el cliente');
+
+        return response.data;
+    } catch (error) {
+        console.error("Error al crear cliente:", error);
+        console.log("Error al crear cliente:", error);
+        throw error;
+    }
+};
+
+const darDeBajaCliente = async (cliente, usuarioAlta) => {
+    try {
+        // Mapeo del cliente al formato del DTO
+        const body = {
+            cliente_documento: cliente.documento,
+            cliente_tipo_documento: cliente.tipoDocumento,
+            cliente_apellido: cliente.apellido,
+            cliente_nombre: cliente.nombre,
+            cliente_email: cliente.email,
+            cliente_telefono: cliente.telefono,
+            cliente_observaciones: cliente.observaciones,
+            cliente_cuit: cliente.cuit, // Si es null o no se utiliza, puede dejarse tal cual
+            domicilioTipoDomicilioId: 0, // No proporcionado en cliente, ajustar según sea necesario
+            domicilioDireccion: cliente.direccion,
+            domicilioBarrio: cliente.barrio,
+            domicilioUbicacion: cliente.ubicacion, 
+            domicilioLocalidadId: 545, 
+            domicilioCodigoPostal: cliente.codigoPostal,
+            domicilioEsPrincipal: 'Y', 
+            usuario_id: 4, 
+            usuario_contrasena: "CRv7ZHhHp1ZYlZNDycNF9Q==", 
+            usuario_rol_id: 1, 
+            usuario_observaciones: " ", // No proporcionado en cliente, ajustar si es necesario
+            usuario_alta: usuarioAlta,
+        };
+
+        // Realizar la solicitud PUT para dar de baja al cliente
+        const response = await axios.put(
+            `${ENDPOINT_NOAUTH}/clientes/upd/`,
+            body,
+            { params: { setbaja: true } }
+        );
+
+        if (response.status === 200) {
+            console.log("Cliente dado de baja correctamente");
+            console.log(cliente, usuarioAlta);
+            console.log(response);
+            return response.data;
+        } else {
+            console.error("Error al intentar dar de baja al cliente:", response.data.message);
+            return { error: response.data.message };
+        }
+    } catch (error) {
+        console.error("Error al dar de baja cliente:", error);
+        return { error: error.message };
+    }
+};
+
+
 const clienteService = {
     getAllClientes,
     getClienteById,
     getDatosClientePedido,
+    createClienteConUsuarioYDomicilios,
+    darDeBajaCliente,
 };
 
 export default clienteService;

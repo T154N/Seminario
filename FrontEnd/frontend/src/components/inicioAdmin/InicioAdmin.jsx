@@ -13,6 +13,7 @@ import AgregarProducto from './agregarProducto';
 import AgregarCategoria from './agregarCategoria';
 import PedidoAdmin from './PedidoAdmin';
 import ConfirmModal from './ConfirmModal';
+import ClienteAlta from './ClienteAlta'
 
 export function InicioAdmin() {
     // Estados principales
@@ -315,17 +316,17 @@ export function InicioAdmin() {
     };
 
     const handleConfirmDelete = async () => {
-        if (catalogTab === 'Productos') {
+        if (menuContent === 'Catálogo' && catalogTab === 'Productos') {
             await productoService.setBajaProducto(itemToDelete.id, usuarioMod);
             recargarProductos();
-        } else if (catalogTab === 'Categorias') {
+        } else if (menuContent === 'Catálogo' && catalogTab === 'Categorias') {
             await categoriaService.setBajaCategoria(itemToDelete.id, usuarioMod);
             recargarCategorias();
         } else if (menuContent === 'Pedidos') {
             await pedidoService.setBajaPedido(itemToDelete.id, usuarioMod);
             recargarPedidos();
         } else if (menuContent === 'Clientes') {
-            await clienteService.setBajaCliente(itemToDelete.id, usuarioMod);
+            await clienteService.darDeBajaCliente(itemToDelete, usuarioMod);
             recargarClientes();
         }
         handleCancelDelete();
@@ -375,14 +376,17 @@ export function InicioAdmin() {
                         )}
 
                         <div className="tab-content-area mt-3">
-                            {modoAlta ? (
-                                menuContent === 'Pedidos' ? (
-                                    <PedidoAdmin onSave={handleSave} onCancel={handleCancel} />
-                                ) : catalogTab === 'Productos' ? (
-                                    <AgregarProducto onSave={handleSave} onCancel={handleCancel} />
-                                ) : (
-                                    <AgregarCategoria onSave={handleSave} onCancel={handleCancel} />
-                                )
+                                {modoAlta ? (
+                                    menuContent === 'Pedidos' ? (
+                                        <PedidoAdmin onSave={handleSave} onCancel={handleCancel} />
+                                    ) : menuContent === 'Clientes' ? (
+                                        <ClienteAlta onSave={handleSave} onCancel={handleCancel} />
+                                    ) :
+                                        catalogTab === 'Productos' ? (
+                                        <AgregarProducto onSave={handleSave} onCancel={handleCancel} />
+                                    ) : (
+                                        <AgregarCategoria onSave={handleSave} onCancel={handleCancel} />
+                                    )
                             ) : modoEdicion ? (
                                 catalogTab === 'Productos' ? (
                                     <ModificarProducto

@@ -232,7 +232,13 @@ const ContenidoVariable = ({
                         <button
                             className="btn btn-primary btn-sm me-2 btn-dollar"
                             title="Editar precio"
-                            onClick={() => openPopup(item, catalogTab === 'Productos' ? 'productos' : 'categorias')}
+                            onClick={() => openPopup(item, 
+                                catalogTab === 'Productos' 
+                                    ? 'productos' 
+                                    : catalogTab === 'Clientes' 
+                                        ? 'clientes' 
+                                        : 'categorias'
+                            )}
                         >
                             <FontAwesomeIcon icon={faDollarSign} />
                         </button>
@@ -289,7 +295,7 @@ const ContenidoVariable = ({
             {/* Botones y filtro */}
             <div className="header-section d-flex justify-content-start">
                 <button className="btn-action btn-alta btn btn-primary" onClick={handlePost}>
-                    Agregar {menuContent === 'Clientes' ? 'Cliente' : menuContent === 'Catálogo' ? catalogTab : 'Pedido'}
+                    Agregar {menuContent === 'Clientes' ? 'Cliente' : catalogTab}
                 </button>
 
                 {menuContent !== 'Pedidos' && (

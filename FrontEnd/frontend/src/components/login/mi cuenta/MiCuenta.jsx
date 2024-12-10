@@ -9,7 +9,7 @@ import { DomiciliosPerfil } from "./DomiciliosPerfil";
 import { MensajesLogin } from "../../Mensajes/Mensajes";
 import { Modal, Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash, faPlus, faSave } from "@fortawesome/free-solid-svg-icons";
+import {faEye, faEyeSlash, faPlus, faSave, faTimes} from "@fortawesome/free-solid-svg-icons";
 
 export function MiCuenta() {
     const { isLoggedIn } = useContext(UserContext);
@@ -175,8 +175,9 @@ export function MiCuenta() {
                                 {errors.tipoDomicilio && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.tipoDomicilio.message}</p>}
                             </Form.Group>
                             <Modal.Footer>
-                                <Button variant="secondary" onClick={() => setShowAddModal(false)}>
-                                    Cerrar
+                                <Button variant="danger" onClick={() => setShowAddModal(false)}>
+                                    <FontAwesomeIcon icon={faTimes}/>
+                                    <span className="ps-1">Cerrar</span>
                                 </Button>
                                 <Button variant="principal" type="submit">
                                     <FontAwesomeIcon icon={faSave} />

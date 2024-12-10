@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Modal, Button, Form } from "react-bootstrap";
-import { faTrash, faEdit, faSave} from "@fortawesome/free-solid-svg-icons";
+import {faTrash, faEdit, faSave, faTimes} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './domiciliosPerfil.css';
@@ -136,8 +136,9 @@ export function DomiciliosPerfil({ datosUsuario, onDomicilioChange, mostrarMsjMi
                                 {errors.tipoDomicilio && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.tipoDomicilio.message}</p>}
                             </Form.Group>
                             <Modal.Footer>
-                                <Button variant="secondary" onClick={() => setShowModal(false)}>
-                                    Cerrar
+                                <Button variant="danger" onClick={() => setShowModal(false)}>
+                                    <FontAwesomeIcon icon={faTimes}/>
+                                    <span className="ps-1">Cerrar</span>
                                 </Button>
                                 <Button variant="principal" type="submit">
                                     <FontAwesomeIcon icon={faSave} />
@@ -183,8 +184,9 @@ export function DomiciliosPerfil({ datosUsuario, onDomicilioChange, mostrarMsjMi
                             {errors.tipoDomicilio && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.tipoDomicilio.message}</p>}
                         </Form.Group>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={() => setShowAddModal(false)}>
-                                Cerrar
+                            <Button variant="danger" onClick={() => setShowAddModal(false)}>
+                                <FontAwesomeIcon icon={faTimes}/>
+                                <span className="ps-1">Cerrar</span>
                             </Button>
                             <Button variant="principal" type="submit">
                                 <FontAwesomeIcon icon={faSave} />

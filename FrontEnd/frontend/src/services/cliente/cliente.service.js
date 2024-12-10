@@ -211,6 +211,33 @@ const darDeBajaCliente = async (cliente, usuarioAlta) => {
     }
 };
 
+const activarCliente = async (usuarioEmail, usuarioMod) => {
+    try {
+        // Realizar la solicitud PUT al endpoint
+        const response = await axios.put(
+            `${ENDPOINT_NOAUTH}/clientes/setact/`,
+            null, // Sin cuerpo para esta solicitud
+            {
+                params: {
+                    usuarioEmail: usuarioEmail,
+                    usuarioMod: usuarioMod,
+                },
+            }
+        );
+
+        if (response.status === 200) {
+            console.log("Usuario/Cliente activado correctamente.");
+            return response.data; // Devuelve la respuesta exitosa
+        } else {
+            console.error("Error al activar el Usuario/Cliente:", response.data.message);
+            return { error: response.data.message };
+        }
+    } catch (error) {
+        console.error("Error al realizar la solicitud:", error.message);
+        return { error: error.message };
+    }
+};
+
 const modificarCliente = async (cliente, usuarioAlta) => {
     try {
         // Mapeo del cliente al formato del DTO
@@ -221,6 +248,7 @@ const modificarCliente = async (cliente, usuarioAlta) => {
             cliente_apellido: cliente.apellido,
             cliente_nombre: cliente.nombre,
             cliente_email: cliente.email,
+            clienteEstadoId: cliente.estado,
             cliente_telefono: cliente.telefono,
             cliente_observaciones: cliente.observaciones,
             cliente_cuit: cliente.cuit, 
@@ -237,28 +265,50 @@ const modificarCliente = async (cliente, usuarioAlta) => {
             usuario_alta: usuarioAlta,
         };
         console.log("Se activo la funcion de modificar cliente", body);
+        console.log(body.clienteEstadoId);
 
-        // Realizar la solicitud PUT para dar de baja al cliente
-        const response = await axios.put(
-            `${ENDPOINT_NOAUTH}/clientes/upd`,
-            body,
-            { params: { setbaja: false } }
-        );
+        if (body.clienteEstadoId === 1) {
+            const response = await axios.put(
+                `${ENDPOINT_NOAUTH}/clientes/upd`,
+                body,
+                { params: { setbaja: false } }
+            );
 
-        if (response.status === 200) {
-            console.log("Cliente dado de baja correctamente");
-            console.log(cliente, usuarioAlta);
-            console.log(response);
-            return response.data;
-        } else {
-            console.error("Error al intentar dar de baja al cliente:", response.data.message);
-            return { error: response.data.message };
+            if (response.status === 200) {
+                console.log("Cliente modificado correctamente");
+                console.log(cliente, usuarioAlta);
+                console.log(response);
+                await activarCliente(cliente.email, usuarioAlta);
+                return response.data;
+            } else {
+                console.error("Error al intentar modificar al cliente:", response.data.message);
+                return { error: response.data.message };
+            }
+        } else if (body.clienteEstadoId === 2) {
+            const response = await axios.put(
+                `${ENDPOINT_NOAUTH}/clientes/upd`,
+                body,
+                { params: { setbaja: true } }
+            );
+
+            if (response.status === 200) {
+                console.log("Cliente dado de baja correctamente");
+                console.log(cliente, usuarioAlta);
+                console.log(response);
+                
+                return response.data;
+            } else {
+                console.error("Error al intentar modificar al cliente:", response.data.message);
+                return { error: response.data.message };
+            }
         }
     } catch (error) {
-        console.error("Error al dar de baja cliente:", error);
+        console.error("Error al modificar cliente:", error);
         return { error: error.message };
     }
 };
+
+
 
 
 

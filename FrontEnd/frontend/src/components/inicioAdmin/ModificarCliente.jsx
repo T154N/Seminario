@@ -67,6 +67,7 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
             apellido: formData.cliente_apellido,
             nombre: formData.cliente_nombre,
             email: formData.cliente_email,
+            estado: parseInt(formData.estado, 10),
             telefono: formData.cliente_telefono,
             observaciones: formData.cliente_observaciones,
             cuit: formData.cliente_cuit,

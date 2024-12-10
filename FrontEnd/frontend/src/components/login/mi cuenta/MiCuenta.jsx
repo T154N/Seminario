@@ -141,10 +141,10 @@ export function MiCuenta() {
             </div>
 
             <Modal show={showAddModal} onHide={() => setShowAddModal(false)} className="custom-modal">
-                <Modal.Header closeButton>
+                <Modal.Header closeButton style={{backgroundColor: "#fff8e1"}}>
                     <Modal.Title>Agregar Dirección</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="pb-0 rounded-3" style={{backgroundColor: "#fff8e1"}}>
                     <Form onSubmit={handleSubmit(handleAddDomicilio)}>
                         <Form.Group controlId="formAddress">
                             <Form.Label className="fs-5">Dirección</Form.Label>

@@ -216,6 +216,71 @@ const getAllPedidosBaja = async () => {
     }
 };
 
+
+
+const generarPedido = async (clienteId, domicilioId, medioPagoId, usuarioTransaccion) => {
+    try {
+        const response = await axios.post(`${ENDPOINT_PEDIDO_URL}/pedidos/generatepedido`, null, {
+            params: {
+                clienteId,
+                domicilioId,
+                medioPagoId,
+                usuarioTransaccion
+            }
+        });
+        console.log(response);
+        return response.data.body;
+    } catch (error) {
+        console.error(error);
+        return 500;
+    }
+};
+
+const addItemToPedido = async (pedidoId, cantidad, usuarioTransaccion, productoData) => {
+    try {
+        const response = await axios.post(
+            `${ENDPOINT_PEDIDO_URL}/pedidos/add`,
+            productoData,
+            {
+                params: {
+                    pedidoId,
+                    cantidad,
+                    usuarioTransaccion
+                }
+            }
+        );
+        console.log("Item agregado exitosamente al pedido:", response.data);
+        return response.status;
+    } catch (error) {
+        console.error("Error al agregar el item al pedido:", error?.response?.data || error.message);
+        return error?.response?.status || 500;
+    }
+};
+
+// Remover un item del pedido
+const removeItemFromPedido = async (pedidoId, productoId, usuarioTransaccion) => {
+    try {
+        const response = await axios.put(
+            `${ENDPOINT_PEDIDO_URL}/api/v1/pedidos/remove/item`,
+            null,
+            {
+                params: {
+                    pedidoId,
+                    productoId,
+                    usuarioTransaccion
+                }
+            }
+        );
+        console.log("Item removido exitosamente del pedido:", response.data);
+        return response.status;
+    } catch (error) {
+        console.error("Error al remover el item del pedido:", error?.response?.data || error.message);
+        return error?.response?.status || 500;
+    }
+};
+
+
+
 // Definir el objeto de servicio de pedidos
 const pedidoService = {
     getPedidoById,
@@ -226,7 +291,10 @@ const pedidoService = {
     updatePedido,
     updatePedidoEstado, // Agregado aquí
     getAllPedidosBaja,
-    getPedidoDetalles
+    getPedidoDetalles,
+    addItemToPedido,
+    generarPedido,
+    removeItemFromPedido
 };
 
 export default pedidoService;

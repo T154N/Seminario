@@ -125,10 +125,7 @@ export function InicioAdmin() {
 
     const recargarPedidos = async () => {
         const pedidos = await pedidoService.getAllPedidos();
-        const pedidosFiltrados = checkboxState
-            ? pedidos.filter(pedido => pedido.estado === 2)
-            : pedidos.filter(pedido => pedido.estado === 1);
-        setPedidosActivos(filteredData(pedidosFiltrados));
+        setPedidosActivos(filteredData(pedidos));
     };
 
     const recargarClientes = async () => {
@@ -267,6 +264,7 @@ export function InicioAdmin() {
     };
 
     const handleSave = async (formData) => {
+
         if (registroSeleccionado) {
             if (catalogTab === 'Productos') {
                 await productoService.updateProducto(registroSeleccionado.id, formData);
@@ -281,6 +279,15 @@ export function InicioAdmin() {
                 await clienteService.updateCliente(registroSeleccionado.id, formData);
                 recargarClientes();
             }
+        }
+        if (menuContent === 'Catálogo' && catalogTab === 'Productos') {
+            recargarProductos();
+        } else if (menuContent === 'Catálogo' && catalogTab === 'Categorias') {
+            recargarCategorias();
+        } else if (menuContent === 'Pedidos') {
+            recargarPedidos();
+        } else if (menuContent === 'Clientes') {
+            recargarClientes();
         }
         handleCancel();
     }
@@ -339,6 +346,7 @@ export function InicioAdmin() {
     // Renderización
     return (
         <div>
+
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-12 col-md-2 menu">

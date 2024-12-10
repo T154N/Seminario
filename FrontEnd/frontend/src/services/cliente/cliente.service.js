@@ -4,6 +4,36 @@ import loginService from "../login/login.service";
 
 const ENDPOINT_NOAUTH = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
 
+const getDomicilioByClienteId = async (clienteId) => {
+    try {
+        const response = await axios.get(`${ENDPOINT_NOAUTH}/domicilios/cliente/${clienteId}`);
+
+        if (response.data.status === 400) {
+            return 400;
+        }
+        if (Array.isArray(response.data.body)) {
+            return response.data.body.map(d => ({
+                id: d.domicilio_id,
+                direccion: d.domicilioDireccion,
+                ubicacion: d.domicilioUbicacion || "",
+                barrio: d.domicilioBarrio || "",
+                codigoPostal: d.domicilioCodigoPostal || "",
+                localidad: d.domicilioLocalidadId,
+                provincia: null, // No hay datos de provincia en el body proporcionado
+                tipoDomicilio: d.domicilioTipoDomicilioId?.tipo_domicilio_descripcion || "",
+            }));
+        }
+
+        return [];
+    } catch (error) {
+        console.error("Error fetching domicilio by cliente id:", error);
+        return { error: error.message };
+    }
+};
+
+
+
+
 const getClienteById = async (id) => { // Agregar el parámetro `id` para buscar cliente por ID.
     try {
         const response = await axios.get(`${ENDPOINT_NOAUTH}/clientes/${id}`);
@@ -31,6 +61,7 @@ const getClienteById = async (id) => { // Agregar el parámetro `id` para buscar
                 observaciones: c.clienteObservaciones,
                 barrio: c.domicilioBarrio,
                 codigoPostal: c.domicilioCodigoPostal,
+                domicilioId: c.domicilioId,
                 direccion: c.domicilioDireccion,
                 ubicaion: c.domicilioUbicacion,
                 localidad: c.localidadNombre,
@@ -73,6 +104,7 @@ const getAllClientes = async () => { // Cambiar función para que obtenga todos 
                 usuarioModificacion: c.clienteUsuarioModificacion,
                 usuarioBaja: c.clienteUsuarioBaja,
                 observaciones: c.clienteObservaciones,
+                domicilioId: c.domicilioId,
                 barrio: c.domicilioBarrio,
                 codigoPostal: c.domicilioCodigoPostal,
                 direccion: c.domicilioDireccion,
@@ -130,6 +162,7 @@ const clienteService = {
     getAllClientes,
     getClienteById,
     getDatosClientePedido,
+    getDomicilioByClienteId
 };
 
 export default clienteService;

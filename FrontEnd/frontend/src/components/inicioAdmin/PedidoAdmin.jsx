@@ -9,6 +9,7 @@ import { faSave, faTimes, faPlus, faMinus, faTrash } from '@fortawesome/free-sol
 import "./inicioAdmin.css";
 import "./PedidoAdmin.css";
 import {usePedido} from "../Pedido/PedidoContext";
+import pedidoService from "../../services/pedido/pedido.service";
 
 export function PedidoAdmin({ onSave, onCancel }) {
     const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ export function PedidoAdmin({ onSave, onCancel }) {
     });
     const [productosSeleccionados, setProductosSeleccionados] = useState([]);
     const [clientes, setClientes] = useState([]);
+    const [domicilios, setDomicilio] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [cargandoProductosACarrito, setCargandoProductosACarrito] = useState(false);
@@ -35,14 +37,16 @@ export function PedidoAdmin({ onSave, onCancel }) {
     }, []);
 
     useEffect(() => {
-        const selectedCliente = clientes.find(cliente => cliente.email === formData.cliente);
-        if (selectedCliente) {
-            setFormData(prevFormData => ({
-                ...prevFormData,
-                domicilio: selectedCliente.direccion
-            }));
+        if (formData.cliente) {
+            const fetchDomicilio = async () => {
+                const domicilio = await clienteService.getDomicilioByClienteId(formData.cliente);
+                setDomicilio(domicilio);
+            };
+            fetchDomicilio();
         }
-    }, [formData.cliente, clientes]);
+    }, [formData.cliente]);
+
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -64,14 +68,21 @@ export function PedidoAdmin({ onSave, onCancel }) {
 
     const handleConfirm = async () => {
         iniciarPedido(productosSeleccionados);
-        const carrito = await carritoService.crearNuevoCarrito(
-            formData.cliente,
-        );
-        await carritoService.cargarProductosAlCarrito(
-            carrito,
-            productosSeleccionados,
-            loginService.getEmailUsuario()
-        );
+        const pedido = await pedidoService.generarPedido(formData.cliente, formData.domicilio, formData.formaPago, loginService.getEmailUsuario());
+
+        for (const producto of productosSeleccionados) {
+            const productoData = {
+                id: producto.id,
+                nombre: producto.nombre,
+                descripcion: producto.descripcion || "",
+                precio: producto.precioUnitario,
+                observaciones: producto.observaciones || "",
+                categoriaNombre: producto.categoriaNombre || "",
+                urlImagen: producto.urlImagen || ""
+            };
+            await pedidoService.addItemToPedido(pedido.id, producto.cantidad, loginService.getEmailUsuario(), productoData);
+        }
+
         setCargandoProductosACarrito(false);
         setShowModal(false);
         if (onSave) {
@@ -128,7 +139,7 @@ export function PedidoAdmin({ onSave, onCancel }) {
                                     >
                                         <option value="" disabled>Seleccione un cliente</option>
                                         {clientes.map((cliente) => (
-                                            <option key={cliente.id} value={cliente.email}>
+                                            <option key={cliente.id} value={cliente.id}>
                                                 {cliente.nombre} {cliente.apellido}
                                             </option>
                                         ))}
@@ -146,8 +157,8 @@ export function PedidoAdmin({ onSave, onCancel }) {
                                         required
                                     >
                                         <option value="" disabled>Seleccione una forma de pago</option>
-                                        <option value="efectivo">Efectivo</option>
-                                        <option value="tarjeta">Tarjeta</option>
+                                        <option value="1">Transferencia</option>
+                                        <option value="2">Efectivo</option>
                                     </select>
                                 </div>
                             </div>
@@ -156,14 +167,19 @@ export function PedidoAdmin({ onSave, onCancel }) {
                             <div className="col-12 col-sm-12 p-0">
                                 <div className="mt-1 mb-0 pe-2">
                                     <label className="form-label m-1" style={{fontSize: '20px'}}>Domicilio</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
+                                    <select
+                                        className="form-select form-select-modificar"
                                         name="domicilio"
                                         value={formData.domicilio}
                                         onChange={handleChange}
                                         required
-                                    />
+                                    >
+                                     <option value="" disabled>Seleccione un domicilio</option>
+                                        {domicilios.map((domicilio) => (
+                                            <option key={domicilio.id} value={domicilio.id}>
+                                                {domicilio.direccion}
+                                            </option>))}
+                                    </select>
                                 </div>
                             </div>
                         </div>

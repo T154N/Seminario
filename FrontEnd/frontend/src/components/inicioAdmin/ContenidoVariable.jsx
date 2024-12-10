@@ -22,6 +22,7 @@ const ContenidoVariable = ({
     handleDeleteClick,
     handlePost,
     recargarProductos,
+
     handleEstadoChange,
     mostrarDetalles
 }) => {
@@ -51,6 +52,7 @@ const ContenidoVariable = ({
             console.error('recargarProductos no está definido o no es una función');
         }
         closePopup();
+
     };
 
     // Renderiza el encabezado de la tabla dependiendo del contenido actual
@@ -317,7 +319,7 @@ const ContenidoVariable = ({
                 <input
                     type="text"
                     className="form-control"
-                    placeholder={`Buscar ${menuContent === 'Clientes' ? 'clientes' : catalogTab.toLowerCase()}...`}
+                    placeholder={`Buscar ${menuContent === 'Clientes' ? 'Cliente' : menuContent === 'Catálogo' ? catalogTab : 'Pedido' }...`}
                     value={busqueda}
                     onChange={handleBusquedaChange}
                 />

@@ -32,6 +32,9 @@ const AgregarProducto = ({ onSave, onCancel }) => {
         fetchCategorias();
     }, []);
 
+
+
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({

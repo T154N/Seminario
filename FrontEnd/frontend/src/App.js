@@ -20,9 +20,13 @@ import { OpcionesPago } from "./components/Pedido/OpcionesPago";
 import { PedidoDetalle } from "./components/Pedido/PedidoDetalle";
 import { PedidosUsuario } from './components/Pedido/PedidosUsuario';
 import { UserProvider } from './components/login/UserContext';
+
 import PedidoAdminPrueba from "./components/inicioAdmin/PedidoAdminPrueba";
 import PedidoAdmin from "./components/inicioAdmin/PedidoAdmin";
 // Importa el UserProvider
+
+import {MiCuenta} from "./components/login/mi cuenta/MiCuenta";
+
 
 function App() {
   return (
@@ -49,6 +53,7 @@ function App() {
                   <Route path={"/pedidoAdminPrueba"} element={<PedidoAdminPrueba />} />
                   <Route path={"/pedidoAdmin"} element={<PedidoAdmin/>} />
                   <Route path="/inicioAdmin" element={<InicioAdmin />} />
+                  <Route path="/mi-cuenta" element={<MiCuenta />} />
                   <Route path='/' element={<Principal />} />
                   <Route path='*' element={<Principal />} />
                 </Routes>

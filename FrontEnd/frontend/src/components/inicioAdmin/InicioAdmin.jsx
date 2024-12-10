@@ -281,11 +281,7 @@ export function InicioAdmin() {
                 recargarClientes();
             }
         }
-        if (menuContent === 'Catálogo' && catalogTab === 'Productos') {
-            recargarProductos();
-        } else if (menuContent === 'Catálogo' && catalogTab === 'Categorias') {
-            recargarCategorias();
-        } else if (menuContent === 'Pedidos') {
+        else if (menuContent === 'Pedidos') {
             recargarPedidos();
         } else if (menuContent === 'Clientes') {
             recargarClientes();

@@ -1,4 +1,10 @@
 
+.subtotal {
+    color: #FF5733; /* Choose your desired color */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
 #botonAlta {
     background-color: #ffac70; /* Cambia este color a lo que desees */
     color: white; /* Cambia el color del texto si es necesario */

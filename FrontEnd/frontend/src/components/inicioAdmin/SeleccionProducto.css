@@ -1,0 +1,35 @@
+.listaProductos {
+    list-style-type: none;
+}
+
+.input-cantidad::-webkit-inner-spin-button,
+.input-cantidad::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Oculta el botón de giro */
+    margin: 0; /* Elimina el margen */
+}
+
+/* Para Firefox */
+.input-cantidad {
+    appearance: textfield; /* Propiedad estándar */
+    -moz-appearance: textfield; /* Para compatibilidad con Firefox */
+    -webkit-appearance: none; /* Para compatibilidad con Webkit (Chrome, Safari) */
+}
+
+.input-cantidad {
+    text-align: center; /* Centrar el texto */
+    width: 50px; /* Ajustar el ancho como desees */
+}
+.productos-container {
+    max-height: 600px; /* Adjust the height as needed */
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    padding: 5px;
+   /* border: 3px solid #ffbb33;
+    border-radius: 4px;/* Add a border with color */
+   /* background-color: #FDFDFDFF; */
+
+}
+.scroll-padding {
+    padding-right: 10px; /* Ajusta el padding según sea necesario */
+}
+

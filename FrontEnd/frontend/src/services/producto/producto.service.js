@@ -173,6 +173,7 @@ const setBajaProducto = async (producto_id, producto_usuario_modificacion) => {
             producto_usuario_modificacion: producto_usuario_modificacion.toString()
         });
         console.log(response);
+        console.log("Producto dadod de baja correctamente");
         return response;
     } catch (error) {
         return 500;

@@ -18,12 +18,12 @@
     text-align: left;
     border: none;
     text-decoration: none !important;
-
+    
 }
 
 .pedido-detalle .tabla-detalles tbody tr td:first-child {
     font-weight: bold;
-
+    
 }
 
 .pedido-detalle .tabla-detalles tbody tr td {
@@ -156,7 +156,7 @@
     .pedido-detalle .tabla-productos tr {
         display: block;
         margin-bottom: 1rem;
-        padding: 0.5rem 0.8rem;
+        padding: 0.5rem 0.8rem; 
         border-top: 1px solid #ddd;
         border-bottom: 1px solid #ddd;
         border-left: white;
@@ -172,7 +172,7 @@
         align-items: center;
         padding: 0.3rem 0;
         font-size: 0.9rem;
-
+        
         border-bottom: 1px solid #ddd; /* Añade una línea divisoria */
     }
 
@@ -192,6 +192,27 @@
 
 }
 
+.btn-imprimir {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Espacio entre el icono y el texto */
+    background-color: #f1a815;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-imprimir i {
+    font-size: 20px; /* Ajusta el tamaño del icono */
+}
+
+.btn-imprimir:hover {
+    background-color: #e08c0d;
+    color: white;
+}
 
 @media (min-width: 768px) {
 /* Ajuste para el nombre en la tabla de productos */

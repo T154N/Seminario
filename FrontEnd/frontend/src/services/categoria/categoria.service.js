@@ -113,6 +113,7 @@ const setBajaCategoria = async (categoriaId, categoriaUsuarioModificacion) => {
             categoriaUsuarioModificacion: categoriaUsuarioModificacion.toString()
         });
         console.log(response.data.body);
+        console.log('Se dio de baja la categoria');
         return response.data.body;
     } catch (error) {
         console.error(error);

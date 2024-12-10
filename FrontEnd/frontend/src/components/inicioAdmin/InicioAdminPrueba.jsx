@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ContenidoVariable from './ContenidoVariable';
 import productoService from '../../services/producto/producto.service';
 import categoriaService from '../../services/categoria/categoria.service';
+import pedidoService from '../../services/pedido/pedido.service';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './inicioAdmin.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

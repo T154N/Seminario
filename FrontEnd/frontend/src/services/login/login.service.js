@@ -98,6 +98,72 @@ const crearCuenta = async (nombre, apellido, dni, telefono,
    }
 }
 
+const crearCuentaAdmin = async (nombre, apellido, dni, telefono,
+                           correo, password, direccion, idTipoDireccion, observaciones, rolId) => {
+    try {
+        // const encryptedPassword = CryptoJs.AES.encrypt(password, ENCRYPTION_KEY).toString();
+        const encryptedPassword = await getEncryptedPassword(password);
+        const response = await axios.post(`${ENDPOINT_NOAUTH}/clientes/new`, {
+            cliente_documento: dni,
+            cliente_tipo_documento: "DNI",
+            cliente_cuit: "",
+            cliente_apellido: apellido,
+            cliente_nombre: nombre,
+            cliente_email: correo,
+            cliente_telefono: telefono,
+            cliente_observaciones: "",
+            domicilioTipoDomicilioId: idTipoDireccion,
+            domicilioDireccion: direccion,
+            domicilioBarrio: "",
+            domicilioUbicacion: "",
+            domicilioLocalidadId: 545,
+            domicilioCodigoPostal: "",
+            domicilioEsPrincipal: "Y",
+            usuario_contrasena: encryptedPassword.toString(),
+            usuario_rol_id: rolId,
+            usuario_observaciones: "",
+            usuario_alta: "ADMIN"
+        });
+        return response;
+    } catch (err) {
+        console.log(err)
+        return 400;
+    }
+}
+
+
+const crearCuentaClienteAdmin = async (nombre, apellido, dni, telefono,
+                                correo, password, direccion, idTipoDireccion, observaciones ) => {
+    try {
+        // const encryptedPassword = CryptoJs.AES.encrypt(password, ENCRYPTION_KEY).toString();
+        const encryptedPassword = await getEncryptedPassword(password);
+        const response = await axios.post(`${ENDPOINT_NOAUTH}/clientes/new`, {
+            cliente_documento: dni,
+            cliente_tipo_documento: "DNI",
+            cliente_apellido: apellido,
+            cliente_nombre: nombre,
+            cliente_email: correo,
+            cliente_telefono: telefono,
+            cliente_observaciones: "",
+            domicilioTipoDomicilioId: idTipoDireccion,
+            domicilioDireccion: direccion,
+            domicilioBarrio: "",
+            domicilioUbicacion: "",
+            domicilioLocalidadId: 545,
+            domicilioCodigoPostal: "5000",
+            domicilioEsPrincipal: "Y",
+            usuario_contrasena: encryptedPassword.toString(),
+            usuario_rol_id: 3,
+            usuario_observaciones: observaciones,
+            usuario_alta: "ADMIN"
+        });
+        return response;
+    } catch (err) {
+        console.log(err)
+        return 400;
+    }
+}
+
 const getCorreoRecuperacion = async (correo) => {
     try {
         const response = await axios.post(`${LOGIN_API_URL}/rest/auth/forgot-password?email=${correo}`);
@@ -153,7 +219,9 @@ const loginService = {
     getCorreoRecuperacion,
     confirmarResetPassword,
     getEmailUsuario,
-    esAdmin
+    esAdmin,
+    crearCuentaAdmin,
+    crearCuentaClienteAdmin
 }
 
 

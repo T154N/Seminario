@@ -30,6 +30,7 @@ export function InicioAdmin() {
     const [modoEdicion, setModoEdicion] = useState(false);
     const [modoAlta, setModoAlta] = useState(false);
     const [catalogoMenu, setCatalogoMenu] = useState(true);
+    const [estadoSeleccionado, setEstadoSeleccionado] = useState('');
 
     // Estados secundarios
     const [checkboxState, setCheckboxState] = useState(false);
@@ -102,7 +103,7 @@ export function InicioAdmin() {
     useEffect(() => {
         const nuevosFiltros = filtrosActivos.filter(filtro => filtro.filtro !== filtroSeleccionado);
         if (busqueda.trim() !== '') {
-            nuevosFiltros.push({ filtro: filtroSeleccionado, valor: busqueda });
+            nuevosFiltros.push({filtro: filtroSeleccionado, valor: busqueda});
         }
         setFiltrosActivos(nuevosFiltros);
     }, [busqueda, filtroSeleccionado]);
@@ -137,7 +138,26 @@ export function InicioAdmin() {
         setClientesActivos(filteredData(clientesFiltrados));
     };
 
+    const resetFilters = () => {
+        setFiltrosActivos([]);
+        setBusqueda('');
+        setEstadoSeleccionado('');
+        setFiltroSeleccionado('nombre');
+    };
+
+    const handleMenuContentChange = (content) => {
+        setMenuContent(content);
+        resetFilters();
+    };
+
     const filteredData = (data) => {
+        const estadoMap = {
+            'Aceptado': 13,
+            'Rechazado': 9,
+            'Pendiente': 7,
+            'Inactivo': 1
+        };
+
         return data.filter(item =>
             filtrosActivos.every(filtro => {
                 if (filtro.filtro === 'nombre') {
@@ -145,17 +165,16 @@ export function InicioAdmin() {
                 } else if (filtro.filtro === 'categoria' && item.categoria) {
                     return item.categoria.toLowerCase().includes(filtro.valor.toLowerCase());
                 } else if (filtro.filtro === 'estado') {
-                    return item.estado.toString() === filtro.valor;
+                    return item.estado === estadoMap[filtro.valor];
                 }
                 return true;
-            })
+            }) && (estadoSeleccionado === '' || item.estado === estadoMap[estadoSeleccionado])
         );
     };
-
     const dataToDisplay = () => {
         if (menuContent === 'Catálogo' && catalogTab === 'Productos') return filteredData(productosActivos);
         if (menuContent === 'Catálogo' && catalogTab === 'Categorias') return filteredData(categoriasActivos);
-        if (menuContent === 'Pedidos') return filteredData(pedidosActivos);
+        if (menuContent === 'Pedidos') return filteredData(pedidosActivos).sort((a, b) =>new Date(b.fecha) - new Date(a.fecha));
         if (menuContent === 'Clientes') return filteredData(clientesActivos);
         return [];
     };
@@ -173,39 +192,8 @@ export function InicioAdmin() {
 
 
     // Cambiar el estado del pedido
-    const handleEstadoChange = (pedido, nuevoEstado) => {
-        const estados = {
-            'Rechazado': { estadoId: 9, estado: false },
-            'Pendiente': { estadoId: 7, estado: false },
-            'Aceptado': { estadoId: 13, estado: false },
-            'Inactivo': { estadoId: 1, estado: false }
-        };
-
-        const estadoData = estados[nuevoEstado];
-
-        // Verificar si el estadoData existe
-        if (!estadoData) {
-            console.error(`El estado "${nuevoEstado}" no es válido`);
-            return;
-        }
-
-        pedidoService.updatePedidoEstado(pedido.id, estadoData.estadoId, "Admin", estadoData.estado)
-            .then(response => {
-                console.log("Estado actualizado:", response);
-
-                setPedidosActivos((prevPedidos) =>
-                    prevPedidos.map((p) =>
-                        p.id === pedido.id
-                            ? { ...p, estado: estadoData.estadoId }
-                            : p
-                    )
-                );
-            })
-
-            .catch(error => {
-                console.error("Error al cambiar el estado:", error);
-            });
-        pedidoService.updatePedidoEstado(pedido.id, estadoData.estadoId, "Admin", estadoData.estado)
+    const handleEstadoChange = (e) => {
+        setEstadoSeleccionado(e.target.value);
     };
 
     const navigate = useNavigate();
@@ -245,6 +233,7 @@ export function InicioAdmin() {
         setFiltroSeleccionado(e.target.value);
         setBusqueda('');
     };
+
 
     const handleRemoveFiltro = (filtroAEliminar) => {
         setFiltrosActivos(filtrosActivos.filter(filtro => filtro !== filtroAEliminar));
@@ -353,7 +342,7 @@ export function InicioAdmin() {
                                 <button
                                     key={item}
                                     className="btn-admin btn btn-success mb-2 btn-block"
-                                    onClick={() => setMenuContent(item)}
+                                    onClick={() => handleMenuContentChange(item)}
                                 >
                                     {item}
                                 </button>
@@ -409,6 +398,7 @@ export function InicioAdmin() {
                                 <ContenidoVariable
                                     menuContent={menuContent}
                                     catalogTab={catalogTab}
+                                    estadoSeleccionado={estadoSeleccionado}
                                     filtrosActivos={filtrosActivos}
                                     handleRemoveFiltro={handleRemoveFiltro}
                                     filtroSeleccionado={filtroSeleccionado}

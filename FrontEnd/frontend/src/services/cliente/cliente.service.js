@@ -236,7 +236,6 @@ const clienteService = {
     getAllClientes,
     getClienteById,
     getDatosClientePedido,
-
     getDomicilioByClienteId,
     createClienteConUsuarioYDomicilios,
     darDeBajaCliente,

@@ -8,6 +8,16 @@
     padding: 0 0px;
 }
 
+.btn-header:hover,
+.btn-header-joaco:hover {
+    box-shadow: 0 4px 8px rgb(252, 159, 52);
+}
+
+.btn-header:active,
+.btn-header-joaco:active {
+    box-shadow: 0 2px 4px rgb(218, 151, 12);
+}
+
 .offcanvas {
     transition: none !important; /* Deshabilita la transición */
 }

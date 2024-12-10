@@ -8,6 +8,7 @@ import './contenidoVariable.css';
 const ContenidoVariable = ({
     menuContent,
     catalogTab,
+    estadoSeleccionado,
     filtrosActivos,
     handleRemoveFiltro,
     filtroSeleccionado,
@@ -30,6 +31,9 @@ const ContenidoVariable = ({
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState([]);
     const [popupTipo, setPopupTipo] = useState('productos');
+
+
+
 
     // Abrir el popup con los elementos seleccionados
     const openPopup = (item, tipo) => {
@@ -197,32 +201,35 @@ const ContenidoVariable = ({
                         </td>
                         <td>
                             <>
-                                <Dropdown>
-                                    <Dropdown.Toggle variant="secondary" size="sm" className="btn-estado" title="Cambio de Estado">
-                                        <FontAwesomeIcon icon={faRotate} />
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item onClick={() => handleEstadoChange(item, "Pendiente")}>
-                                            Pendiente
-                                        </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => handleEstadoChange(item, "Aceptado")} >
-                                            Aceptado
-                                        </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => handleEstadoChange(item, "Rechazado")}>
-                                            Rechazado
-                                        </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => handleEstadoChange(item, "Inactivo")}>
-                                            Inactivo
-                                        </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown>
-                                <button
-                                    className="pedidos-info-btn-link"
-                                    onClick={() => mostrarDetalles(item)}
-                                    title="Info"
-                                >
-                                    <FontAwesomeIcon icon={faInfoCircle} />
-                                </button>
+                                <div className="d-flex justify-content-center">
+                                    <Dropdown>
+                                        <Dropdown.Toggle variant="secondary" size="sm" className="btn-estado"
+                                                         title="Cambio de Estado">
+                                            <FontAwesomeIcon icon={faRotate}/>
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item onClick={() => handleEstadoChange(item, "Pendiente")}>
+                                                Pendiente
+                                            </Dropdown.Item>
+                                            <Dropdown.Item onClick={() => handleEstadoChange(item, "Aceptado")}>
+                                                Aceptado
+                                            </Dropdown.Item>
+                                            <Dropdown.Item onClick={() => handleEstadoChange(item, "Rechazado")}>
+                                                Rechazado
+                                            </Dropdown.Item>
+                                            <Dropdown.Item onClick={() => handleEstadoChange(item, "Inactivo")}>
+                                                Inactivo
+                                            </Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                    <button
+                                        className="pedidos-info-btn-link ms-2"
+                                        onClick={() => mostrarDetalles(item)}
+                                        title="Info"
+                                    >
+                                        <FontAwesomeIcon icon={faInfoCircle}/>
+                                    </button>
+                                </div>
                             </>
                         </td>
                     </>
@@ -234,15 +241,15 @@ const ContenidoVariable = ({
                         <button
                             className="btn btn-primary btn-sm me-2 btn-dollar"
                             title="Editar precio"
-                            onClick={() => openPopup(item, 
-                                catalogTab === 'Productos' 
-                                    ? 'productos' 
-                                    : catalogTab === 'Clientes' 
-                                        ? 'clientes' 
+                            onClick={() => openPopup(item,
+                                catalogTab === 'Productos'
+                                    ? 'productos'
+                                    : catalogTab === 'Clientes'
+                                        ? 'clientes'
                                         : 'categorias'
                             )}
                         >
-                            <FontAwesomeIcon icon={faDollarSign} />
+                            <FontAwesomeIcon icon={faDollarSign}/>
                         </button>
                         <button
                             className="btn-action btn btn-sm me-2"
@@ -297,19 +304,19 @@ const ContenidoVariable = ({
             {/* Botones y filtro */}
             <div className="header-section d-flex justify-content-start">
                 <button className="btn-action btn-alta btn btn-primary" onClick={handlePost}>
-                    Agregar {menuContent === 'Clientes' ? 'Cliente' : catalogTab}
+                    Agregar {menuContent === 'Clientes' ? 'Cliente' : menuContent === 'Catálogo' ? catalogTab : 'Pedido'}
                 </button>
 
                 {menuContent !== 'Pedidos' && (
-                    <div className="form-check ms-3 checkbox-container">
+                    <div className="form-check ms-3 mb-0 btn-action checkbox-container">
                         <input
                             type="checkbox"
                             id="inactivosCheckbox"
                             onChange={handleInactivosChange}
                             checked={checkboxState}
-                            className="form-check-input"
+                            className="form-check-input me-1 mb-0 mt-0"
                         />
-                        <label htmlFor="inactivosCheckbox" className="btn-action">
+                        <label htmlFor="inactivosCheckbox" className="btn-action me-1 mb-0 mt-0">
                             Inactivos
                         </label>
                     </div>
@@ -322,6 +329,18 @@ const ContenidoVariable = ({
                     <option value="nombre">Nombre</option>
                     {menuContent === 'Catálogo' && catalogTab === 'Productos' && <option value="categoria">Categoría</option>}
                 </select>
+                {menuContent === 'Pedidos' && (
+                    <select className="form-select me-2 small-select" value={estadoSeleccionado} onChange={handleEstadoChange}>
+                        <option value="">Todos los estados</option>
+                        <option value="Aceptado">Aceptado</option>
+                        <option value="Rechazado">Rechazado</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Inactivo">Inactivo</option>
+
+                    </select>
+                )}
+
+
                 <input
                     type="text"
                     className="form-control"

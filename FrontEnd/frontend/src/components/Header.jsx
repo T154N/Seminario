@@ -244,7 +244,7 @@ export function Header() {
                                     }
                                     {/* Botones que se muestran solo en pantallas grandes */}
                                     <li className="nav-item me-0 d-none d-lg-block">
-                                        <button className="nav-link btn active fs-5"
+                                        <button className="btn-header-joaco nav-link btn active fs-5"
                                                 onClick={goToCatalogue}>
                                             <img className="me-1" src={catalogo} alt="Catalogo" style={{
                                                 width: "35px",
@@ -258,7 +258,7 @@ export function Header() {
                                     </li>
                                     {!isLoggedIn &&
                                         <li className="nav-item me-0 d-none d-lg-block">
-                                            <button className="nav-link btn active fs-5"
+                                            <button className="btn-header-joaco nav-link btn active fs-5"
                                                     onClick={goToUserProfile}>
                                                 <img src={usuario} alt="Login" style={{
                                                     width: "30px",
@@ -273,7 +273,7 @@ export function Header() {
                                     {isLoggedIn &&
                                         <li className="nav-item me-0 d-none d-lg-block">
                                             <div className="dropdown">
-                                                <button className="btn dropdown-toggle fs-5" type="button"
+                                                <button className=" btn-header-joaco btn dropdown-toggle fs-5" type="button"
                                                         id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
                                                     <img src={usuario} alt="Login" style={{
@@ -307,7 +307,7 @@ export function Header() {
                                     }
 
                                     <li className="nav-item me-0 d-none d-lg-block">
-                                        <button className="nav-link btn active fs-5"
+                                        <button className="btn-header-joaco nav-link btn active fs-5"
                                                 onClick={goToInformacion}>
                                             <img className="me-1" src={informacion} alt="Informacion" style={{
                                                 width: "30px",
@@ -321,7 +321,7 @@ export function Header() {
 
                                     {loginService.esAdmin() &&
                                         <li className="nav-item me-0 d-none d-lg-block">
-                                            <button className="nav-link btn active fs-5 text-white"
+                                            <button className="btn-header-joaco nav-link btn active fs-5 text-white"
                                                     onClick={goToAdminConfig}>
                                                 <img className="colorTuerca" src={config} alt="Carrito" style={{
                                                     width: "30px",

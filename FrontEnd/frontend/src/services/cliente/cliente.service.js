@@ -31,51 +31,12 @@ const getDomicilioByClienteId = async (clienteId) => {
     }
 };
 
-
-
-}
-
-
-
-
-const getClienteById = async (id) => { // Agregar el parámetro `id` para buscar cliente por ID.
+const getClienteById = async (id) => {
     try {
         const response = await axios.get(`${ENDPOINT_NOAUTH}/clientes/${id}`);
-        if (response.data.status === 400) {
-            return 400;
-        }
+
         if (response.data.body) {
             const c = response.data.body;
-
-            return {
-                id: c.clienteId,
-                documento: c.clienteDocumento,
-                tipoDocumento: c.clienteTipoDocumento,
-                cuit: c.clienteCuit,
-                apellido: c.clienteApellido,
-                nombre: c.clienteNombre,
-                email: c.clienteEmail,
-                telefono: c.clienteTelefono,
-                estado: c.clienteEstadoId,
-                fechaAlta: c.clienteFechaAlta,
-                fechaModificacion: c.clienteFechaModificacion,
-                fechaBaja: c.clienteFechaBaja,
-                usuarioAlta: c.clienteUsuarioAlta,
-                usuarioModificacion: c.clienteUsuarioModificacion,
-                usuarioBaja: c.clienteUsuarioBaja,
-                observaciones: c.clienteObservaciones,
-                barrio: c.domicilioBarrio,
-                codigoPostal: c.domicilioCodigoPostal,
-                domicilioId: c.domicilioId,
-                direccion: c.domicilioDireccion,
-                ubicaion: c.domicilioUbicacion,
-                localidad: c.localidadNombre,
-                provincia: c.provinciaNombre,
-                tipoDomicilio: c.tipoDomicilioDescripcion,
-                pedidos: c.pedidos || [], // Validación para evitar undefined.
-                carritos: c.carritos || [],
-            };
-
             if (c.cliente_estado_id === 1) {
                 const domiciliosFiltrados = c.domicilios.filter(d => d.domicilioEstadoId === 1);
                 return {
@@ -94,9 +55,10 @@ const getClienteById = async (id) => { // Agregar el parámetro `id` para buscar
                 return null; // or handle it as needed
             }
         }
+
     } catch (error) {
-        console.error("Error fetching cliente by id:", error);
-        return { error: error.message };
+        console.error(error);
+        return null; // Puedes devolver un objeto vacío o algo más adecuado para manejar el error
     }
 };
 
@@ -281,8 +243,5 @@ const clienteService = {
     modificarDatosCliente
 
 };
-
-   
-}
 
 export default clienteService;

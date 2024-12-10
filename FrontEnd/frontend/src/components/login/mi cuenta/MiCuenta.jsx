@@ -141,49 +141,51 @@ export function MiCuenta() {
             </div>
 
             <Modal show={showAddModal} onHide={() => setShowAddModal(false)} className="custom-modal">
-                <Modal.Header closeButton>
-                    <Modal.Title>Agregar Dirección</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={handleSubmit(handleAddDomicilio)}>
-                        <Form.Group controlId="formAddress">
-                            <Form.Label className="fs-5">Dirección</Form.Label>
-                            <Form.Control
-                                type="text"
-                                {...register("direccion", {
-                                    required: "La dirección es obligatoria",
-                                    minLength: {
-                                        value: 3,
-                                        message: "La dirección debe tener al menos 3 caracteres."
-                                    },
-                                })}
-                            />
-                            {errors.direccion && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.direccion.message}</p>}
-                        </Form.Group>
-                        <Form.Group controlId="formTipoDomicilio" className="mb-3">
-                            <Form.Label className="fs-5">Tipo de Domicilio</Form.Label>
-                            <Form.Select
-                                {...register("tipoDomicilio", {
-                                    required: "El tipo de domicilio es obligatorio",
-                                })}
-                            >
-                                <option value="1">CASA</option>
-                                <option value="2">LOCAL COMERCIAL</option>
-                                <option value="3">DEPÓSITO</option>
-                            </Form.Select>
-                            {errors.tipoDomicilio && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.tipoDomicilio.message}</p>}
-                        </Form.Group>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={() => setShowAddModal(false)}>
-                                Cerrar
-                            </Button>
-                            <Button variant="principal" type="submit">
-                                <FontAwesomeIcon icon={faSave} />
-                                <span className="ps-1">Agregar Domicilio</span>
-                            </Button>
-                        </Modal.Footer>
-                    </Form>
-                </Modal.Body>
+                <div style={{ border: "2px solid #ffbb33", borderRadius: "5px" }}>
+                    <Modal.Header closeButton style={{backgroundColor: "#fff8e1"}}>
+                        <Modal.Title>Agregar Dirección</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="pb-0 rounded-3" style={{backgroundColor: "#fff8e1"}}>
+                        <Form onSubmit={handleSubmit(handleAddDomicilio)}>
+                            <Form.Group controlId="formAddress">
+                                <Form.Label className="fs-5">Dirección</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    {...register("direccion", {
+                                        required: "La dirección es obligatoria",
+                                        minLength: {
+                                            value: 3,
+                                            message: "La dirección debe tener al menos 3 caracteres."
+                                        },
+                                    })}
+                                />
+                                {errors.direccion && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.direccion.message}</p>}
+                            </Form.Group>
+                            <Form.Group controlId="formTipoDomicilio" className="mb-3">
+                                <Form.Label className="fs-5">Tipo de Domicilio</Form.Label>
+                                <Form.Select
+                                    {...register("tipoDomicilio", {
+                                        required: "El tipo de domicilio es obligatorio",
+                                    })}
+                                >
+                                    <option value="1">CASA</option>
+                                    <option value="2">LOCAL COMERCIAL</option>
+                                    <option value="3">DEPÓSITO</option>
+                                </Form.Select>
+                                {errors.tipoDomicilio && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.tipoDomicilio.message}</p>}
+                            </Form.Group>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={() => setShowAddModal(false)}>
+                                    Cerrar
+                                </Button>
+                                <Button variant="principal" type="submit">
+                                    <FontAwesomeIcon icon={faSave} />
+                                    <span className="ps-1">Agregar Domicilio</span>
+                                </Button>
+                            </Modal.Footer>
+                        </Form>
+                    </Modal.Body>
+                </div>
             </Modal>
         </>
     );

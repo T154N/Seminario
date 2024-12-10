@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './inicioAdmin.css';
+import './clienteAlta.css';
 
 import clienteService from "../../services/cliente/cliente.service";
 import ConfirmModal from "./ConfirmModal";
@@ -119,18 +120,21 @@ const ClienteAlta = ({ onSave, onCancel }) => {
                     </div>
                     <div className="form-group col-md-4">
                         <label htmlFor="cliente_tipo_documento">Tipo de Documento</label>
-                        <select
-                            className="form-control"
-                            name="cliente_tipo_documento"
-                            id="cliente_tipo_documento"
-                            value={formData.cliente_tipo_documento}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="DNI">DNI</option>
-                            <option value="Pasaporte">Pasaporte</option>
-                            <option value="Cédula">Cédula</option>
-                        </select>
+                        <div className="custom-select-wrapper">
+                            <select
+                                className="form-control"
+                                name="cliente_tipo_documento"
+                                id="cliente_tipo_documento"
+                                value={formData.cliente_tipo_documento}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="DNI">DNI</option>
+                                <option value="Pasaporte">Pasaporte</option>
+                                <option value="Cédula">Cédula</option>
+                            </select>
+                            <FontAwesomeIcon icon="caret-down" className="custom-select-icon" />
+                        </div>
                     </div>
                     <div className="form-group col-md-4">
                         <label htmlFor="cliente_cuit">CUIT</label>

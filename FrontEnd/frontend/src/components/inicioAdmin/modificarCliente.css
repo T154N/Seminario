@@ -1,0 +1,86 @@
+/* Estilos específicos para ModificarContenidoCliente */
+.modificar-contenido-cliente {
+    padding: 20px;
+    border-radius: 8px;
+    
+}
+
+.modificar-contenido-cliente h2 {
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modificar-contenido-cliente .form-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.modificar-contenido-cliente .form-control,
+.modificar-contenido-cliente .form-select {
+
+    transition: all 0.3s ease;
+}
+
+.modificar-contenido-cliente .form-control:focus,
+.modificar-contenido-cliente .form-select:focus {
+    border-color: #FFC107;
+    box-shadow: 0px 0px 5px #FFC107;
+    outline: none;
+}
+
+.modificar-contenido-cliente .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.modificar-contenido-cliente .btn-success {
+    background-color: #FFC107;
+    border: none;
+}
+
+.modificar-contenido-cliente .btn-success:hover {
+    background-color: #d3a20e;
+}
+
+.modificar-contenido-cliente .btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.modificar-contenido-cliente .btn-danger:hover {
+    background-color: #c82333;
+}
+
+.modificar-contenido-cliente .d-flex {
+    gap: 15px;
+}
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+    .modificar-contenido-cliente .form-label {
+        font-size: 14px;
+    }
+
+    .modificar-contenido-cliente .form-control,
+    .modificar-contenido-cliente .form-select {
+        font-size: 14px;
+    }
+
+    .modificar-contenido-cliente .btn {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    .modificar-contenido-cliente {
+        padding: 15px;
+    }
+}
+
+/* Optional: Add hover effects for the input fields */
+.modificar-contenido-cliente .form-control:hover,
+.modificar-contenido-cliente .form-select:hover {
+    border-color: #ccc;
+}

@@ -177,7 +177,16 @@ export function InicioAdmin() {
                     return item.categoria.toLowerCase().includes(filtro.valor.toLowerCase());
                 } else if (filtro.filtro === 'estado') {
                     return item.estado === estadoMap[filtro.valor];
-                }
+                } else if (filtro.filtro === 'apellido') {
+                    return item.apellido.toLowerCase().includes(filtro.valor.toLowerCase());
+                } else if (filtro.filtro === 'documento') {
+                    return item.documento.toLowerCase().includes(filtro.valor.toLowerCase());
+                }else if (filtro.filtro === 'direccion') {
+                    return item.direccion.toLowerCase().includes(filtro.valor.toLowerCase());
+                }else if (filtro.filtro === 'email') {
+                    return item.email.toLowerCase().includes(filtro.valor.toLowerCase());}
+
+
                 return true;
             }) && (estadoSeleccionado === '' || item.estado === estadoMap[estadoSeleccionado])
         );

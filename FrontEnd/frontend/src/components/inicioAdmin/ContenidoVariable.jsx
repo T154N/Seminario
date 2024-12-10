@@ -74,11 +74,11 @@ const ContenidoVariable = ({
         if (menuContent === 'Clientes') {
             return (
                 <>
-                    <th>ID</th>
+                    <th>Nro cliente</th>
                     <th>Nombre</th>
-                    <th>Apellido</th>
                     <th>Documento</th>
                     <th>Domicilio</th>
+                    <th>Correo electronico</th>
                     <th>Estado</th>
                     <th>Acción</th>
                 </>
@@ -126,14 +126,14 @@ const ContenidoVariable = ({
         return dataToDisplay().map((item) => (
             <tr key={item.id}>
                 <td>{item.id}</td>
-                <td>{item.nombre}</td>
 
                 {/* Columnas específicas para "Clientes" */}
                 {menuContent === 'Clientes' && (
                     <>
-                        <td>{item.apellido}</td>
+                        <td>{item.nombre}, {item.apellido}</td>
                         <td>{item.documento}</td>
                         <td>{item.direccion}</td>
+                        <td>{item.email}</td>
                         <td>
                             <span>
                                 {item.estado === 1 ? 'Activo' : 'Inactivo'}
@@ -152,7 +152,7 @@ const ContenidoVariable = ({
 
                 {/* Columnas específicas para "Productos" */}
                 {menuContent === 'Catálogo' && catalogTab === 'Productos' && (
-                    <>
+                        <><td>{item.nombre}</td>
                         <td>{item.categoria}</td>
                         <td>{`$${item.precioUnitario.toFixed(2)}`}</td>
                         <td>
@@ -173,6 +173,8 @@ const ContenidoVariable = ({
 
                 {/* Columnas específicas para "Categorías" */}
                 {menuContent === 'Catálogo' && catalogTab === 'Categorias' && (
+                    <>
+                    <td>{item.nombre}</td>
                     <td>
                         <span>
                             {item.estado === 1 ? 'Activo' : 'Inactivo'}
@@ -186,12 +188,13 @@ const ContenidoVariable = ({
                             />
                         </span>
                     </td>
+                    </>
                 )}
 
                 {/* Columnas específicas para "Pedidos" */}
                 {menuContent === 'Pedidos' && (
                     <>
-
+<td>{item.nombre}</td>
                         <td>{item.fecha.split("T")[0]}</td>
                         <td>{`$${item.montoTotal.toFixed(2)}`}</td>
                         <td data-label="Estado">
@@ -338,6 +341,10 @@ const ContenidoVariable = ({
                 <select className="form-select me-2 small-select" value={filtroSeleccionado}
                         onChange={handleFiltroChange}>
                     <option value="nombre">Nombre</option>
+                    {menuContent === 'Clientes' && <option value="apellido">Apellido</option>}
+                    {menuContent === 'Clientes' && <option value="documento">Documento</option>}
+                    {menuContent === 'Clientes' && <option value="direccion">Domicilio</option>}
+                    {menuContent === 'Clientes'&& <option value="email">Correo electronico</option>}
                     {menuContent === 'Catálogo' && catalogTab === 'Productos' &&
                         <option value="categoria">Categoría</option>}
                 </select>

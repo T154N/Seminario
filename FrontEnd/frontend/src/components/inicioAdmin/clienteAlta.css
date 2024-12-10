@@ -1,0 +1,10 @@
+select {
+    appearance: auto; /* Elimina el estilo nativo */
+    -webkit-appearance: none; /* Compatibilidad con Webkit */
+    -moz-appearance: none; /* Compatibilidad con Firefox */
+    background-image: url("https://i.pinimg.com/736x/31/54/59/315459a1702be5166052f3ba17a761f9.jpg");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 20px; /* Espacio para la flecha */
+  }

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './inicioAdmin.css';
+import './modificarCliente.css';
 import modificarCliente from '../../services/cliente/cliente.service';
 
 const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
@@ -35,10 +36,10 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
                 cliente_nombre: registro.nombre || "",
                 cliente_email: registro.email || "",
                 cliente_telefono: registro.telefono || "",
-                cliente_observaciones: registro.observaciones || "",
+                cliente_observaciones: registro.observaciones || "Observaciones varias",
                 domicilioTipoDomicilioId: registro.tipoDomicilio === "CASA" ? "1" : registro.tipoDomicilio === "LOCAL COMERCIAL" ? "2" : "3",
                 domicilioDireccion: registro.direccion || "",
-                domicilioBarrio: registro.barrio || "",
+                domicilioBarrio: registro.barrio || "Barrio cenrtrico",
                 domicilioUbicacion: registro.ubicacion || "",
                 domicilioCodigoPostal: registro.codigoPostal || "0",
                 estado: registro.estado ? registro.estado.toString() : "1",
@@ -217,19 +218,20 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
     ];
 
     return (
-        <div className="modificar-contenido container">
+        <div className="modificar-contenido-cliente container">
             <h2 className="mb-4">Modificar Cliente</h2>
             <form onSubmit={handleSubmit}>
                 <div className="row g-3">
                     {fields.map((field) => renderField(field))}
                 </div>
                 <div className="d-flex justify-content-between mt-4">
-                    <button type="submit" className="btn btn-success">
-                        <FontAwesomeIcon icon={faSave} /> Guardar
-                    </button>
                     <button type="button" className="btn btn-danger" onClick={onCancel}>
                         <FontAwesomeIcon icon={faTimes} /> Cancelar
                     </button>
+                    <button type="submit" className="btn btn-success">
+                        <FontAwesomeIcon icon={faSave} /> Guardar
+                    </button>
+
                 </div>
             </form>
         </div>

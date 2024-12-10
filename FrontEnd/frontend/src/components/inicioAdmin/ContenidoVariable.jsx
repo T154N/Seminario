@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faDollarSign, faEdit, faTrash, faInfoCircle, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faDollarSign, faEdit, faTrash, faInfoCircle, faRotate, faEye } from '@fortawesome/free-solid-svg-icons';
 import MassUpdatePopup from './MassUpdatePopup';
 import { Dropdown } from 'react-bootstrap';
 import './contenidoVariable.css';
+import ClienteModal from './ClienteModal';
+
 
 const ContenidoVariable = ({
     menuContent,
@@ -28,6 +30,20 @@ const ContenidoVariable = ({
     handleFechaDesdeChange,
     handleFechaHastaChange
 }) => {
+    // Estados locales para controlar el popup y los elementos seleccionados
+        const [showModal, setShowModal] = useState(false);
+        const [selectedClient, setSelectedClient] = useState(null);
+    
+        const handleViewClick = (client) => {
+            setSelectedClient(client);
+            setShowModal(true);
+        };
+    
+        const handleCloseModal = () => {
+            setShowModal(false);
+            setSelectedClient(null);
+        }
+    
     // Estados locales para controlar el popup y los elementos seleccionados
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState([]);
@@ -77,7 +93,6 @@ const ContenidoVariable = ({
                     <th>Nro cliente</th>
                     <th>Nombre</th>
                     <th>Documento</th>
-                    <th>Domicilio</th>
                     <th>Correo electronico</th>
                     <th>Estado</th>
                     <th>Acción</th>
@@ -132,7 +147,6 @@ const ContenidoVariable = ({
                     <>
                         <td>{item.nombre}, {item.apellido}</td>
                         <td>{item.documento}</td>
-                        <td>{item.direccion}</td>
                         <td>{item.email}</td>
                         <td>
                             <span>
@@ -152,7 +166,7 @@ const ContenidoVariable = ({
 
                 {/* Columnas específicas para "Productos" */}
                 {menuContent === 'Catálogo' && catalogTab === 'Productos' && (
-                        <><td>{item.nombre}</td>
+                    <><td>{item.nombre}</td>
                         <td>{item.categoria}</td>
                         <td>{`$${item.precioUnitario.toFixed(2)}`}</td>
                         <td>
@@ -174,27 +188,27 @@ const ContenidoVariable = ({
                 {/* Columnas específicas para "Categorías" */}
                 {menuContent === 'Catálogo' && catalogTab === 'Categorias' && (
                     <>
-                    <td>{item.nombre}</td>
-                    <td>
-                        <span>
-                            {item.estado === 1 ? 'Activo' : 'Inactivo'}
-                            <span
-                                className="estado-indicador"
-                                style={{
-                                    backgroundColor: getIndicatorColor(
-                                        item.estado === 1 ? 'Activo' : 'Inactivo'
-                                    ),
-                                }}
-                            />
-                        </span>
-                    </td>
+                        <td>{item.nombre}</td>
+                        <td>
+                            <span>
+                                {item.estado === 1 ? 'Activo' : 'Inactivo'}
+                                <span
+                                    className="estado-indicador"
+                                    style={{
+                                        backgroundColor: getIndicatorColor(
+                                            item.estado === 1 ? 'Activo' : 'Inactivo'
+                                        ),
+                                    }}
+                                />
+                            </span>
+                        </td>
                     </>
                 )}
 
                 {/* Columnas específicas para "Pedidos" */}
                 {menuContent === 'Pedidos' && (
                     <>
-<td>{item.nombre}</td>
+                        <td>{item.nombre}</td>
                         <td>{item.fecha.split("T")[0]}</td>
                         <td>{`$${item.montoTotal.toFixed(2)}`}</td>
                         <td data-label="Estado">
@@ -217,8 +231,8 @@ const ContenidoVariable = ({
                                 <div className="d-flex justify-content-center">
                                     <Dropdown>
                                         <Dropdown.Toggle variant="secondary" size="sm" className="btn-estado"
-                                                         title="Cambio de Estado">
-                                            <FontAwesomeIcon icon={faRotate}/>
+                                            title="Cambio de Estado">
+                                            <FontAwesomeIcon icon={faRotate} />
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
                                             <Dropdown.Item onClick={() => handleEstadoChange(item, "Pendiente")}>
@@ -240,7 +254,7 @@ const ContenidoVariable = ({
                                         onClick={() => mostrarDetalles(item)}
                                         title="Info"
                                     >
-                                        <FontAwesomeIcon icon={faInfoCircle}/>
+                                        <FontAwesomeIcon icon={faInfoCircle} />
                                     </button>
                                 </div>
                             </>
@@ -262,7 +276,7 @@ const ContenidoVariable = ({
                                         : 'categorias'
                             )}
                         >
-                            <FontAwesomeIcon icon={faDollarSign}/>
+                            <FontAwesomeIcon icon={faDollarSign} />
                         </button>
                         <button
                             className="btn-action btn btn-sm me-2"
@@ -282,25 +296,39 @@ const ContenidoVariable = ({
                     </td>
                 )}
 
-                {menuContent === 'Clientes' && (
-                    <td>
-                        <button
-                            className="btn-action btn btn-sm me-2"
-                            title="Editar registro"
-                            onClick={() => handleEditClick(item)}
-                        >
-                            <FontAwesomeIcon icon={faEdit} />
-                        </button>
-                        <button
-                            className="btn-action-delete btn btn-sm"
-                            onClick={() => handleDeleteClick(item)}
-                            title="Eliminar registro"
-                            style={{ display: checkboxState ? 'none' : 'inline-block' }}
-                        >
-                            <FontAwesomeIcon icon={faTrash} />
-                        </button>
-                    </td>
-                )}
+{menuContent === "Clientes" && (
+                <td>
+                    <button
+                        className="btn-action btn btn-sm me-2"
+                        title="Editar registro"
+                        onClick={() => handleEditClick(item)}
+                    >
+                        <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                    <button
+                        className="btn-action-delete btn btn-sm me-2"
+                        onClick={() => handleDeleteClick(item)}
+                        title="Eliminar registro"
+                        style={{ display: checkboxState ? "none" : "inline-block" }}
+                    >
+                        <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                    <button
+                        className="btn-action-view btn btn-sm"
+                        onClick={() => handleViewClick(item)}
+                        title="Visualizar datos del cliente"
+                    >
+                        <FontAwesomeIcon icon={faEye} />
+                    </button>
+                </td>
+            )}
+            {showModal && (
+                <ClienteModal
+                    clientData={selectedClient}
+                    onClose={handleCloseModal}
+                />
+            )}
+
             </tr>
         ));
     };
@@ -310,7 +338,7 @@ const ContenidoVariable = ({
             {/* Encabezado */}
             <div>
                 <span className="fs-3 fw-bold mt-0">
-                    {menuContent === 'Catálogo' ?  catalogTab : menuContent}
+                    {menuContent === 'Catálogo' ? catalogTab : menuContent}
                 </span>
             </div>
 
@@ -339,12 +367,12 @@ const ContenidoVariable = ({
             {/* Campo de búsqueda y filtros */}
             <div className="mb-3 d-flex align-items-baseline">
                 <select className="form-select me-2 small-select" value={filtroSeleccionado}
-                        onChange={handleFiltroChange}>
+                    onChange={handleFiltroChange}>
                     <option value="nombre">Nombre</option>
                     {menuContent === 'Clientes' && <option value="apellido">Apellido</option>}
                     {menuContent === 'Clientes' && <option value="documento">Documento</option>}
-                    {menuContent === 'Clientes' && <option value="direccion">Domicilio</option>}
-                    {menuContent === 'Clientes'&& <option value="email">Correo electronico</option>}
+                    {/*menuContent === 'Clientes' && <option value="direccion">Domicilio</option>*/}
+                    {menuContent === 'Clientes' && <option value="email">Correo electronico</option>}
                     {menuContent === 'Catálogo' && catalogTab === 'Productos' &&
                         <option value="categoria">Categoría</option>}
                 </select>
@@ -357,7 +385,7 @@ const ContenidoVariable = ({
                 />
                 {menuContent === 'Pedidos' && (
                     <select className="form-select me-2 small-select" value={estadoSeleccionado}
-                            onChange={handleEstadoChange}>
+                        onChange={handleEstadoChange}>
                         <option value="">Todos los estados</option>
                         <option value="Aceptado">Aceptado</option>
                         <option value="Rechazado">Rechazado</option>

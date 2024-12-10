@@ -25,3 +25,11 @@
     border-radius: 5px;
      /* Color de borde más oscuro para el botón */
 }
+
+.btn-action-view {
+    background-color: #3b92e2;  
+    border-color: none;
+    color: white;
+    border-radius: 5px;
+     /* Color de borde más oscuro para el botón */
+}

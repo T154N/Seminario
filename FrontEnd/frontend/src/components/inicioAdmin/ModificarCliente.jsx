@@ -141,14 +141,7 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
                 { value: "PASAPORTE", label: "Pasaporte" },
                 { value: "CEDULA", label: "Cédula" },
             ],
-        },
-        {
-            name: "cliente_cuit",
-            title: "CUIT",
-            placeholder: "CUIT del cliente",
-            colSize: 6,
-        },
-        {
+        },        {
             name: "cliente_apellido",
             title: "Apellido",
             placeholder: "Apellido del cliente",
@@ -160,6 +153,15 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
             placeholder: "Nombre del cliente",
             colSize: 6,
         },
+
+        {
+            name: "cliente_cuit",
+            title: "CUIT",
+            placeholder: "CUIT del cliente",
+            colSize: 6,
+        },
+
+
         {
             name: "cliente_email",
             title: "Email",

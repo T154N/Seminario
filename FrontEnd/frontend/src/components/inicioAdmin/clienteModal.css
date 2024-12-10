@@ -1,0 +1,107 @@
+/* clienteModal.css */
+
+/* Aislar estilos del modal usando prefijo */
+.cliente-modal-backdrop {
+    background-color: #fff3ef !important; /* Color solicitado */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Contenedor del modal */
+
+
+.cliente-modal-content h2 {
+    font-size: 28px;
+    color: #333333;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    flex-basis: 100%;
+}
+
+
+
+
+/* clienteModal.css */
+.cliente-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.cliente-modal-content {
+    background: #fff7e7;
+    border: solid 1px #ff9800;
+    border-color: #ff9800;
+    padding: 40px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cliente-modal-tables {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.cliente-modal-table {
+    width: 50%;
+    border-collapse: collapse;
+}
+
+.cliente-modal-table th {
+    text-align: left;
+    font-weight: bold;
+    padding: 8px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+}
+
+.cliente-modal-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.cliente-modal-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ffa726;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cliente-modal-btn:hover {
+    background-color: #ff9800;
+}
+
+.cliente-modal-observaciones-fullwidth {
+    width: 200%;
+    margin-top: 10px;
+}
+
+.obesrvaciones-cabecera {
+    width: 18.5%;
+}
+
+.tabla-valores{
+    background-color: #fff;
+}

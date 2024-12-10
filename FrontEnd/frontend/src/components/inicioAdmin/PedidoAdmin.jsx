@@ -119,6 +119,7 @@ export function PedidoAdmin({ onSave, onCancel }) {
         <form onSubmit={handleSubmit}>
             <div className="text-start">
                 <div className="row">
+                    <h2 className="text-center">Nuevo Pedido</h2>
                     <div className="col-7">
                         <SeleccionarProductos
                             onProductosSeleccionados={setProductosSeleccionados}

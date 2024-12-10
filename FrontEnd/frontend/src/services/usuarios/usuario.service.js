@@ -25,3 +25,9 @@ const getAllUsuarios = async () => {
         return []
     }
 };
+
+const usuariosService = {
+    getAllUsuarios,
+}
+
+export default usuariosService;

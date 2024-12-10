@@ -1,0 +1,12 @@
+.custom-modal {
+    font-family: 'Bree Serif', serif;
+}
+
+/*style={{backgroundColor: "#fff8e1"}}*/
+
+.tab-content-area {
+    border: 2px solid #ffbb33; /* Borde naranja para el área activa */
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff8e1; /* Fondo claro */
+}

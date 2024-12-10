@@ -13,6 +13,11 @@
     margin: 0; /* Elimina el margen */
 }
 
+/* producto.css */
+.btn-producto-disabled {
+    cursor: not-allowed;
+}
+
 /* Para Firefox */
 .input-cantidad {
     appearance: textfield; /* Propiedad estándar */

@@ -34,7 +34,7 @@ export function Carrito() {
             }
         } else {
             setmostrarAlerta(true);
-            setMensajeRegistro("No hay productos en el carrito.");
+            setMensajeRegistro("Agregue productos al carrito para iniciar la compra.");
             setTipoError("alerta")
         }
 };

@@ -77,7 +77,7 @@ export function Registrarse({mostrarMsjRegistro}) {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="container text-start">
-            <div className="row p-0">
+                <div className="row p-0">
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0 pe-2">
                             <label className="form-label fs-4">Nombre <span style={{color: "darkred"}}>*</span></label>
@@ -128,7 +128,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                     </div>
                 </div>
                 <div className="row">
-                <div className="col-12 col-sm-6 p-0">
+                    <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-0 pe-2">
                             <label className="form-label fs-4">DNI <span style={{color: "darkred"}}>*</span></label>
                             <input
@@ -154,7 +154,7 @@ export function Registrarse({mostrarMsjRegistro}) {
                     </div>
                     <div className="col-12 col-sm-6 p-0">
                         <div className="mt-1 mb-1">
-                            <label className="form-label fs-4">Telefono <span style={{color: "darkred"}}>*</span></label>
+                            <label className="form-label fs-4">Teléfono <span style={{color: "darkred"}}>*</span></label>
                             <input
                                    className="form-control"
                                    id="inputTelefono"

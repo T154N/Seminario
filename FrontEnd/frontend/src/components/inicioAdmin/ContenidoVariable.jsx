@@ -77,7 +77,7 @@ const ContenidoVariable = ({
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
-                    <th>CUIT</th>
+                    <th>Documento</th>
                     <th>Domicilio</th>
                     <th>Estado</th>
                     <th>Acción</th>
@@ -132,8 +132,8 @@ const ContenidoVariable = ({
                 {menuContent === 'Clientes' && (
                     <>
                         <td>{item.apellido}</td>
-                        <td>{item.cuit}</td>
-                        <td>{item.domicilio}</td>
+                        <td>{item.documento}</td>
+                        <td>{item.direccion}</td>
                         <td>
                             <span>
                                 {item.estado === 1 ? 'Activo' : 'Inactivo'}

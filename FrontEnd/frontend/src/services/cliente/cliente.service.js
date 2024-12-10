@@ -74,6 +74,7 @@ const getAllClientes = async () => {
         if (response.data.body) {
             return response.data.body.map((c) => ({
                 id: c.clienteId,
+                idUsuario: c.clienteUsuarioId, // No se usa en los ejemplos, pero mantenido por consistencia
                 documento: c.clienteDocumento,
                 tipoDocumento: c.clienteTipoDocumento,
                 cuit: c.clienteCuit, // No se usa en los ejemplos, pero mantenido por consistencia
@@ -166,6 +167,7 @@ const darDeBajaCliente = async (cliente, usuarioAlta) => {
     try {
         // Mapeo del cliente al formato del DTO
         const body = {
+            usuario_id: cliente.idUsuario,
             cliente_documento: cliente.documento,
             cliente_tipo_documento: cliente.tipoDocumento,
             cliente_apellido: cliente.apellido,
@@ -180,9 +182,8 @@ const darDeBajaCliente = async (cliente, usuarioAlta) => {
             domicilioUbicacion: cliente.ubicacion, 
             domicilioLocalidadId: 545, 
             domicilioCodigoPostal: cliente.codigoPostal,
-            domicilioEsPrincipal: 'Y', 
-            usuario_id: 4, 
-            usuario_contrasena: "CRv7ZHhHp1ZYlZNDycNF9Q==", 
+            domicilioEsPrincipal: 'Y',  
+            usuario_contrasena: "", 
             usuario_rol_id: 1, 
             usuario_observaciones: " ", // No proporcionado en cliente, ajustar si es necesario
             usuario_alta: usuarioAlta,
@@ -190,7 +191,7 @@ const darDeBajaCliente = async (cliente, usuarioAlta) => {
 
         // Realizar la solicitud PUT para dar de baja al cliente
         const response = await axios.put(
-            `${ENDPOINT_NOAUTH}/clientes/upd/`,
+            `${ENDPOINT_NOAUTH}/clientes/upd`,
             body,
             { params: { setbaja: true } }
         );
@@ -209,6 +210,105 @@ const darDeBajaCliente = async (cliente, usuarioAlta) => {
         return { error: error.message };
     }
 };
+
+const activarCliente = async (usuarioEmail, usuarioMod) => {
+    try {
+        // Realizar la solicitud PUT al endpoint
+        const response = await axios.put(
+            `${ENDPOINT_NOAUTH}/clientes/setact/`,
+            null, // Sin cuerpo para esta solicitud
+            {
+                params: {
+                    usuarioEmail: usuarioEmail,
+                    usuarioMod: usuarioMod,
+                },
+            }
+        );
+
+        if (response.status === 200) {
+            console.log("Usuario/Cliente activado correctamente.");
+            return response.data; // Devuelve la respuesta exitosa
+        } else {
+            console.error("Error al activar el Usuario/Cliente:", response.data.message);
+            return { error: response.data.message };
+        }
+    } catch (error) {
+        console.error("Error al realizar la solicitud:", error.message);
+        return { error: error.message };
+    }
+};
+
+const modificarCliente = async (cliente, usuarioAlta) => {
+    try {
+        // Mapeo del cliente al formato del DTO
+        const body = {
+            usuario_id: cliente.idUsuario,
+            cliente_documento: cliente.documento,
+            cliente_tipo_documento: cliente.tipoDocumento,
+            cliente_apellido: cliente.apellido,
+            cliente_nombre: cliente.nombre,
+            cliente_email: cliente.email,
+            clienteEstadoId: cliente.estado,
+            cliente_telefono: cliente.telefono,
+            cliente_observaciones: cliente.observaciones,
+            cliente_cuit: cliente.cuit, 
+            domicilioTipoDomicilioId: 0, 
+            domicilioDireccion: cliente.direccion,
+            domicilioBarrio: cliente.barrio,
+            domicilioUbicacion: cliente.ubicacion, 
+            domicilioLocalidadId: 545, 
+            domicilioCodigoPostal: cliente.codigoPostal,
+            domicilioEsPrincipal: 'Y',  
+            usuario_contrasena: "", 
+            usuario_rol_id: 1, 
+            usuario_observaciones: " ", 
+            usuario_alta: usuarioAlta,
+        };
+        console.log("Se activo la funcion de modificar cliente", body);
+        console.log(body.clienteEstadoId);
+
+        if (body.clienteEstadoId === 1) {
+            const response = await axios.put(
+                `${ENDPOINT_NOAUTH}/clientes/upd`,
+                body,
+                { params: { setbaja: false } }
+            );
+
+            if (response.status === 200) {
+                console.log("Cliente modificado correctamente");
+                console.log(cliente, usuarioAlta);
+                console.log(response);
+                await activarCliente(cliente.email, usuarioAlta);
+                return response.data;
+            } else {
+                console.error("Error al intentar modificar al cliente:", response.data.message);
+                return { error: response.data.message };
+            }
+        } else if (body.clienteEstadoId === 2) {
+            const response = await axios.put(
+                `${ENDPOINT_NOAUTH}/clientes/upd`,
+                body,
+                { params: { setbaja: true } }
+            );
+
+            if (response.status === 200) {
+                console.log("Cliente dado de baja correctamente");
+                console.log(cliente, usuarioAlta);
+                console.log(response);
+                
+                return response.data;
+            } else {
+                console.error("Error al intentar modificar al cliente:", response.data.message);
+                return { error: response.data.message };
+            }
+        }
+    } catch (error) {
+        console.error("Error al modificar cliente:", error);
+        return { error: error.message };
+    }
+};
+
+
 
 
 
@@ -239,6 +339,7 @@ const clienteService = {
     getDomicilioByClienteId,
     createClienteConUsuarioYDomicilios,
     darDeBajaCliente,
+    modificarCliente,
     modificarDatosCliente
 
 };

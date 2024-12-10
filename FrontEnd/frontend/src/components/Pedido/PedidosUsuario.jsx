@@ -6,9 +6,14 @@ import './pedidosUsuario.css';
 
 export function PedidosUsuario() {
     const [currentPage, setCurrentPage] = useState(1);
+    const [filters, setFilters] = useState({
+        estado: '',
+        nroPedido: '',
+        fechaDesde: '',
+        fechaHasta: '',
+    });
     const pedidosPerPage = 6;
     const navigate = useNavigate();
-
 
     const pedidosSimulados = [
         {
@@ -96,11 +101,36 @@ export function PedidosUsuario() {
             ]
         }
     ];
-
     const pedidosOrdenados = pedidosSimulados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+    const applyFilters = () => {
+        return pedidosOrdenados.filter((pedido) => {
+            const { estado, nroPedido, fechaDesde, fechaHasta } = filters;
+
+            const matchesEstado = estado ? pedido.estado === estado : true;
+            const matchesNroPedido = nroPedido ? pedido.id === parseInt(nroPedido) : true;
+            const matchesFechaDesde = fechaDesde ? new Date(pedido.fecha) >= new Date(fechaDesde) : true;
+            const matchesFechaHasta = fechaHasta ? new Date(pedido.fecha) <= new Date(fechaHasta) : true;
+
+            return matchesEstado && matchesNroPedido && matchesFechaDesde && matchesFechaHasta;
+        });
+    };
+
+    const clearFilters = () => {
+        setFilters({
+            estado: '',
+            nroPedido: '',
+            fechaDesde: '',
+            fechaHasta: '',
+        });
+        setCurrentPage(1); 
+    };
+
+    const filteredPedidos = applyFilters();
+
     const indexOfLastPedido = currentPage * pedidosPerPage;
     const indexOfFirstPedido = indexOfLastPedido - pedidosPerPage;
-    const pedidosActuales = pedidosOrdenados.slice(indexOfFirstPedido, indexOfLastPedido);
+    const pedidosActuales = filteredPedidos.slice(indexOfFirstPedido, indexOfLastPedido);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -121,9 +151,72 @@ export function PedidosUsuario() {
         navigate('/pedido-detalle', { state: { pedido } });
     };
 
+    const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
+        setCurrentPage(1); // Reiniciar a la primera página al cambiar los filtros
+    };
+
     return (
         <div className="pedidos-usuario">
             <h1 className="pedidos-usuario-title">Pedidos Solicitados</h1>
+            
+            {/* Filtros */}
+            <div className="pedidos-usuario-filtros">
+                <label className="pedidos-usuario-filtro-label">
+                    Estado:
+                    <select 
+                        className="pedidos-usuario-filtro-select" 
+                        name="estado" 
+                        value={filters.estado} 
+                        onChange={handleFilterChange}
+                    >
+                        <option value="">Todos</option>
+                        <option value="Confirmado">Confirmado</option>
+                        <option value="Rechazado">Rechazado</option>
+                        <option value="Pendiente">Pendiente</option>
+                    </select>
+                </label>
+                <label className="pedidos-usuario-filtro-label">
+                    Nro de pedido:
+                    <input
+                        type="number"
+                        name="nroPedido"
+                        value={filters.nroPedido}
+                        onChange={handleFilterChange}
+                        placeholder="Ej. 1"
+                        className="pedidos-usuario-filtro-input"
+                    />
+                </label>
+                <label className="pedidos-usuario-filtro-label">
+                    Fecha desde:
+                    <input
+                        type="date"
+                        name="fechaDesde"
+                        value={filters.fechaDesde}
+                        onChange={handleFilterChange}
+                        className="pedidos-usuario-filtro-date"
+                    />
+                </label>
+                <label className="pedidos-usuario-filtro-label">
+                    Fecha hasta:
+                    <input
+                        type="date"
+                        name="fechaHasta"
+                        value={filters.fechaHasta}
+                        onChange={handleFilterChange}
+                        className="pedidos-usuario-filtro-date"
+                    />
+                </label>
+                <button className="pedidos-usuario-filtro-boton" onClick={applyFilters}>
+                    Filtrar
+                </button>
+                <button className="pedidos-usuario-filtro-boton-limpiar" onClick={clearFilters}>
+                    Limpiar
+                </button>
+            </div>
+    
+            {/* Tabla de pedidos */}
             <div className="pedidos-usuario-table-responsive">
                 <table className="pedidos-usuario-table">
                     <thead>
@@ -162,10 +255,11 @@ export function PedidosUsuario() {
                     </tbody>
                 </table>
             </div>
-
+    
+            {/* Paginación */}
             <nav aria-label="Paginación">
                 <ul className="pedidos-usuario-pagination">
-                    {Array.from({ length: Math.ceil(pedidosSimulados.length / pedidosPerPage) }, (_, i) => (
+                    {Array.from({ length: Math.ceil(filteredPedidos.length / pedidosPerPage) }, (_, i) => (
                         <li key={i + 1} className={`pedidos-usuario-page-item ${currentPage === i + 1 ? 'active' : ''}`}>
                             <button className="pedidos-usuario-page-link" onClick={() => paginate(i + 1)}>
                                 {i + 1}
@@ -176,4 +270,4 @@ export function PedidosUsuario() {
             </nav>
         </div>
     );
-}
+}    

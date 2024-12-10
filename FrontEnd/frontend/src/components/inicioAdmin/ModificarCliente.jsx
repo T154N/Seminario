@@ -3,163 +3,231 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './inicioAdmin.css';
-import clienteService from '../../services/cliente/cliente.service';
-
+import modificarCliente from '../../services/cliente/cliente.service';
 
 const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
     const [formData, setFormData] = useState({
-        nombre: '',
-        apellido: '',
-        cuit: '',
-        telefono: 0, 
-        email: '',
-        observaciones: "", 
-        domicilio: '', 
-        estado: 1
+        cliente_documento: "",
+        cliente_tipo_documento: "DNI",
+        cliente_cuit: "",
+        cliente_apellido: "",
+        cliente_nombre: "",
+        cliente_email: "",
+        cliente_telefono: "",
+        cliente_observaciones: "",
+        domicilioTipoDomicilioId: "1",
+        domicilioDireccion: "",
+        domicilioBarrio: "",
+        domicilioUbicacion: "",
+        domicilioCodigoPostal: "0",
+        estado: "1", // Default: Activo
     });
 
-    const [isLoading, setIsLoading] = useState(true); // Nuevo estado para controlar la carga
-
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const fetchCliente = async () => {
-            if (registro && registro.id) {
-                const cliente = await clienteService.getClienteById(registro.id);
-                console.log(cliente);  // Verifica la respuesta de la API
-                setFormData({
-                    nombre: cliente.nombre || '',
-                    apellido: cliente.apellido || '',
-                    cuit: cliente.cuit || '',
-                    telefono: cliente.telefono || '',
-                    email: cliente.email || '',
-                    observaciones: cliente.observaciones || '',
-                    domicilio: cliente.domicilio || '', 
-                    estado: cliente.estado || 1,
-                });
-                setIsLoading(false); // Marcar que los datos han sido cargados
-            }
-        };
-
-        fetchCliente();
+        if (registro) {
+            setFormData({
+                cliente_documento: registro.documento || "",
+                cliente_tipo_documento: registro.tipoDocumento || "DNI",
+                cliente_cuit: registro.cuit || "",
+                cliente_apellido: registro.apellido || "",
+                cliente_nombre: registro.nombre || "",
+                cliente_email: registro.email || "",
+                cliente_telefono: registro.telefono || "",
+                cliente_observaciones: registro.observaciones || "",
+                domicilioTipoDomicilioId: registro.tipoDomicilio === "CASA" ? "1" : registro.tipoDomicilio === "LOCAL COMERCIAL" ? "2" : "3",
+                domicilioDireccion: registro.direccion || "",
+                domicilioBarrio: registro.barrio || "",
+                domicilioUbicacion: registro.ubicacion || "",
+                domicilioCodigoPostal: registro.codigoPostal || "0",
+                estado: registro.estado ? registro.estado.toString() : "1",
+            });
+            setIsLoading(false);
+        }
+        console.log(registro);
     }, [registro]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: value
+            [name]: value,
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSave(formData);
+
+        // Preparar el objeto cliente con los datos requeridos
+        const cliente = {
+            idUsuario: registro.idUsuario,
+            documento: formData.cliente_documento,
+            tipoDocumento: formData.cliente_tipo_documento,
+            apellido: formData.cliente_apellido,
+            nombre: formData.cliente_nombre,
+            email: formData.cliente_email,
+            telefono: formData.cliente_telefono,
+            observaciones: formData.cliente_observaciones,
+            cuit: formData.cliente_cuit,
+            direccion: formData.domicilioDireccion,
+            barrio: formData.domicilioBarrio,
+            ubicacion: formData.domicilioUbicacion,
+            codigoPostal: formData.domicilioCodigoPostal,
+            domicilioUbicacion: formData.domicilioUbicacion,
+            domicilioLocalidadId: 545,
+            domicilioEsPrincipal: 'Y',
+            usuario_contrasena: "",
+            usuario_rol_id: 1,
+            usuario_observaciones: " ",
+            usuario_alta: "Admin",
+        };
+        console.log(cliente);
+        onSave(cliente);
+
     };
 
     if (isLoading) {
-        return <div>Loading...</div>;  // Mostrar un mensaje de carga mientras los datos se obtienen
+        return <div>Loading...</div>;
     }
 
-    return (
-        <div className="modificar-contenido">
-            <h2>Modificar {registro ? registro.nombre : 'Contenido'}</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label className="form-label">Nombre</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="nombre"
-                        value={formData.nombre}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Apellido</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="apellido"
-                        value={formData.apellido}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">CUIT</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="cuit"
-                        value={formData.cuit}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Telefono</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        name="telefono"
-                        value={formData.telefono}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Email</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Observaciones</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="observaciones"
-                        value={formData.observaciones}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Domicilio</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="domicilio"
-                        value={formData.domicilio}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Estado</label>
+    const renderField = ({ name, title, colSize, type, options }) => {
+        return (
+            <div className={`col-md-${colSize}`} key={name}>
+                <label className="form-label">{title}</label>
+                {options ? (
                     <select
                         className="form-select"
-                        name="estado"
-                        value={formData.estado}
+                        name={name}
+                        value={formData[name]}
                         onChange={handleChange}
+                        required
                     >
-                        <option value={1}>Activo</option>
-                        <option value={0}>Inactivo</option>
+                        {options.map((option, index) => (
+                            <option value={option.value} key={index}>
+                                {option.label}
+                            </option>
+                        ))}
                     </select>
-                </div>
+                ) : (
+                    <input
+                        type={type || "text"}
+                        className="form-control"
+                        name={name}
+                        value={formData[name]}
+                        onChange={handleChange}
+                        placeholder={registro ? registro[name] || title : title} // Placeholder dinámico
+                        required
+                    />
+                )}
+            </div>
+        );
+    };
+    const fields = [
+        {
+            name: "cliente_documento",
+            title: "Documento del Cliente",
+            placeholder: "Documento del cliente",
+            colSize: 6,
+        },
+        {
+            name: "cliente_tipo_documento",
+            title: "Tipo de Documento",
+            colSize: 6,
+            options: [
+                { value: "DNI", label: "DNI" },
+                { value: "PASAPORTE", label: "Pasaporte" },
+                { value: "CEDULA", label: "Cédula" },
+            ],
+        },
+        {
+            name: "cliente_cuit",
+            title: "CUIT",
+            placeholder: "CUIT del cliente",
+            colSize: 6,
+        },
+        {
+            name: "cliente_apellido",
+            title: "Apellido",
+            placeholder: "Apellido del cliente",
+            colSize: 6,
+        },
+        {
+            name: "cliente_nombre",
+            title: "Nombre",
+            placeholder: "Nombre del cliente",
+            colSize: 6,
+        },
+        {
+            name: "cliente_email",
+            title: "Email",
+            placeholder: "Email del cliente",
+            colSize: 6,
+        },
+        {
+            name: "cliente_telefono",
+            title: "Teléfono",
+            placeholder: "Teléfono del cliente",
+            colSize: 6,
+        },
+        {
+            name: "domicilioTipoDomicilioId",
+            title: "Tipo de Domicilio",
+            colSize: 6,
+            options: [
+                { value: "1", label: "Casa" },
+                { value: "2", label: "Local Comercial" },
+                { value: "3", label: "Depósito" },
+            ],
+        },
+        {
+            name: "domicilioDireccion",
+            title: "Dirección",
+            placeholder: "Dirección del cliente",
+            colSize: 6,
+        },
+        {
+            name: "domicilioBarrio",
+            title: "Barrio",
+            placeholder: "Barrio del cliente",
+            colSize: 6,
+        },
+        {
+            name: "domicilioCodigoPostal",
+            title: "Código Postal",
+            placeholder: "Código postal",
+            colSize: 6,
+        },
+        {
+            name: "estado",
+            title: "Estado",
+            colSize: 6,
+            options: [
+                { value: "1", label: "Activo" },
+                { value: "2", label: "Inactivo" },
+            ],
+        },
+        {
+            name: "cliente_observaciones",
+            title: "Observaciones",
+            placeholder: "Observaciones del cliente",
+            colSize: 12,
+        },
+    ];
 
-                <div className="d-flex justify-content-between">
+    return (
+        <div className="modificar-contenido container">
+            <h2 className="mb-4">Modificar Cliente</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="row g-3">
+                    {fields.map((field) => renderField(field))}
+                </div>
+                <div className="d-flex justify-content-between mt-4">
                     <button type="submit" className="btn btn-success">
-                        <FontAwesomeIcon icon={faSave}/> Guardar
+                        <FontAwesomeIcon icon={faSave} /> Guardar
                     </button>
                     <button type="button" className="btn btn-danger" onClick={onCancel}>
-                        <FontAwesomeIcon icon={faTimes}/> Cancelar
+                        <FontAwesomeIcon icon={faTimes} /> Cancelar
                     </button>
                 </div>
             </form>

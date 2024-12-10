@@ -23,17 +23,27 @@ const ContenidoVariable = ({
     handleDeleteClick,
     handlePost,
     recargarProductos,
-
     handleEstadoChange,
-    mostrarDetalles
+    mostrarDetalles,
+    handleFechaDesdeChange,
+    handleFechaHastaChange
 }) => {
     // Estados locales para controlar el popup y los elementos seleccionados
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState([]);
     const [popupTipo, setPopupTipo] = useState('productos');
+    const [fechaDesde, setFechaDesde] = useState('');
+    const [fechaHasta, setFechaHasta] = useState('');
 
+    const onFechaDesdeChange = (e) => {
+        setFechaDesde(e.target.value);
+        handleFechaDesdeChange(e.target.value); // Llama a la función pasada por props
+    };
 
-
+    const onFechaHastaChange = (e) => {
+        setFechaHasta(e.target.value);
+        handleFechaHastaChange(e.target.value); // Llama a la función pasada por props
+    };
 
     // Abrir el popup con los elementos seleccionados
     const openPopup = (item, tipo) => {
@@ -325,12 +335,22 @@ const ContenidoVariable = ({
 
             {/* Campo de búsqueda y filtros */}
             <div className="mb-3 d-flex align-items-baseline">
-                <select className="form-select me-2 small-select" value={filtroSeleccionado} onChange={handleFiltroChange}>
+                <select className="form-select me-2 small-select" value={filtroSeleccionado}
+                        onChange={handleFiltroChange}>
                     <option value="nombre">Nombre</option>
-                    {menuContent === 'Catálogo' && catalogTab === 'Productos' && <option value="categoria">Categoría</option>}
+                    {menuContent === 'Catálogo' && catalogTab === 'Productos' &&
+                        <option value="categoria">Categoría</option>}
                 </select>
+                <input
+                    type="text"
+                    className="form-control me-2"
+                    placeholder={`Buscar ${menuContent === 'Clientes' ? 'Cliente' : menuContent === 'Catálogo' ? catalogTab : 'Pedido'}...`}
+                    value={busqueda}
+                    onChange={handleBusquedaChange}
+                />
                 {menuContent === 'Pedidos' && (
-                    <select className="form-select me-2 small-select" value={estadoSeleccionado} onChange={handleEstadoChange}>
+                    <select className="form-select me-2 small-select" value={estadoSeleccionado}
+                            onChange={handleEstadoChange}>
                         <option value="">Todos los estados</option>
                         <option value="Aceptado">Aceptado</option>
                         <option value="Rechazado">Rechazado</option>
@@ -338,16 +358,28 @@ const ContenidoVariable = ({
                         <option value="Inactivo">Inactivo</option>
 
                     </select>
+
+                )}
+                {menuContent === 'Pedidos' && (
+                    <div className="d-flex align-items-baseline labelFechas">
+                        <label className="me-2 align-self-center">Desde:</label>
+                        <input
+                            type="date"
+                            className="form-control me-2"
+                            value={fechaDesde}
+                            onChange={onFechaDesdeChange}
+                        />
+                        <label className="me-2 align-self-center labelFechas">Hasta:</label>
+                        <input
+                            type="date"
+                            className="form-control me-2"
+                            value={fechaHasta}
+                            onChange={onFechaHastaChange}
+                        />
+                    </div>
                 )}
 
 
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder={`Buscar ${menuContent === 'Clientes' ? 'Cliente' : menuContent === 'Catálogo' ? catalogTab : 'Pedido' }...`}
-                    value={busqueda}
-                    onChange={handleBusquedaChange}
-                />
             </div>
 
             {/* Lista de filtros activos */}

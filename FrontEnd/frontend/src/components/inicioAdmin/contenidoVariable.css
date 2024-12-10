@@ -1,3 +1,9 @@
+.labelFechas{
+
+    font-weight: bold;
+}
+
+
 .btn-estado {
     background-color: #f39c12;  /* Amarillo oscuro */
     border-color: #e67e22; /* Color de borde más oscuro para el botón */

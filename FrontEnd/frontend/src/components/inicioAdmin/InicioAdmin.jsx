@@ -31,7 +31,8 @@ export function InicioAdmin() {
     const [modoAlta, setModoAlta] = useState(false);
     const [catalogoMenu, setCatalogoMenu] = useState(true);
     const [estadoSeleccionado, setEstadoSeleccionado] = useState('');
-
+    const [fechaDesde, setFechaDesde] = useState('');
+    const [fechaHasta, setFechaHasta] = useState('');
     // Estados secundarios
     const [checkboxState, setCheckboxState] = useState(false);
     const [savedFiltros, setSavedFiltros] = useState([]);
@@ -109,6 +110,14 @@ export function InicioAdmin() {
     }, [busqueda, filtroSeleccionado]);
 
     // Funciones auxiliares
+    const handleFechaDesdeChange = (fecha) => {
+        setFechaDesde(fecha);
+    };
+
+    const handleFechaHastaChange = (fecha) => {
+        setFechaHasta(fecha);
+    };
+
     const recargarProductos = async () => {
         const productos = await productoService.getAllProductosAdmin();
         const productosFiltrados = checkboxState
@@ -174,7 +183,18 @@ export function InicioAdmin() {
     const dataToDisplay = () => {
         if (menuContent === 'Catálogo' && catalogTab === 'Productos') return filteredData(productosActivos);
         if (menuContent === 'Catálogo' && catalogTab === 'Categorias') return filteredData(categoriasActivos);
-        if (menuContent === 'Pedidos') return filteredData(pedidosActivos).sort((a, b) =>new Date(b.fecha) - new Date(a.fecha));
+        if (menuContent === 'Pedidos')
+            return filteredData(pedidosActivos)
+            .filter((pedidosActivos) => {
+                const fechaPedido = new Date(pedidosActivos.fecha);
+                const desde = fechaDesde ? new Date(fechaDesde) : null;
+                const hasta = fechaHasta ? new Date(fechaHasta) : null;
+
+                if (desde && fechaPedido < desde) return false;
+                if (hasta && fechaPedido > hasta) return false;
+                return true;
+            })
+            .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
         if (menuContent === 'Clientes') return filteredData(clientesActivos);
         return [];
     };
@@ -415,6 +435,8 @@ export function InicioAdmin() {
                                     recargarProductos={recargarProductos}
                                     handleEstadoChange={handleEstadoChange}
                                     mostrarDetalles={mostrarDetalles}
+                                    handleFechaDesdeChange={handleFechaDesdeChange}
+                                    handleFechaHastaChange={handleFechaHastaChange}
                                 />
                             )}
                         </div>

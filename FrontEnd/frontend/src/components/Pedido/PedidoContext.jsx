@@ -11,17 +11,19 @@ export const PedidoProvider = ({ children }) => {
         id: null,
         fecha: new Date().toISOString().split('T')[0], // formato YYYY-MM-DD
         total: 0,
-        estado: 'Pendiente', 
+        estado: 'Pendiente',
         metodoPago: null,
         productos: [],
-        direccionEnvio: null
+        direccionEnvio: null,
+        nombre: '' // Agregar el atributo nombre
     });
 
-    const iniciarPedido = (productos) => {
+    const iniciarPedido = (productos, nombre) => {
         setPedidoActual((prev) => ({
             ...prev,
             productos,
-            total: calcularTotal(productos)
+            total: calcularTotal(productos),
+            nombre // Asignar el nombre del cliente
         }));
     };
 

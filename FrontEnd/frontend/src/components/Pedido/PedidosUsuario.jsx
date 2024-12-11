@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import './pedidosUsuario.css';
+import pedidoService from "../../services/pedido/pedido.service";
 
 export function PedidosUsuario() {
     const [currentPage, setCurrentPage] = useState(1);
+    const [pedidos, setPedidos] = useState([]);
     const [filters, setFilters] = useState({
         estado: '',
         nroPedido: '',
@@ -14,6 +16,17 @@ export function PedidosUsuario() {
     });
     const pedidosPerPage = 6;
     const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            const pedido = await pedidoService.getPedidosPorCadaCliente();
+            setPedidos(pedido);
+            setLoading(false);
+        };
+    }, []);
 
     const pedidosSimulados = [
         {

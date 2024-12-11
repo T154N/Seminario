@@ -8,22 +8,30 @@ import { faPrint,faFileLines } from '@fortawesome/free-solid-svg-icons';
 export function PedidoDetalle() {
     const location = useLocation();
     const pedido = location.state?.pedido;
+    console.log(pedido)
 
-    const getEstado = (nroEstado) => {
-        console.log(pedido.estado)
-        switch (nroEstado) {
-            case 1:
-                return 'Inactivo';
-            case 7:
-                return 'Pendiente';
-            case 9:
-                return 'Rechazado';
-            case 13:
-                return 'Aceptado';
-            default:
-                return 'Desconocido';
-        }
-    };
+const getEstado = (nroEstado) => {
+    console.log("Estado del pedido: ", pedido.estado);
+
+    if (typeof nroEstado === 'string') {
+        return nroEstado;
+    }
+
+    switch (nroEstado) {
+        case 1:
+            return 'Inactivo';
+        case 7:
+            return 'Pendiente';
+        case 9:
+            return 'Rechazado';
+        case 12:
+            return 'Nuevo'
+        case 13:
+            return 'Aceptado';
+        default:
+            return 'Desconocido';
+    }
+};
 
     const handlePrint = async () => {
         if (pedido && pedido.id) {
@@ -59,11 +67,11 @@ export function PedidoDetalle() {
                                             </tr>
                                             <tr>
                                                 <td><strong>Fecha:</strong></td>
-                                                <td>{pedido.fecha.split("T")[0] || 'No especificada'}</td>
+                                                <td>{new Date(pedido.fecha).toLocaleDateString('es-ES') || 'No especificada'}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>Dirección de entrega:</strong></td>
-                                                <td>{pedido.direccionEntrega || 'No especificada'}</td>
+                                                <td>{pedido.direccionEnvio || 'No especificada'}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -79,7 +87,7 @@ export function PedidoDetalle() {
                                             </tr>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
-                                                <td>${pedido.montoTotal}</td>
+                                                <td>${pedido.total}</td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -33,17 +33,17 @@ const ContenidoVariable = ({
     // Estados locales para controlar el popup y los elementos seleccionados
         const [showModal, setShowModal] = useState(false);
         const [selectedClient, setSelectedClient] = useState(null);
-    
+
         const handleViewClick = (client) => {
             setSelectedClient(client);
             setShowModal(true);
         };
-    
+
         const handleCloseModal = () => {
             setShowModal(false);
             setSelectedClient(null);
         }
-    
+
     // Estados locales para controlar el popup y los elementos seleccionados
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState([]);
@@ -209,7 +209,7 @@ const ContenidoVariable = ({
                 {menuContent === 'Pedidos' && (
                     <>
                         <td>{item.nombre}</td>
-                        <td>{item.fecha.split("T")[0]}</td>
+                        <td>{new Date(item.fecha).toLocaleDateString('es-ES')}</td>
                         <td>{`$${item.montoTotal.toFixed(2)}`}</td>
                         <td data-label="Estado">
                             <span>

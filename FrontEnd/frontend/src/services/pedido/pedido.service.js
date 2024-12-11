@@ -28,6 +28,19 @@ const getPedidoById = async (id) => {
     }
 };
 
+
+const crearPedido = async (carritoId, domicilioId, medioPagoId, usuarioTransaccion) => {
+    try {
+        const response = await axios.post(`${ENDPOINT_PEDIDO_URL}/pedidos/generate?carritoID=${carritoId}&domicilioId=1&medioPagoId=${medioPagoId}&usuarioTransaccion=${usuarioTransaccion}`);
+        return {
+            pedidoId: response.data.body
+        }
+    } catch (err) {
+        return 400;
+    }
+};
+
+
 // Obtener todos los pedidos
 const getAllPedidos = async () => {
     try {
@@ -39,9 +52,10 @@ const getAllPedidos = async () => {
             numeroPedido: p.pedido_nro,
             nombre: `${p.nombre_cliente} ${p.apellido_cliente}`,
             email: p.email_cliente,
-            direccionEntrega: p.pedido_direccion_entrega,
+            direccionEnvio: p.pedido_direccion_entrega,
             fecha: p.pedido_fecha_alta,
             montoTotal: p.pedido_total_dinero,
+            total: p.pedido_total_dinero,
             estado: p.estado_pedido_id,
             estadoRegistro: p.estado_pedido_registro,
 
@@ -294,7 +308,8 @@ const pedidoService = {
     getPedidoDetalles,
     addItemToPedido,
     generarPedido,
-    removeItemFromPedido
+    removeItemFromPedido,
+    crearPedido
 };
 
 export default pedidoService;

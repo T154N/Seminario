@@ -1,4 +1,3 @@
-// CarritoContext.js
 import React, { createContext, useState, useContext } from "react";
 import { usePedido } from '../Pedido/PedidoContext';
 import carritoService from "../../services/carrito/carrito.service";
@@ -68,8 +67,9 @@ export const CarritoProvider = ({ children }) => {
 
     const generarPedido = async (navigate) => {
         setCargandoProductosACarrito(true);
+        const nombreCliente = `${localStorage.getItem('nombre')} ${localStorage.getItem('apellido')}`;
         navigate('/pago');
-        iniciarPedido(productos);
+        iniciarPedido(productos, nombreCliente); // Pasar el nombre del cliente
         const carrito = await carritoService.crearNuevoCarrito(
             loginService.getEmailUsuario()
         );

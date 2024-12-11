@@ -75,6 +75,11 @@ export function Header() {
         closeOffcanvasNavbar();
     }
 
+    const goToMisPedidos = () => {
+        navigate('/pedidos-usuario');
+        closeOffcanvasNavbar();
+    };
+
     const mostrarCarrito = () => {
         const offcanvasNavbarCloseButton = document.getElementById('offcanvasNavbarCloseButton');
         const offcanvasElement = document.getElementById('offcanvasScrolling');
@@ -200,7 +205,7 @@ export function Header() {
                                                     </li>
                                                     <li>
                                                         <button className="dropdown-item"
-                                                                onClick={goToUserProfile}>Mis Pedidos
+                                                                onClick={goToMisPedidos}>Mis Pedidos
                                                         </button>
                                                     </li>
                                                     <li><hr className="dropdown-divider"/></li>
@@ -292,7 +297,7 @@ export function Header() {
                                                     </li>
                                                     <li>
                                                         <button className="dropdown-item"
-                                                                onClick={goToUserProfile}>Mis Pedidos
+                                                                onClick={goToMisPedidos}>Mis Pedidos
                                                         </button>
                                                     </li>
                                                     <li><hr className="dropdown-divider"/></li>

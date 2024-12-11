@@ -220,11 +220,50 @@ export function InicioAdmin() {
             default: return 'gray';
         }
     };
+    const handleEstadoChangeFiltro = (e) => {
+        if (e && e.target) {
+            setEstadoSeleccionado(e.target.value);
+        } else {
+            console.error("Event or target is undefined");
+        }
+    };
 
 
     // Cambiar el estado del pedido
-    const handleEstadoChange = (e) => {
-        setEstadoSeleccionado(e.target.value);
+    const handleEstadoChange = (pedido, nuevoEstado) => {
+        const estados = {
+            'Rechazado': { estadoId: 9, estado: false },
+            'Pendiente': { estadoId: 7, estado: false },
+            'Aceptado': { estadoId: 13, estado: false },
+            'Inactivo': { estadoId: 1, estado: false }
+        };
+
+        const estadoData = estados[nuevoEstado];
+
+        // Verificar si el estadoData existe
+        if (!estadoData) {
+            console.error(`El estado "${nuevoEstado}" no es válido`);
+            return;
+        }
+
+        pedidoService.updatePedidoEstado(pedido.id, estadoData.estadoId, "Admin", estadoData.estado)
+            .then(response => {
+                console.log("Estado actualizado:", response);
+
+                setPedidosActivos((prevPedidos) =>
+                    prevPedidos.map((p) =>
+                        p.id === pedido.id
+                            ? { ...p, estado: estadoData.estadoId }
+                            : p
+                    )
+                );
+            })
+
+            .catch(error => {
+                console.error("Error al cambiar el estado:", error);
+            });
+        pedidoService.updatePedidoEstado(pedido.id, estadoData.estadoId, "Admin", estadoData.estado)
+
     };
 
     const navigate = useNavigate();
@@ -455,6 +494,7 @@ export function InicioAdmin() {
                                     handlePost={handlePost}
                                     recargarProductos={recargarProductos}
                                     handleEstadoChange={handleEstadoChange}
+                                    handleEstadoChangeFiltro={handleEstadoChangeFiltro}
                                     mostrarDetalles={mostrarDetalles}
                                     handleFechaDesdeChange={handleFechaDesdeChange}
                                     handleFechaHastaChange={handleFechaHastaChange}

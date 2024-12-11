@@ -28,7 +28,8 @@ const ContenidoVariable = ({
     handleEstadoChange,
     mostrarDetalles,
     handleFechaDesdeChange,
-    handleFechaHastaChange
+    handleFechaHastaChange,
+    handleEstadoChangeFiltro
 }) => {
     // Estados locales para controlar el popup y los elementos seleccionados
         const [showModal, setShowModal] = useState(false);
@@ -385,7 +386,7 @@ const ContenidoVariable = ({
                 />
                 {menuContent === 'Pedidos' && (
                     <select className="form-select me-2 small-select" value={estadoSeleccionado}
-                        onChange={handleEstadoChange}>
+                        onChange={handleEstadoChangeFiltro}>
                         <option value="">Todos los estados</option>
                         <option value="Aceptado">Aceptado</option>
                         <option value="Rechazado">Rechazado</option>

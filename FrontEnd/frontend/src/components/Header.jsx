@@ -145,7 +145,7 @@ export function Header() {
                              aria-labelledby="offcanvasNavbarLabel" data-bs-backdrop="false" inert>
 
                             <div className="offcanvas-header text-black">
-                                <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Menu de opciones</h5>
+                                <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Menú de opciones</h5>
                                 <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas"
                                         aria-label="Close" id="offcanvasNavbarCloseButton"></button>
                             </div>

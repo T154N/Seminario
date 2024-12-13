@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import ContenidoVariable from './ContenidoVariable';
 import productoService from '../../services/producto/producto.service';
@@ -15,6 +15,7 @@ import PedidoAdmin from './PedidoAdmin';
 import ConfirmModal from './ConfirmModal';
 import ClienteAlta from './ClienteAlta'
 import ModificarCliente from './ModificarCliente';
+import {UserContext} from "../login/UserContext";
 
 
 export function InicioAdmin() {
@@ -42,11 +43,24 @@ export function InicioAdmin() {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
 
+    const navigate = useNavigate();
+
     // Usuario
     const storedUser = localStorage.getItem('email');
     const usuarioMod = storedUser ?? 'ADMIN';
+    const {isLoggedIn} = useContext(UserContext);
 
     // Efectos
+
+    // Si el usuario es ADMIN o SUPERADMIN o EMPLEADO inicioAdmin se renderiza
+
+    useEffect(() => {
+        const rol = localStorage.getItem('rol');
+        if (!isLoggedIn || !['SUPERUSER', 'ADMIN', 'EMPLEADO'].includes(rol)) {
+            navigate('/');
+        }
+    }, [isLoggedIn, navigate]);
+
     useEffect(() => {
         handleCancel();
     }, [menuContent]);
@@ -266,7 +280,6 @@ export function InicioAdmin() {
 
     };
 
-    const navigate = useNavigate();
     const mostrarDetalles = async (pedido) => {
         try {
             // Obtener los detalles del pedido
@@ -292,9 +305,11 @@ export function InicioAdmin() {
             console.error("Error al mostrar los detalles del pedido:", error);
         }
     };
+
     const navigateToDetail = (pedido) => {
-        navigate('/pedido-detalle', { state: { pedido } });
+        navigate('/pedido-detalle', { state: { pedido, fromInicioAdmin: true } });
     };
+
 
     // Manejo de filtros y búsqueda
     const handleBusquedaChange = (e) => setBusqueda(e.target.value);

@@ -4,6 +4,8 @@ import productoService from "../../services/producto/producto.service";
 import { useParams, useNavigate, useLocation } from "react-router";
 import { useCarrito } from '../carrito/CarritoContext';
 import loginService from "../../services/login/login.service";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export function Producto() {
     const navigate = useNavigate();
@@ -112,7 +114,10 @@ export function Producto() {
                 <div className="row mb-3">
                     <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
                         <div className="d-flex align-items-start">
-                            <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>Volver al catálogo</button>
+                            <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>
+                                <FontAwesomeIcon icon={faArrowLeft} size={"md"}/>
+                                <span className="ps-1">Volver al Catálogo</span>
+                            </button>
                         </div>
                     </div>
                 </div>

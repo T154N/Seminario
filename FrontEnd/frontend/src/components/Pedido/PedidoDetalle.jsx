@@ -3,12 +3,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './pedidoDetalle.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint, faFileLines, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import impresionPDFService from "../../services/impresion/impresionPDF.service";
 
 export function PedidoDetalle() {
     const location = useLocation();
     const navigate = useNavigate();
     const pedido = location.state?.pedido;
     const fromPedidosUsuario = location.state?.fromPedidosUsuario;
+    const fromInicioAdmin = location.state?.fromInicioAdmin;
 
     const getEstado = (nroEstado) => {
         if (typeof nroEstado === 'string') {
@@ -33,20 +35,36 @@ export function PedidoDetalle() {
 
     const handlePrint = async () => {
         if (pedido && pedido.id) {
-            const response = await fetch(`http://localhost:8080/api/v1/impresion/pedido/${pedido.id}`);
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `pedido_${pedido.id}.pdf`;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
+            try {
+                const response = await impresionPDFService.imprimirPDF(pedido.id);
+                const blob = response.data;
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+
+                // Get the current date in dd-mm-yyyy format
+                const currentDate = new Date();
+                const day = String(currentDate.getDate()).padStart(2, '0');
+                const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                const year = currentDate.getFullYear();
+                const formattedDate = `${day}-${month}-${year}`;
+
+                a.download = `Pedido_Nro${pedido.id}_${formattedDate}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            } catch (err) {
+                console.error("Error al imprimir el PDF:", err);
+            }
         }
     };
 
     const handleVolverMisPedidos = () => {
         navigate('/pedidos-usuario');
+    };
+
+    const handleVolverInicioAdmin = () => {
+        navigate('/inicioAdmin');
     };
 
     return (
@@ -61,8 +79,23 @@ export function PedidoDetalle() {
                                 <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
                                     <div className="d-flex align-items-start">
                                         <button className="btn btn-secundario text-white" onClick={handleVolverMisPedidos}>
-                                            <FontAwesomeIcon icon={faArrowLeft} size={"md"}/>
+                                            <FontAwesomeIcon icon={faArrowLeft} size={"lg"}/>
                                             <span className="ps-1">Volver a Mis Pedidos</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {fromInicioAdmin && (
+                        <div className="container ms-0 ps-0">
+                            <div className="row mb-3">
+                                <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
+                                    <div className="d-flex align-items-start">
+                                        <button className="btn btn-secundario text-white" onClick={handleVolverInicioAdmin}>
+                                            <FontAwesomeIcon icon={faArrowLeft} size={"lg"}/>
+                                            <span className="ps-1">Volver a Administración</span>
                                         </button>
                                     </div>
                                 </div>

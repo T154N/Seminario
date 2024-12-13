@@ -114,6 +114,20 @@ export function PedidosUsuario() {
                 </div>
             )}
 
+            {location.pathname === '/inicioAdmin' && (
+                <div className="container">
+                    <div className="row mb-3">
+                        <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
+                            <div className="d-flex align-items-start">
+                                <button className="btn btn-secundario text-white" onClick={handleVolverMisPedidos}>
+                                    Volver a Administración
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Filtros */}
             <div className="pedidos-usuario-filtros">
                 <label className="pedidos-usuario-filtro-label">

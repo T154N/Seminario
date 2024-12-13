@@ -305,9 +305,11 @@ export function InicioAdmin() {
             console.error("Error al mostrar los detalles del pedido:", error);
         }
     };
+
     const navigateToDetail = (pedido) => {
-        navigate('/pedido-detalle', { state: { pedido } });
+        navigate('/pedido-detalle', { state: { pedido, fromInicioAdmin: true } });
     };
+
 
     // Manejo de filtros y búsqueda
     const handleBusquedaChange = (e) => setBusqueda(e.target.value);

@@ -311,6 +311,7 @@ const getPedidosPorCadaCliente = async (clienteId) => {
             const productos = await getDetallePedido(p.pedido_id);
             return {
                 id: p.pedido_nro,
+                pedidoId: p.pedido_id,
                 fecha: formatDateToDDMMYYYY(p.pedido_fecha_alta),
                 total: p.pedido_total_dinero,
                 estado: p.estado_pedido,

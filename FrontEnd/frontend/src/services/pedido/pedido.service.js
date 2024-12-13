@@ -315,6 +315,8 @@ const getPedidosPorCadaCliente = async (clienteId) => {
                 total: p.pedido_total_dinero,
                 estado: p.estado_pedido,
                 metodoPago: p.medio_pago,
+                direccionEnvio: p.pedido_direccion_entrega,
+                nombre: p.nombre_cliente + " " + p.apellido_cliente,
                 productos: productos
             };
         }));

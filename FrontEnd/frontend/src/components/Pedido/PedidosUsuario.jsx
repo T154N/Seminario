@@ -23,7 +23,6 @@ export function PedidosUsuario() {
         const fetchData = async () => {
             setLoading(true);
             const pedido = await pedidoService.getPedidosPorCadaCliente(localStorage.getItem('clienteId'));
-            console.log("pedidos: ", pedido);
             setPedidos(pedido);
             setLoading(false);
         };
@@ -90,6 +89,10 @@ export function PedidosUsuario() {
 
     const handleVolverMisPedidos = () => {
         navigate('/pedidos-usuario');
+    };
+
+    if (loading) {
+        return <div className="fs-3">Cargando tus pedidos...</div>;
     };
 
     return (

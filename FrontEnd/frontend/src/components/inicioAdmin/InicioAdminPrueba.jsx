@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+/*import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ContenidoVariable from './ContenidoVariable';
 import productoService from '../../services/producto/producto.service';
@@ -17,7 +17,7 @@ import ClienteAlta from './ClienteAlta'
 import ModificarCliente from './ModificarCliente';
 
 
-export function InicioAdmin() {
+export function InicioAdminPrueba() {
     // Estados principales
     const [menuContent, setMenuContent] = useState('Catálogo');
     const [catalogTab, setCatalogTab] = useState('Productos');
@@ -521,4 +521,4 @@ export function InicioAdmin() {
             />
         </div>
     );
-}
+}*/

@@ -217,7 +217,10 @@ export function InicioAdmin() {
                 const fechaPedido = new Date(pedidosActivos.fecha);
                 const desde = fechaDesde ? new Date(fechaDesde) : null;
                 const hasta = fechaHasta ? new Date(fechaHasta) : null;
-
+                if (hasta) {
+                    hasta.setDate(hasta.getDate() + 1);
+                }
+                console.log(fechaPedido,desde, hasta)
                 if (desde && fechaPedido < desde) return false;
                 if (hasta && fechaPedido > hasta) return false;
                 return true;

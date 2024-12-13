@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import './pedidosUsuario.css';
@@ -16,105 +16,20 @@ export function PedidosUsuario() {
     });
     const pedidosPerPage = 6;
     const navigate = useNavigate();
-
+    const location = useLocation();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            const pedido = await pedidoService.getPedidosPorCadaCliente();
+            const pedido = await pedidoService.getPedidosPorCadaCliente(localStorage.getItem('clienteId'));
             setPedidos(pedido);
             setLoading(false);
         };
-    }, []);
+        fetchData();
+    }, []); // Array de dependencias vacío para que se ejecute solo una vez
 
-    const pedidosSimulados = [
-        {
-            id: 1,
-            fecha: '2023-10-01',
-            total: 50140,
-            estado: 'Rechazado',
-            metodoPago: 'Efectivo',
-            productos: [
-                { id: 101, nombre: 'Producto A', cantidad: 2, precioUnitario: 10000 },
-                { id: 102, nombre: 'Producto B', cantidad: 1, precioUnitario: 30140 }
-            ]
-        },
-        {
-            id: 2,
-            fecha: '2024-11-03',
-            total: 1200,
-            estado: 'Pendiente',
-            metodoPago: 'Transferencia Bancaria',
-            productos: [
-                { id: 103, nombre: 'Producto C', cantidad: 3, precioUnitario: 400 }
-            ]
-        },
-        {
-            id: 3,
-            fecha: '2024-10-05',
-            total: 78250,
-            estado: 'Pendiente',
-            metodoPago: 'Efectivo',
-            productos: [
-                { id: 104, nombre: 'Producto D', cantidad: 5, precioUnitario: 10000 },
-                { id: 105, nombre: 'Producto E', cantidad: 2, precioUnitario: 14125 }
-            ]
-        },
-        {
-            id: 4,
-            fecha: '2024-10-07',
-            total: 62540,
-            estado: 'Confirmado',
-            metodoPago: 'Transferencia Bancaria',
-            productos: [
-                { id: 106, nombre: 'Producto F', cantidad: 3, precioUnitario: 20847 },
-                { id: 107, nombre: 'Producto G', cantidad: 1, precioUnitario: 5000 }
-            ]
-        },
-        {
-            id: 5,
-            fecha: '2024-12-10',
-            total: 90360,
-            estado: 'Confirmado',
-            metodoPago: 'Efectivo',
-            productos: [
-                { id: 108, nombre: 'Producto H', cantidad: 4, precioUnitario: 22590 },
-                { id: 109, nombre: 'Producto I', cantidad: 2, precioUnitario: 11390 }
-            ]
-        },
-        {
-            id: 6,
-            fecha: '2024-10-15',
-            total: 12250,
-            estado: 'Rechazado',
-            metodoPago: 'Transferencia Bancaria',
-            productos: [
-                { id: 110, nombre: 'Producto J', cantidad: 1, precioUnitario: 12250 }
-            ]
-        },
-        {
-            id: 7,
-            fecha: '2024-01-20',
-            total: 45350,
-            estado: 'Pendiente',
-            metodoPago: 'Efectivo',
-            productos: [
-                { id: 111, nombre: 'Producto K', cantidad: 10, precioUnitario: 4535 }
-            ]
-        },
-        {
-            id: 8,
-            fecha: '2024-10-25',
-            total: 99250,
-            estado: 'Confirmado',
-            metodoPago: 'Transferencia Bancaria',
-            productos: [
-                { id: 112, nombre: 'Producto L', cantidad: 5, precioUnitario: 19850 }
-            ]
-        }
-    ];
-    const pedidosOrdenados = pedidosSimulados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    const pedidosOrdenados = pedidos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
     const applyFilters = () => {
         return pedidosOrdenados.filter((pedido) => {
@@ -136,7 +51,7 @@ export function PedidosUsuario() {
             fechaDesde: '',
             fechaHasta: '',
         });
-        setCurrentPage(1); 
+        setCurrentPage(1);
     };
 
     const filteredPedidos = applyFilters();
@@ -149,11 +64,13 @@ export function PedidosUsuario() {
 
     const getIndicatorColor = (estado) => {
         switch (estado) {
-            case 'Confirmado':
+            case 'CONFIRMADO':
                 return 'green';
-            case 'Rechazado':
+            case 'RECHAZADO':
                 return 'red';
-            case 'Pendiente':
+            case 'CANCELADO':
+                return 'red';
+            case 'PENDIENTE':
                 return 'yellow';
             default:
                 return 'gray';
@@ -161,7 +78,7 @@ export function PedidosUsuario() {
     };
 
     const navigateToDetail = (pedido) => {
-        navigate('/pedido-detalle', { state: { pedido } });
+    navigate('/pedido-detalle', { state: { pedido, fromPedidosUsuario: true } });
     };
 
     const handleFilterChange = (e) => {
@@ -170,24 +87,62 @@ export function PedidosUsuario() {
         setCurrentPage(1); // Reiniciar a la primera página al cambiar los filtros
     };
 
+    const handleVolverMisPedidos = () => {
+        navigate('/pedidos-usuario');
+    };
+
+    if (loading) {
+        return <div className="fs-3">Cargando tus pedidos...</div>;
+    };
+
     return (
         <div className="pedidos-usuario">
             <h1 className="pedidos-usuario-title">Pedidos Solicitados</h1>
-            
+
+            {/* Mostrar el botón solo en la página de Descripcion del Pedido */}
+            {location.pathname === '/pedido-detalle' && (
+                <div className="container">
+                    <div className="row mb-3">
+                        <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
+                            <div className="d-flex align-items-start">
+                                <button className="btn btn-secundario text-white" onClick={handleVolverMisPedidos}>
+                                    Volver a Mis Pedidos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {location.pathname === '/inicioAdmin' && (
+                <div className="container">
+                    <div className="row mb-3">
+                        <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
+                            <div className="d-flex align-items-start">
+                                <button className="btn btn-secundario text-white" onClick={handleVolverMisPedidos}>
+                                    Volver a Administración
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Filtros */}
             <div className="pedidos-usuario-filtros">
                 <label className="pedidos-usuario-filtro-label">
                     Estado:
-                    <select 
-                        className="pedidos-usuario-filtro-select" 
-                        name="estado" 
-                        value={filters.estado} 
+                    <select
+                        className="pedidos-usuario-filtro-select"
+                        name="estado"
+                        value={filters.estado}
                         onChange={handleFilterChange}
                     >
-                        <option value="">Todos</option>
-                        <option value="Confirmado">Confirmado</option>
-                        <option value="Rechazado">Rechazado</option>
-                        <option value="Pendiente">Pendiente</option>
+                        <option value="">TODOS</option>
+                        <option value="CONFIRMADO">CONFIRMADO</option>
+                        <option value="RECHAZADO">RECHAZADO</option>
+                        <option value="PENDIENTE">PENDIENTE</option>
+                        <option value="CANCELADO">CANCELADO</option>
                     </select>
                 </label>
                 <label className="pedidos-usuario-filtro-label">
@@ -228,14 +183,14 @@ export function PedidosUsuario() {
                     Limpiar
                 </button>
             </div>
-    
+
             {/* Tabla de pedidos */}
             <div className="pedidos-usuario-table-responsive">
                 <table className="pedidos-usuario-table">
                     <thead>
-                        <tr>
-                            <th className="pedidos-usuario-header">Nro de pedido</th>
-                            <th className="pedidos-usuario-header">Fecha de solicitud</th>
+                    <tr>
+                        <th className="pedidos-usuario-header">Nro de pedido</th>
+                        <th className="pedidos-usuario-header">Fecha de solicitud</th>
                             <th className="pedidos-usuario-header">Método de Pago</th>
                             <th className="pedidos-usuario-header">Estado</th>
                             <th className="pedidos-usuario-header">Total</th>
@@ -268,7 +223,7 @@ export function PedidosUsuario() {
                     </tbody>
                 </table>
             </div>
-    
+
             {/* Paginación */}
             <nav aria-label="Paginación">
                 <ul className="pedidos-usuario-pagination">
@@ -283,4 +238,4 @@ export function PedidosUsuario() {
             </nav>
         </div>
     );
-}    
+}

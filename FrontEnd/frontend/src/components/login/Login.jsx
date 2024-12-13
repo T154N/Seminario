@@ -42,8 +42,14 @@ export function Login() {
     const navegarHaciaCatalogoLogin = () => {
         setTimeout(() => {
             navigate('/catalogo');
-        }, 4000);
+        }, 3000);
     }
+
+    const navegarHaciaLogin = () => {
+        setTimeout(() => {
+            navigate('/login');
+        }, 3000);
+    };
 
     const mostrarCambiarContrasena = () => {
         setMostrarCambiarPwd(true);
@@ -90,6 +96,9 @@ export function Login() {
         setMostrarAlertaRecuperarContrasena(false);
         setMensajeRegistro(mensaje);
         setTipoError(tipoError);
+        if (tipoError === "exitoso") {
+            navegarHaciaLogin();
+        }
     }
 
     const mostrarMsjInicioSesion = (mensaje, tipoError) => {
@@ -124,6 +133,14 @@ export function Login() {
         setMostrarAlertaRecuperarContrasena(false);
     }
 
+    const onRegistroExitoso = () => {
+        setTimeout(() => {
+            setMostrarIniciarSesion(true);
+            setMostrarAlertaRegistro(false);
+            setMostrarRegistrarse(false);
+        }, 3000);
+    };
+
     return (
         <>
             <div className="">
@@ -147,7 +164,7 @@ export function Login() {
                                             {mostrarCambiarPwd && !sesionYaIniciada && <CambiarContrasena mostrarMsjRecuperarContrasena={mostrarMsjRecuperarContrasena}/>}
 
                                             {/* Solo mostrar registrarse si la sesión no está iniciada */}
-                                            {mostrarRegistrarse && !sesionYaIniciada && <Registrarse mostrarMsjRegistro={mostrarMsjRegistro}/>}
+                                            {mostrarRegistrarse && !sesionYaIniciada && <Registrarse mostrarMsjRegistro={mostrarMsjRegistro} onRegistroExitoso={onRegistroExitoso}/>}
 
                                             {/* Mostrar botón de cerrar sesión si la sesión está iniciada */}
                                             {sesionYaIniciada &&

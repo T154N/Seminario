@@ -4,6 +4,8 @@ import productoService from "../../services/producto/producto.service";
 import { useParams, useNavigate, useLocation } from "react-router";
 import { useCarrito } from '../carrito/CarritoContext';
 import loginService from "../../services/login/login.service";
+import {faArrowLeft, faCheck, faLock, faShoppingCart} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export function Producto() {
     const navigate = useNavigate();
@@ -112,7 +114,10 @@ export function Producto() {
                 <div className="row mb-3">
                     <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
                         <div className="d-flex align-items-start">
-                            <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>Volver al catálogo</button>
+                            <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>
+                                <FontAwesomeIcon icon={faArrowLeft} size={"md"}/>
+                                <span className="ps-1">Volver al Catálogo</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -134,10 +139,15 @@ export function Producto() {
                                 <div className="d-flex justify-content-center">
                                     <img
                                         src={producto.imagen}
-                                        className="rounded mx-auto d-block mt-4"
-                                        style={{width: "50%", height: "auto"}}
                                         alt={producto.descripcion}
+                                        style={{
+                                            width: '180px',
+                                            height: '180px',
+                                            objectFit: 'contain',
+                                            borderRadius: '5px',
+                                        }}
                                     />
+
                                 </div>
                                 <div className="card-body d-flex flex-column justify-content-between">
                                     <div>
@@ -162,9 +172,21 @@ export function Producto() {
                                         onClick={() => agregarAlCarrito(producto)}
                                         disabled={!sesionIniciada}
                                     >
-                                        {!sesionIniciada && "🔒 Inicie sesión para agregar"}
-                                        {sesionIniciada && !productoAgregado[producto.id] && "🛒 Agregar al carrito"}
-                                        {sesionIniciada && productoAgregado[producto.id] && "✔️ Producto agregado"}
+                                        {!sesionIniciada && 
+                                        (<>
+                                            <FontAwesomeIcon icon={faLock}/>
+                                            <span className="ms-1">Inicie Sesión para Agregar</span>
+                                        </>)}
+                                        {sesionIniciada && !productoAgregado[producto.id] && 
+                                        (<>
+                                            <FontAwesomeIcon icon={faShoppingCart}/>
+                                            <span className="ms-1">Agregar al Carrito</span>
+                                        </>)}
+                                        {sesionIniciada && productoAgregado[producto.id] && 
+                                        (<>
+                                            <FontAwesomeIcon icon={faCheck}/>
+                                            <span className="ms-1">Producto Agregado al Carrito</span>
+                                        </>)}
                                     </button>
                                 </div>
                             </div>

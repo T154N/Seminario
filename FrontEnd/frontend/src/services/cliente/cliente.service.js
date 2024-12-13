@@ -129,12 +129,13 @@ const getDatosClientePedido = async () => {
         }
 
         const cliente = clientes.map((c) => {
+            const domicilioPrincipal = c.domicilios.find(d => d.domicilioEsPrincipal === "Y");
             return {
                 nombre: c.cliente_nombre,
                 apellido: c.cliente_apellido,
                 clienteId: c.cliente_id,
-                domicilioId: c.domicilios[0]?.domicilio_id, // Validación de existencia.
-                domicilioNombre: c.domicilios[0]?.domicilioDireccion // Validación de existencia.
+                domicilioId: domicilioPrincipal?.domicilio_id, // Validación de existencia.
+                domicilioNombre: domicilioPrincipal?.domicilioDireccion // Validación de existencia.
             };
         });
 

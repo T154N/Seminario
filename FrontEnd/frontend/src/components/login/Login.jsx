@@ -155,7 +155,7 @@ export function Login() {
                                     {mostrarAlertaRecuperarContrasena && <MensajesLogin mensaje={mensajeRecuperarContrasena} tipoError={tipoError} onClose={cerrarAlertaRecuperarContrasena}/>}
                                     <div className="card border-0 shadow mt-3" style={{background: "#FCBB3A", borderRadius: "30px"}}>
                                         <div className="card-body text-start px-3">
-                                            {sesionYaIniciada && <div className="alert alert-success mt-3 fs-5 text-center" style={{borderRadius: "10px"}}>La sesion esta iniciada</div>}
+                                            {sesionYaIniciada && <div className="alert alert-success mt-3 fs-5 text-center" style={{borderRadius: "10px"}}>La sesión está iniciada</div>}
 
                                             {/* Solo mostrar iniciar sesión si la sesión no está iniciada */}
                                             {mostrarIniciarSesion && !sesionYaIniciada && <IniciarSesion mostrarMsjInicioSesion={mostrarMsjInicioSesion}/>}

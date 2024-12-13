@@ -64,16 +64,15 @@ export function PedidosUsuario() {
 
     const getIndicatorColor = (estado) => {
         switch (estado) {
-            case 'CONFIRMADO':
-                return 'green';
-            case 'RECHAZADO':
-                return 'red';
-            case 'CANCELADO':
-                return 'red';
-            case 'PENDIENTE':
-                return 'yellow';
-            default:
-                return 'gray';
+            case 'Activo': return 'green';
+            case 'Aceptado': return 'blue';
+            case 'Nuevo': return 'purple';
+            case 'Rechazado': return 'red';
+            case 'EnPreparacion': return 'yellow';
+            case 'PendientePago': return 'orange';
+            case  'Entregado': return 'green';
+            case  'Preparado': return 'pink'
+            default: return 'gray';
         }
     };
 
@@ -205,10 +204,22 @@ export function PedidosUsuario() {
                                 <td className="pedidos-usuario-data" data-label="Método de Pago">{pedido.metodoPago}</td>
                                 <td className="pedidos-usuario-data" data-label="Estado">
                                     <span className="pedidos-usuario-estado">
-                                        {pedido.estado}
+                                        {pedido.estado === 13 ? "Aceptado" : pedido.estado === 9 ? "Rechazado" :
+                                            pedido.estado === 7 ? "En Preparación" : pedido.estado === 12 ? "Nuevo":
+                                                pedido.estado === 10 ? "Preparado" : pedido.estado === 3 ? "Pediente de Pago" :
+                                                    pedido.estado === 6 ? "Entregado" :
+                                                        "Estado no definido"}
                                         <span
                                             className="pedidos-usuario-estado-indicador"
-                                            style={{ backgroundColor: getIndicatorColor(pedido.estado) }}
+                                            style={{ backgroundColor: getIndicatorColor(
+                                                    pedido.estado === 13 ? "Aceptado" :
+                                                        pedido.estado === 9 ? "Rechazado" :
+                                                            pedido.estado === 7 ? "EnPreparacion" :
+                                                                pedido.estado === 12 ? "Nuevo":
+                                                                    pedido.estado === 10 ? "Preparado" :
+                                                                        pedido.estado === 3 ? "PendientePago" :
+                                                                            pedido.estado === 6 ? "Entregado" :
+                                                                                "Estado no definido") }}
                                         />
                                     </span>
                                 </td>

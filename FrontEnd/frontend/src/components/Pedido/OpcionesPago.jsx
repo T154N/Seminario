@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { usePedido } from './PedidoContext';
 import './resumenPedido.css';
 import './opcionesPago.css';
 import { useCarrito } from "../carrito/CarritoContext";
 import { MensajesLogin } from "../Mensajes/Mensajes";
-import { useLocation } from "react-router-dom";
 
 export function OpcionesPago() {
     const { pedidoActual, setMetodoPago, finalizarPedido } = usePedido();
@@ -16,7 +15,7 @@ export function OpcionesPago() {
     const [creandoPedido, setCreandoPedido] = useState(false);
 
     const location = useLocation();
-    const { datosCliente } = location.state || {};
+    const { datosCliente, fromPedidosUsuario, fromOpcionesPago } = location.state || {};
 
     const seleccionarMetodo = (metodo, e) => {
         e.stopPropagation();
@@ -47,7 +46,7 @@ export function OpcionesPago() {
 
     useEffect(() => {
         if (isPedidoFinalizado) {
-            navigate('/pedido-detalle', { state: { pedido: pedidoActual } });
+            navigate('/pedido-detalle', { state: { pedido: pedidoActual, fromOpcionesPago: true } });
         }
     }, [isPedidoFinalizado, navigate, pedidoActual]);
 

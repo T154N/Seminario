@@ -179,8 +179,11 @@ export function InicioAdmin() {
         const estadoMap = {
             'Aceptado': 13,
             'Rechazado': 9,
-            'Pendiente': 7,
-            'Inactivo': 1
+            'EnPreparacion': 7,
+            'Nuevo': 12,
+            'PendientePago': 3,
+            'Entregado': 6,
+            'Preparado':10,
         };
 
         return data.filter(item =>
@@ -214,7 +217,10 @@ export function InicioAdmin() {
                 const fechaPedido = new Date(pedidosActivos.fecha);
                 const desde = fechaDesde ? new Date(fechaDesde) : null;
                 const hasta = fechaHasta ? new Date(fechaHasta) : null;
-
+                if (hasta) {
+                    hasta.setDate(hasta.getDate() + 1);
+                }
+                console.log(fechaPedido,desde, hasta)
                 if (desde && fechaPedido < desde) return false;
                 if (hasta && fechaPedido > hasta) return false;
                 return true;
@@ -227,10 +233,13 @@ export function InicioAdmin() {
     const getIndicatorColor = (estado) => {
         switch (estado) {
             case 'Activo': return 'green';
-            case 'Aceptado': return 'green';
-            case 'Inactivo': return 'grey';
+            case 'Aceptado': return 'blue';
+            case 'Nuevo': return 'purple';
             case 'Rechazado': return 'red';
-            case 'Pendiente': return 'yellow';
+            case 'EnPreparacion': return 'yellow';
+            case 'PendientePago': return 'orange';
+            case  'Entregado': return 'green';
+            case  'Preparado': return 'pink'
             default: return 'gray';
         }
     };
@@ -247,9 +256,12 @@ export function InicioAdmin() {
     const handleEstadoChange = (pedido, nuevoEstado) => {
         const estados = {
             'Rechazado': { estadoId: 9, estado: false },
-            'Pendiente': { estadoId: 7, estado: false },
+            'EnPreparacion': { estadoId: 7, estado: false },
             'Aceptado': { estadoId: 13, estado: false },
-            'Inactivo': { estadoId: 1, estado: false }
+            'Nuevo': { estadoId: 12, estado: false },
+            'PendientePago': {estadoId: 3, estado: false},
+            'Entregado':{estadoId: 6, estado: false},
+            'Preparado':{estadoId: 10, estado: false},
         };
 
         const estadoData = estados[nuevoEstado];

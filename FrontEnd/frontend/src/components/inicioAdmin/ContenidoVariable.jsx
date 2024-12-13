@@ -215,14 +215,21 @@ const ContenidoVariable = ({
                         <td data-label="Estado">
                             <span>
                                 {item.estado === 13 ? "Aceptado" : item.estado === 9 ? "Rechazado" :
-                                    item.estado === 7 ? "Pendiente" : "Inactivo"}
+                                    item.estado === 7 ? "En Preparación" : item.estado === 12 ? "Nuevo":
+                                    item.estado === 10 ? "Preparado" : item.estado === 3 ? "Pediente de Pago" :
+                                    item.estado === 6 ? "Entregado" :
+                                        "Estado no definido"}
                                 <span className="estado-indicador"
                                     style={{
                                         backgroundColor: getIndicatorColor(
                                             item.estado === 13 ? "Aceptado" :
                                                 item.estado === 9 ? "Rechazado" :
-                                                    item.estado === 7 ? "Pendiente" :
-                                                        "Inactivo"),
+                                                    item.estado === 7 ? "EnPreparacion" :
+                                                        item.estado === 12 ? "Nuevo":
+                                                        item.estado === 10 ? "Preparado" :
+                                                            item.estado === 3 ? "PendientePago" :
+                                                                item.estado === 6 ? "Entregado" :
+                                                                    "Estado no definido"),
                                     }}
                                 />
                             </span>
@@ -236,8 +243,8 @@ const ContenidoVariable = ({
                                             <FontAwesomeIcon icon={faRotate} />
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
-                                            <Dropdown.Item onClick={() => handleEstadoChange(item, "Pendiente")}>
-                                                Pendiente
+                                            <Dropdown.Item onClick={() => handleEstadoChange(item, "EnPreparacion")}>
+                                                En Preparación
                                             </Dropdown.Item>
                                             <Dropdown.Item onClick={() => handleEstadoChange(item, "Aceptado")}>
                                                 Aceptado
@@ -245,8 +252,14 @@ const ContenidoVariable = ({
                                             <Dropdown.Item onClick={() => handleEstadoChange(item, "Rechazado")}>
                                                 Rechazado
                                             </Dropdown.Item>
-                                            <Dropdown.Item onClick={() => handleEstadoChange(item, "Inactivo")}>
-                                                Inactivo
+                                            <Dropdown.Item onClick={() => handleEstadoChange(item, "Preparado")}>
+                                                Preparado
+                                            </Dropdown.Item>
+                                            <Dropdown.Item onClick={() => handleEstadoChange(item, "PendientePago")}>
+                                                Pendiente de Pago
+                                            </Dropdown.Item>
+                                            <Dropdown.Item onClick={() => handleEstadoChange(item, "Entregado")}>
+                                                Entregado
                                             </Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
@@ -390,8 +403,8 @@ const ContenidoVariable = ({
                         <option value="">Todos los estados</option>
                         <option value="Aceptado">Aceptado</option>
                         <option value="Rechazado">Rechazado</option>
-                        <option value="Pendiente">Pendiente</option>
-                        <option value="Inactivo">Inactivo</option>
+                        <option value="EnPreparacion">En Preparación</option>
+                        <option value="Nuevo">Nuevo</option>
 
                     </select>
 

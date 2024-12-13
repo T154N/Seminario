@@ -63,11 +63,18 @@ export function Catalogo() {
             <div className="row">
                 {categoriasFiltradas.map(categoria => (
                     <div key={categoria.id} className="col-sm-6 col-md-4 col-lg-3">
-                        <div className='catalogo-card mb-5 shadow-sm' onClick={() => handleCardClick(categoria)} // Cambia aquí
-                            style={{ cursor: 'pointer' }} >
-                            <img src={categoria.imagen} alt={categoria.nombre} className="card-img-top" />
+                        <div
+                            className="catalogo-card mb-5 shadow-sm"
+                            onClick={() => handleCardClick(categoria)}
+                            style={{cursor: 'pointer'}}
+                        >
+                            <img
+                                src={categoria.imagen}
+                                alt={categoria.nombre}
+                                className="card-img-top"
+                            />
                             <div className="card-body">
-                                <h5 className="card-title mt-2" style={{borderRadius: '0.3rem'}}>{categoria.nombre}</h5>
+                                <h5 className="card-title mt-2">{categoria.nombre}</h5>
                             </div>
                         </div>
                     </div>

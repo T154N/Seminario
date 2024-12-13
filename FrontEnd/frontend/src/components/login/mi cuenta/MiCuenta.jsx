@@ -9,7 +9,7 @@ import { DomiciliosPerfil } from "./DomiciliosPerfil";
 import { MensajesLogin } from "../../Mensajes/Mensajes";
 import { Modal, Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faEye, faEyeSlash, faPlus, faSave, faTimes} from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faPlus, faSave, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 export function MiCuenta() {
     const { isLoggedIn } = useContext(UserContext);
@@ -17,6 +17,7 @@ export function MiCuenta() {
 
     const [loading, setLoading] = useState(true);
     const [datosUsuario, setDatosUsuario] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
 
     // Mensajes
     const [mensajeMiCuenta, setMensajeMiCuenta] = useState("");
@@ -59,20 +60,22 @@ export function MiCuenta() {
     };
 
     const handleAddDomicilio = async (data) => {
-    const response = await domicilioService.agregarDomicilio(data.tipoDomicilio, data.direccion);
-    if (response.code && response.code === "ERR_NETWORK") {
-        mostrarMsjMiCuenta("Ocurrió un error en el servidor. Inténtelo de nuevo más tarde.", "peligro");
-    } else if (response && response === 400) {
-        mostrarMsjMiCuenta("Ocurrió un error en el servidor. Inténtelo de nuevo más tarde.", "peligro");
-    } else if (response.data.status && response.data.status === 500) {
-        mostrarMsjMiCuenta("Ocurrió un error en el servidor. Inténtelo de nuevo más tarde.", "peligro");
-    } else if (response.data.status && response.data.status === 200) {
-        mostrarMsjMiCuenta("Domicilio agregado correctamente.", "exitoso");
-        reset(); // Clear the form fields
-    }
-    setShowAddModal(false);
-    getDatosCliente(); // Update user data
-};
+        setIsLoading(true);
+        const response = await domicilioService.agregarDomicilio(data.tipoDomicilio, data.direccion);
+        if (response.code && response.code === "ERR_NETWORK") {
+            mostrarMsjMiCuenta("Ocurrió un error en el servidor. Inténtelo de nuevo más tarde.", "peligro");
+        } else if (response && response === 400) {
+            mostrarMsjMiCuenta("Ocurrió un error en el servidor. Inténtelo de nuevo más tarde.", "peligro");
+        } else if (response.data.status && response.data.status === 500) {
+            mostrarMsjMiCuenta("Ocurrió un error en el servidor. Inténtelo de nuevo más tarde.", "peligro");
+        } else if (response.data.status && response.data.status === 200) {
+            mostrarMsjMiCuenta("Domicilio agregado correctamente.", "exitoso");
+            reset(); // Clear the form fields
+        }
+        setIsLoading(false);
+        setShowAddModal(false);
+        getDatosCliente(); // Update user data
+    };
 
     if (!isLoggedIn) {
         return null;
@@ -123,7 +126,7 @@ export function MiCuenta() {
                                                                   onDomicilioChange={getDatosCliente}
                                                                   mostrarMsjMiCuenta={mostrarMsjMiCuenta}/>
                                                 <div className="d-grid mb-3">
-                                                    <button type="button" className="btn btn-principal" onClick={() => setShowAddModal(true)}>
+                                                    <button type="button" className="btn btn-principal" onClick={() => setShowAddModal(true)} disabled={isLoading}>
                                                         <FontAwesomeIcon icon={faPlus} />
                                                         <span className="ps-1">Agregar Domicilio</span>
                                                     </button>
@@ -174,12 +177,25 @@ export function MiCuenta() {
                                 </Form.Select>
                                 {errors.tipoDomicilio && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.tipoDomicilio.message}</p>}
                             </Form.Group>
+                            <Form.Group controlId="formPrincipalDomiclio" className="mb-3">
+                                <Form.Label className="fs-5">¿El domicilio será principal?</Form.Label>
+                                <Form.Select
+                                    {...register("esPrincipal", {
+                                        required: "Si el domicilio es principal o no es obligatorio",
+                                    })}
+                                    defaultValue={" "}
+                                >
+                                    <option value="Y">SÍ</option>
+                                    <option value=" ">NO</option>
+                                </Form.Select>
+                                {errors.esPrincipal && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.esPrincipal.message}</p>}
+                            </Form.Group>
                             <Modal.Footer>
                                 <Button variant="danger" onClick={() => setShowAddModal(false)}>
                                     <FontAwesomeIcon icon={faTimes}/>
                                     <span className="ps-1">Cerrar</span>
                                 </Button>
-                                <Button variant="principal" type="submit">
+                                <Button variant="principal" type="submit" disabled={isLoading}>
                                     <FontAwesomeIcon icon={faSave} />
                                     <span className="ps-1">Agregar Domicilio</span>
                                 </Button>

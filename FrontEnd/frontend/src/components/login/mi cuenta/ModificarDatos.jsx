@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function ModificarDatos({ datosUsuario, mostrarMsjMiCuenta }) {
     const [isEditing, setIsEditing] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const {
         register,
@@ -19,6 +20,7 @@ export function ModificarDatos({ datosUsuario, mostrarMsjMiCuenta }) {
     }, [datosUsuario, reset]);
 
     const onSubmit = async (data) => {
+        setIsLoading(true);
         const response = await clienteService.modificarDatosCliente(
             localStorage.getItem('clienteId'),
             data.dni,
@@ -37,6 +39,7 @@ export function ModificarDatos({ datosUsuario, mostrarMsjMiCuenta }) {
             mostrarMsjMiCuenta("Datos actualizados correctamente.", "exitoso");
         }
 
+        setIsLoading(false);
         setIsEditing(false);
     };
 
@@ -192,6 +195,7 @@ export function ModificarDatos({ datosUsuario, mostrarMsjMiCuenta }) {
                         <button
                             type="submit"
                             className="btn btn-principal"
+                            disabled={isLoading}
                         >
                             <FontAwesomeIcon icon={faSave}/>
                             <span className="ps-1">Guardar Cambios</span>

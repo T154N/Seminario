@@ -33,7 +33,7 @@ const eliminarDomicilio = async (domicilioId) => {
     }
 };
 
-const agregarDomicilio = async (tipoDomicilioId, domicilioDireccion) => {
+const agregarDomicilio = async (tipoDomicilioId, domicilioDireccion, esPrincipal) => {
     try {
         const response = await axios.put(`${ENDPOINT_DOMICILIO}/domicilios/newdomicilio/?clienteid=${localStorage.getItem('clienteId')}`, {
             domicilioTipoDomicilioId: tipoDomicilioId,
@@ -42,7 +42,7 @@ const agregarDomicilio = async (tipoDomicilioId, domicilioDireccion) => {
             domicilioUbicacion: "",
             domicilioLocalidadId: "",
             domicilioCodigoPostal: "",
-            domicilioEsPrincipal: "",
+            domicilioEsPrincipal: esPrincipal,
             domicilioObservaciones: "",
             usuario_alta: localStorage.getItem('email'),
         });

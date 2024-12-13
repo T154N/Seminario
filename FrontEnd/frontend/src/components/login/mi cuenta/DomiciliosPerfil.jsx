@@ -12,6 +12,7 @@ export function DomiciliosPerfil({ datosUsuario, onDomicilioChange, mostrarMsjMi
     const [showAddModal, setShowAddModal] = useState(false);
     const [selectedDomicilio, setSelectedDomicilio] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [loadingDelete, setLoadingDelete] = useState({});
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     const handleEditClick = (domicilio) => {
@@ -20,6 +21,7 @@ export function DomiciliosPerfil({ datosUsuario, onDomicilioChange, mostrarMsjMi
     };
 
     const handleDeleteClick = async (domicilioId) => {
+        setLoadingDelete(prevState => ({ ...prevState, [domicilioId]: true }));
         const response = await domicilioService.eliminarDomicilio(domicilioId);
         if (response.code && response.code === "ERR_NETWORK") {
             mostrarMsjMiCuenta("Ocurrió un error en el servidor. Inténtelo de nuevo más tarde.", "peligro");
@@ -31,13 +33,15 @@ export function DomiciliosPerfil({ datosUsuario, onDomicilioChange, mostrarMsjMi
             mostrarMsjMiCuenta("Domicilio eliminado correctamente.", "exitoso");
             onDomicilioChange(); // Update user data
         }
+        setLoadingDelete(prevState => ({ ...prevState, [domicilioId]: false }));
     };
 
     useEffect(() => {
         if (selectedDomicilio) {
             reset({
                 direccion: selectedDomicilio.domicilioDireccion,
-                tipoDomicilio: selectedDomicilio.domicilioTipoDomicilioId.tipo_domicilio_id
+                tipoDomicilio: selectedDomicilio.domicilioTipoDomicilioId.tipo_domicilio_id,
+                esPrincipal: selectedDomicilio.domicilioEsPrincipal === "Y" ? "Y" : " ",
             });
         }
     }, [selectedDomicilio, reset]);
@@ -97,7 +101,7 @@ export function DomiciliosPerfil({ datosUsuario, onDomicilioChange, mostrarMsjMi
                                     <button className="btn btn-warning me-1" onClick={() => handleEditClick(domicilio)}>
                                         <FontAwesomeIcon icon={faEdit} style={{ color: "white" }} />
                                     </button>
-                                    <button className="btn btn-danger" onClick={() => handleDeleteClick(domicilio.domicilio_id)} disabled={datosUsuario.domicilio.length === 1}>
+                                    <button className="btn btn-danger" onClick={() => handleDeleteClick(domicilio.domicilio_id)} disabled={loadingDelete[domicilio.domicilio_id] || datosUsuario.domicilio.length === 1}>
                                         <FontAwesomeIcon icon={faTrash} />
                                     </button>
                                 </td>

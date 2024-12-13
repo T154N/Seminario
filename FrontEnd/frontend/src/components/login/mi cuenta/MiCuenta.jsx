@@ -61,7 +61,7 @@ export function MiCuenta() {
 
     const handleAddDomicilio = async (data) => {
         setIsLoading(true);
-        const response = await domicilioService.agregarDomicilio(data.tipoDomicilio, data.direccion);
+        const response = await domicilioService.agregarDomicilio(data.tipoDomicilio, data.direccion, data.esPrincipal);
         if (response.code && response.code === "ERR_NETWORK") {
             mostrarMsjMiCuenta("Ocurrió un error en el servidor. Inténtelo de nuevo más tarde.", "peligro");
         } else if (response && response === 400) {

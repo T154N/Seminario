@@ -1,20 +1,19 @@
-import React from "react";
-import {useForm} from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import "../../scss/custom.css";
 import loginService from "../../services/login/login.service";
 
-import { useState, useEffect } from "react";
-
-export function Registrarse({mostrarMsjRegistro}) {
-
-    const [datosRegistro, setDatosRegistro] = useState({tipoDomicilios: [], roles: []});
+export function Registrarse({ mostrarMsjRegistro, onRegistroExitoso }) {
+    const [datosRegistro, setDatosRegistro] = useState({ tipoDomicilios: [], roles: [] });
     const [loading, setLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const {
         register,
         handleSubmit,
-        formState: {errors},
-        reset} = useForm();
+        formState: { errors },
+        reset
+    } = useForm();
 
     useEffect(() => {
         const getDatosRegistro = async () => {
@@ -24,16 +23,19 @@ export function Registrarse({mostrarMsjRegistro}) {
         }
         getDatosRegistro();
     }, []);
-    
+
     const onSubmit = async (data) => {
+        setIsSubmitting(true);
         if (data.password !== data.confirmPassword) {
             alert("Las contraseñas no coinciden.");
             reset({
                 password: "",
                 confirmPassword: ""
-            })
+            });
+            setIsSubmitting(false);
             return;
         }
+        mostrarMsjRegistro("Registrando cuenta, por favor espere...", "espera");
         const response = await loginService.crearCuenta(
             data.nombre,
             data.apellido,
@@ -54,20 +56,23 @@ export function Registrarse({mostrarMsjRegistro}) {
             mostrarMsjRegistro("Ocurrio un error en el servidor. Intentelo de nuevo mas tarde.", "peligro");
         } else if (response.data.status === 409) {
             reset({
-                dni: "", 
+                dni: "",
                 correo: ""
             });
             mostrarMsjRegistro("Ya existe un usuario con ese correo o documento.", "alerta");
         } else if (response.data.status === 400 && response.data.message) {
             reset({
-                correo: "", 
+                correo: "",
                 password: ""
             });
             mostrarMsjRegistro(response.data.message, "alerta");
         } else if (response.data.status === 200) {
-            mostrarMsjRegistro("Cuenta registrada exitosamente. Redirigiendo al inicio de sesion...", "exitoso");
+            mostrarMsjRegistro("Cuenta registrada exitosamente. Redirigiendo al inicio de sesión...", "exitoso");
+            setTimeout(() => {
+                onRegistroExitoso();
+            }, 3000);
         }
-        
+        setIsSubmitting(false);
     }
 
     if (loading) {
@@ -311,9 +316,10 @@ export function Registrarse({mostrarMsjRegistro}) {
             </div>
 
             <div className="d-grid mb-3">
-                <button className="btn btn-principal">Registrarse</button>
+                <button className="btn btn-principal" type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Registrando..." : "Registrarse"}
+                </button>
             </div>
-
         </form>
-    )
+    );
 }

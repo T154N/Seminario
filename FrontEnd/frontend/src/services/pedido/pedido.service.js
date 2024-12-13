@@ -293,7 +293,53 @@ const removeItemFromPedido = async (pedidoId, productoId, usuarioTransaccion) =>
     }
 };
 
+const formatDateToDDMMYYYY = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+};
 
+const getPedidosPorCadaCliente = async (clienteId) => {
+    try {
+        const response = await axios.get(`${ENDPOINT_PEDIDO_URL}/pedidos/getpedidoscliente`, {
+            params: { clienteId }
+        });
+
+        const pedidos = await Promise.all(response.data.body.map(async (p) => {
+            const productos = await getDetallePedido(p.pedido_id);
+            return {
+                id: p.pedido_nro,
+                fecha: formatDateToDDMMYYYY(p.pedido_fecha_alta),
+                total: p.pedido_total_dinero,
+                estado: p.estado_pedido,
+                metodoPago: p.medio_pago,
+                productos: productos
+            };
+        }));
+
+        return pedidos;
+    } catch (err) {
+        return [];
+    }
+};
+
+const getDetallePedido = async (pedidoId) => {
+    try {
+        const response = await axios.get(`${ENDPOINT_PEDIDO_URL}/pedidos/detalle`, {
+            params: { pedidoID: pedidoId }
+        });
+        return response.data.body.map((p) => ({
+            id: p.productoID,
+            nombre: p.productoName,
+            cantidad: p.cantidad,
+            precioUnitario: p.precioIndividual,
+        }));
+    } catch (err) {
+        return [];
+    }
+};
 
 // Definir el objeto de servicio de pedidos
 const pedidoService = {
@@ -309,7 +355,8 @@ const pedidoService = {
     addItemToPedido,
     generarPedido,
     removeItemFromPedido,
-    crearPedido
+    crearPedido,
+    getPedidosPorCadaCliente
 };
 
 export default pedidoService;

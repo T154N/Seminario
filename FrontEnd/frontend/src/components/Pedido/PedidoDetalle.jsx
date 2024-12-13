@@ -1,37 +1,35 @@
-
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './pedidoDetalle.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPrint,faFileLines } from '@fortawesome/free-solid-svg-icons';
+import { faPrint, faFileLines, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 export function PedidoDetalle() {
     const location = useLocation();
+    const navigate = useNavigate();
     const pedido = location.state?.pedido;
-    console.log(pedido)
+    const fromPedidosUsuario = location.state?.fromPedidosUsuario;
 
-const getEstado = (nroEstado) => {
-    console.log("Estado del pedido: ", pedido.estado);
+    const getEstado = (nroEstado) => {
+        if (typeof nroEstado === 'string') {
+            return nroEstado;
+        }
 
-    if (typeof nroEstado === 'string') {
-        return nroEstado;
-    }
-
-    switch (nroEstado) {
-        case 1:
-            return 'Inactivo';
-        case 7:
-            return 'Pendiente';
-        case 9:
-            return 'Rechazado';
-        case 12:
-            return 'Nuevo'
-        case 13:
-            return 'Aceptado';
-        default:
-            return 'Desconocido';
-    }
-};
+        switch (nroEstado) {
+            case 1:
+                return 'Inactivo';
+            case 7:
+                return 'Pendiente';
+            case 9:
+                return 'Rechazado';
+            case 12:
+                return 'Nuevo';
+            case 13:
+                return 'Aceptado';
+            default:
+                return 'Desconocido';
+        }
+    };
 
     const handlePrint = async () => {
         if (pedido && pedido.id) {
@@ -47,12 +45,31 @@ const getEstado = (nroEstado) => {
         }
     };
 
+    const handleVolverMisPedidos = () => {
+        navigate('/pedidos-usuario');
+    };
+
     return (
         <div className="container pedido-detalle">
             <h1 className="text-center my-4">Descripción del Pedido</h1>
 
             {pedido ? (
                 <>
+                    {fromPedidosUsuario && (
+                        <div className="container ms-0 ps-0">
+                            <div className="row mb-3">
+                                <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
+                                    <div className="d-flex align-items-start">
+                                        <button className="btn btn-secundario text-white" onClick={handleVolverMisPedidos}>
+                                            <FontAwesomeIcon icon={faArrowLeft} size={"md"}/>
+                                            <span className="ps-1">Volver a Mis Pedidos</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <div className="card shadow-sm mb-4">
                         <div className="card-body">
                             <h5 className="card-title">Detalles del Pedido</h5>
@@ -98,7 +115,7 @@ const getEstado = (nroEstado) => {
 
                     <div className="text-left my-4">
                         <button className="btn btn-imprimir" onClick={handlePrint}>
-                        <FontAwesomeIcon icon={faFileLines} size="lg" />  Generar PDF
+                            <FontAwesomeIcon icon={faFileLines} size="lg" />  Generar PDF
                         </button>
                     </div>
 
@@ -124,10 +141,10 @@ const getEstado = (nroEstado) => {
                                             <td data-label="Subtotal">${(producto.precioUnitario * producto.cantidad).toFixed(2)}</td>
                                         </tr>
                                     )) || (
-                                            <tr>
-                                                <td colSpan="4" className="text-center">No hay productos en este pedido.</td>
-                                            </tr>
-                                        )}
+                                        <tr>
+                                            <td colSpan="4" className="text-center">No hay productos en este pedido.</td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>

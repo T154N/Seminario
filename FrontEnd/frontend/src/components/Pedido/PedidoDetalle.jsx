@@ -11,6 +11,7 @@ export function PedidoDetalle() {
     const pedido = location.state?.pedido;
     const fromPedidosUsuario = location.state?.fromPedidosUsuario;
     const fromInicioAdmin = location.state?.fromInicioAdmin;
+    const fromOpcionesPago = location.state?.fromOpcionesPago;
 
     const getEstado = (nroEstado) => {
         if (typeof nroEstado === 'string') {
@@ -67,6 +68,10 @@ export function PedidoDetalle() {
         navigate('/inicioAdmin');
     };
 
+    const handleVolverInicio = () => {
+        navigate('/');
+    };
+
     return (
         <div className="container pedido-detalle">
             <h1 className="text-center my-4">Descripción del Pedido</h1>
@@ -96,6 +101,21 @@ export function PedidoDetalle() {
                                         <button className="btn btn-secundario text-white" onClick={handleVolverInicioAdmin}>
                                             <FontAwesomeIcon icon={faArrowLeft} size={"lg"}/>
                                             <span className="ps-1">Volver a Administración</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {fromOpcionesPago && (
+                        <div className="container ms-0 ps-0">
+                            <div className="row mb-3">
+                                <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
+                                    <div className="d-flex align-items-start">
+                                        <button className="btn btn-secundario text-white" onClick={handleVolverInicio}>
+                                            <FontAwesomeIcon icon={faArrowLeft} size={"lg"}/>
+                                            <span className="ps-1">Volver al Inicio</span>
                                         </button>
                                     </div>
                                 </div>

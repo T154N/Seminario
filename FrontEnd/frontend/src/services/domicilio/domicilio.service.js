@@ -2,7 +2,7 @@ import axios from "axios";
 
 const ENDPOINT_DOMICILIO = process.env.REACT_APP_SEMINARIO_BACKEND_NOAUTH_URL;
 
-const modificarDomicilio = async (domicilioId, tipoDomicilioId, domicilioDireccion) => {
+const modificarDomicilio = async (domicilioId, tipoDomicilioId, domicilioDireccion, esPrincipal) => {
     try {
         const response = await axios.put(`${ENDPOINT_DOMICILIO}/domicilios/upddomicilio/?setbaja=false`, {
             domicilioId: domicilioId,
@@ -12,7 +12,7 @@ const modificarDomicilio = async (domicilioId, tipoDomicilioId, domicilioDirecci
             domicilioUbicacion: "",
             domicilioLocalidadId: "",
             domicilioCodigoPostal: "",
-            domicilioEsPrincipal: "",
+            domicilioEsPrincipal: esPrincipal,
             domicilioObservaciones: "",
             usuario_alta: localStorage.getItem('email'),
         });

@@ -97,12 +97,12 @@ export function OpcionesPago() {
                                 </label>
                                 <div className="transferencia-info">
                                     <p>Transfiera el total indicado a la siguiente cuenta bancaria:</p>
-                                    <p><strong>Alias:</strong> <span>mi.alias.bancario</span></p>
-                                    <p><strong>CBU:</strong> <span>1234567890123456789012</span></p>
-                                    <p><strong>Banco:</strong> <span>BANCOR</span></p>
-                                    <p><strong>Número de cuenta:</strong> <span>1234567890</span></p>
-                                    <p><strong>Titular de la cuenta:</strong> <span>Juan Pérez</span></p>
-                                    <p>Una vez hecha la transferencia y llenado los campos con sus datos, presione "Finalizar pedido" para completar la solicitud del pedido.</p>
+                                    <p><strong>Alias:</strong> <span>cmdistribuidora.mp</span></p>
+                                    <p><strong>CBU:</strong> <span>0000008854938543989</span></p>
+                                    <p><strong>Banco:</strong> <span>Mercado Pago</span></p>
+                                    <p><strong>Número de cuenta:</strong> <span>86749829</span></p>
+                                    <p><strong>Titular de la cuenta:</strong> <span>Claudio Molla</span></p>
+                                    <p>Una vez hecha la transferencia, presione "Finalizar pedido" para completar la solicitud del pedido.</p>
                                 </div>
                             </div>
                             <div className="mb-3">

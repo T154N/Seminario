@@ -29,7 +29,7 @@ export function PedidosUsuario() {
         fetchData();
     }, []); // Array de dependencias vacío para que se ejecute solo una vez
 
-    const pedidosOrdenados = pedidos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    const pedidosOrdenados = pedidos.sort((a, b) => b.id - a.id);
 
     const applyFilters = () => {
         return pedidosOrdenados.filter((pedido) => {
@@ -200,7 +200,7 @@ export function PedidosUsuario() {
                         {pedidosActuales.map((pedido) => (
                             <tr key={pedido.id}>
                                 <td className="pedidos-usuario-data" data-label="Nro de pedido">{pedido.id}</td>
-                                <td className="pedidos-usuario-data" data-label="Fecha de solicitud">{pedido.fecha}</td>
+                                <td className="pedidos-usuario-data" data-label="Fecha de solicitud">{new Date(pedido.fecha).toLocaleDateString('es-ES') || 'No especificada'}</td>
                                 <td className="pedidos-usuario-data" data-label="Método de Pago">{pedido.metodoPago}</td>
                                 <td className="pedidos-usuario-data" data-label="Estado">
                                     <span className="pedidos-usuario-estado">

@@ -359,6 +359,7 @@ const pedidoService = {
     addItemToPedido,
     generarPedido,
     removeItemFromPedido,
+
     crearPedido,
     getPedidosPorCadaCliente
 };

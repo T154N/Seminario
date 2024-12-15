@@ -2,7 +2,7 @@
 
 /* Aislar estilos del modal usando prefijo */
 .cliente-modal-backdrop {
-    background-color: #fff3ef !important; /* Color solicitado */
+    background-color: rgba(255, 243, 239, 0) !important; /* Color solicitado */
     position: fixed;
     top: 0;
     left: 0;

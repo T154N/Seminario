@@ -262,6 +262,7 @@ export function InicioAdmin() {
             'PendientePago': {estadoId: 3, estado: false},
             'Entregado':{estadoId: 6, estado: false},
             'Preparado':{estadoId: 10, estado: false},
+
         };
 
         const estadoData = estados[nuevoEstado];

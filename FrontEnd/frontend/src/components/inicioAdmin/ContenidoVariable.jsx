@@ -62,6 +62,8 @@ const ContenidoVariable = ({
         handleFechaHastaChange(e.target.value); // Llama a la función pasada por props
     };
 
+
+
     // Abrir el popup con los elementos seleccionados
     const openPopup = (item, tipo) => {
         setSelectedItems([item]);

@@ -10,7 +10,7 @@ import './clienteAlta.css';
 import clienteService from "../../services/cliente/cliente.service";
 import ConfirmModal from "./ConfirmModal";
 
-const ClienteAlta = ({ onSave, onCancel, clientesActivos = []}) => {
+const ClienteAlta = ({ onSave, onCancel, clientesActivos = [] }) => {
     const [formData, setFormData] = useState({
         cliente_documento: '',
         cliente_tipo_documento: 'DNI',
@@ -38,37 +38,78 @@ const ClienteAlta = ({ onSave, onCancel, clientesActivos = []}) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        // Validar si es CUIT para formatearlo
+        if (name === "cliente_cuit") {
+            // Filtrar solo números
+            const numericValue = value.replace(/\D/g, "");
+            // Aplicar formato CUIT (nn-nnnnnnnn-n)
+            const formattedCuit = numericValue
+                .replace(/^(\d{2})(\d{0,8})(\d{0,1}).*/, (match, p1, p2, p3) => {
+                    let result = p1;
+                    if (p2) result += `-${p2}`;
+                    if (p3) result += `-${p3}`;
+                    return result;
+                })
+                .slice(0, 13); // Limitar a 13 caracteres formateados
+            setFormData({
+                ...formData,
+                [name]: formattedCuit,
+            });
+            return;
+        }
+
+        // Validar si es documento y permitir solo números
+        if (name === "cliente_documento") {
+            const numericValue = value.replace(/\D/g, ""); // Filtrar solo números
+            setFormData({
+                ...formData,
+                [name]: numericValue,
+            });
+            return;
+        }
+
+        // Para otros campos, continuar con la lógica estándar
         setFormData({
             ...formData,
             [name]: value,
         });
     };
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
-    
-        // Validación de duplicados
+
+        // Validar formato de CUIT
+        const cuitRegex = /^\d{2}-\d{8}-\d{1}$/;
+        if (!cuitRegex.test(formData.cliente_cuit)) {
+            alert("El CUIT debe tener el formato nn-nnnnnnnn-n.");
+            return;
+        }
+
+        // Validar duplicados como antes
         const emailDuplicado = clientesActivos.some(
             (cliente) => cliente.email === formData.cliente_email
         );
         const documentoDuplicado = clientesActivos.some(
             (cliente) => cliente.documento === formData.cliente_documento
         );
-    
+
         if (emailDuplicado) {
             alert("Ya existe un cliente registrado con este correo electrónico.");
             return;
         }
-    
+
         if (documentoDuplicado) {
             alert("Ya existe un cliente registrado con este número de documento.");
             return;
         }
-    
-        // Mostrar el modal si no hay duplicados
+
+        // Mostrar el modal si no hay errores
         setShowModal(true);
     };
-    
+
+
 
     const handleConfirm = async () => {
         setIsLoading(true);
@@ -136,7 +177,12 @@ const ClienteAlta = ({ onSave, onCancel, clientesActivos = []}) => {
                             id="cliente_documento"
                             value={formData.cliente_documento}
                             onChange={handleChange}
+                            onKeyPress={(e) => {
+                                if (!/[0-9]/.test(e.key)) e.preventDefault(); // Evitar caracteres no numéricos
+                            }}
+                            required
                         />
+
                     </div>
                     <div className="form-group col-md-4">
                         <label htmlFor="cliente_tipo_documento">Tipo de Documento</label>
@@ -164,7 +210,14 @@ const ClienteAlta = ({ onSave, onCancel, clientesActivos = []}) => {
                             id="cliente_cuit"
                             value={formData.cliente_cuit}
                             onChange={handleChange}
+                            onKeyPress={(e) => {
+                                if (!/[0-9]/.test(e.key)) e.preventDefault(); // Evitar caracteres no numéricos
+                            }}
+                            pattern="\d{2}-\d{8}-\d{1}" // Validar formato final del CUIT
+                            title="El CUIT debe tener el formato nn-nnnnnnnn-n"
                         />
+
+
                     </div>
                 </div>
 

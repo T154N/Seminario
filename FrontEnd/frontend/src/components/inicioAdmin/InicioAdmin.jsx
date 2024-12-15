@@ -440,7 +440,7 @@ export function InicioAdmin() {
                     <div className="col-12 col-md-2 menu">
                         <h2>Menú</h2>
                         <div className="d-flex flex-column">
-                            {['Pedidos', 'Catálogo', 'Clientes'].map((item) => (
+                            {['Pedidos', 'Catálogo', 'Clientes','Informes'].map((item) => (
                                 <button
                                     key={item}
                                     className="btn-admin btn btn-success mb-2 btn-block"

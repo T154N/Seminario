@@ -57,6 +57,26 @@ const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onC
         });
     };
 
+    const handleCuitChange = (e) => {
+        let value = e.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+        if (value.length > 11) value = value.slice(0, 11); // Limitar a 11 dígitos
+    
+        // Aplicar el formato NN-NNNNNNNN-N
+        if (value.length > 2 && value.length <= 10) {
+            value = value.replace(/^(\d{2})(\d{0,8})/, "$1-$2");
+        } else if (value.length > 10) {
+            value = value.replace(/^(\d{2})(\d{8})(\d{0,1})/, "$1-$2-$3");
+        }
+    
+        setFormData({ ...formData, cliente_cuit: value });
+    };
+    
+    const handleDocumentoChange = (e) => {
+        const value = e.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+        setFormData({ ...formData, cliente_documento: value });
+    };
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -116,38 +136,36 @@ const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onC
         return <div>Loading...</div>;
     }
 
-    const renderField = ({ name, title, colSize, type, options,required = true }) => {
-        return (
-            <div className={`col-md-${colSize}`} key={name}>
-                <label className="form-label">{title}</label>
-                {options ? (
-                    <select
-                        className="form-select"
-                        name={name}
-                        value={formData[name]}
-                        onChange={handleChange}
-                        {...(required ? { required: true } : {})}
-                    >
-                        {options.map((option, index) => (
-                            <option value={option.value} key={index}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
-                ) : (
-                    <input
-                        type={type || "text"}
-                        className="form-control"
-                        name={name}
-                        value={formData[name]}
-                        onChange={handleChange}
-                        placeholder={registro ? registro[name] || title : title} // Placeholder dinámico
-                        {...(required ? { required: true } : {})}
-                    />
-                )}
-            </div>
-        );
-    };
+    const renderField = ({ name, title, colSize, type, options, onChange, required = true }) => (
+        <div className={`col-md-${colSize}`} key={name}>
+            <label className="form-label">{title}</label>
+            {options ? (
+                <select
+                    className="form-select"
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    {...(required ? { required: true } : {})}
+                >
+                    {options.map((option, index) => (
+                        <option value={option.value} key={index}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+            ) : (
+                <input
+                    type={type || "text"}
+                    className="form-control"
+                    name={name}
+                    value={formData[name]}
+                    onChange={onChange || handleChange} // Usar controlador personalizado si está definido
+                    placeholder={registro ? registro[name] || title : title} // Placeholder dinámico
+                    {...(required ? { required: true } : {})}
+                />
+            )}
+        </div>
+    );
 
     const fields = [
         {
@@ -155,6 +173,8 @@ const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onC
             title: "Documento del Cliente",
             placeholder: "Documento del cliente",
             colSize: 6,
+            type: "text", // Usar texto para controlar el input manualmente
+            onChange: handleDocumentoChange, // Asignar el controlador personalizado
         },
         {
             name: "cliente_tipo_documento",
@@ -184,7 +204,9 @@ const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onC
             title: "CUIT",
             placeholder: "CUIT del cliente",
             colSize: 6,
-            required: false
+            type: "text", // Usar texto para formatear dinámicamente
+            onChange: handleCuitChange, // Asignar el controlador personalizado
+            required: false,
         },
 
 

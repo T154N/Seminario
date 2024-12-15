@@ -32,18 +32,18 @@ const ContenidoVariable = ({
     handleEstadoChangeFiltro
 }) => {
     // Estados locales para controlar el popup y los elementos seleccionados
-        const [showModal, setShowModal] = useState(false);
-        const [selectedClient, setSelectedClient] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedClient, setSelectedClient] = useState(null);
 
-        const handleViewClick = (client) => {
-            setSelectedClient(client);
-            setShowModal(true);
-        };
+    const handleViewClick = (client) => {
+        setSelectedClient(client);
+        setShowModal(true);
+    };
 
-        const handleCloseModal = () => {
-            setShowModal(false);
-            setSelectedClient(null);
-        }
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedClient(null);
+    }
 
     // Estados locales para controlar el popup y los elementos seleccionados
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -217,21 +217,21 @@ const ContenidoVariable = ({
                         <td data-label="Estado">
                             <span>
                                 {item.estado === 13 ? "Aceptado" : item.estado === 9 ? "Rechazado" :
-                                    item.estado === 7 ? "En Preparación" : item.estado === 12 ? "Nuevo":
-                                    item.estado === 10 ? "Preparado" : item.estado === 3 ? "Pediente de Pago" :
-                                    item.estado === 6 ? "Entregado" :
-                                        "Estado no definido"}
+                                    item.estado === 7 ? "En Preparación" : item.estado === 12 ? "Nuevo" :
+                                        item.estado === 10 ? "Preparado" : item.estado === 3 ? "Pediente de Pago" :
+                                            item.estado === 6 ? "Entregado" :
+                                                "Estado no definido"}
                                 <span className="estado-indicador"
                                     style={{
                                         backgroundColor: getIndicatorColor(
                                             item.estado === 13 ? "Aceptado" :
                                                 item.estado === 9 ? "Rechazado" :
                                                     item.estado === 7 ? "EnPreparacion" :
-                                                        item.estado === 12 ? "Nuevo":
-                                                        item.estado === 10 ? "Preparado" :
-                                                            item.estado === 3 ? "PendientePago" :
-                                                                item.estado === 6 ? "Entregado" :
-                                                                    "Estado no definido"),
+                                                        item.estado === 12 ? "Nuevo" :
+                                                            item.estado === 10 ? "Preparado" :
+                                                                item.estado === 3 ? "PendientePago" :
+                                                                    item.estado === 6 ? "Entregado" :
+                                                                        "Estado no definido"),
                                     }}
                                 />
                             </span>
@@ -312,38 +312,38 @@ const ContenidoVariable = ({
                     </td>
                 )}
 
-{menuContent === "Clientes" && (
-                <td>
-                    <button
-                        className="btn-action btn btn-sm me-2"
-                        title="Editar registro"
-                        onClick={() => handleEditClick(item)}
-                    >
-                        <FontAwesomeIcon icon={faEdit} />
-                    </button>
-                    <button
-                        className="btn-action-delete btn btn-sm me-2"
-                        onClick={() => handleDeleteClick(item)}
-                        title="Eliminar registro"
-                        style={{ display: checkboxState ? "none" : "inline-block" }}
-                    >
-                        <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                    <button
-                        className="btn-action-view btn btn-sm"
-                        onClick={() => handleViewClick(item)}
-                        title="Visualizar datos del cliente"
-                    >
-                        <FontAwesomeIcon icon={faEye} />
-                    </button>
-                </td>
-            )}
-            {showModal && (
-                <ClienteModal
-                    clientData={selectedClient}
-                    onClose={handleCloseModal}
-                />
-            )}
+                {menuContent === "Clientes" && (
+                    <td>
+                        <button
+                            className="btn-action btn btn-sm me-2"
+                            title="Editar registro"
+                            onClick={() => handleEditClick(item)}
+                        >
+                            <FontAwesomeIcon icon={faEdit} />
+                        </button>
+                        <button
+                            className="btn-action-delete btn btn-sm me-2"
+                            onClick={() => handleDeleteClick(item)}
+                            title="Eliminar registro"
+                            style={{ display: checkboxState ? "none" : "inline-block" }}
+                        >
+                            <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                        <button
+                            className="btn-action-view btn btn-sm"
+                            onClick={() => handleViewClick(item)}
+                            title="Visualizar datos del cliente"
+                        >
+                            <FontAwesomeIcon icon={faEye} />
+                        </button>
+                    </td>
+                )}
+                {showModal && (
+                    <ClienteModal
+                        clientData={selectedClient}
+                        onClose={handleCloseModal}
+                    />
+                )}
 
             </tr>
         ));
@@ -351,127 +351,155 @@ const ContenidoVariable = ({
 
     return (
         <div className="contenido-variable">
-            {/* Encabezado */}
-            <div>
-                <span className="fs-3 fw-bold mt-0">
-                    {menuContent === 'Catálogo' ? catalogTab : menuContent}
-                </span>
-            </div>
-
-            {/* Botones y filtro */}
-            <div className="header-section d-flex justify-content-start">
-                <button className="btn-action btn-alta btn btn-primary" onClick={handlePost}>
-                    Agregar {menuContent === 'Clientes' ? 'Cliente' : menuContent === 'Catálogo' ? catalogTab : 'Pedido'}
-                </button>
-
-                {menuContent !== 'Pedidos' && (
-                    <div className="form-check ms-3 mb-0 btn-action checkbox-container">
-                        <input
-                            type="checkbox"
-                            id="inactivosCheckbox"
-                            onChange={handleInactivosChange}
-                            checked={checkboxState}
-                            className="form-check-input me-1 mb-0 mt-0"
-                        />
-                        <label htmlFor="inactivosCheckbox" className="btn-action me-1 mb-0 mt-0">
-                            Inactivos
-                        </label>
-                    </div>
-                )}
-            </div>
-
-            {/* Campo de búsqueda y filtros */}
-            <div className="mb-3 d-flex align-items-baseline">
-                <select className="form-select me-2 small-select" value={filtroSeleccionado}
-                    onChange={handleFiltroChange}>
-                    <option value="nombre">Nombre</option>
-                    {menuContent === 'Clientes' && <option value="apellido">Apellido</option>}
-                    {menuContent === 'Clientes' && <option value="documento">Documento</option>}
-                    {/*menuContent === 'Clientes' && <option value="direccion">Domicilio</option>*/}
-                    {menuContent === 'Clientes' && <option value="email">Correo electronico</option>}
-                    {menuContent === 'Catálogo' && catalogTab === 'Productos' &&
-                        <option value="categoria">Categoría</option>}
-                </select>
-                <input
-                    type="text"
-                    className="form-control me-2"
-                    placeholder={`Buscar ${menuContent === 'Clientes' ? 'Cliente' : menuContent === 'Catálogo' ? catalogTab : 'Pedido'}...`}
-                    value={busqueda}
-                    onChange={handleBusquedaChange}
-                />
-                {menuContent === 'Pedidos' && (
-                    <select className="form-select me-2 small-select" value={estadoSeleccionado}
-                        onChange={handleEstadoChangeFiltro}>
-                        <option value="">Todos los estados</option>
-                        <option value="Aceptado">Aceptado</option>
-                        <option value="Rechazado">Rechazado</option>
-                        <option value="EnPreparacion">En Preparación</option>
-                        <option value="Nuevo">Nuevo</option>
-
-                    </select>
-
-                )}
-                {menuContent === 'Pedidos' && (
-                    <div className="d-flex align-items-baseline labelFechas">
-                        <label className="me-2 align-self-center">Desde:</label>
-                        <input
-                            type="date"
-                            className="form-control me-2"
-                            value={fechaDesde}
-                            onChange={onFechaDesdeChange}
-                        />
-                        <label className="me-2 align-self-center labelFechas">Hasta:</label>
-                        <input
-                            type="date"
-                            className="form-control me-2"
-                            value={fechaHasta}
-                            onChange={onFechaHastaChange}
-                        />
-                    </div>
-                )}
-
-
-            </div>
-
-            {/* Lista de filtros activos */}
-            {filtrosActivos.length > 0 && (
-                <div className="d-flex mt-3 titulo-filtro">
-                    <span>Filtros activos:</span>
-                    {filtrosActivos.map((f) => (
-                        <span key={f.filtro} className="badge filtro-activo ms-2">
-                            {f.filtro}: {f.valor}
-                            <button
-                                type="button"
-                                className="btn btn-sm btn-danger ms-2 boton-eliminar-filtro"
-                                onClick={() => handleRemoveFiltro(f)}
-                            >
-                                <FontAwesomeIcon icon={faTimes} />
-                            </button>
+            {menuContent === 'Informes' ? (
+                    
+                    <div>
+                        <span className="fs-3 fw-bold mt-0">
+                            Informes
                         </span>
-                    ))}
-                </div>
+                    </div>
+            ) : (
+                <>
+                    {/* Encabezado */}
+
+                    <div>
+                        <span className="fs-3 fw-bold mt-0">
+                            {menuContent === 'Catálogo' ? catalogTab : menuContent}
+                        </span>
+                    
+                    </div>
+
+
+                    {/* Botones y filtro */}
+                    <div className="header-section d-flex justify-content-start">
+                        <button
+                            className="btn-action btn-alta btn btn-primary"
+                            onClick={handlePost}
+                        >
+                            Agregar {menuContent === 'Clientes' ? 'Cliente' : menuContent === 'Catálogo' ? catalogTab : 'Pedido'}
+                        </button>
+
+                        {menuContent !== 'Pedidos' && (
+                            <div className="form-check ms-3 mb-0 btn-action checkbox-container">
+                                <input
+                                    type="checkbox"
+                                    id="inactivosCheckbox"
+                                    onChange={handleInactivosChange}
+                                    checked={checkboxState}
+                                    className="form-check-input me-1 mb-0 mt-0"
+                                />
+                                <label htmlFor="inactivosCheckbox" className="btn-action me-1 mb-0 mt-0">
+                                    Inactivos
+                                </label>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Campo de búsqueda y filtros */}
+                    <div className="mb-3 d-flex align-items-baseline">
+                        <select
+                            className="form-select me-2 small-select"
+                            value={filtroSeleccionado}
+                            onChange={handleFiltroChange}
+                        >
+                            <option value="nombre">Nombre</option>
+                            {menuContent === 'Clientes' && <option value="apellido">Apellido</option>}
+                            {menuContent === 'Clientes' && <option value="documento">Documento</option>}
+                            {/*menuContent === 'Clientes' && <option value="direccion">Domicilio</option>*/}
+                            {menuContent === 'Clientes' && <option value="email">Correo electronico</option>}
+                            {menuContent === 'Catálogo' &&
+                                catalogTab === 'Productos' && (
+                                    <option value="categoria">Categoría</option>
+                                )}
+                        </select>
+                        <input
+                            type="text"
+                            className="form-control me-2"
+                            placeholder={`Buscar ${menuContent === 'Clientes'
+                                    ? 'Cliente'
+                                    : menuContent === 'Catálogo'
+                                        ? catalogTab
+                                        : 'Pedido'
+                                }...`}
+                            value={busqueda}
+                            onChange={handleBusquedaChange}
+                        />
+                        {menuContent === 'Pedidos' && (
+                            <select
+                                className="form-select me-2 small-select"
+                                value={estadoSeleccionado}
+                                onChange={handleEstadoChangeFiltro}
+                            >
+                                <option value="">Todos los estados</option>
+                                <option value="Aceptado">Aceptado</option>
+                                <option value="Rechazado">Rechazado</option>
+                                <option value="EnPreparacion">En Preparación</option>
+                                <option value="Nuevo">Nuevo</option>
+                            </select>
+                        )}
+                        {menuContent === 'Pedidos' && (
+                            <div className="d-flex align-items-baseline labelFechas">
+                                <label className="me-2 align-self-center">Desde:</label>
+                                <input
+                                    type="date"
+                                    className="form-control me-2"
+                                    value={fechaDesde}
+                                    onChange={onFechaDesdeChange}
+                                />
+                                <label className="me-2 align-self-center labelFechas">Hasta:</label>
+                                <input
+                                    type="date"
+                                    className="form-control me-2"
+                                    value={fechaHasta}
+                                    onChange={onFechaHastaChange}
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Lista de filtros activos */}
+                    {filtrosActivos.length > 0 && (
+                        <div className="d-flex mt-3 titulo-filtro">
+                            <span>Filtros activos:</span>
+                            {filtrosActivos.map((f) => (
+                                <span
+                                    key={f.filtro}
+                                    className="badge filtro-activo ms-2"
+                                >
+                                    {f.filtro}: {f.valor}
+                                    <button
+                                        type="button"
+                                        className="btn btn-sm btn-danger ms-2 boton-eliminar-filtro"
+                                        onClick={() => handleRemoveFiltro(f)}
+                                    >
+                                        <FontAwesomeIcon icon={faTimes} />
+                                    </button>
+                                </span>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Tabla de contenido */}
+                    <div className="table-responsive scrollable-table">
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>{renderTableHeader()}</tr>
+                            </thead>
+                            <tbody>{renderTableRows()}</tbody>
+                        </table>
+                    </div>
+
+                    {/* Popup para actualizaciones*/}
+                    <MassUpdatePopup
+                        isOpen={isPopupOpen}
+                        onClose={closePopup}
+                        onSubmit={handlePopupSubmit}
+                        selectedItems={selectedItems}
+                        tipo={popupTipo}
+                    />
+                </>
             )}
-
-            {/* Tabla de contenido */}
-            <div className="table-responsive scrollable-table">
-                <table className="table table-striped">
-                    <thead>
-                        <tr>{renderTableHeader()}</tr>
-                    </thead>
-                    <tbody>{renderTableRows()}</tbody>
-                </table>
-            </div>
-
-            {/* Popup para actualizaciones*/}
-            <MassUpdatePopup
-                isOpen={isPopupOpen}
-                onClose={closePopup}
-                onSubmit={handlePopupSubmit}
-                selectedItems={selectedItems}
-                tipo={popupTipo}
-            />
         </div>
     );
-};
-
-export default ContenidoVariable;
+}
+    export default ContenidoVariable;

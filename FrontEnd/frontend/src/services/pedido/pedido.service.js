@@ -312,7 +312,7 @@ const getPedidosPorCadaCliente = async (clienteId) => {
             return {
                 id: p.pedido_nro,
                 pedidoId: p.pedido_id,
-                fecha: formatDateToDDMMYYYY(p.pedido_fecha_alta),
+                fecha: p.pedido_fecha_alta,
                 total: p.pedido_total_dinero,
                 // estado: p.estado_pedido,
                 estado: p.estado_pedido_id,

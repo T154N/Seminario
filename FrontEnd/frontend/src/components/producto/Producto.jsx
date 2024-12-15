@@ -115,7 +115,7 @@ export function Producto() {
                     <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
                         <div className="d-flex align-items-start">
                             <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>
-                                <FontAwesomeIcon icon={faArrowLeft} size={"md"}/>
+                                <FontAwesomeIcon icon={faArrowLeft} size={"lg"}/>
                                 <span className="ps-1">Volver al Catálogo</span>
                             </button>
                         </div>

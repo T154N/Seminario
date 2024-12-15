@@ -62,6 +62,55 @@ const getClienteById = async (id) => {
     }
 };
 
+
+const getAllClientesActivos = async () => {
+    try {
+        const response = await axios.get(`${ENDPOINT_NOAUTH}/getclientes`);
+        console.log(response);
+
+        if (response.data.status === 400) {
+            return 400;
+        }
+
+        if (response.data.body) {
+            return response.data.body
+                .filter(c => c.clienteEstadoId === 1) // Filtrar clientes con estadoId === 1
+                .map((c) => ({
+                    id: c.clienteId,
+                    idUsuario: c.clienteUsuarioId, // No se usa en los ejemplos, pero mantenido por consistencia
+                    documento: c.clienteDocumento,
+                    tipoDocumento: c.clienteTipoDocumento,
+                    cuit: c.clienteCuit, // No se usa en los ejemplos, pero mantenido por consistencia
+                    apellido: c.clienteApellido,
+                    nombre: c.clienteNombre,
+                    email: c.clienteEmail,
+                    telefono: c.clienteTelefono,
+                    fechaAlta: c.clienteFechaAlta,
+                    fechaModificacion: c.clienteFechaModificacion,
+                    fechaBaja: c.clienteFechaBaja,
+                    usuarioAlta: c.clienteUsuarioAlta, // Parece no estar en uso
+                    usuarioModificacion: c.clienteUsuarioModificacion, // Parece no estar en uso
+                    usuarioBaja: c.clienteUsuarioBaja, // Parece no estar en uso
+                    observaciones: c.clienteObservaciones,
+                    domicilioId: c.domicilioId,
+                    barrio: c.domicilioBarrio,
+                    codigoPostal: c.domicilioCodigoPostal,
+                    direccion: c.domicilioDireccion,
+                    ubicacion: c.domicilioUbicacion, // Corregido typo de "ubicaion" a "ubicacion"
+                    localidad: c.localidadNombre,
+                    provincia: c.provinciaNombre,
+                    tipoDomicilio: c.tipoDomicilioDescripcion,
+                    pedidos: c.pedidos || [], // Atributo opcional que no aparece en el ejemplo actual
+                    carritos: c.carritos || [], // Atributo opcional que no aparece en el ejemplo actual
+                }));
+        }
+    } catch (error) {
+        console.error("Error fetching all clientes:", error);
+        return { error: error.message };
+    }
+};
+
+
 const getAllClientes = async () => {
     try {
         const response = await axios.get(`${ENDPOINT_NOAUTH}/getclientes`);
@@ -341,7 +390,8 @@ const clienteService = {
     createClienteConUsuarioYDomicilios,
     darDeBajaCliente,
     modificarCliente,
-    modificarDatosCliente
+    modificarDatosCliente,
+    getAllClientesActivos
 
 };
 

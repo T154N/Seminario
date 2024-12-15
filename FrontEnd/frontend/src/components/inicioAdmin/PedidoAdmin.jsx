@@ -29,7 +29,7 @@ export function PedidoAdmin({ onSave, onCancel }) {
 
     useEffect(() => {
         const fetchClientes = async () => {
-            const clientes = await clienteService.getAllClientes();
+            const clientes = await clienteService.getAllClientesActivos();
             setClientes(clientes);
             setIsLoading(false);
         };

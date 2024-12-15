@@ -475,7 +475,7 @@ export function InicioAdmin() {
                                 menuContent === 'Pedidos' ? (
                                     <PedidoAdmin onSave={handleSave} onCancel={handleCancel} />
                                 ) : menuContent === 'Clientes' ? (
-                                    <ClienteAlta onSave={handleSave} onCancel={handleCancel} />
+                                    <ClienteAlta onSave={handleSave} onCancel={handleCancel} clientesActivos={clientesActivos} />
                                 ) :
                                     catalogTab === 'Productos' ? (
                                     <AgregarProducto onSave={handleSave} onCancel={handleCancel} />
@@ -488,6 +488,7 @@ export function InicioAdmin() {
                                         registro={registroSeleccionado}
                                         onSave={handleSave}
                                         onCancel={handleCancel}
+                                        clientesActivos={clientesActivos}
                                     />
                                 ) : catalogTab === 'Productos' ? (
                                     <ModificarProducto

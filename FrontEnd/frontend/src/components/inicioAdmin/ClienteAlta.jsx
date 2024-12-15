@@ -10,7 +10,7 @@ import './clienteAlta.css';
 import clienteService from "../../services/cliente/cliente.service";
 import ConfirmModal from "./ConfirmModal";
 
-const ClienteAlta = ({ onSave, onCancel }) => {
+const ClienteAlta = ({ onSave, onCancel, clientesActivos = []}) => {
     const [formData, setFormData] = useState({
         cliente_documento: '',
         cliente_tipo_documento: 'DNI',
@@ -28,7 +28,7 @@ const ClienteAlta = ({ onSave, onCancel }) => {
         domicilioCodigoPostal: '5000',
         domicilioEsPrincipal: 'Y',
         usuario_contrasena: "CRv7ZHhHp1ZYlZNDycNF9Q==", // Constante
-        usuario_rol_id: 1, // Constante
+        usuario_rol_id: 3, // Constante
         usuario_observaciones: 'USUARIO',
         usuario_alta: "CLIENTE", // Constante
     });
@@ -46,8 +46,29 @@ const ClienteAlta = ({ onSave, onCancel }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+    
+        // Validación de duplicados
+        const emailDuplicado = clientesActivos.some(
+            (cliente) => cliente.email === formData.cliente_email
+        );
+        const documentoDuplicado = clientesActivos.some(
+            (cliente) => cliente.documento === formData.cliente_documento
+        );
+    
+        if (emailDuplicado) {
+            alert("Ya existe un cliente registrado con este correo electrónico.");
+            return;
+        }
+    
+        if (documentoDuplicado) {
+            alert("Ya existe un cliente registrado con este número de documento.");
+            return;
+        }
+    
+        // Mostrar el modal si no hay duplicados
         setShowModal(true);
     };
+    
 
     const handleConfirm = async () => {
         setIsLoading(true);
@@ -115,7 +136,6 @@ const ClienteAlta = ({ onSave, onCancel }) => {
                             id="cliente_documento"
                             value={formData.cliente_documento}
                             onChange={handleChange}
-                            required
                         />
                     </div>
                     <div className="form-group col-md-4">
@@ -127,7 +147,6 @@ const ClienteAlta = ({ onSave, onCancel }) => {
                                 id="cliente_tipo_documento"
                                 value={formData.cliente_tipo_documento}
                                 onChange={handleChange}
-                                required
                             >
                                 <option value="DNI">DNI</option>
                                 <option value="Pasaporte">Pasaporte</option>
@@ -171,33 +190,13 @@ const ClienteAlta = ({ onSave, onCancel }) => {
                             id="cliente_email"
                             value={formData.cliente_email}
                             onChange={handleChange}
+                            required
                         />
                     </div>
                 </div>
 
-                {/* Dirección */}
+                {/* Tipo de Domicilio y Dirección */}
                 <div className="form-group mb-3">
-                    <label htmlFor="domicilioDireccion">Dirección</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="domicilioDireccion"
-                        id="domicilioDireccion"
-                        value={formData.domicilioDireccion}
-                        onChange={handleChange}
-                    />
-                    <label htmlFor="domicilioBarrio">Barrio</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="domicilioBarrio"
-                        id="domicilioBarrio"
-                        value={formData.domicilioBarrio}
-                        onChange={handleChange}
-                    />
-
-
-
                     <label htmlFor="domicilioTipoDomicilioId">Tipo de Domicilio</label>
                     <select
                         className="form-control"
@@ -211,6 +210,44 @@ const ClienteAlta = ({ onSave, onCancel }) => {
                         <option value="2">LOCAL COMERCIAL</option>
                         <option value="3">DEPÓSITO</option>
                     </select>
+                    <label htmlFor="domicilioDireccion" className="mt-3">Dirección</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="domicilioDireccion"
+                        id="domicilioDireccion"
+                        value={formData.domicilioDireccion}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+
+                {/* Código Postal y Barrio */}
+                <div className="row mb-3">
+                    <div className="form-group col-md-6">
+                        <label htmlFor="domicilioCodigoPostal">Código Postal</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="domicilioCodigoPostal"
+                            id="domicilioCodigoPostal"
+                            value={formData.domicilioCodigoPostal}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="domicilioBarrio">Barrio</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="domicilioBarrio"
+                            id="domicilioBarrio"
+                            value={formData.domicilioBarrio}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
                 </div>
 
                 {/* Observaciones */}

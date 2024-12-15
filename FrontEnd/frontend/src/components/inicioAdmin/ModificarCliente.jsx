@@ -6,7 +6,7 @@ import './inicioAdmin.css';
 import './modificarCliente.css';
 import modificarCliente from '../../services/cliente/cliente.service';
 
-const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
+const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onCancel }) => {
     const [formData, setFormData] = useState({
         cliente_documento: "",
         cliente_tipo_documento: "DNI",
@@ -36,10 +36,10 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
                 cliente_nombre: registro.nombre || "",
                 cliente_email: registro.email || "",
                 cliente_telefono: registro.telefono || "",
-                cliente_observaciones: registro.observaciones || "Observaciones varias",
+                cliente_observaciones: registro.observaciones,
                 domicilioTipoDomicilioId: registro.tipoDomicilio === "CASA" ? "1" : registro.tipoDomicilio === "LOCAL COMERCIAL" ? "2" : "3",
                 domicilioDireccion: registro.direccion || "",
-                domicilioBarrio: registro.barrio || "Barrio cenrtrico",
+                domicilioBarrio: registro.barrio || "Barrio céntrico",
                 domicilioUbicacion: registro.ubicacion || "",
                 domicilioCodigoPostal: registro.codigoPostal || "0",
                 estado: registro.estado ? registro.estado.toString() : "1",
@@ -60,6 +60,29 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Validar duplicados, excluyendo el registro actual
+        const emailDuplicado = clientesActivos.some(
+            (cliente) =>
+                cliente.email === formData.cliente_email &&
+                cliente.idUsuario !== registro.idUsuario
+        );
+
+        const documentoDuplicado = clientesActivos.some(
+            (cliente) =>
+                cliente.documento === formData.cliente_documento &&
+                cliente.idUsuario !== registro.idUsuario
+        );
+
+        if (emailDuplicado) {
+            alert("Ya existe un cliente registrado con este correo electrónico.");
+            return;
+        }
+
+        if (documentoDuplicado) {
+            alert("Ya existe un cliente registrado con este número de documento.");
+            return;
+        }
+
         // Preparar el objeto cliente con los datos requeridos
         const cliente = {
             idUsuario: registro.idUsuario,
@@ -78,22 +101,22 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
             codigoPostal: formData.domicilioCodigoPostal,
             domicilioUbicacion: formData.domicilioUbicacion,
             domicilioLocalidadId: 545,
-            domicilioEsPrincipal: 'Y',
+            domicilioEsPrincipal: "Y",
             usuario_contrasena: "",
             usuario_rol_id: 1,
             usuario_observaciones: " ",
             usuario_alta: "Admin",
         };
-        console.log(cliente);
-        onSave(cliente);
 
+        // Guardar cambios
+        onSave(cliente);
     };
 
     if (isLoading) {
         return <div>Loading...</div>;
     }
 
-    const renderField = ({ name, title, colSize, type, options }) => {
+    const renderField = ({ name, title, colSize, type, options,required = true }) => {
         return (
             <div className={`col-md-${colSize}`} key={name}>
                 <label className="form-label">{title}</label>
@@ -103,7 +126,7 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
                         name={name}
                         value={formData[name]}
                         onChange={handleChange}
-                        required
+                        {...(required ? { required: true } : {})}
                     >
                         {options.map((option, index) => (
                             <option value={option.value} key={index}>
@@ -119,12 +142,13 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
                         value={formData[name]}
                         onChange={handleChange}
                         placeholder={registro ? registro[name] || title : title} // Placeholder dinámico
-                        required
+                        {...(required ? { required: true } : {})}
                     />
                 )}
             </div>
         );
     };
+
     const fields = [
         {
             name: "cliente_documento",
@@ -141,7 +165,8 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
                 { value: "PASAPORTE", label: "Pasaporte" },
                 { value: "CEDULA", label: "Cédula" },
             ],
-        },        {
+        },
+        {
             name: "cliente_apellido",
             title: "Apellido",
             placeholder: "Apellido del cliente",
@@ -159,6 +184,7 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
             title: "CUIT",
             placeholder: "CUIT del cliente",
             colSize: 6,
+            required: false
         },
 
 
@@ -173,6 +199,7 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
             title: "Teléfono",
             placeholder: "Teléfono del cliente",
             colSize: 6,
+            required: false
         },
         {
             name: "domicilioTipoDomicilioId",
@@ -216,6 +243,7 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
             title: "Observaciones",
             placeholder: "Observaciones del cliente",
             colSize: 12,
+            required: false
         },
     ];
 
@@ -233,7 +261,6 @@ const ModificarContenidoCliente = ({ registro, onSave, onCancel }) => {
                     <button type="submit" className="btn btn-success">
                         <FontAwesomeIcon icon={faSave} /> Guardar
                     </button>
-
                 </div>
             </form>
         </div>

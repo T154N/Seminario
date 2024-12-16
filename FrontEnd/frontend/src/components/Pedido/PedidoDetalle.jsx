@@ -35,9 +35,10 @@ export function PedidoDetalle() {
     };
 
     const handlePrint = async () => {
-        if (pedido && pedido.id) {
+        console.log("Pedido a imprimir: ", pedido)
+        if (pedido) { //  && pedido.pedidoId
             try {
-                const response = await impresionPDFService.imprimirPDF(pedido.id);
+                const response = await impresionPDFService.imprimirPDF(pedido.pedidoId);
                 const blob = response.data;
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -57,6 +58,8 @@ export function PedidoDetalle() {
             } catch (err) {
                 console.error("Error al imprimir el PDF:", err);
             }
+        } else {
+            console.log("No se pudo imprimir el PDF. No se encontró información sobre el pedido.");
         }
     };
 

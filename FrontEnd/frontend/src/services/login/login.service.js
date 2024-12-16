@@ -24,7 +24,9 @@ const iniciarSesion = async (email, password, agregarProducto) => {
                 localStorage.setItem('email', response.data.body.email);
                 localStorage.setItem('rol', response.data.body.rol);
                 const datosCliente = await clienteService.getDatosClientePedido();
+                console.log("Datos del cliente: ", datosCliente);
                 localStorage.setItem('clienteId', datosCliente.clienteId);
+                localStorage.setItem('domicilioId', datosCliente.domicilioId);
                 localStorage.setItem('nombre', datosCliente.nombre);
                 localStorage.setItem('apellido', datosCliente.apellido);
                 await carritoService.cargarCarrito(agregarProducto);

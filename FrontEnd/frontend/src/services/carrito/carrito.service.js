@@ -136,7 +136,7 @@ const addCarrito = async (carritoId, cantidad, usuarioTransaccion,
 
 const removeItemFromCarrito = async (carritoId, productoId, usuarioTransaccion) => {
     try {
-        const response = await axios.put(`${ENDPOINT_CARRITO_URL}/remove/item`, {}, {
+        const response = await axios.put(`${ENDPOINT_CARRITO_URL}/carrito/remove/item`, {}, {
             params: {
                 carritoId: carritoId,
                 productoId: productoId,

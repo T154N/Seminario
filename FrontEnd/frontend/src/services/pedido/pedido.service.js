@@ -31,9 +31,11 @@ const getPedidoById = async (id) => {
 
 const crearPedido = async (carritoId, domicilioId, medioPagoId, usuarioTransaccion) => {
     try {
-        const response = await axios.post(`${ENDPOINT_PEDIDO_URL}/pedidos/generate?carritoID=${carritoId}&domicilioId=1&medioPagoId=${medioPagoId}&usuarioTransaccion=${usuarioTransaccion}`);
+        const response = await axios.post(`${ENDPOINT_PEDIDO_URL}/pedidos/generate?carritoID=${carritoId}&domicilioId=${domicilioId}&medioPagoId=${medioPagoId}&usuarioTransaccion=${usuarioTransaccion}`);
+        console.log(response)
         return {
-            pedidoId: response.data.body
+            pedidoId: response.data.body.id,
+            nroPedido: response.data.body.nroPedido
         }
     } catch (err) {
         return 400;
@@ -48,7 +50,8 @@ const getAllPedidos = async () => {
         console.log(response);
 
         const pedidos = response.data.body.map((p) => ({
-            id: p.pedido_id,
+            id: p.pedido_nro, // El id es el numero de pedido, que es distinto al id y NO se debe usar como id unico
+            pedidoId: p.pedido_id, // Para compatibilidad de PDF
             numeroPedido: p.pedido_nro,
             nombre: `${p.nombre_cliente} ${p.apellido_cliente}`,
             email: p.email_cliente,
@@ -58,26 +61,9 @@ const getAllPedidos = async () => {
             total: p.pedido_total_dinero,
             estado: p.estado_pedido_id,
             estadoRegistro: p.estado_pedido_registro,
-
-            productos: p.productos || [],//verificar si se puede hacer un map de productos
-            observaciones: p.observaciones || "Sin observaciones",
-
-            //productos: [
-            //    { id: 101, nombre: 'Pila', cantidad: 2, precioUnitario: 10000 },
-            //    { id: 102, nombre: 'Producto B', cantidad: 1, precioUnitario: 30140 },
-            //    { id: 103, nombre: 'Producto C', cantidad: 3, precioUnitario: 15000 },
-            //    { id: 104, nombre: 'Producto D', cantidad: 4, precioUnitario: 20000 },
-            //    { id: 105, nombre: 'Producto E', cantidad: 5, precioUnitario: 25000 },
-            //    { id: 106, nombre: 'Producto F', cantidad: 6, precioUnitario: 30000 },
-            //    { id: 107, nombre: 'Producto G', cantidad: 7, precioUnitario: 35000 },
-            //    { id: 108, nombre: 'Producto H', cantidad: 8, precioUnitario: 40000 },
-            //    { id: 109, nombre: 'Producto I', cantidad: 9, precioUnitario: 45000 },
-            //    { id: 110, nombre: 'Producto J', cantidad: 10, precioUnitario: 50000 },
-            //    { id: 111, nombre: 'Producto K', cantidad: 11, precioUnitario: 55000 }]
-
+            productos: p.productos || [], // verificar si se puede hacer un map de productos
+            observaciones: p.observaciones || "Sin observaciones"
         }));
-
-
 
         console.log("Listado de todos los pedidos:", pedidos);
 
@@ -91,10 +77,8 @@ const getAllPedidos = async () => {
 
 const getPedidoDetalles = async (pedidoID) => {
     try {
-        const response = await axios.get(`${ENDPOINT_PEDIDO_URL}/pedidos/detalle`, {
-            params: { pedidoID }
-        });
-
+        const response = await axios.get(`${ENDPOINT_PEDIDO_URL}/pedidos/detalle?pedidoID=${pedidoID}`);
+        console.log("Detalles del pedido:", response);
         // Estructura de los detalles de pedido
         const detalles = response.data.body.map(detalle => ({
             pedidoID: detalle.pedidoID,
@@ -310,8 +294,8 @@ const getPedidosPorCadaCliente = async (clienteId) => {
         const pedidos = await Promise.all(response.data.body.map(async (p) => {
             const productos = await getDetallePedido(p.pedido_id);
             return {
-                id: p.pedido_nro,
-                pedidoId: p.pedido_id,
+                id: p.pedido_nro, // El id es el numero de pedido, que es distinto al id y NO se debe usar como id unico
+                pedidoId: p.pedido_id, // El pedidoId es el id unico del pedido
                 fecha: p.pedido_fecha_alta,
                 total: p.pedido_total_dinero,
                 // estado: p.estado_pedido,

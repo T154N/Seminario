@@ -43,7 +43,7 @@ export const CarritoProvider = ({ children }) => {
 
     const eliminarDelCarrito = async (id) => {
         if (localStorage.getItem('carritoId')) {
-            await carritoService.removeItemFromCarrito(localStorage.getItem('carritoId'), id, localStorage.getItem('email'));
+            await carritoService.removeItemFromCarrito(localStorage.getItem('carritoId'), id, localStorage.getItem('nombre') + localStorage.getItem('apellido'));
         }
         setProductos((prevProductos) => prevProductos.filter(producto => producto.id !== id));
     };

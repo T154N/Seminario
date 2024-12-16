@@ -230,7 +230,9 @@ export function InicioAdmin() {
                     }
                     return (!desde || fechaPedido >= desde) && (!hasta || fechaPedido <= hasta);
                 })
-                .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+                // .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+                .sort((a, b) => b.id - a.id);
+
             }
         if (menuContent === 'Clientes') return filteredData(clientesActivos);
         return [];
@@ -302,7 +304,9 @@ export function InicioAdmin() {
     const mostrarDetalles = async (pedido) => {
         try {
             // Obtener los detalles del pedido
-            const detalles = await pedidoService.getPedidoDetalles(pedido.id);
+            const detalles = await pedidoService.getPedidoDetalles(pedido.pedidoId);
+            console.log(detalles)
+            console.log("pedido: ", pedido)
 
             // Añadir los detalles como un array en el pedido
             const pedidoConDetalles = {

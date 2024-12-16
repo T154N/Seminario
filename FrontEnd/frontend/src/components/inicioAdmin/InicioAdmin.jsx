@@ -401,12 +401,12 @@ export function InicioAdmin() {
             recargarProductos();
         } else if (menuContent === 'Catálogo' && catalogTab === 'Categorias') {
             recargarCategorias();
-            //} else if (menuContent === 'Pedidos') {
-            //    recargarPedidos();
-            //} else if (menuContent === 'Clientes') {
-            //    recargarClientes();
-            //}
+        } else if (menuContent === 'Pedidos') {
+               recargarPedidos();
+        } else if (menuContent === 'Clientes') {
+             recargarClientes();
         }
+
     };
 
     // Manejo de eliminación

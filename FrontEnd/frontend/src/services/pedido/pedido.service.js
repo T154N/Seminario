@@ -294,9 +294,10 @@ const getPedidosPorCadaCliente = async (clienteId) => {
         const pedidos = await Promise.all(response.data.body.map(async (p) => {
             const productos = await getDetallePedido(p.pedido_id);
             return {
-                id: p.pedido_nro, // El id es el numero de pedido, que es distinto al id y NO se debe usar como id unico
+                id: p.pedido_nro, // El id es el número de pedido, que es distinto al id y NO se debe usar como id unico
                 pedidoId: p.pedido_id, // El pedidoId es el id unico del pedido
                 fecha: p.pedido_fecha_alta,
+                fechaEstimada: p.pedido_fecha_estimada_entrega,
                 total: p.pedido_total_dinero,
                 // estado: p.estado_pedido,
                 estado: p.estado_pedido_id,

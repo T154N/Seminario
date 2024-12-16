@@ -131,6 +131,7 @@ const getAllClientes = async () => {
                 nombre: c.clienteNombre,
                 email: c.clienteEmail,
                 telefono: c.clienteTelefono,
+                rolId: c.rolid,
                 estado: c.clienteEstadoId,
                 fechaAlta: c.clienteFechaAlta,
                 fechaModificacion: c.clienteFechaModificacion,
@@ -248,7 +249,7 @@ const darDeBajaCliente = async (cliente, usuarioAlta) => {
             domicilioCodigoPostal: cliente.codigoPostal,
             domicilioEsPrincipal: 'Y',  
             usuario_contrasena: "", 
-            usuario_rol_id: 1,//modificarrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr 
+            usuario_rol_id: cliente.rolId,
             usuario_observaciones: " ", // No proporcionado en cliente, ajustar si es necesario
             usuario_alta: usuarioAlta,
         };

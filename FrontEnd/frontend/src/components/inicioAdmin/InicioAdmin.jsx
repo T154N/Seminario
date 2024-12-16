@@ -111,7 +111,7 @@ export function InicioAdmin() {
     useEffect(() => {
 
         const fetchClientes = async () => {
-            const clientes = await clienteService.getClientesConRolId();
+            const clientes = await clienteService.getAllClientes();
             const clientesFiltrados = checkboxState
                 ? clientes.filter(cliente => cliente.estado === 2)
                 : clientes.filter(cliente => cliente.estado === 1);
@@ -165,7 +165,7 @@ export function InicioAdmin() {
     };
 
     const recargarClientes = async () => {
-        const clientes = await clienteService.getClientesConRolId();
+        const clientes = await clienteService.getAllClientes();
         const clientesFiltrados = checkboxState
             ? clientes.filter(cliente => cliente.estado === 2)
             : clientes.filter(cliente => cliente.estado === 1);
@@ -306,11 +306,7 @@ export function InicioAdmin() {
         const valor = e.target.value;
         setRolSeleccionado(valor);
     
-        const nuevosFiltros = filtrosActivos.filter(f => f.filtro !== 'rol');
-        if (valor !== '') {
-            nuevosFiltros.push({ filtro: 'rol', valor: valor });
-        }
-        setFiltrosActivos(nuevosFiltros);
+    
     };
 
 

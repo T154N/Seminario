@@ -205,6 +205,14 @@ export function PedidoDetalle() {
                             </table>
                         </div>
                     </div>
+                    {(fromOpcionesPago || fromPedidosUsuario) &&
+                        <div>
+                            <span className="fst-italic" style={{ color: "darkred" }}>
+                                <span className="fw-bold me-1">*</span>
+                                Para modificación o cancelación de un pedido, deberá comunicarse al WhatsApp: +54 9 351 366-2196.
+                            </span>
+                        </div>
+                    }
                 </>
             ) : (
                 <p>No se encontró información sobre el pedido.</p>

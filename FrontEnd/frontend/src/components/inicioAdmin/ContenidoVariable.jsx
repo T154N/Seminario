@@ -224,7 +224,7 @@ const ContenidoVariable = ({
                             <span>
                                 {item.estado === 13 ? "Aceptado" : item.estado === 9 ? "Rechazado" :
                                     item.estado === 7 ? "En Preparación" : item.estado === 12 ? "Nuevo" :
-                                        item.estado === 10 ? "Preparado" : item.estado === 3 ? "Pediente de Pago" :
+                                        item.estado === 10 ? "Preparado" : item.estado === 3 ? "Pendiente de Pago" :
                                             item.estado === 6 ? "Entregado" :
                                                 "Estado no definido"}
                                 <span className="estado-indicador"

@@ -20,6 +20,54 @@ export const obtenerAniosPedidos = async () => {
     }
 };
 
+
+const getTotalDXD = async () => {
+    try {
+        const response = await axios.get(`${ENDPOINT_INFORMES_URL}/informes/getTotalDxD`);
+        if (response.status === 200) {
+            return response.data.body;
+        }
+    } catch (error) {
+        console.error('Error al obtener el total DXD:', error);
+        throw error;
+    }
+};
+const getTotalDXS = async () => {
+    try {
+        const response = await axios.get(`${ENDPOINT_INFORMES_URL}/informes/getTotalDx5`);
+        if (response.status === 200) {
+            return response.data.body;
+        }
+    } catch (error) {
+        console.error('Error al obtener el total DXD:', error);
+        throw error;
+    }
+};
+const getTotalDXM = async () => {
+    try {
+        const response = await axios.get(`${ENDPOINT_INFORMES_URL}/informes/getTotalDxM`);
+        if (response.status === 200) {
+            return response.data.body;
+        }
+    } catch (error) {
+        console.error('Error al obtener el total DXD:', error);
+        throw error;
+    }
+};
+const getTotalDXA = async () => {
+    try {
+        const response = await axios.get(`${ENDPOINT_INFORMES_URL}/informes/getTotalDxA`);
+        if (response.status === 200) {
+            return response.data.body;
+        }
+    } catch (error) {
+        console.error('Error al obtener el total DXD:', error);
+        throw error;
+    }
+};
+
+
+
 const getProductosPedidos = async (fechaInicio, fechaFin) => {
     try {
         const response = await axios.get(`${ENDPOINT_INFORMES_URL}/informes/productos/pedidos`, {
@@ -82,12 +130,20 @@ const getTotalPedidosPorMes = async (anio) => {
     }
 };
 
+
+
+
+
 const informesService = {
     getProductosPedidos,
     getProductosClientes,
     getTotalPedidosPorFecha,
     getClientesActivos,
     getTotalPedidosPorMes,
+    getTotalDXM,
+    getTotalDXA,
+    getTotalDXS,
+    getTotalDXD,
 };
 
 export default informesService;

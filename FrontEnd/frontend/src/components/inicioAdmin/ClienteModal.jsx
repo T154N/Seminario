@@ -1,6 +1,21 @@
 import React from "react";
 import "./clienteModal.css";
 
+function getClienteRol(rolId) {
+    switch (rolId) {
+        case 1:
+            return 'SUPERUSER';
+        case 2:
+            return 'ADMIN';
+        case 3:
+            return 'CLIENTE';
+        case 4:
+            return 'EMPLEADO';
+        default:
+            return 'DESCONOCIDO';
+    }
+}
+
 const ClienteModal = ({ clientData, onClose }) => {
     if (!clientData) return null;
 
@@ -12,6 +27,7 @@ const ClienteModal = ({ clientData, onClose }) => {
         { label: "Apellido", value: clientData.apellido },
         { label: "Nombre", value: clientData.nombre },
         { label: "Email", value: clientData.email },
+        
     ];
 
     const secondHalfAttributes = [
@@ -21,12 +37,13 @@ const ClienteModal = ({ clientData, onClose }) => {
         { label: "Barrio", value: clientData.barrio },
         { label: "Código Postal", value: clientData.codigoPostal },
         { label: "Estado", value: clientData.estado === 1 ? "Activo" : clientData.estado === 2 ? "Inactivo" : clientData.estado },
-    ];
+        { label: "Rol", value: getClienteRol(clientData.rolId) },
+];
 
     return (
         <div className="cliente-modal-backdrop">
             <div className="cliente-modal-content">
-                <h2>Detalles del Cliente</h2>
+                <h2>Detalles del Usuario</h2>
                 <div className="cliente-modal-tables">
                     {/* Primera tabla */}
                     <table className="cliente-modal-table">

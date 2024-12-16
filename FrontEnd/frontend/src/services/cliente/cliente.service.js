@@ -248,7 +248,7 @@ const darDeBajaCliente = async (cliente, usuarioAlta) => {
             domicilioCodigoPostal: cliente.codigoPostal,
             domicilioEsPrincipal: 'Y',  
             usuario_contrasena: "", 
-            usuario_rol_id: 1, 
+            usuario_rol_id: 1,//modificarrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr 
             usuario_observaciones: " ", // No proporcionado en cliente, ajustar si es necesario
             usuario_alta: usuarioAlta,
         };
@@ -324,7 +324,7 @@ const modificarCliente = async (cliente, usuarioAlta) => {
             domicilioCodigoPostal: cliente.codigoPostal,
             domicilioEsPrincipal: 'Y',  
             usuario_contrasena: "", 
-            usuario_rol_id: 1, 
+            usuario_rol_id: cliente.rolId, 
             usuario_observaciones: " ", 
             usuario_alta: usuarioAlta,
         };
@@ -396,6 +396,55 @@ const modificarDatosCliente = async (usuarioId, clienteDocumento, clienteNombre,
     }
 };
 
+const getClientesConRolId = async () => {
+    try {
+        // Obtener usuarios y clientes en paralelo
+        const [usuarios, clientes] = await Promise.all([getAllUsuarios(), getAllClientes()]);
+
+        // Crear un diccionario de usuarios por su id para buscar rápidamente
+        const usuariosMap = new Map(usuarios.map((u) => [u.id, u.rol?.id || null]));
+
+        // Mapear clientes para agregar el rolId
+        const clientesConRolId = clientes.map((cliente) => ({
+            ...cliente, // Mantiene todos los atributos originales
+            rolId: usuariosMap.get(cliente.idUsuario) || null, // Agrega solo el id del rol
+        }));
+
+        return clientesConRolId;
+    } catch (error) {
+        console.error("Error al fusionar clientes con el rolId:", error);
+        return [];
+    }
+};
+
+const getAllUsuarios = async () => {
+    try {
+        const response = await axios.get(`${ENDPOINT_NOAUTH}/usuarios`);
+        
+        // Mapea solo las propiedades que están presentes en la respuesta del backend
+        return response.data.body.map((u) => {
+            return {
+                id: u.usuario_id,
+                authorities: u.authorities.map((auth) => auth.authority), // Extrae las authorities
+                rol: {
+                    id: u.rol?.rol_id || null,
+                    nombre: u.rol?.rolNombre || null,
+                    estadoId: u.rol?.rolEstadoId || null,
+                    observaciones: u.rol?.rolObservaciones || null,
+                    fechaAlta: u.rol?.rolFechaAlta || null,
+                    fechaModificacion: u.rol?.rolFechaModificacion || null,
+                    fechaBaja: u.rol?.rolFechaBaja || null,
+                    usuarioAlta: u.rol?.rolUsuarioAlta || null,
+                    usuarioModificacion: u.rol?.rolUsuarioModificacion || null,
+                    usuarioBaja: u.rol?.rolUsuarioBaja || null,
+                }
+            };
+        });
+    } catch (error) {
+        console.error('Error al obtener usuarios:', error);
+        return [];
+    }
+};
 const clienteService = {
     getAllClientes,
     getClienteById,
@@ -405,7 +454,8 @@ const clienteService = {
     darDeBajaCliente,
     modificarCliente,
     modificarDatosCliente,
-    getAllClientesActivos
+    getAllClientesActivos,
+    getClientesConRolId,
 
 };
 

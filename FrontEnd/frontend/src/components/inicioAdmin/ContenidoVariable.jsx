@@ -11,6 +11,7 @@ const ContenidoVariable = ({
     menuContent,
     catalogTab,
     estadoSeleccionado,
+    rolSeleccionado,
     filtrosActivos,
     handleRemoveFiltro,
     filtroSeleccionado,
@@ -19,6 +20,7 @@ const ContenidoVariable = ({
     handleBusquedaChange,
     dataToDisplay,
     getIndicatorColor,
+    getClienteRol,
     handleEditClick,
     handleInactivosChange,
     checkboxState,
@@ -29,7 +31,8 @@ const ContenidoVariable = ({
     mostrarDetalles,
     handleFechaDesdeChange,
     handleFechaHastaChange,
-    handleEstadoChangeFiltro
+    handleEstadoChangeFiltro,
+    handleRolChangeFiltro
 }) => {
     // Estados locales para controlar el popup y los elementos seleccionados
     const [showModal, setShowModal] = useState(false);
@@ -97,6 +100,7 @@ const ContenidoVariable = ({
                     <th>Nombre</th>
                     <th>Documento</th>
                     <th>Correo electronico</th>
+                    <th>Rol</th>
                     <th>Estado</th>
                     <th>Acción</th>
                 </>
@@ -151,6 +155,7 @@ const ContenidoVariable = ({
                         <td>{item.nombre}, {item.apellido}</td>
                         <td>{item.documento}</td>
                         <td>{item.email}</td>
+                        <td>{getClienteRol(item.rolId)}</td>
                         <td>
                             <span>
                                 {item.estado === 1 ? 'Activo' : 'Inactivo'}
@@ -332,7 +337,7 @@ const ContenidoVariable = ({
                         <button
                             className="btn-action-view btn btn-sm"
                             onClick={() => handleViewClick(item)}
-                            title="Visualizar datos del cliente"
+                            title="Visualizar datos del Usuario"
                         >
                             <FontAwesomeIcon icon={faEye} />
                         </button>
@@ -352,21 +357,21 @@ const ContenidoVariable = ({
     return (
         <div className="contenido-variable">
             {menuContent === 'Informes' ? (
-                    
-                    <div>
-                        <span className="fs-3 fw-bold mt-0">
-                            Informes
-                        </span>
-                    </div>
+
+                <div>
+                    <span className="fs-3 fw-bold mt-0">
+                        Informes
+                    </span>
+                </div>
             ) : (
                 <>
                     {/* Encabezado */}
 
                     <div>
                         <span className="fs-3 fw-bold mt-0">
-                            {menuContent === 'Catálogo' ? catalogTab : menuContent}
+                            {menuContent === 'Catálogo' ? catalogTab : menuContent==='Clientes' ? 'Usuarios' : menuContent}
                         </span>
-                    
+
                     </div>
 
 
@@ -376,7 +381,7 @@ const ContenidoVariable = ({
                             className="btn-action btn-alta btn btn-primary"
                             onClick={handlePost}
                         >
-                            Agregar {menuContent === 'Clientes' ? 'Cliente' : menuContent === 'Catálogo' ? catalogTab : 'Pedido'}
+                            Agregar {menuContent === 'Clientes' ? 'Usuario' : menuContent === 'Catálogo' ? catalogTab : 'Pedido'}
                         </button>
 
                         {menuContent !== 'Pedidos' && (
@@ -416,10 +421,10 @@ const ContenidoVariable = ({
                             type="text"
                             className="form-control me-2"
                             placeholder={`Buscar ${menuContent === 'Clientes'
-                                    ? 'Cliente'
-                                    : menuContent === 'Catálogo'
-                                        ? catalogTab
-                                        : 'Pedido'
+                                ? 'Usuario'
+                                : menuContent === 'Catálogo'
+                                    ? catalogTab
+                                    : 'Pedido'
                                 }...`}
                             value={busqueda}
                             onChange={handleBusquedaChange}
@@ -435,6 +440,19 @@ const ContenidoVariable = ({
                                 <option value="Rechazado">Rechazado</option>
                                 <option value="EnPreparacion">En Preparación</option>
                                 <option value="Nuevo">Nuevo</option>
+                            </select>
+                        )}
+                            {menuContent === 'Clientes' && (
+                            <select
+                                className="form-select me-2 small-select"
+                                value={rolSeleccionado}
+                                onChange={handleRolChangeFiltro}
+                            >
+                                <option value="">Todos los roles</option>
+                                <option value="1">SUPERUSER</option>
+                                <option value="2">ADMIN</option>
+                                <option value="3">CLIENTE</option>
+                                <option value="4">EMPLEADO</option>
                             </select>
                         )}
                         {menuContent === 'Pedidos' && (
@@ -504,4 +522,4 @@ const ContenidoVariable = ({
         </div>
     );
 }
-    export default ContenidoVariable;
+export default ContenidoVariable;

@@ -277,7 +277,7 @@ const ClienteAlta = ({ onSave, onCancel, clientesActivos = [] }) => {
 
                 {/* Código Postal y Barrio */}
                 <div className="row mb-3">
-                    <div className="form-group col-md-6">
+                    <div className="form-group col-md-3">
                         <label htmlFor="domicilioCodigoPostal">Código Postal</label>
                         <input
                             type="text"
@@ -301,6 +301,24 @@ const ClienteAlta = ({ onSave, onCancel, clientesActivos = [] }) => {
                             required
                         />
                     </div>
+
+                                    {/* Rol de Usuario */}
+                <div className="form-group col-md-3">
+                    <label htmlFor="usuario_rol_id">Rol</label>
+                    <select
+                        className="form-control"
+                        name="usuario_rol_id"
+                        id="usuario_rol_id"
+                        value={formData.usuario_rol_id}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="1">SUPERUSER</option>
+                        <option value="2">ADMIN</option>
+                        <option value="3">CLIENTE</option>
+                        <option value="4">EMPLEADO</option>
+                    </select>
+                </div>
                 </div>
 
                 {/* Observaciones */}

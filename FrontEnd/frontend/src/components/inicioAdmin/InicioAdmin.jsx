@@ -16,6 +16,8 @@ import ConfirmModal from './ConfirmModal';
 import ClienteAlta from './ClienteAlta'
 import ModificarCliente from './ModificarCliente';
 import {UserContext} from "../login/UserContext";
+import usuariosService from '../../services/usuarios/usuario.service';
+import { set } from 'react-hook-form';
 
 
 export function InicioAdmin() {
@@ -36,12 +38,14 @@ export function InicioAdmin() {
     const [estadoSeleccionado, setEstadoSeleccionado] = useState('');
     const [fechaDesde, setFechaDesde] = useState('');
     const [fechaHasta, setFechaHasta] = useState('');
+    const [rolSeleccionado, setRolSeleccionado] = useState('');
     // Estados secundarios
     const [checkboxState, setCheckboxState] = useState(false);
     const [savedFiltros, setSavedFiltros] = useState([]);
     const [savedCheckboxState, setSavedCheckboxState] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
+    const [usuariosActivos, setUsuariosActivos] = useState([]);
 
     const navigate = useNavigate();
 
@@ -105,16 +109,21 @@ export function InicioAdmin() {
     }, [menuContent, checkboxState]);
 
     useEffect(() => {
+
         const fetchClientes = async () => {
-            const clientes = await clienteService.getAllClientes();
+            const clientes = await clienteService.getClientesConRolId();
             const clientesFiltrados = checkboxState
                 ? clientes.filter(cliente => cliente.estado === 2)
                 : clientes.filter(cliente => cliente.estado === 1);
             setClientesActivos(clientesFiltrados);
+            console.log('Activosss' ,clientesFiltrados);
+            console.log( 'Clientesssssss',  clientes);
         }
         if (menuContent === 'Clientes') {
             fetchClientes();
+            
         }
+
     }, [menuContent, checkboxState]);
 
     useEffect(() => {
@@ -156,7 +165,7 @@ export function InicioAdmin() {
     };
 
     const recargarClientes = async () => {
-        const clientes = await clienteService.getAllClientes();
+        const clientes = await clienteService.getClientesConRolId();
         const clientesFiltrados = checkboxState
             ? clientes.filter(cliente => cliente.estado === 2)
             : clientes.filter(cliente => cliente.estado === 1);
@@ -168,11 +177,18 @@ export function InicioAdmin() {
         setBusqueda('');
         setEstadoSeleccionado('');
         setFiltroSeleccionado('nombre');
+        setRolSeleccionado('');
     };
 
     const handleMenuContentChange = (content) => {
+        if (content === 'Usuarios') {
+            setMenuContent('Clientes');
+            resetFilters();
+        }
+
+        else{
         setMenuContent(content);
-        resetFilters();
+        resetFilters();}
     };
 
     const filteredData = (data) => {
@@ -186,6 +202,13 @@ export function InicioAdmin() {
             'Preparado':10,
         };
 
+        const rolMap = {
+            'SUPERUSER': 1,
+            'ADMIN': 2,
+            'CLIENTE': 3,
+            'EMPLEADO': 4,
+        };
+
         return data.filter(item =>
             filtrosActivos.every(filtro => {
                 if (filtro.filtro === 'nombre') {
@@ -194,20 +217,24 @@ export function InicioAdmin() {
                     return item.categoria.toLowerCase().includes(filtro.valor.toLowerCase());
                 } else if (filtro.filtro === 'estado') {
                     return item.estado === estadoMap[filtro.valor];
+                } else if (filtro.filtro === 'rol') {
+                    return item.rolId === parseInt(filtro.valor, 10); // Conversión a número
                 } else if (filtro.filtro === 'apellido') {
                     return item.apellido.toLowerCase().includes(filtro.valor.toLowerCase());
                 } else if (filtro.filtro === 'documento') {
                     return item.documento.toLowerCase().includes(filtro.valor.toLowerCase());
-                }else if (filtro.filtro === 'direccion') {
+                } else if (filtro.filtro === 'direccion') {
                     return item.direccion.toLowerCase().includes(filtro.valor.toLowerCase());
-                }else if (filtro.filtro === 'email') {
-                    return item.email.toLowerCase().includes(filtro.valor.toLowerCase());}
-
-
+                } else if (filtro.filtro === 'email') {
+                    return item.email.toLowerCase().includes(filtro.valor.toLowerCase());
+                }
                 return true;
-            }) && (estadoSeleccionado === '' || item.estado === estadoMap[estadoSeleccionado])
+            }) &&
+            (estadoSeleccionado === '' || item.estado === estadoMap[estadoSeleccionado]) &&
+            (rolSeleccionado === '' || item.rolId === parseInt(rolSeleccionado, 10)) // Conversión adicional
         );
-    };
+    }
+        
     const dataToDisplay = () => {
         if (menuContent === 'Catálogo' && catalogTab === 'Productos') return filteredData(productosActivos);
         if (menuContent === 'Catálogo' && catalogTab === 'Categorias') return filteredData(categoriasActivos);
@@ -251,12 +278,39 @@ export function InicioAdmin() {
             default: return 'gray';
         }
     };
+
+    function getClienteRol(rolId) {
+        switch (rolId) {
+            case 1:
+                return 'SUPERUSER';
+            case 2:
+                return 'ADMIN';
+            case 3:
+                return 'CLIENTE';
+            case 4:
+                return 'EMPLEADO';
+            default:
+                return 'DESCONOCIDO';
+        }
+    }
+    
     const handleEstadoChangeFiltro = (e) => {
         if (e && e.target) {
             setEstadoSeleccionado(e.target.value);
         } else {
             console.error("Event or target is undefined");
         }
+    };
+
+    const handleRolChangeFiltro = (e) => {
+        const valor = e.target.value;
+        setRolSeleccionado(valor);
+    
+        const nuevosFiltros = filtrosActivos.filter(f => f.filtro !== 'rol');
+        if (valor !== '') {
+            nuevosFiltros.push({ filtro: 'rol', valor: valor });
+        }
+        setFiltrosActivos(nuevosFiltros);
     };
 
 
@@ -450,7 +504,7 @@ export function InicioAdmin() {
                     <div className="col-12 col-md-2 menu">
                         <h2>Menú</h2>
                         <div className="d-flex flex-column">
-                            {['Pedidos', 'Catálogo', 'Clientes','Informes'].map((item) => (
+                            {['Pedidos', 'Catálogo', 'Usuarios','Informes'].map((item) => (
                                 <button
                                     key={item}
                                     className="btn-admin btn btn-success mb-2 btn-block"
@@ -518,6 +572,7 @@ export function InicioAdmin() {
                                     menuContent={menuContent}
                                     catalogTab={catalogTab}
                                     estadoSeleccionado={estadoSeleccionado}
+                                    rolSeleccionado={rolSeleccionado}
                                     filtrosActivos={filtrosActivos}
                                     handleRemoveFiltro={handleRemoveFiltro}
                                     filtroSeleccionado={filtroSeleccionado}
@@ -526,6 +581,7 @@ export function InicioAdmin() {
                                     handleBusquedaChange={handleBusquedaChange}
                                     dataToDisplay={dataToDisplay}
                                     getIndicatorColor={getIndicatorColor}
+                                    getClienteRol={getClienteRol}
                                     handleEditClick={handleEditClick}
                                     handleInactivosChange={handleInactivosChange}
                                     checkboxState={checkboxState}
@@ -537,6 +593,7 @@ export function InicioAdmin() {
                                     mostrarDetalles={mostrarDetalles}
                                     handleFechaDesdeChange={handleFechaDesdeChange}
                                     handleFechaHastaChange={handleFechaHastaChange}
+                                    handleRolChangeFiltro={handleRolChangeFiltro}
                                 />
                             )}
                         </div>

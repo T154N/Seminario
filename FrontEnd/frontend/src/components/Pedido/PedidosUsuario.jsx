@@ -175,9 +175,6 @@ export function PedidosUsuario() {
                         className="pedidos-usuario-filtro-date"
                     />
                 </label>
-                <button className="pedidos-usuario-filtro-boton" onClick={applyFilters}>
-                    Filtrar
-                </button>
                 <button className="pedidos-usuario-filtro-boton-limpiar" onClick={clearFilters}>
                     Limpiar
                 </button>

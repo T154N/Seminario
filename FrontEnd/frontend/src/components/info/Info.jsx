@@ -13,7 +13,7 @@ export function Info() {
                 <div className="row m-5">
                     <div className="col info-col p-3">
                     <h1>¿CUÁNDO SE REALIZAN LAS ENTREGAS DE LOS PEDIDOS?</h1>
-                    <p className='fs-5'>Las entregas se realizan los dias:</p>
+                    <p className='fs-5'>Las entregas se realizan los días:</p>
                     <ul className="payment-list ps-5 text-start fs-5">
                          <li>MIÉRCOLES:</li><p>Todos aquellos pedidos realizados y abonados los días Viernes, Sábado, Domingo y Lunes.</p>
                          <li>SÁBADO:</li><p>Todos aquellos pedidos realizados y abonados los días Martes, Miércoles y Jueves.</p>

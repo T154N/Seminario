@@ -77,7 +77,7 @@ export function PedidosUsuario() {
     };
 
     const navigateToDetail = (pedido) => {
-    navigate('/pedido-detalle', { state: { pedido, fromPedidosUsuario: true } });
+        navigate('/pedido-detalle', { state: { pedido, fromPedidosUsuario: true } });
     };
 
     const handleFilterChange = (e) => {
@@ -190,28 +190,35 @@ export function PedidosUsuario() {
                     <tr>
                         <th className="pedidos-usuario-header">Nro de pedido</th>
                         <th className="pedidos-usuario-header">Fecha de solicitud</th>
-                            <th className="pedidos-usuario-header">Método de Pago</th>
-                            <th className="pedidos-usuario-header">Estado</th>
-                            <th className="pedidos-usuario-header">Total</th>
-                            <th className="pedidos-usuario-header">Detalles</th>
-                        </tr>
+                        <th className="pedidos-usuario-header">Posible fecha de entrega</th>
+                        <th className="pedidos-usuario-header">Método de Pago</th>
+                        <th className="pedidos-usuario-header">Estado</th>
+                        <th className="pedidos-usuario-header">Total</th>
+                        <th className="pedidos-usuario-header">Detalles</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {pedidosActuales.map((pedido) => (
-                            <tr key={pedido.id}>
-                                <td className="pedidos-usuario-data" data-label="Nro de pedido">{pedido.id}</td>
-                                <td className="pedidos-usuario-data" data-label="Fecha de solicitud">{new Date(pedido.fecha).toLocaleDateString('es-ES') || 'No especificada'}</td>
-                                <td className="pedidos-usuario-data" data-label="Método de Pago">{pedido.metodoPago}</td>
-                                <td className="pedidos-usuario-data" data-label="Estado">
+                    {pedidosActuales.map((pedido) => (
+                        <tr key={pedido.id}>
+                            <td className="pedidos-usuario-data" data-label="Nro de pedido">{pedido.id}</td>
+                            <td className="pedidos-usuario-data"
+                                data-label="Fecha de solicitud">{new Date(pedido.fecha).toLocaleDateString('es-ES') || 'No especificada'}</td>
+                            <td className="pedidos-usuario-data"
+                                data-label="Fecha de solicitud">
+                                {pedido.fechaEstimada ? new Date(new Date(pedido.fechaEstimada).setDate(new Date(pedido.fechaEstimada).getDate() + 1)).toLocaleDateString('es-ES') : 'No especificada'}
+                            </td>
+                            <td className="pedidos-usuario-data" data-label="Método de Pago">{pedido.metodoPago}</td>
+                            <td className="pedidos-usuario-data" data-label="Estado">
                                     <span className="pedidos-usuario-estado">
                                         {pedido.estado === 13 ? "Aceptado" : pedido.estado === 9 ? "Rechazado" :
-                                            pedido.estado === 7 ? "En Preparación" : pedido.estado === 12 ? "Pendiente de Aprobación":
+                                            pedido.estado === 7 ? "En Preparación" : pedido.estado === 12 ? "Pendiente de Aprobación" :
                                                 pedido.estado === 10 ? "Preparado" : pedido.estado === 3 ? "Pediente de Pago" :
                                                     pedido.estado === 6 ? "Entregado" :
                                                         "Estado no definido"}
                                         <span
                                             className="pedidos-usuario-estado-indicador"
-                                            style={{ backgroundColor: getIndicatorColor(
+                                            style={{
+                                                backgroundColor: getIndicatorColor(
                                                     pedido.estado === 13 ? "Aceptado" :
                                                         pedido.estado === 9 ? "Rechazado" :
                                                             pedido.estado === 7 ? "EnPreparacion" :
@@ -219,18 +226,19 @@ export function PedidosUsuario() {
                                                                     pedido.estado === 10 ? "Preparado" :
                                                                         pedido.estado === 3 ? "PendientePago" :
                                                                             pedido.estado === 6 ? "Entregado" :
-                                                                                "Estado no definido") }}
+                                                                                "Estado no definido")
+                                            }}
                                         />
                                     </span>
-                                </td>
-                                <td className="pedidos-usuario-data" data-label="Total">${pedido.total}</td>
-                                <td className="pedidos-usuario-data" data-label="Detalles">
-                                    <button onClick={() => navigateToDetail(pedido)} className="pedidos-usuario-btn-link">
-                                        <FontAwesomeIcon icon={faInfoCircle} />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                            </td>
+                            <td className="pedidos-usuario-data" data-label="Total">${pedido.total}</td>
+                            <td className="pedidos-usuario-data" data-label="Detalles">
+                                <button onClick={() => navigateToDetail(pedido)} className="pedidos-usuario-btn-link">
+                                    <FontAwesomeIcon icon={faInfoCircle}/>
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                     </tbody>
                 </table>
             </div>

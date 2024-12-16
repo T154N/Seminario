@@ -31,18 +31,32 @@ export function PedidosUsuario() {
 
     const pedidosOrdenados = pedidos.sort((a, b) => b.id - a.id);
 
+
+    const estadoMapping = {
+        'Activo': 1,
+        'Aceptado': 13,
+        'Pendiente de Aprobación': 12,
+        'Rechazado': 9,
+        'EnPreparacion': 7,
+        'PendientePago': 3,
+        'Entregado': 6,
+        'Preparado': 10,
+    };
     const applyFilters = () => {
         return pedidosOrdenados.filter((pedido) => {
             const { estado, nroPedido, fechaDesde, fechaHasta } = filters;
 
-            const matchesEstado = estado ? pedido.estado === estado : true;
+            const matchesEstado = estado ? pedido.estado === estadoMapping[estado] : true;
             const matchesNroPedido = nroPedido ? pedido.id === parseInt(nroPedido) : true;
             const matchesFechaDesde = fechaDesde ? new Date(pedido.fecha) >= new Date(fechaDesde) : true;
-            const matchesFechaHasta = fechaHasta ? new Date(pedido.fecha) <= new Date(fechaHasta) : true;
+            const matchesFechaHasta = fechaHasta
+                ? new Date(pedido.fecha) < new Date(new Date(fechaHasta).setDate(new Date(fechaHasta).getDate() + 1))
+                : true;
 
             return matchesEstado && matchesNroPedido && matchesFechaDesde && matchesFechaHasta;
         });
     };
+
 
     const clearFilters = () => {
         setFilters({
@@ -70,11 +84,14 @@ export function PedidosUsuario() {
             case 'Rechazado': return 'red';
             case 'EnPreparacion': return 'yellow';
             case 'PendientePago': return 'orange';
-            case  'Entregado': return 'green';
-            case  'Preparado': return 'pink'
+            case 'Entregado': return 'green';
+            case 'Preparado': return 'pink'
             default: return 'gray';
         }
     };
+
+
+
 
     const navigateToDetail = (pedido) => {
         navigate('/pedido-detalle', { state: { pedido, fromPedidosUsuario: true } });
@@ -138,12 +155,17 @@ export function PedidosUsuario() {
                         onChange={handleFilterChange}
                     >
                         <option value="">TODOS</option>
-                        <option value="CONFIRMADO">CONFIRMADO</option>
-                        <option value="RECHAZADO">RECHAZADO</option>
-                        <option value="PENDIENTE">PENDIENTE</option>
-                        <option value="CANCELADO">CANCELADO</option>
+                        <option value="Aceptado">Aceptado</option>
+                        <option value="Pendiente de Aprobación">Pendiente de Aprobación</option>
+                        <option value="Rechazado">Rechazado</option>
+                        <option value="EnPreparacion">En Preparación</option>
+                        <option value="PendientePago">Pendiente de Pago</option>
+                        <option value="Entregado">Entregado</option>
+                        <option value="Preparado">Preparado</option>
                     </select>
                 </label>
+
+
                 <label className="pedidos-usuario-filtro-label">
                     Nro de pedido:
                     <input
@@ -155,28 +177,30 @@ export function PedidosUsuario() {
                         className="pedidos-usuario-filtro-input"
                     />
                 </label>
-                <label className="pedidos-usuario-filtro-label">
-                    Fecha desde:
-                    <input
-                        type="date"
-                        name="fechaDesde"
-                        value={filters.fechaDesde}
-                        onChange={handleFilterChange}
-                        className="pedidos-usuario-filtro-date"
-                    />
-                </label>
-                <label className="pedidos-usuario-filtro-label">
-                    Fecha hasta:
-                    <input
-                        type="date"
-                        name="fechaHasta"
-                        value={filters.fechaHasta}
-                        onChange={handleFilterChange}
-                        className="pedidos-usuario-filtro-date"
-                    />
-                </label>
+                <div className="pedidos-usuario-filtro-fechas">
+                    <label className="pedidos-usuario-filtro-label">
+                        Fecha desde:
+                        <input
+                            type="date"
+                            name="fechaDesde"
+                            value={filters.fechaDesde}
+                            onChange={handleFilterChange}
+                            className="pedidos-usuario-filtro-date"
+                        />
+                    </label>
+                    <label className="pedidos-usuario-filtro-label">
+                        Fecha hasta:
+                        <input
+                            type="date"
+                            name="fechaHasta"
+                            value={filters.fechaHasta}
+                            onChange={handleFilterChange}
+                            className="pedidos-usuario-filtro-date"
+                        />
+                    </label>
+                </div>
                 <button className="pedidos-usuario-filtro-boton-limpiar" onClick={clearFilters}>
-                    Limpiar
+                    Limpiar filtros
                 </button>
             </div>
 
@@ -184,28 +208,28 @@ export function PedidosUsuario() {
             <div className="pedidos-usuario-table-responsive">
                 <table className="pedidos-usuario-table">
                     <thead>
-                    <tr>
-                        <th className="pedidos-usuario-header">Nro de pedido</th>
-                        <th className="pedidos-usuario-header">Fecha de solicitud</th>
-                        <th className="pedidos-usuario-header">Posible fecha de entrega</th>
-                        <th className="pedidos-usuario-header">Método de Pago</th>
-                        <th className="pedidos-usuario-header">Estado</th>
-                        <th className="pedidos-usuario-header">Total</th>
-                        <th className="pedidos-usuario-header">Detalles</th>
-                    </tr>
+                        <tr>
+                            <th className="pedidos-usuario-header">Nro de pedido</th>
+                            <th className="pedidos-usuario-header">Fecha de solicitud</th>
+                            <th className="pedidos-usuario-header">Posible fecha de entrega</th>
+                            <th className="pedidos-usuario-header">Método de Pago</th>
+                            <th className="pedidos-usuario-header">Estado</th>
+                            <th className="pedidos-usuario-header">Total</th>
+                            <th className="pedidos-usuario-header">Detalles</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {pedidosActuales.map((pedido) => (
-                        <tr key={pedido.id}>
-                            <td className="pedidos-usuario-data" data-label="Nro de pedido">{pedido.id}</td>
-                            <td className="pedidos-usuario-data"
-                                data-label="Fecha de solicitud">{new Date(pedido.fecha).toLocaleDateString('es-ES') || 'No especificada'}</td>
-                            <td className="pedidos-usuario-data"
-                                data-label="Fecha de solicitud">
-                                {pedido.fechaEstimada ? new Date(new Date(pedido.fechaEstimada).setDate(new Date(pedido.fechaEstimada).getDate() + 1)).toLocaleDateString('es-ES') : 'No especificada'}
-                            </td>
-                            <td className="pedidos-usuario-data" data-label="Método de Pago">{pedido.metodoPago}</td>
-                            <td className="pedidos-usuario-data" data-label="Estado">
+                        {pedidosActuales.map((pedido) => (
+                            <tr key={pedido.id}>
+                                <td className="pedidos-usuario-data" data-label="Nro de pedido">{pedido.id}</td>
+                                <td className="pedidos-usuario-data"
+                                    data-label="Fecha de solicitud">{new Date(pedido.fecha).toLocaleDateString('es-ES') || 'No especificada'}</td>
+                                <td className="pedidos-usuario-data"
+                                    data-label="Fecha de solicitud">
+                                    {pedido.fechaEstimada ? new Date(new Date(pedido.fechaEstimada).setDate(new Date(pedido.fechaEstimada).getDate() + 1)).toLocaleDateString('es-ES') : 'No especificada'}
+                                </td>
+                                <td className="pedidos-usuario-data" data-label="Método de Pago">{pedido.metodoPago}</td>
+                                <td className="pedidos-usuario-data" data-label="Estado">
                                     <span className="pedidos-usuario-estado">
                                         {pedido.estado === 13 ? "Aceptado" : pedido.estado === 9 ? "Rechazado" :
                                             pedido.estado === 7 ? "En Preparación" : pedido.estado === 12 ? "Pendiente de Aprobación" :
@@ -227,15 +251,15 @@ export function PedidosUsuario() {
                                             }}
                                         />
                                     </span>
-                            </td>
-                            <td className="pedidos-usuario-data" data-label="Total">${pedido.total}</td>
-                            <td className="pedidos-usuario-data" data-label="Detalles">
-                                <button onClick={() => navigateToDetail(pedido)} className="pedidos-usuario-btn-link">
-                                    <FontAwesomeIcon icon={faInfoCircle}/>
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                                </td>
+                                <td className="pedidos-usuario-data" data-label="Total">${pedido.total}</td>
+                                <td className="pedidos-usuario-data" data-label="Detalles">
+                                    <button onClick={() => navigateToDetail(pedido)} className="pedidos-usuario-btn-link">
+                                        <FontAwesomeIcon icon={faInfoCircle} />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

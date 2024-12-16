@@ -189,9 +189,17 @@
   font-weight: 500;
   color: #333;
 }
+.pedidos-usuario-filtro-select{
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 210px;
+  transition: border-color 0.3s ease;
+}
+
 
 .pedidos-usuario-filtro-input,
-.pedidos-usuario-filtro-select,
 .pedidos-usuario-filtro-date {
   font-size: 1rem;
   padding: 0.5rem;
@@ -249,4 +257,19 @@
   .pedidos-usuario-filtro-date {
     width: 100%;
   }
+}
+
+
+.pedidos-usuario-filtro-fechas {
+  display: flex;
+  gap: 1rem; /* Espacio entre los campos */
+  align-items: center;
+}
+
+.pedidos-usuario-filtro-label {
+  margin: 0; /* Elimina márgenes para mantener alineación */
+}
+
+.pedidos-usuario-filtro-date {
+  width: 150px; /* Ajusta el ancho según sea necesario */
 }

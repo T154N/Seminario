@@ -331,7 +331,7 @@ export function InicioAdmin() {
             return;
         }
 
-        pedidoService.updatePedidoEstado(pedido.id, estadoData.estadoId, "Admin", estadoData.estado)
+        pedidoService.updatePedidoEstado(pedido.pedidoId, estadoData.estadoId, "Admin", estadoData.estado)
             .then(response => {
                 console.log("Estado actualizado:", response);
 
@@ -347,7 +347,7 @@ export function InicioAdmin() {
             .catch(error => {
                 console.error("Error al cambiar el estado:", error);
             });
-        pedidoService.updatePedidoEstado(pedido.id, estadoData.estadoId, "Admin", estadoData.estado)
+        pedidoService.updatePedidoEstado(pedido.pedidoId, estadoData.estadoId, "Admin", estadoData.estado)
 
     };
 

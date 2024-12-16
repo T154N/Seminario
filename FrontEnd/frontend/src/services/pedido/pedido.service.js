@@ -61,26 +61,9 @@ const getAllPedidos = async () => {
             total: p.pedido_total_dinero,
             estado: p.estado_pedido_id,
             estadoRegistro: p.estado_pedido_registro,
-
-            productos: p.productos || [],//verificar si se puede hacer un map de productos
-            observaciones: p.observaciones || "Sin observaciones",
-
-            //productos: [
-            //    { id: 101, nombre: 'Pila', cantidad: 2, precioUnitario: 10000 },
-            //    { id: 102, nombre: 'Producto B', cantidad: 1, precioUnitario: 30140 },
-            //    { id: 103, nombre: 'Producto C', cantidad: 3, precioUnitario: 15000 },
-            //    { id: 104, nombre: 'Producto D', cantidad: 4, precioUnitario: 20000 },
-            //    { id: 105, nombre: 'Producto E', cantidad: 5, precioUnitario: 25000 },
-            //    { id: 106, nombre: 'Producto F', cantidad: 6, precioUnitario: 30000 },
-            //    { id: 107, nombre: 'Producto G', cantidad: 7, precioUnitario: 35000 },
-            //    { id: 108, nombre: 'Producto H', cantidad: 8, precioUnitario: 40000 },
-            //    { id: 109, nombre: 'Producto I', cantidad: 9, precioUnitario: 45000 },
-            //    { id: 110, nombre: 'Producto J', cantidad: 10, precioUnitario: 50000 },
-            //    { id: 111, nombre: 'Producto K', cantidad: 11, precioUnitario: 55000 }]
-
+            productos: p.productos || [], // verificar si se puede hacer un map de productos
+            observaciones: p.observaciones || "Sin observaciones"
         }));
-
-
 
         console.log("Listado de todos los pedidos:", pedidos);
 

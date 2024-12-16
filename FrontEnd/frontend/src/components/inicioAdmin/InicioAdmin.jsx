@@ -230,7 +230,9 @@ export function InicioAdmin() {
                     }
                     return (!desde || fechaPedido >= desde) && (!hasta || fechaPedido <= hasta);
                 })
-                .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+                // .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+                .sort((a, b) => b.id - a.id);
+
             }
         if (menuContent === 'Clientes') return filteredData(clientesActivos);
         return [];

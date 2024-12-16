@@ -51,6 +51,12 @@ export function Login() {
         }, 3000);
     };
 
+    const navegarHaciaInicioAdmin = () => {
+        setTimeout(() => {
+            navigate('/inicioAdmin');
+        }, 3000);
+    };
+
     const mostrarCambiarContrasena = () => {
         setMostrarCambiarPwd(true);
         setMostrarIniciarSesion(false);
@@ -107,10 +113,13 @@ export function Login() {
         setMostrarAlertaRecuperarContrasena(false);
         setMensajeInicioSesion(mensaje);
         setTipoError(tipoError);
-        if (tipoError === "exitoso") {
+        if (tipoError === "exitoso" && localStorage.getItem("rol") === "CLIENTE") {
             login();
             navegarHaciaCatalogoLogin();
-        }
+    } else if (tipoError === "exitoso" && ["ADMIN", "SUPERUSER", "EMPLEADO"].includes(localStorage.getItem("rol"))) {
+        login();
+        navegarHaciaInicioAdmin();
+}
     }
 
     const mostrarMsjRecuperarContrasena = (mensaje, tipoError) => {

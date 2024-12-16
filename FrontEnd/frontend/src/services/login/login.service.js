@@ -211,7 +211,7 @@ const getEmailUsuario = () => {
 }
 
 const esAdmin = () => {
-    return localStorage.getItem('rol') === 'ADMIN' || localStorage.getItem('rol') === 'SUPERUSER';
+    return localStorage.getItem('rol') === 'ADMIN' || localStorage.getItem('rol') === 'SUPERUSER' || localStorage.getItem('rol') === 'EMPLEADO';
 }
 
 const loginService = {

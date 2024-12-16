@@ -5,6 +5,7 @@ import MassUpdatePopup from './MassUpdatePopup';
 import { Dropdown } from 'react-bootstrap';
 import './contenidoVariable.css';
 import ClienteModal from './ClienteModal';
+import Informes from "../informes/Informes";
 
 
 const ContenidoVariable = ({
@@ -357,12 +358,13 @@ const ContenidoVariable = ({
     return (
         <div className="contenido-variable">
             {menuContent === 'Informes' ? (
-
-                <div>
-                    <span className="fs-3 fw-bold mt-0">
-                        Informes
-                    </span>
-                </div>
+                    
+                    <div>
+                        <span className="fs-3 fw-bold mt-0">
+                            Informes
+                        </span>
+                        <Informes/>
+                    </div>
             ) : (
                 <>
                     {/* Encabezado */}

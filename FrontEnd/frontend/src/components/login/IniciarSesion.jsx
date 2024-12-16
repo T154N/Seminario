@@ -37,7 +37,11 @@ export function IniciarSesion({ mostrarMsjInicioSesion }) {
             });
             mostrarMsjInicioSesion(response.data.message, "alerta");
         } else if (response.data.status === 200) {
-            mostrarMsjInicioSesion("Sesión iniciada exitosamente. Redirigiendo al catálogo...", "exitoso");
+            if (["CLIENTE"].includes(localStorage.getItem("rol"))) {
+                mostrarMsjInicioSesion("Sesión iniciada exitosamente. Redirigiendo al catálogo...", "exitoso");
+            } else if (["ADMIN", "SUPERUSER", "EMPLEADO"].includes(localStorage.getItem("rol"))) {
+                mostrarMsjInicioSesion("Sesión iniciada exitosamente. Redirigiendo al panel de administración...", "exitoso");
+            }
         }
     }
 

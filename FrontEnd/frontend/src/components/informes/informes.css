@@ -1,0 +1,70 @@
+.info-col {
+    background-color: #FCBB3A !important;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.payment-list {
+    list-style-type: disc;
+}
+
+.dashboard {
+    padding: 20px;
+    text-align: center;
+}
+
+.dashboard h1 {
+    color: #333;
+}
+
+.dashboard p {
+    color: #555;
+    font-size: 1.2rem;
+}
+
+/* .pageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.loginContainer {
+  width: 80%;
+  max-width: 1200px;
+  min-height: 250px;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.pedido-img {
+  width: 100px;
+  height: 100px;
+} */
+
+.btn-aceptar {
+    color: #000000;
+    background-color: #C8FFDF;
+    border-color: #C8FFD4;
+}
+
+.btn-aceptar:hover,
+.btn-aceptar:active,
+.btn-aceptar.active,
+.open .dropdown-toggle.btn-aceptar {
+    color: #000000;
+    background-color: #83C8A0;
+    border-color: #C8FFD4;
+}
+
+.btn-aceptar:active,
+.btn-aceptar.active,
+.open .dropdown-toggle.btn-aceptar {
+    background-color: #83C8A0;
+}
+.btn-aceptar .badge {
+
+    color: #C8FFDF;
+    background-color: #000000;
+}

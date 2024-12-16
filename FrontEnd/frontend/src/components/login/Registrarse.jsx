@@ -99,7 +99,7 @@ export function Registrarse({ mostrarMsjRegistro, onRegistroExitoso }) {
                                        },
                                        maxLength: {
                                            value: 30,
-                                           message: "La contraseña debe tener como maximo de 30 caracteres."
+                                           message: "La contraseña debe tener como máximo 30 caracteres."
                                        }
                                    })}/>
                             <div>
@@ -123,7 +123,7 @@ export function Registrarse({ mostrarMsjRegistro, onRegistroExitoso }) {
                                        },
                                        maxLength: {
                                            value: 30,
-                                           message: "El apellido debe tener como maximo de 30 caracteres."
+                                           message: "El apellido debe tener como máximo 30 caracteres."
                                        }
                                    })}/>
                             <div>
@@ -137,21 +137,27 @@ export function Registrarse({ mostrarMsjRegistro, onRegistroExitoso }) {
                         <div className="mt-1 mb-0 pe-2">
                             <label className="form-label fs-4">DNI <span style={{color: "darkred"}}>*</span></label>
                             <input
-                                   className="form-control"
-                                   id="inputdni"
-                                   placeholder="Documento"
-                                   maxLength={8}
-                                   {...register("dni", {
-                                       required: "Este campo es requerido.",
-                                       minLength: {
-                                           value: 7,
-                                           message: "El DNI debe tener al menos 7 caracteres."
-                                       },
-                                       maxLength: {
-                                           value: 8,
-                                           message: "El DNI debe tener como maximo de 8 caracteres."
-                                       }
-                                   })}/>
+                                type={"number"}
+                                className="form-control"
+                                id="inputdni"
+                                placeholder="Documento"
+                                maxLength={8}
+                                {...register("dni", {
+                                    required: "Este campo es requerido.",
+                                    minLength: {
+                                        value: 7,
+                                        message: "El DNI debe tener al menos 7 caracteres."
+                                    },
+                                    maxLength: {
+                                        value: 8,
+                                        message: "El DNI debe tener como máximo 8 caracteres."
+                                    },
+                                    pattern: {
+                                        value: /^[0-9]+$/,
+                                        message: "El DNI solo debe contener números."
+                                    }
+                                })}
+                            />
                             <div>
                                 {errors.dni && <p className="mt-1 mb-0 fs-6" style={{color: "darkred"}}>{errors.dni.message}</p>}
                             </div>
@@ -161,6 +167,7 @@ export function Registrarse({ mostrarMsjRegistro, onRegistroExitoso }) {
                         <div className="mt-1 mb-1">
                             <label className="form-label fs-4">Teléfono <span style={{color: "darkred"}}>*</span></label>
                             <input
+                                    type={"number"}
                                    className="form-control"
                                    id="inputTelefono"
                                    placeholder="Telefono fijo o celular"
@@ -169,11 +176,15 @@ export function Registrarse({ mostrarMsjRegistro, onRegistroExitoso }) {
                                        required: "Este campo es requerido.",
                                        minLength: {
                                            value: 7,
-                                           message: "El telefono debe tener al menos 7 caracteres."
+                                           message: "El teléfono debe tener al menos 7 caracteres."
                                        },
                                        maxLength: {
                                            value: 10,
-                                           message: "El telefono debe tener como maximo de 10 caracteres."
+                                           message: "El teléfono debe tener como máximo 10 caracteres."
+                                       },
+                                       pattern: {
+                                           value: /^[0-9]+$/,
+                                           message: "El teléfono sólo debe contener números."
                                        }
                                    })}/>
                             <div>
@@ -239,7 +250,7 @@ export function Registrarse({ mostrarMsjRegistro, onRegistroExitoso }) {
                                        },
                                        maxLength: {
                                            value: 20,
-                                           message: "La contraseña debe tener como maximo de 20 caracteres."
+                                           message: "La contraseña debe tener como máximo de 20 caracteres."
                                        }
                                    })}/>
                             <div>

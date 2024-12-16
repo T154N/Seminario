@@ -66,7 +66,7 @@ export function PedidosUsuario() {
         switch (estado) {
             case 'Activo': return 'green';
             case 'Aceptado': return 'blue';
-            case 'Nuevo': return 'purple';
+            case "Pendiente de Aprobación": return 'purple';
             case 'Rechazado': return 'red';
             case 'EnPreparacion': return 'yellow';
             case 'PendientePago': return 'orange';
@@ -205,7 +205,7 @@ export function PedidosUsuario() {
                                 <td className="pedidos-usuario-data" data-label="Estado">
                                     <span className="pedidos-usuario-estado">
                                         {pedido.estado === 13 ? "Aceptado" : pedido.estado === 9 ? "Rechazado" :
-                                            pedido.estado === 7 ? "En Preparación" : pedido.estado === 12 ? "Nuevo":
+                                            pedido.estado === 7 ? "En Preparación" : pedido.estado === 12 ? "Pendiente de Aprobación":
                                                 pedido.estado === 10 ? "Preparado" : pedido.estado === 3 ? "Pediente de Pago" :
                                                     pedido.estado === 6 ? "Entregado" :
                                                         "Estado no definido"}
@@ -215,7 +215,7 @@ export function PedidosUsuario() {
                                                     pedido.estado === 13 ? "Aceptado" :
                                                         pedido.estado === 9 ? "Rechazado" :
                                                             pedido.estado === 7 ? "EnPreparacion" :
-                                                                pedido.estado === 12 ? "Nuevo":
+                                                                pedido.estado === 12 ? "Pendiente de Aprobación" :
                                                                     pedido.estado === 10 ? "Preparado" :
                                                                         pedido.estado === 3 ? "PendientePago" :
                                                                             pedido.estado === 6 ? "Entregado" :

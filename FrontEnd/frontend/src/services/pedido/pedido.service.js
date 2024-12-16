@@ -32,8 +32,10 @@ const getPedidoById = async (id) => {
 const crearPedido = async (carritoId, domicilioId, medioPagoId, usuarioTransaccion) => {
     try {
         const response = await axios.post(`${ENDPOINT_PEDIDO_URL}/pedidos/generate?carritoID=${carritoId}&domicilioId=${domicilioId}&medioPagoId=${medioPagoId}&usuarioTransaccion=${usuarioTransaccion}`);
+        console.log(response)
         return {
-            pedidoId: response.data.body // En el body devuelve directamente el nro del pedido
+            pedidoId: response.data.body.id,
+            nroPedido: response.data.body.nroPedido
         }
     } catch (err) {
         return 400;

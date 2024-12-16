@@ -82,7 +82,7 @@ const ClienteAlta = ({ onSave, onCancel, clientesActivos = [] }) => {
 
         // Validar formato de CUIT
         const cuitRegex = /^\d{2}-\d{8}-\d{1}$/;
-        if (!cuitRegex.test(formData.cliente_cuit)) {
+        if (!cuitRegex.test(formData.cliente_cuit) && formData.cliente_cuit) {
             alert("El CUIT debe tener el formato nn-nnnnnnnn-n.");
             return;
         }

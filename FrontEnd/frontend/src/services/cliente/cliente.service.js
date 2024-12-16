@@ -121,7 +121,7 @@ const getAllClientes = async () => {
         }
 
         if (response.data.body) {
-            return response.data.body.map((c) => ({
+            const clientes = response.data.body.map((c) => ({
                 id: c.clienteId,
                 idUsuario: c.clienteUsuarioId, // No se usa en los ejemplos, pero mantenido por consistencia
                 documento: c.clienteDocumento,
@@ -150,12 +150,26 @@ const getAllClientes = async () => {
                 pedidos: c.pedidos || [], // Atributo opcional que no aparece en el ejemplo actual
                 carritos: c.carritos || [], // Atributo opcional que no aparece en el ejemplo actual
             }));
+
+            // Eliminar duplicados basados en el campo "id"
+            const uniqueClientes = [];
+            const seenIds = new Set();
+
+            for (const cliente of clientes) {
+                if (!seenIds.has(cliente.id)) {
+                    uniqueClientes.push(cliente);
+                    seenIds.add(cliente.id);
+                }
+            }
+
+            return uniqueClientes;
         }
     } catch (error) {
         console.error("Error fetching all clientes:", error);
         return { error: error.message };
     }
 };
+
 
 
 const getDatosClientePedido = async () => {

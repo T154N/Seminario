@@ -123,7 +123,7 @@ const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onC
             domicilioLocalidadId: 545,
             domicilioEsPrincipal: "Y",
             usuario_contrasena: "",
-            usuario_rol_id: 1,
+            rolId: formData.usuario_rol_id,
             usuario_observaciones: " ",
             usuario_alta: "Admin",
         };
@@ -170,8 +170,8 @@ const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onC
     const fields = [
         {
             name: "cliente_documento",
-            title: "Documento del Cliente",
-            placeholder: "Documento del cliente",
+            title: "Documento del Usuario",
+            placeholder: "Documento del Usuario",
             colSize: 6,
             type: "text", // Usar texto para controlar el input manualmente
             onChange: handleDocumentoChange, // Asignar el controlador personalizado
@@ -189,20 +189,20 @@ const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onC
         {
             name: "cliente_apellido",
             title: "Apellido",
-            placeholder: "Apellido del cliente",
+            placeholder: "Apellido del Usuario",
             colSize: 6,
         },
         {
             name: "cliente_nombre",
             title: "Nombre",
-            placeholder: "Nombre del cliente",
+            placeholder: "Nombre del Usuario",
             colSize: 6,
         },
 
         {
             name: "cliente_cuit",
             title: "CUIT",
-            placeholder: "CUIT del cliente",
+            placeholder: "CUIT del Usuario",
             colSize: 6,
             type: "text", // Usar texto para formatear dinámicamente
             onChange: handleCuitChange, // Asignar el controlador personalizado
@@ -213,13 +213,13 @@ const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onC
         {
             name: "cliente_email",
             title: "Email",
-            placeholder: "Email del cliente",
+            placeholder: "Email del Usuario",
             colSize: 6,
         },
         {
             name: "cliente_telefono",
             title: "Teléfono",
-            placeholder: "Teléfono del cliente",
+            placeholder: "Teléfono del Usuario",
             colSize: 6,
             required: false
         },
@@ -236,13 +236,13 @@ const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onC
         {
             name: "domicilioDireccion",
             title: "Dirección",
-            placeholder: "Dirección del cliente",
+            placeholder: "Dirección del Usuario",
             colSize: 6,
         },
         {
             name: "domicilioBarrio",
             title: "Barrio",
-            placeholder: "Barrio del cliente",
+            placeholder: "Barrio del Usuario",
             colSize: 6,
         },
         {
@@ -261,9 +261,20 @@ const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onC
             ],
         },
         {
+            name: "usuario_rol_id",
+            title: "Rol",
+            colSize: 6,
+            options: [
+                { value: "1", label: "SUPERUSER" },
+                { value: "2", label: "ADMIN" },
+                { value: "3", label: "CLIENTE" },
+                { value: "4", label: "EMPLEADO" },
+            ],
+        },
+        {
             name: "cliente_observaciones",
             title: "Observaciones",
-            placeholder: "Observaciones del cliente",
+            placeholder: "Observaciones del Usuario",
             colSize: 12,
             required: false
         },

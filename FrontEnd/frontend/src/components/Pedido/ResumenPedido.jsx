@@ -5,7 +5,7 @@ import { useCarrito } from '../carrito/CarritoContext';
 import { useNavigate } from 'react-router-dom';
 import './resumenPedido.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft, faTrash} from '@fortawesome/free-solid-svg-icons';
 import clienteService from "../../services/cliente/cliente.service";
 import {MensajesLogin} from "../Mensajes/Mensajes";
 
@@ -87,8 +87,9 @@ export function ResumenPedido() {
             <div className="row mb-3">
                 <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
                     <div className="d-flex align-items-start">
-                        <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>Volver
-                            al catálogo
+                        <button className="btn btn-secundario text-white" onClick={handleVolverCatalogo}>
+                            <FontAwesomeIcon icon={faArrowLeft} size={"lg"}/>
+                            <span className="ps-1">Volver al Catálogo</span>
                         </button>
                     </div>
                 </div>

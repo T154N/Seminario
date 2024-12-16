@@ -8,14 +8,15 @@ export const usePedido = () => useContext(PedidoContext);
 
 export const PedidoProvider = ({ children }) => {
     const [pedidoActual, setPedidoActual] = useState({
-        id: null,
+        id: null, // aca va el numero de pedido
         fecha: new Date().toISOString().split('T')[0], // formato YYYY-MM-DD
         total: 0,
         estado: 'Pendiente',
         metodoPago: null,
         productos: [],
         direccionEnvio: null,
-        nombre: '' // Agregar el atributo nombre
+        nombre: '', // Agregar el atributo nombre
+        pedidoId: null // aca va el Id de pedido
     });
 
     const iniciarPedido = (productos, nombre) => {
@@ -60,6 +61,10 @@ export const PedidoProvider = ({ children }) => {
         setPedidoActual((prev) => ({ ...prev, direccionEnvio: direccion }));
     };
 
+    const setTruePedidoId = (pedidoId) => {
+        setPedidoActual((prev) => ({ ...prev, pedidoId }));
+    };
+
     const eliminarDelPedido = async (id) => {
         await carritoService.removeCarrito(
             localStorage.getItem('carritoId'),
@@ -83,8 +88,10 @@ export const PedidoProvider = ({ children }) => {
             const medioPagoId = pedidoActual.metodoPago;
             const usuarioTransaccion = localStorage.getItem('email');
             const pedidoHecho = await pedidoService.crearPedido(carritoId, domicilioId, medioPagoId, usuarioTransaccion);
-            setPedidoId(pedidoHecho.pedidoId);
+            setPedidoId(pedidoHecho.pedidoId); // Terminar cuando se arregle el back y me traiga el id, pedidoId es el numero de pedido
+            setTruePedidoId(pedidoHecho.id); // ACA tiene que ir el id verdadero del pedido
             setDireccionEnvio(localStorage.getItem('direccionNombre'));
+            console.log("pedidoHecho", pedidoHecho);
             return pedidoHecho;
         } catch (err) {
             console.error(err);

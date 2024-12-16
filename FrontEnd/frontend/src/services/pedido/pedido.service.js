@@ -31,9 +31,9 @@ const getPedidoById = async (id) => {
 
 const crearPedido = async (carritoId, domicilioId, medioPagoId, usuarioTransaccion) => {
     try {
-        const response = await axios.post(`${ENDPOINT_PEDIDO_URL}/pedidos/generate?carritoID=${carritoId}&domicilioId=1&medioPagoId=${medioPagoId}&usuarioTransaccion=${usuarioTransaccion}`);
+        const response = await axios.post(`${ENDPOINT_PEDIDO_URL}/pedidos/generate?carritoID=${carritoId}&domicilioId=${domicilioId}&medioPagoId=${medioPagoId}&usuarioTransaccion=${usuarioTransaccion}`);
         return {
-            pedidoId: response.data.body
+            pedidoId: response.data.body // En el body devuelve directamente el nro del pedido
         }
     } catch (err) {
         return 400;
@@ -48,7 +48,8 @@ const getAllPedidos = async () => {
         console.log(response);
 
         const pedidos = response.data.body.map((p) => ({
-            id: p.pedido_id,
+            id: p.pedido_nro, // El id es el numero de pedido, que es distinto al id y NO se debe usar como id unico
+            pedidoId: p.pedido_id, // Para compatibilidad de PDF
             numeroPedido: p.pedido_nro,
             nombre: `${p.nombre_cliente} ${p.apellido_cliente}`,
             email: p.email_cliente,
@@ -91,10 +92,8 @@ const getAllPedidos = async () => {
 
 const getPedidoDetalles = async (pedidoID) => {
     try {
-        const response = await axios.get(`${ENDPOINT_PEDIDO_URL}/pedidos/detalle`, {
-            params: { pedidoID }
-        });
-
+        const response = await axios.get(`${ENDPOINT_PEDIDO_URL}/pedidos/detalle?pedidoID=${pedidoID}`);
+        console.log("Detalles del pedido:", response);
         // Estructura de los detalles de pedido
         const detalles = response.data.body.map(detalle => ({
             pedidoID: detalle.pedidoID,
@@ -310,8 +309,8 @@ const getPedidosPorCadaCliente = async (clienteId) => {
         const pedidos = await Promise.all(response.data.body.map(async (p) => {
             const productos = await getDetallePedido(p.pedido_id);
             return {
-                id: p.pedido_nro,
-                pedidoId: p.pedido_id,
+                id: p.pedido_nro, // El id es el numero de pedido, que es distinto al id y NO se debe usar como id unico
+                pedidoId: p.pedido_id, // El pedidoId es el id unico del pedido
                 fecha: p.pedido_fecha_alta,
                 total: p.pedido_total_dinero,
                 // estado: p.estado_pedido,

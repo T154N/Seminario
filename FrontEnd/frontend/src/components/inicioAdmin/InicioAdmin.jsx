@@ -302,7 +302,9 @@ export function InicioAdmin() {
     const mostrarDetalles = async (pedido) => {
         try {
             // Obtener los detalles del pedido
-            const detalles = await pedidoService.getPedidoDetalles(pedido.id);
+            const detalles = await pedidoService.getPedidoDetalles(pedido.pedidoId);
+            console.log(detalles)
+            console.log("pedido: ", pedido)
 
             // Añadir los detalles como un array en el pedido
             const pedidoConDetalles = {

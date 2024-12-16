@@ -211,21 +211,27 @@ export function InicioAdmin() {
     const dataToDisplay = () => {
         if (menuContent === 'Catálogo' && catalogTab === 'Productos') return filteredData(productosActivos);
         if (menuContent === 'Catálogo' && catalogTab === 'Categorias') return filteredData(categoriasActivos);
-        if (menuContent === 'Pedidos')
+        if (menuContent === 'Pedidos'){
             return filteredData(pedidosActivos)
-            .filter((pedidosActivos) => {
-                const fechaPedido = new Date(pedidosActivos.fecha);
-                const desde = fechaDesde ? new Date(fechaDesde) : null;
-                const hasta = fechaHasta ? new Date(fechaHasta) : null;
-                if (hasta) {
-                    hasta.setDate(hasta.getDate() + 1);
-                }
-                console.log(fechaPedido,desde, hasta)
-                if (desde && fechaPedido < desde) return false;
-                if (hasta && fechaPedido > hasta) return false;
-                return true;
-            })
-            .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+                .filter((pedidosActivos) => {
+                    const fechaPedido = new Date(pedidosActivos.fecha);
+                    const hasta = fechaHasta ? new Date(fechaHasta) : null;
+                    const desde = fechaDesde ? new Date(fechaDesde) : null;
+
+                    const argentinaTimezoneOffset = -3 * 60; // Argentina is UTC-3
+                    fechaPedido.setMinutes(fechaPedido.getMinutes() + fechaPedido.getTimezoneOffset() + argentinaTimezoneOffset);
+                    if (hasta) {
+                        hasta.setMinutes(hasta.getMinutes() + hasta.getTimezoneOffset() );
+                        hasta.setDate(hasta.getDate() + 1);
+                    }
+                    if (desde) {
+                        desde.setMinutes(desde.getMinutes() + desde.getTimezoneOffset());
+                        desde.setDate(desde.getDate());
+                    }
+                    return (!desde || fechaPedido >= desde) && (!hasta || fechaPedido <= hasta);
+                })
+                .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+            }
         if (menuContent === 'Clientes') return filteredData(clientesActivos);
         return [];
     };

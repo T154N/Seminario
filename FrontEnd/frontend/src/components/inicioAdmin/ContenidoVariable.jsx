@@ -443,6 +443,7 @@ const ContenidoVariable = ({
                                 <input
                                     type="date"
                                     className="form-control me-2"
+                                    lang="es-AR"
                                     value={fechaDesde}
                                     onChange={onFechaDesdeChange}
                                 />
@@ -450,6 +451,7 @@ const ContenidoVariable = ({
                                 <input
                                     type="date"
                                     className="form-control me-2"
+                                    lang="es-AR"
                                     value={fechaHasta}
                                     onChange={onFechaHastaChange}
                                 />

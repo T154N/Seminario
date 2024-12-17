@@ -177,12 +177,14 @@ const Informes = () => {
     if (error) {
         return <div>{error}</div>;
     }
-
     const dataForRadarTotales = ChartDataPedidosPorMes.map(item => ({
         MesAnio: `${item.Mes < 10 ? '0' + item.Mes : item.Mes}-${item.Anio}`,
-        TotalPedidos: item.TotalPedidos,
-        TotalDinero: `${item.TotalDinero.toString()}`
+        TotalPedidos: Math.round(item.TotalPedidos / 1000), // Reducción a miles
+        TotalDinero: Math.round(item.TotalDinero / 1000),   // Reducción a miles
     }));
+
+
+
 
     const getRandomColor = () => {
         const letters = '0123456789ABCDEF';
@@ -234,69 +236,69 @@ const Informes = () => {
                     padding: '20px',
                 }}>
                     <div
-                        style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between'}}>
-                        <div style={{width: '20%', textAlign: 'center'}}>
+                        style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                        <div style={{ width: '20%', textAlign: 'center' }}>
                             <h5>Diario</h5>
                             <ResponsiveContainer width="100%" height={300}>
                                 <table border="1" className="table table-striped">
                                     <thead>
-                                    <tr>
-                                        <th style={{backgroundColor: "#f5a70a", color: "white"}}>Estado</th>
-                                        <th style={{backgroundColor: "#f5a70a", color: "white"}}>Dinero</th>
-                                    </tr>
+                                        <tr>
+                                            <th style={{ backgroundColor: "#f5a70a", color: "white" }}>Estado</th>
+                                            <th style={{ backgroundColor: "#f5a70a", color: "white" }}>Dinero</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    {pedidoDiario && pedidoDiario.length > 0 ? (
-                                        pedidoDiario.map((pedido, index) => (
-                                            <tr key={index}>
-                                                <td>{pedido.ESTADO}</td>
-                                                <td>{pedido.TotalDineroDia}</td>
+                                        {pedidoDiario && pedidoDiario.length > 0 ? (
+                                            pedidoDiario.map((pedido, index) => (
+                                                <tr key={index}>
+                                                    <td>{pedido.ESTADO}</td>
+                                                    <td>{pedido.TotalDineroDia}</td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="2">No hay datos disponibles</td>
                                             </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="2">No hay datos disponibles</td>
-                                        </tr>
-                                    )}
+                                        )}
                                     </tbody>
                                 </table>
                             </ResponsiveContainer>
                             <div className="card mt-3">
-                                <div style={{width: '100%', textAlign: 'center', marginTop: '20px'}}>
+                                <div style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
                                     <h5>Total</h5>
                                     {pedidoDiario &&
                                         <p>${pedidoDiario.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>}
                                 </div>
                             </div>
                         </div>
-                        <div style={{width: '20%', textAlign: 'center'}}>
+                        <div style={{ width: '20%', textAlign: 'center' }}>
                             <h5>Semanal</h5>
                             <ResponsiveContainer width="100%" height={300}>
                                 <table border="1" className="table table-striped">
                                     <thead>
-                                    <tr>
-                                        <th style={{backgroundColor: "#f5a70a", color: "white"}}>Estado</th>
-                                        <th style={{backgroundColor: "#f5a70a", color: "white"}}>Dinero</th>
-                                    </tr>
+                                        <tr>
+                                            <th style={{ backgroundColor: "#f5a70a", color: "white" }}>Estado</th>
+                                            <th style={{ backgroundColor: "#f5a70a", color: "white" }}>Dinero</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    {pedidoSemanal && pedidoSemanal.length > 0 ? (
-                                        pedidoSemanal.map((pedido, index) => (
-                                            <tr key={index}>
-                                                <td>{pedido.ESTADO}</td>
-                                                <td>{pedido.TotalDineroDia}</td>
+                                        {pedidoSemanal && pedidoSemanal.length > 0 ? (
+                                            pedidoSemanal.map((pedido, index) => (
+                                                <tr key={index}>
+                                                    <td>{pedido.ESTADO}</td>
+                                                    <td>{pedido.TotalDineroDia}</td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="2">No hay datos disponibles</td>
                                             </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="2">No hay datos disponibles</td>
-                                        </tr>
-                                    )}
+                                        )}
                                     </tbody>
                                 </table>
                             </ResponsiveContainer>
                             <div className="card mt-3">
-                                <div style={{width: '100%', textAlign: 'center', marginTop: '20px'}}>
+                                <div style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
                                     <h5>Total</h5>
                                     {pedidoSemanal &&
                                         <p>${pedidoSemanal.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>
@@ -304,70 +306,70 @@ const Informes = () => {
                                 </div>
                             </div>
                         </div>
-                        <div style={{width: '20%', textAlign: 'center'}}>
+                        <div style={{ width: '20%', textAlign: 'center' }}>
                             <h5>Mensual</h5>
                             <ResponsiveContainer width="100%" height={300}>
                                 <table border="1" className="table table-striped">
                                     <thead>
-                                    <tr>
-                                        <th style={{backgroundColor: "#f5a70a", color: "white"}}>Estado</th>
-                                        <th style={{backgroundColor: "#f5a70a", color: "white"}}>Dinero</th>
-                                    </tr>
+                                        <tr>
+                                            <th style={{ backgroundColor: "#f5a70a", color: "white" }}>Estado</th>
+                                            <th style={{ backgroundColor: "#f5a70a", color: "white" }}>Dinero</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    {pedidoMensual && pedidoMensual.length > 0 ? (
-                                        pedidoMensual.map((pedido, index) => (
-                                            <tr key={index}>
-                                                <td>{pedido.ESTADO}</td>
-                                                <td>{pedido.TotalDineroDia}</td>
+                                        {pedidoMensual && pedidoMensual.length > 0 ? (
+                                            pedidoMensual.map((pedido, index) => (
+                                                <tr key={index}>
+                                                    <td>{pedido.ESTADO}</td>
+                                                    <td>{pedido.TotalDineroDia}</td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="2">No hay datos disponibles</td>
                                             </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="2">No hay datos disponibles</td>
-                                        </tr>
-                                    )}
+                                        )}
                                     </tbody>
                                 </table>
                             </ResponsiveContainer>
                             <div className="card mt-3">
-                                <div style={{width: '100%', textAlign: 'center', marginTop: '20px'}}>
+                                <div style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
                                     <h5>Total</h5>
                                     {pedidoMensual &&
                                         <p>${pedidoMensual.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>}
                                 </div>
                             </div>
                         </div>
-                        <div style={{width: '20%', textAlign: 'center'}}>
+                        <div style={{ width: '20%', textAlign: 'center' }}>
                             <h5>Anual</h5>
                             <ResponsiveContainer width="100%" height={300}>
                                 <table border="1" className="table table-striped">
                                     <thead>
-                                    <tr>
-                                        <th style={{backgroundColor: "#f5a70a", color: "white"}}>Estado</th>
-                                        <th style={{backgroundColor: "#f5a70a", color: "white"}}>Dinero</th>
-                                    </tr>
+                                        <tr>
+                                            <th style={{ backgroundColor: "#f5a70a", color: "white" }}>Estado</th>
+                                            <th style={{ backgroundColor: "#f5a70a", color: "white" }}>Dinero</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    {pedidoAnual &&pedidoAnual.length > 0 ? (
-                                        pedidoAnual.map((pedido, index) => (
-                                            <tr key={index}>
-                                                <td>{pedido.ESTADO}</td>
-                                                <td>{pedido.TotalDineroDia}</td>
+                                        {pedidoAnual && pedidoAnual.length > 0 ? (
+                                            pedidoAnual.map((pedido, index) => (
+                                                <tr key={index}>
+                                                    <td>{pedido.ESTADO}</td>
+                                                    <td>{pedido.TotalDineroDia}</td>
 
 
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="2">No hay datos disponibles</td>
                                             </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="2">No hay datos disponibles</td>
-                                        </tr>
-                                    )}
+                                        )}
                                     </tbody>
                                 </table>
                             </ResponsiveContainer>
                             <div className="card mt-3">
-                                <div style={{width: '100%', textAlign: 'center', marginTop: '20px'}}>
+                                <div style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
                                     <h5>Total</h5>
                                     {pedidoAnual &&
                                         <p>${pedidoAnual.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>}
@@ -387,11 +389,11 @@ const Informes = () => {
                 <h3>Totales Anuales</h3>
                 <div>
                     <label htmlFor="yearSelector">Filtrar por</label>
-                    <select style={{marginLeft: '5px'}}
-                            id="yearSelector"
-                            className="form-select-sm"
-                            value={selectedYear || ''}
-                            onChange={(e) => setSelectedYear(e.target.value || null)}
+                    <select style={{ marginLeft: '5px' }}
+                        id="yearSelector"
+                        className="form-select-sm"
+                        value={selectedYear || ''}
+                        onChange={(e) => setSelectedYear(e.target.value || null)}
                     >
                         <option value=""> Año</option>
                         {aniosPedidos.map((anio) => (
@@ -407,48 +409,59 @@ const Informes = () => {
                     width: '100%',
                     padding: '20px',
                 }}>
-                    <div style={{width: '45%', textAlign: 'center'}}>
+                    <div style={{ width: '45%', textAlign: 'center' }}>
                         <h5>Por Año</h5>
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart data={chartData}>
-                                <CartesianGrid strokeDasharray="3 3"/>
-                                <XAxis dataKey="Anio"/>
-                                <YAxis/>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="Anio" />
+                                <YAxis />
                                 <Tooltip
                                     formatter={(value) => {
                                         return `$${value.toLocaleString()}`; // Formato para el Tooltip
                                     }}
                                 />
-                                <Legend/>
+                                <Legend />
                                 {months.map((month) => (
                                     chartData.some(item => item[month.num] > 0) && (
                                         <Bar key={month.num}
-                                             dataKey={month.num}
-                                             stackId="a"
-                                             fill={`#${Math.floor(Math.random() * 16777215).toString(16)}`}
-                                             name={month.name}
-                                             label={({value}) => `$${value.toLocaleString()}`}
+                                            dataKey={month.num}
+                                            stackId="a"
+                                            fill={`#${Math.floor(Math.random() * 16777215).toString(16)}`}
+                                            name={month.name}
+                                            label={({ value }) => `$${value.toLocaleString()}`}
                                         />
                                     )
                                 ))}
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
-                    <div style={{width: '45%', textAlign: 'center'}}>
+                    <div style={{ width: '45%', textAlign: 'center' }}>
                         <h5>Pedidos y dinero</h5>
-                        <ResponsiveContainer width="100%" height={300}>
+                        <ResponsiveContainer width="100%" height={250}> {/* Reduce la altura */}
                             <RadarChart data={dataForRadarTotales}>
-                                <PolarGrid/>
-                                <PolarAngleAxis dataKey="MesAnio"/>
-                                <PolarRadiusAxis angle={30} domain={[0, 'dataMax']}/>
-                                <Radar name="TotalPedidos" dataKey="TotalPedidos" stroke="#8884d8" fill="#8884d8"
-                                       fillOpacity={0.6}/>
-                                <Radar name="TotalDinero" dataKey="TotalDinero" stroke="#82ca9d" fill="#82ca9d"
-                                       fillOpacity={0.6}/>
-                                <Tooltip/>
-                                <Legend/>
+                                <PolarGrid />
+                                <PolarAngleAxis dataKey="MesAnio" />
+                                <PolarRadiusAxis angle={30} domain={[0, 100]} /> {/* Máximo ajustado */}
+                                <Radar
+                                    name="TotalPedidos (en miles)"
+                                    dataKey="TotalPedidos"
+                                    stroke="#8884d8"
+                                    fill="#8884d8"
+                                    fillOpacity={0.6}
+                                />
+                                <Radar
+                                    name="TotalDinero (en miles)"
+                                    dataKey="TotalDinero"
+                                    stroke="#82ca9d"
+                                    fill="#82ca9d"
+                                    fillOpacity={0.6}
+                                />
+                                <Tooltip formatter={(value) => `${value}K`} />
+                                <Legend />
                             </RadarChart>
                         </ResponsiveContainer>
+
                     </div>
                 </div>
             </div>
@@ -468,7 +481,7 @@ const Informes = () => {
                     width: '100%',
                     padding: '20px',
                 }}>
-                    <div style={{width: '45%', textAlign: 'center', margin: '0 auto'}}>
+                    <div style={{ width: '45%', textAlign: 'center', margin: '0 auto' }}>
                         <h5>Productos vendidos</h5>
                         <ResponsiveContainer width="100%" height={400}>
                             <PieChart>
@@ -481,9 +494,9 @@ const Informes = () => {
                                     label
                                 />
                                 {chartDataPieProductosPedidos.map((entry, index) => (
-                                    <cell key={index} fill={getRandomColorInRange('#FCBB3A')}/>
+                                    <cell key={index} fill={getRandomColorInRange('#FCBB3A')} />
                                 ))}
-                                <Tooltip/>
+                                <Tooltip />
                             </PieChart>
                         </ResponsiveContainer>
                     </div>

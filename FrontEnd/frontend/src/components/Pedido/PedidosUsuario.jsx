@@ -233,7 +233,7 @@ export function PedidosUsuario() {
                                     <span className="pedidos-usuario-estado">
                                         {pedido.estado === 13 ? "Aceptado" : pedido.estado === 9 ? "Rechazado" :
                                             pedido.estado === 7 ? "En Preparación" : pedido.estado === 12 ? "Pendiente de Aprobación" :
-                                                pedido.estado === 10 ? "Preparado" : pedido.estado === 3 ? "Pediente de Pago" :
+                                                pedido.estado === 10 ? "Preparado" : pedido.estado === 3 ? "Pendiente de Pago" :
                                                     pedido.estado === 6 ? "Entregado" :
                                                         "Estado no definido"}
                                         <span

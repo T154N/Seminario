@@ -282,7 +282,7 @@ const ModificarContenidoCliente = ({ registro, clientesActivos = [], onSave, onC
 
     return (
         <div className="modificar-contenido-cliente container">
-            <h2 className="mb-4">Modificar Cliente</h2>
+            <h2 className="mb-4">Modificar Usuario</h2>
             <form onSubmit={handleSubmit}>
                 <div className="row g-3">
                     {fields.map((field) => renderField(field))}

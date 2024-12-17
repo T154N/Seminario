@@ -171,11 +171,11 @@
 }
 
 
+/* Contenedor general de filtros */
 .pedidos-usuario-filtros {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
   gap: 1rem;
   margin-bottom: 2rem;
   padding: 1rem;
@@ -184,12 +184,16 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Filtros individuales */
 .pedidos-usuario-filtro-label {
   font-size: 1rem;
   font-weight: 500;
   color: #333;
 }
-.pedidos-usuario-filtro-select{
+
+.pedidos-usuario-filtro-input,
+.pedidos-usuario-filtro-select,
+.pedidos-usuario-filtro-date {
   font-size: 1rem;
   padding: 0.5rem;
   border: 1px solid #ddd;
@@ -198,33 +202,20 @@
   transition: border-color 0.3s ease;
 }
 
-
-.pedidos-usuario-filtro-input,
-.pedidos-usuario-filtro-date {
-  font-size: 1rem;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  width: 200px;
-  transition: border-color 0.3s ease;
-}
-
-.pedidos-usuario-filtro-input:focus,
-.pedidos-usuario-filtro-select:focus,
-.pedidos-usuario-filtro-date:focus {
-  border-color: #ff8c42;
-  outline: none;
-}
-
-.pedidos-usuario-filtro-boton {
+/* Botones de filtro */
+.pedidos-usuario-filtro-boton,
+.pedidos-usuario-filtro-boton-limpiar {
   font-size: 1rem;
   padding: 0.6rem 1.2rem;
-  background-color: #f5a70a;
-  color: #fff;
-  border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+.pedidos-usuario-filtro-boton {
+  background-color: #f5a70a;
+  color: #fff;
+  border: none;
 }
 
 .pedidos-usuario-filtro-boton:hover {
@@ -232,44 +223,67 @@
 }
 
 .pedidos-usuario-filtro-boton-limpiar {
-  font-size: 1rem;
-  padding: 0.6rem 1.2rem;
   background-color: #ddd;
   color: #333;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .pedidos-usuario-filtro-boton-limpiar:hover {
   background-color: #bbb;
 }
 
+/* Filtros de fecha */
+.pedidos-usuario-filtro-fechas {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Diseño responsive */
 @media (max-width: 768px) {
   .pedidos-usuario-filtros {
     flex-direction: column;
-    gap: 0.5rem;
+    align-items: center; /* Centra los elementos */
+    gap: 0.8rem;
   }
 
   .pedidos-usuario-filtro-input,
   .pedidos-usuario-filtro-select,
   .pedidos-usuario-filtro-date {
+    width: 100%; /* Ocupa todo el ancho */
+  }
+
+  .pedidos-usuario-filtro-fechas {
+    flex-direction: column; /* Pone las fechas en columna */
     width: 100%;
+  }
+
+  .pedidos-usuario-filtro-boton,
+  .pedidos-usuario-filtro-boton-limpiar {
+    width: 100%; /* Botones a ancho completo */
   }
 }
 
+@media (max-width: 480px) {
+  .pedidos-usuario-filtros {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
 
-.pedidos-usuario-filtro-fechas {
-  display: flex;
-  gap: 1rem; /* Espacio entre los campos */
-  align-items: center;
-}
+  .pedidos-usuario-filtro-label {
+    font-size: 0.9rem; /* Tamaño de texto más pequeño */
+  }
 
-.pedidos-usuario-filtro-label {
-  margin: 0; /* Elimina márgenes para mantener alineación */
-}
+  .pedidos-usuario-filtro-input,
+  .pedidos-usuario-filtro-select,
+  .pedidos-usuario-filtro-date {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
 
-.pedidos-usuario-filtro-date {
-  width: 150px; /* Ajusta el ancho según sea necesario */
+  .pedidos-usuario-filtro-boton,
+  .pedidos-usuario-filtro-boton-limpiar {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
 }

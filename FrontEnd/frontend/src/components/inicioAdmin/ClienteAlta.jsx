@@ -136,7 +136,7 @@ const ClienteAlta = ({ onSave, onCancel, clientesActivos = [] }) => {
 
     return (
         <div>
-            <h2>Registrar Cliente</h2>
+            <h2>Registrar Usuario</h2>
             <form onSubmit={handleSubmit}>
                 {/* Nombre y Apellido */}
                 <div className="row mb-3 mt-4">

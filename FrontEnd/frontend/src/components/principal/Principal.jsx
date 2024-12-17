@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-
+import loginService from "../../services/login/login.service";
 import pedidoflex from '../../images/PedidoFlex Icons/PedidoFlexlineal.png';
 
 export function Principal() {
 
     const navigate = useNavigate();
-
     const handleLoginClick = () => {
         navigate('/login'); 
     };
@@ -27,10 +26,15 @@ export function Principal() {
                                     <img src={pedidoflex} alt='logoPF' className='img-fluid'></img>
                                 </div>
                                 <div className='text-center fs-4'>
-                                    <p>Para comenzar seleccioná una opción:</p>
+                                    {loginService.estaIniciadaSesion() &&
+                                        <p>Para comenzar a realizar pedidos, ingrese al catálogo:</p>}
+                                    {!loginService.estaIniciadaSesion() &&
+                                        <p>Para comenzar seleccioná una opción:</p>}
                                 </div>
                                 <div className='d-flex justify-content-center mb-3'>
-                                    <button className='btn btn-principal text-white me-1' onClick={handleLoginClick}>Iniciar Sesión</button>
+                                    {!loginService.estaIniciadaSesion() &&
+                                        <button className='btn btn-principal text-white me-1'
+                                             onClick={handleLoginClick}>Iniciar Sesión</button>}
                                     <button className='btn btn-principal text-white ms-1' onClick={handleCatalogClick}>Ver Catálogo</button>
                                 </div>
                             </div>

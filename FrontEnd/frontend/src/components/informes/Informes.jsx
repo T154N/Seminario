@@ -246,7 +246,7 @@ const Informes = () => {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {pedidoDiario.length > 0 ? (
+                                    {pedidoDiario && pedidoDiario.length > 0 ? (
                                         pedidoDiario.map((pedido, index) => (
                                             <tr key={index}>
                                                 <td>{pedido.ESTADO}</td>
@@ -264,7 +264,8 @@ const Informes = () => {
                             <div className="card mt-3">
                                 <div style={{width: '100%', textAlign: 'center', marginTop: '20px'}}>
                                     <h5>Total</h5>
-                                    <p>${pedidoDiario.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>
+                                    {pedidoDiario &&
+                                        <p>${pedidoDiario.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>}
                                 </div>
                             </div>
                         </div>
@@ -279,7 +280,7 @@ const Informes = () => {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {pedidoSemanal.length > 0 ? (
+                                    {pedidoSemanal && pedidoSemanal.length > 0 ? (
                                         pedidoSemanal.map((pedido, index) => (
                                             <tr key={index}>
                                                 <td>{pedido.ESTADO}</td>
@@ -297,7 +298,9 @@ const Informes = () => {
                             <div className="card mt-3">
                                 <div style={{width: '100%', textAlign: 'center', marginTop: '20px'}}>
                                     <h5>Total</h5>
-                                    <p>${pedidoSemanal.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>
+                                    {pedidoSemanal &&
+                                        <p>${pedidoSemanal.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -312,7 +315,7 @@ const Informes = () => {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {pedidoMensual.length > 0 ? (
+                                    {pedidoMensual && pedidoMensual.length > 0 ? (
                                         pedidoMensual.map((pedido, index) => (
                                             <tr key={index}>
                                                 <td>{pedido.ESTADO}</td>
@@ -330,7 +333,8 @@ const Informes = () => {
                             <div className="card mt-3">
                                 <div style={{width: '100%', textAlign: 'center', marginTop: '20px'}}>
                                     <h5>Total</h5>
-                                    <p>${pedidoMensual.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>
+                                    {pedidoMensual &&
+                                        <p>${pedidoMensual.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>}
                                 </div>
                             </div>
                         </div>
@@ -345,7 +349,7 @@ const Informes = () => {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {pedidoAnual.length > 0 ? (
+                                    {pedidoAnual &&pedidoAnual.length > 0 ? (
                                         pedidoAnual.map((pedido, index) => (
                                             <tr key={index}>
                                                 <td>{pedido.ESTADO}</td>
@@ -365,7 +369,8 @@ const Informes = () => {
                             <div className="card mt-3">
                                 <div style={{width: '100%', textAlign: 'center', marginTop: '20px'}}>
                                     <h5>Total</h5>
-                                    <p>${pedidoAnual.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>
+                                    {pedidoAnual &&
+                                        <p>${pedidoAnual.reduce((acc, pedido) => acc + pedido.TotalDineroDia, 0).toFixed(2)}</p>}
                                 </div>
                             </div>
                         </div>

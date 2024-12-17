@@ -225,7 +225,7 @@ export function PedidosUsuario() {
                                 <td className="pedidos-usuario-data"
                                     data-label="Fecha de solicitud">{new Date(pedido.fecha).toLocaleDateString('es-ES') || 'No especificada'}</td>
                                 <td className="pedidos-usuario-data"
-                                    data-label="Fecha de solicitud">
+                                    data-label="Posible fecha de entrega">
                                     {pedido.fechaEstimada ? new Date(new Date(pedido.fechaEstimada).setDate(new Date(pedido.fechaEstimada).getDate() + 1)).toLocaleDateString('es-ES') : 'No especificada'}
                                 </td>
                                 <td className="pedidos-usuario-data" data-label="Método de Pago">{pedido.metodoPago}</td>

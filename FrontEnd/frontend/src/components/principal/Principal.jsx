@@ -27,7 +27,7 @@ export function Principal() {
                                 </div>
                                 <div className='text-center fs-4'>
                                     {loginService.estaIniciadaSesion() &&
-                                        <p>Para comenzar a realizar pedidos, ingrese al catálogo:</p>}
+                                        <p>Para comenzar a realizar pedidos, ingresá al catálogo:</p>}
                                     {!loginService.estaIniciadaSesion() &&
                                         <p>Para comenzar seleccioná una opción:</p>}
                                 </div>

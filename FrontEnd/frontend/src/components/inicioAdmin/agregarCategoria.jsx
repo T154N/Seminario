@@ -57,7 +57,7 @@ const AgregarCategoria = ({ onSave, onCancel }) => {
 
     return (
         <div>
-            <h2>Registrar Categoria</h2>
+            <h2>Registrar Categoría</h2>
             <form onSubmit={handleSubmit}>
                 <div className="row mb-3 mt-4">
                     <div className="form-group col-6">
@@ -113,7 +113,7 @@ const AgregarCategoria = ({ onSave, onCancel }) => {
                 show={showModal}
                 onHide={handleCancel}
                 onConfirm={handleConfirm}
-                message="¿Estás seguro de que deseas registrar la categoria?"
+                message="¿Estás seguro de que deseas registrar la Categoría?"
             />
         </div>
     );

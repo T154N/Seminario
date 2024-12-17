@@ -74,7 +74,7 @@ const ModificarCategoria = ({ registro, onSave, onCancel }) => {
 
     return (
         <div>
-            <h2>Modificar Categoria: {registro ? registro.nombre : 'Contenido'}</h2>
+            <h2>Modificar Categoría: {registro ? registro.nombre : 'Contenido'}</h2>
             <form onSubmit={handleSubmit}>
                 <div className="row mb-3 mt-4">
                     <div className="form-group col-6">

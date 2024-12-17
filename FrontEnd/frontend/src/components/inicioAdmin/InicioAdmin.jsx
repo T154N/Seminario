@@ -92,7 +92,7 @@ export function InicioAdmin() {
             setCategoriasActivas(categoriasFiltradas);
         };
 
-        if (menuContent === 'Catálogo' && catalogTab === 'Categorias') {
+        if (menuContent === 'Catálogo' && catalogTab === 'Categorías') {
             fetchCategorias();
         }
     }, [menuContent, catalogTab, checkboxState]);
@@ -237,7 +237,7 @@ export function InicioAdmin() {
         
     const dataToDisplay = () => {
         if (menuContent === 'Catálogo' && catalogTab === 'Productos') return filteredData(productosActivos);
-        if (menuContent === 'Catálogo' && catalogTab === 'Categorias') return filteredData(categoriasActivos);
+        if (menuContent === 'Catálogo' && catalogTab === 'Categorías') return filteredData(categoriasActivos);
         if (menuContent === 'Pedidos'){
             return filteredData(pedidosActivos)
                 .filter((pedidosActivos) => {
@@ -418,9 +418,9 @@ export function InicioAdmin() {
                 await productoService.updateProducto(registroSeleccionado.id, formData);
                 console.log("Producto modificado");
                 recargarProductos();
-            } else if (menuContent === 'Catálogo' &&catalogTab === 'Categorias') {
+            } else if (menuContent === 'Catálogo' &&catalogTab === 'Categorías') {
                 await categoriaService.updateCategoria(registroSeleccionado.id, formData);
-                console.log("Categoria modificada");
+                console.log("Categoría modificada");
                 recargarCategorias();
             } else if (menuContent === 'Pedidos') {
                 await pedidoService.updatePedido(registroSeleccionado.id, formData);
@@ -453,7 +453,7 @@ export function InicioAdmin() {
         setCheckboxState(event.target.checked);
         if (menuContent === 'Catálogo' && catalogTab === 'Productos') {
             recargarProductos();
-        } else if (menuContent === 'Catálogo' && catalogTab === 'Categorias') {
+        } else if (menuContent === 'Catálogo' && catalogTab === 'Categorías') {
             recargarCategorias();
         } else if (menuContent === 'Pedidos') {
                recargarPedidos();
@@ -473,7 +473,7 @@ export function InicioAdmin() {
         if (menuContent === 'Catálogo' && catalogTab === 'Productos') {
             await productoService.setBajaProducto(itemToDelete.id, usuarioMod);
             recargarProductos();
-        } else if (menuContent === 'Catálogo' && catalogTab === 'Categorias') {
+        } else if (menuContent === 'Catálogo' && catalogTab === 'Categorías') {
             await categoriaService.setBajaCategoria(itemToDelete.id, usuarioMod);
             recargarCategorias();
         } else if (menuContent === 'Pedidos') {
@@ -517,7 +517,7 @@ export function InicioAdmin() {
                             <div>
                                 <h2>Gestión del Catálogo</h2>
                                 <div className={`d-flex ${modoEdicion ? 'd-none' : ''}`}>
-                                    {['Categorias', 'Productos'].map((tab) => (
+                                    {['Categorías', 'Productos'].map((tab) => (
                                         <button
                                             key={tab}
                                             className={`btn-tab ${catalogTab === tab ? 'active' : ''}`}

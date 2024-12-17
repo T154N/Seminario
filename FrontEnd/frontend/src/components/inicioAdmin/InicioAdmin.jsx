@@ -401,6 +401,8 @@ export function InicioAdmin() {
     const handlePost = () => {
         setModoAlta(true);
         setCatalogoMenu(false);
+        recargarProductos();
+        recargarCategorias();
     };
 
     const handleEditClick = (registro) => {
@@ -446,6 +448,8 @@ export function InicioAdmin() {
         setModoAlta(false);
         setFiltrosActivos(savedFiltros);
         setCheckboxState(savedCheckboxState);
+        recargarProductos();
+        recargarCategorias();
     };
 
     // Manejo de estado

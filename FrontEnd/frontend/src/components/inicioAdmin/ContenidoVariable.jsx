@@ -416,7 +416,7 @@ const ContenidoVariable = ({
                             {menuContent === 'Clientes' && <option value="email">Correo electronico</option>}
                             {menuContent === 'Catálogo' &&
                                 catalogTab === 'Productos' && (
-                                    <option value="Categoría">Categoría</option>
+                                    <option value="categoria">Categoría</option>
                                 )}
                         </select>
                         <input

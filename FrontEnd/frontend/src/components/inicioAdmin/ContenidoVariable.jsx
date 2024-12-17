@@ -119,7 +119,7 @@ const ContenidoVariable = ({
                 </>
             );
         }
-        if (menuContent === 'Catálogo' && catalogTab === 'Categorias') {
+        if (menuContent === 'Catálogo' && catalogTab === 'Categorías') {
             return (
                 <>
                     <th>ID</th>
@@ -195,7 +195,7 @@ const ContenidoVariable = ({
                 )}
 
                 {/* Columnas específicas para "Categorías" */}
-                {menuContent === 'Catálogo' && catalogTab === 'Categorias' && (
+                {menuContent === 'Catálogo' && catalogTab === 'Categorías' && (
                     <>
                         <td>{item.nombre}</td>
                         <td>
@@ -295,7 +295,7 @@ const ContenidoVariable = ({
                                     ? 'productos'
                                     : catalogTab === 'Clientes'
                                         ? 'clientes'
-                                        : 'categorias'
+                                        : 'Categorías'
                             )}
                         >
                             <FontAwesomeIcon icon={faDollarSign} />
@@ -416,7 +416,7 @@ const ContenidoVariable = ({
                             {menuContent === 'Clientes' && <option value="email">Correo electronico</option>}
                             {menuContent === 'Catálogo' &&
                                 catalogTab === 'Productos' && (
-                                    <option value="categoria">Categoría</option>
+                                    <option value="Categoría">Categoría</option>
                                 )}
                         </select>
                         <input
